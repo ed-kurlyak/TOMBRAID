@@ -8,7 +8,7 @@ Tested under Win 10.
 
 Compiled on Visual Studio 2019.
 
-Put levels files to DATA directory.
+Put levels files to DATA directory. See winmain.cpp for config.
 
 Features:
 
