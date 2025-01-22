@@ -15,5 +15,5 @@ Features:
 1) for rendering triangles used original Core Desing functions
 2) used 8- bit backbuffer SCITECH Mega Graph Library from Quake 1
 3) for sound used Direct Sound 8
-4) no healbar, no savegames etc., 1,2,3,4 num keys change weapons, full ammo, 100% health always
+4) no healthbar, no savegames, no inventory, 1,2,3,4 num keys change weapons, full ammo, 100% health always
 
