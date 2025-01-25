@@ -1,8 +1,8 @@
 # TOMBRAID
 
-Tomb Radier 1 reverse engineering test version
+Tomb Radier 1 reverse engineering test version, no DirectX/OpenGL, software rendering project.
 
-Thank you very much to LostArtefacts & Marcin Kurczewski for previous job, reverse enginireeng was done partially and source code is maximum close to original Core Design code
+Thank you very much to LostArtefacts & Marcin Kurczewski for previous job, reverse enginireeng was done partially and source code is maximum close to original Core Design code.
 
 Tested under Win 10.
 
