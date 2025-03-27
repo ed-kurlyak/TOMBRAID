@@ -11,98 +11,6 @@ int16_t g_InvKeysQtys[24] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
-/*
-INVENTORY_ITEM *g_InvKeysList[23] = {
-    &g_InvItemLeadBar,
-    &g_InvItemPuzzle1,
-    &g_InvItemPuzzle2,
-    &g_InvItemPuzzle3,
-    &g_InvItemPuzzle4,
-    &g_InvItemKey1,
-    &g_InvItemKey2,
-    &g_InvItemKey3,
-    &g_InvItemKey4,
-    &g_InvItemPickup1,
-    &g_InvItemPickup2,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-};
-*/
-INVENTORY_ITEM *g_InvKeysList[23] = {
-    NULL,//&g_InvItemLeadBar,
-    &g_InvItemPuzzle1,
-    NULL,//&g_InvItemPuzzle2,
-    NULL,//&g_InvItemPuzzle3,
-    NULL,//&g_InvItemPuzzle4,
-    &g_InvItemKey1,
-    NULL,//&g_InvItemKey2,
-    NULL,//&g_InvItemKey3,
-    NULL,//&g_InvItemKey4,
-    NULL,//&g_InvItemPickup1,
-    NULL,//&g_InvItemPickup2,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-};
-
-
-
-int16_t g_InvMainCurrent;
-int16_t g_InvMainObjects = 8;
-int16_t g_InvMainQtys[24] = {
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-};
-
-INVENTORY_ITEM *g_InvMainList[23] = {
-    &g_InvItemCompass,
-    &g_InvItemPistols,
-    &g_InvItemShotgun,
-    &g_InvItemMagnum,
-    &g_InvItemUzi,
-    &g_InvItemGrenade,
-    &g_InvItemBigMedi,
-    &g_InvItemMedi,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-};
-/*
-int16_t g_InvOptionCurrent;
-int16_t g_InvOptionObjects = 5;
-INVENTORY_ITEM *g_InvOptionList[] = {
-    &g_InvItemGame,    &g_InvItemControls,  &g_InvItemSound,
-    &g_InvItemDetails, &g_InvItemLarasHome,
-};
-*/
 
 INVENTORY_ITEM g_InvItemCompass = {
     "Compass", //.string = 
@@ -182,115 +90,115 @@ INVENTORY_ITEM g_InvItemBigMedi = {
     NULL,//.sprlist = 
 };
 
-/*
+
 INVENTORY_ITEM g_InvItemLeadBar = {
-    .string = "Lead Bar",
-    .object_number = O_LEADBAR_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 3616,
-    .pt_xrot = 0,
-    .x_rot_sel = -8160,
-    .x_rot = 0,
-    .y_rot_sel = -4096,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 352,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 100,
-    .sprlist = NULL,
+    "Lead Bar", //.string = 
+    O_LEADBAR_OPTION, //.object_number = 
+    1,//.frames_total = 
+    0,//.current_frame = 
+    0,//.goal_frame = 
+    0,//.open_frame = 
+    1,//.anim_direction = 
+    1,//.anim_speed = 
+    0,//.anim_count = 
+    3616,//.pt_xrot_sel = 
+    0,//.pt_xrot = 
+    -8160,//.x_rot_sel = 
+    0,//.x_rot = 
+    -4096,//.y_rot_sel = 
+    0,//.y_rot = 
+    0,//.ytrans_sel = 
+    0,//.ytrans = 
+    352,//.ztrans_sel = 
+    0,//.ztrans = 
+    0xFFFFFFFF,//.which_meshes = 
+    0xFFFFFFFF,//.drawn_meshes = 
+    100,//.inv_pos = 
+    NULL,//.sprlist = 
 };
 
 
 INVENTORY_ITEM g_InvItemPickup1 = {
-    .string = "Pickup",
-    .object_number = O_PICKUP_OPTION1,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 7200,
-    .pt_xrot = 0,
-    .x_rot_sel = -4352,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 256,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 111,
-    .sprlist = NULL,
+    "Pickup",//.string = 
+    O_PICKUP_OPTION1,//.object_number = 
+    1,//.frames_total = 
+    0,//.current_frame = 
+    0,//.goal_frame = 
+    0,//.open_frame = 
+    1,//.anim_direction = 
+    1,//.anim_speed = 
+    0,//.anim_count = 
+    7200,//.pt_xrot_sel = 
+    0,//.pt_xrot = 
+    -4352,//.x_rot_sel = 
+    0,//.x_rot = 
+    0,//.y_rot_sel = 
+    0,//.y_rot = 
+    0,//.ytrans_sel = 
+    0,//.ytrans = 
+    256,//.ztrans_sel = 
+    0,//.ztrans = 
+    0xFFFFFFFF,//.which_meshes = 
+    0xFFFFFFFF,//.drawn_meshes = 
+    111,//.inv_pos = 
+    NULL,//.sprlist = 
 };
 
 
 
 INVENTORY_ITEM g_InvItemPickup2 = {
-    .string = "Pickup",
-    .object_number = O_PICKUP_OPTION2,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 7200,
-    .pt_xrot = 0,
-    .x_rot_sel = -4352,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 256,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 110,
-    .sprlist = NULL,
+    "Pickup",//.string = 
+    O_PICKUP_OPTION2,//.object_number = 
+    1,//.frames_total = 
+    0,//.current_frame = 
+    0,//.goal_frame = 
+    0,//.open_frame = 
+    1,//.anim_direction = 
+    1,//.anim_speed = 
+    0,//.anim_count = 
+    7200,//.pt_xrot_sel = 
+    0,//.pt_xrot = 
+    -4352,//.x_rot_sel = 
+    0,//.x_rot = 
+    0,//.y_rot_sel = 
+    0,//.y_rot = 
+    0,//.ytrans_sel = 
+    0,//.ytrans = 
+    256,//.ztrans_sel = 
+    0,//.ztrans = 
+    0xFFFFFFFF,//.which_meshes = 
+    0xFFFFFFFF,//.drawn_meshes = 
+    110,//.inv_pos = 
+    NULL,//.sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemScion = {
-    .string = "Scion",
-    .object_number = O_SCION_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 7200,
-    .pt_xrot = 0,
-    .x_rot_sel = -4352,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 256,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 109,
-    .sprlist = NULL,
+    "Scion",//.string = 
+    O_SCION_OPTION,//.object_number = 
+    1,//.frames_total = 
+    0,//.current_frame = 
+    0,//.goal_frame = 
+    0,//.open_frame = 
+    1,//.anim_direction = 
+    1,//.anim_speed = 
+    0,//.anim_count = 
+    7200,//.pt_xrot_sel = 
+    0,//.pt_xrot = 
+    -4352,//.x_rot_sel = 
+    0,//.x_rot = 
+    0,//.y_rot_sel = 
+    0,//.y_rot = 
+    0,//.ytrans_sel = 
+    0,//.ytrans = 
+    256,//.ztrans_sel = 
+    0,//.ztrans = 
+    0xFFFFFFFF,//.which_meshes = 
+    0xFFFFFFFF,//.drawn_meshes = 
+    109,//.inv_pos = 
+    NULL,//.sprlist = 
 };
 
-*/
+
 INVENTORY_ITEM g_InvItemPuzzle1 = {
     "Puzzle", //.string = 
     O_PUZZLE_OPTION1, //.object_number = 
@@ -317,87 +225,87 @@ INVENTORY_ITEM g_InvItemPuzzle1 = {
     NULL, //.sprlist = 
 };
 
-/*
+
 
 INVENTORY_ITEM g_InvItemPuzzle2 = {
-    .string = "Puzzle",
-    .object_number = O_PUZZLE_OPTION2,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 7200,
-    .pt_xrot = 0,
-    .x_rot_sel = -4352,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 256,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 107,
-    .sprlist = NULL,
+    "Puzzle", //.string = 
+    O_PUZZLE_OPTION2,//.object_number = 
+    1,//.frames_total = 
+    0,//.current_frame = 
+    0,//.goal_frame = 
+    0,//.open_frame = 
+    1,//.anim_direction = 
+    1,//.anim_speed = 
+    0,//.anim_count = 
+    7200,//.pt_xrot_sel = 
+    0,//.pt_xrot = 
+    -4352,//.x_rot_sel = 
+    0,//.x_rot = 
+    0,//.y_rot_sel = 
+    0,//.y_rot = 
+    0,//.ytrans_sel = 
+    0,//.ytrans = 
+    256,//.ztrans_sel = 
+    0,//.ztrans = 
+    0xFFFFFFFF,//.which_meshes = 
+    0xFFFFFFFF,//.which_meshes = 
+    107,//.inv_pos = 
+    NULL,//.sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemPuzzle3 = {
-    .string = "Puzzle",
-    .object_number = O_PUZZLE_OPTION3,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 7200,
-    .pt_xrot = 0,
-    .x_rot_sel = -4352,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 256,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 106,
-    .sprlist = NULL,
+    "Puzzle", //.string = 
+    O_PUZZLE_OPTION3,//.object_number = 
+    1,//.frames_total = 
+    0,//.current_frame = 
+    0,//.goal_frame = 
+    0,//.open_frame = 
+    1,//.anim_direction = 
+    1,//.anim_speed = 
+    0,//.anim_count = 
+    7200,//.pt_xrot_sel = 
+    0,//.pt_xrot = 
+    -4352,//.x_rot_sel = 
+    0,//.x_rot = 
+    0,//.y_rot_sel = 
+    0,//.y_rot = 
+    0,//.ytrans_sel = 
+    0,//.ytrans = 
+    256,//.ztrans_sel = 
+    0,//.ztrans = 
+    0xFFFFFFFF,//.which_meshes = 
+    0xFFFFFFFF,//.drawn_meshes = 
+    106,//.drawn_meshes = 
+    NULL,//.sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemPuzzle4 = {
-    .string = "Puzzle",
-    .object_number = O_PUZZLE_OPTION4,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 7200,
-    .pt_xrot = 0,
-    .x_rot_sel = -4352,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 256,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 105,
-    .sprlist = NULL,
+    "Puzzle",//.string = 
+    O_PUZZLE_OPTION4,//.object_number = 
+    1,//.object_number = 
+    0,//.current_frame = 
+    0,//.current_frame = 
+    0,//.open_frame = 
+    1,//.anim_direction = 
+    1,//.anim_direction = 
+    0,//.anim_count = 
+    7200,//.anim_count = 
+    0,//.pt_xrot = 
+    -4352,//.x_rot_sel = 
+    0,//.x_rot = 
+    0,//.y_rot_sel = 
+    0,//.y_rot = 
+    0,//.ytrans_sel = 
+    0,//.ytrans = 
+    256,//.ztrans_sel = 
+    0,//.ztrans = 
+    0xFFFFFFFF,//.which_meshes = 
+    0xFFFFFFFF,//.drawn_meshes = 
+    105,//.inv_pos = 
+    NULL,//.sprlist = 
 };
 
-*/
+
 
 INVENTORY_ITEM g_InvItemKey1 = {
     "Key", //.string = 
@@ -425,86 +333,86 @@ INVENTORY_ITEM g_InvItemKey1 = {
     NULL, //.sprlist = 
 };
 
-/*
+
 INVENTORY_ITEM g_InvItemKey2 = {
-    .string = "Key",
-    .object_number = O_KEY_OPTION2,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 7200,
-    .pt_xrot = 0,
-    .x_rot_sel = -4352,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 256,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 102,
-    .sprlist = NULL,
+"Key", //     .string = 
+O_KEY_OPTION2, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+7200, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-4352, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+256, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+102, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemKey3 = {
-    .string = "Key",
-    .object_number = O_KEY_OPTION3,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 7200,
-    .pt_xrot = 0,
-    .x_rot_sel = -4352,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 256,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 103,
-    .sprlist = NULL,
+"Key", //     .string = 
+O_KEY_OPTION3, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+7200, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-4352, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+256, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+103, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemKey4 = {
-    .string = "Key",
-    .object_number = O_KEY_OPTION4,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 7200,
-    .pt_xrot = 0,
-    .x_rot_sel = -4352,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 256,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 104,
-    .sprlist = NULL,
+"Key", //     .string = 
+O_KEY_OPTION4, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+7200, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-4352, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+256, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+104, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
-*/
+
 
 INVENTORY_ITEM g_InvItemPistols = {
     "Pistols",//.string = 
@@ -638,238 +546,357 @@ INVENTORY_ITEM g_InvItemGrenade = {
     NULL,//.sprlist = 
 };
 
-/*
+
+
 INVENTORY_ITEM g_InvItemPistolAmmo = {
-    .string = "Pistol Clips",
-    .object_number = O_GUN_AMMO_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 3200,
-    .pt_xrot = 0,
-    .x_rot_sel = -3808,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 296,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 1,
-    .sprlist = NULL,
+"Pistol Clips", //     .string = 
+O_GUN_AMMO_OPTION, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+3200, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-3808, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+296, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+1, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemShotgunAmmo = {
-    .string = "Shotgun Shells",
-    .object_number = O_SG_AMMO_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 3200,
-    .pt_xrot = 0,
-    .x_rot_sel = -3808,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 296,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 2,
-    .sprlist = NULL,
+"Shotgun Shells", //     .string = 
+O_SG_AMMO_OPTION, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+3200, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-3808, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+296, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+2, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemMagnumAmmo = {
-    .string = "Magnum Clips",
-    .object_number = O_MAG_AMMO_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 3200,
-    .pt_xrot = 0,
-    .x_rot_sel = -3808,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 296,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 3,
-    .sprlist = NULL,
+"Magnum Clips", //     .string = 
+O_MAG_AMMO_OPTION, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+3200, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-3808, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+296, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+3, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemUziAmmo = {
-    .string = "Uzi Clips",
-    .object_number = O_UZI_AMMO_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 3200,
-    .pt_xrot = 0,
-    .x_rot_sel = -3808,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 296,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 4,
-    .sprlist = NULL,
+"Uzi Clips", //     .string = 
+O_UZI_AMMO_OPTION, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+3200, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-3808, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+296, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+4, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemGame = {
-    .string = "Game",
-    .object_number = O_PASSPORT_CLOSED,
-    .frames_total = 30,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 14,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 4640,
-    .pt_xrot = 0,
-    .x_rot_sel = -4320,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 384,
-    .ztrans = 0,
-    .which_meshes = 0x13,
-    .drawn_meshes = 0x13,
-    .inv_pos = 0,
-    .sprlist = NULL,
+"Game", //     .string = 
+O_PASSPORT_CLOSED, //     .object_number = 
+30, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+14, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+4640, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-4320, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+384, //     .ztrans_sel = 
+0, //     .ztrans = 
+0x13, //     .which_meshes = 
+0x13, //     .drawn_meshes = 
+0, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemDetails = {
-    .string = "Detail Levels",
-    .object_number = O_DETAIL_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 4224,
-    .pt_xrot = 0,
-    .x_rot_sel = -6720,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 424,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 1,
-    .sprlist = NULL,
+"Detail Levels", //     .string =  
+O_DETAIL_OPTION, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+4224, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-6720, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+424, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+1, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemSound = {
-    .string = "Sound",
-    .object_number = O_SOUND_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 4832,
-    .pt_xrot = 0,
-    .x_rot_sel = -2336,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 368,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 2,
-    .sprlist = NULL,
+"Sound", //     .string = 
+O_SOUND_OPTION, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+4832, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-2336, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+368, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+2, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemControls = {
-    .string = "Controls",
-    .object_number = O_CONTROL_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 5504,
-    .pt_xrot = 0,
-    .x_rot_sel = 1536,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 352,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 3,
-    .sprlist = NULL,
+"Controls", //     .string = 
+O_CONTROL_OPTION, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+5504, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+1536, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+352, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+3, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
 
 INVENTORY_ITEM g_InvItemLarasHome = {
-    .string = "g_Lara's Home",
-    .object_number = O_PHOTO_OPTION,
-    .frames_total = 1,
-    .current_frame = 0,
-    .goal_frame = 0,
-    .open_frame = 0,
-    .anim_direction = 1,
-    .anim_speed = 1,
-    .anim_count = 0,
-    .pt_xrot_sel = 4640,
-    .pt_xrot = 0,
-    .x_rot_sel = -4320,
-    .x_rot = 0,
-    .y_rot_sel = 0,
-    .y_rot = 0,
-    .ytrans_sel = 0,
-    .ytrans = 0,
-    .ztrans_sel = 384,
-    .ztrans = 0,
-    .which_meshes = 0xFFFFFFFF,
-    .drawn_meshes = 0xFFFFFFFF,
-    .inv_pos = 5,
-    .sprlist = NULL,
+"Lara's Home", //     .string =  
+O_PHOTO_OPTION, //     .object_number = 
+1, //     .frames_total = 
+0, //     .current_frame = 
+0, //     .goal_frame = 
+0, //     .open_frame = 
+1, //     .anim_direction = 
+1, //     .anim_speed = 
+0, //     .anim_count = 
+4640, //     .pt_xrot_sel = 
+0, //     .pt_xrot = 
+-4320, //     .x_rot_sel = 
+0, //     .x_rot = 
+0, //     .y_rot_sel = 
+0, //     .y_rot = 
+0, //     .ytrans_sel = 
+0, //     .ytrans = 
+384, //     .ztrans_sel = 
+0, //     .ztrans = 
+0xFFFFFFFF, //     .which_meshes = 
+0xFFFFFFFF, //     .drawn_meshes = 
+5, //     .inv_pos = 
+NULL, //     .sprlist = 
 };
+
+
+//-------------------------
+
+
+
+
+INVENTORY_ITEM *g_InvKeysList[23] = {
+    &g_InvItemLeadBar,
+    &g_InvItemPuzzle1,
+    &g_InvItemPuzzle2,
+    &g_InvItemPuzzle3,
+    &g_InvItemPuzzle4,
+    &g_InvItemKey1,
+    &g_InvItemKey2,
+    &g_InvItemKey3,
+    &g_InvItemKey4,
+    &g_InvItemPickup1,
+    &g_InvItemPickup2,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+};
+
+/*
+
+INVENTORY_ITEM *g_InvKeysList[23] = {
+    NULL,//&g_InvItemLeadBar,
+    &g_InvItemPuzzle1,
+    NULL,//&g_InvItemPuzzle2,
+    NULL,//&g_InvItemPuzzle3,
+    NULL,//&g_InvItemPuzzle4,
+    &g_InvItemKey1,
+    NULL,//&g_InvItemKey2,
+    NULL,//&g_InvItemKey3,
+    NULL,//&g_InvItemKey4,
+    NULL,//&g_InvItemPickup1,
+    NULL,//&g_InvItemPickup2,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+};
+
 */
+
+
+
+int16_t g_InvMainCurrent;
+//int16_t g_InvMainObjects = 8;
+int16_t g_InvMainObjects = 2;
+int16_t g_InvMainQtys[24] = {
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+};
+
+INVENTORY_ITEM *g_InvMainList[23] = {
+    &g_InvItemCompass,
+    &g_InvItemPistols,
+
+
+    //------------------------
+
+    /*
+    &g_InvItemBigMedi,
+    &g_InvItemMedi,
+    &g_InvItemShotgun,
+    &g_InvItemMagnum,
+    &g_InvItemUzi,
+    &g_InvItemGrenade,
+    */
+
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+
+    //------------------------
+
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+};
+
+int16_t g_InvOptionCurrent;
+int16_t g_InvOptionObjects = 5;
+INVENTORY_ITEM *g_InvOptionList[] = {
+    &g_InvItemGame,    &g_InvItemControls,  &g_InvItemSound,
+    &g_InvItemDetails, &g_InvItemLarasHome,
+};
+

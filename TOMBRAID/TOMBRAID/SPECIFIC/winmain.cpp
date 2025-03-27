@@ -5,8 +5,12 @@
 #include "vars.h"
 #include "gameflow.h"
 #include "init.h"
-
-#pragma comment (lib, "legacy_stdio_definitions.lib")
+#include "inv.h"
+#include "setup.h"
+#include "text.h"
+#include "inv.h"
+#include "game.h"
+#include "screen.h"
 
 //SETUP START
 //SETUP START
@@ -19,7 +23,7 @@
 //игра широкий экран - запускаем на полный широкий
 //не надо учет аспекта,
 //1)SETUP FULLSCREEN/NO
-//#define FULL_SCREEN
+int FULL_SCREEN = 0;
 
 //закоментировать учет аспекта в
 //matrix.cpp phd_GenerateW2V()
@@ -30,11 +34,35 @@ int widescreen = 0;
 int select_game = VER_TR1;
 //int select_game = VER_TR_GOLD;
 
-//4)SETUP LEVEL NUM - TR1/GOLD
+//4)SETUP SCREEN RESOLUTION
+
+//int SCREEN_WIDTH = 1600;
+//int SCREEN_HEIGHT = 900;
+
+
+int SCREEN_WIDTH = 800;
+int SCREEN_HEIGHT = 600;
+
+//int SCREEN_WIDTH = 640;
+//int SCREEN_HEIGHT = 480;
+
+//5)SETUP LARA DIST
+//false is original dist
+//влияет на g_PhdPersp
+int lara_dist = false;
+//int lara_dist = false;
+
+
+//SETUP END
+//SETUP END
+//SETUP END
+//SETUP END
+
+
 
 	//TOMB ORIGINAL
 	//int level_num = 0; //Level 0 - GYM - GYM.PHD 
-	int level_num = 1; //Level 1 - Caves - LEVEL1.PHD 
+	//int level_num = 1; //Level 1 - Caves - LEVEL1.PHD 
 	//int level_num = 2; //Level 2 - City of Vilcabamba - LEVEL2.PHD
 	//int level_num = 3; //Level 3 - Lost Valley - LEVEL3A.PHD
 	//int level_num = 4; //Level 4 - Tomb of Qualopec - LEVEL3B.PHD
@@ -59,30 +87,6 @@ int select_game = VER_TR1;
 //int level_num = 4; //Level 4 - Hive - END2.PHD 
 
 
-//5)SETUP SCREEN RESOLUTION
-/*
-int SCREEN_WIDTH = 1600;
-int SCREEN_HEIGHT = 900;
-
-int SCREEN_WIDTH = 640;
-int SCREEN_HEIGHT = 480;
-*/
-
-int SCREEN_WIDTH = 800;
-int SCREEN_HEIGHT = 600;
-
-
-//6)SETUP LARA DIST
-//false is original dist
-//влияет на g_PhdPersp
-int lara_dist = false;
-//int lara_dist = false;
-
-
-//SETUP END
-//SETUP END
-//SETUP END
-//SETUP END
 
 // Структура для хранения предыдущего режима
 static DEVMODE previousMode;
@@ -100,17 +104,19 @@ int32_t m_RandDraw = 0xD371F947;
 int16_t		phd_winxmin = 0;
 int16_t		phd_winymin = 0;
 
-int16_t		phd_winxmax = SCREEN_WIDTH - 1;        	/* Maximum Window X coord*/
-int16_t		phd_winymax = SCREEN_HEIGHT - 1;        	/* Maximum Window Y coord*/
-int32_t		phd_scrwidth = SCREEN_WIDTH;
+int phd_winwidth = Screen_GetResWidth();
+
+int16_t		phd_winxmax = Screen_GetResWidth() - 1;        	/* Maximum Window X coord*/
+int16_t		phd_winymax = Screen_GetResHeight() - 1;        	/* Maximum Window Y coord*/
+int32_t		phd_scrwidth = Screen_GetResWidth();
 
 // Функция для установки режима дисплея 800x600
 bool SetDisplayMode()
 {
     DEVMODE dm = { 0 };
     dm.dmSize = sizeof(DEVMODE);
-    dm.dmPelsWidth = SCREEN_WIDTH;
-    dm.dmPelsHeight = SCREEN_HEIGHT;
+    dm.dmPelsWidth = Screen_GetResWidth();
+    dm.dmPelsHeight = Screen_GetResHeight();
     dm.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT;
 
     if (!isPreviousModeStored)
@@ -196,13 +202,19 @@ void phd_InitWindow( int  x, 	int y,
 					   int  scrwidth,
 					   int	 scrheight, unsigned char *BackBuff)
 {
-	phd_winxmax = SCREEN_WIDTH - 1;
-	phd_winymax = SCREEN_HEIGHT - 1;
+	phd_winxmax = Screen_GetResWidth() - 1;
+	phd_winymax = Screen_GetResHeight() - 1;
 
 	g_SurfaceMinX = 0;
 	g_SurfaceMinY = 0;
-	g_SurfaceMaxX = (float)SCREEN_WIDTH - 1;
-	g_SurfaceMaxY = (float)SCREEN_HEIGHT - 1;
+	g_SurfaceMaxX = (float)Screen_GetResWidth() - 1;
+	g_SurfaceMaxY = (float)Screen_GetResHeight() - 1;
+
+	//int16_t c = phd_cos(fov / 2);
+    //int16_t s = phd_sin(fov / 2);
+    //g_PhdPersp = ((SCREEN_WIDTH / 2) * c) / s;
+
+	//ZNear = 127 << W2V_SHIFT;
 }
 
 int SpinMessageLoop()
@@ -219,7 +231,7 @@ int SpinMessageLoop()
 			if (msg.message==WM_QUIT)
 				break;
 
-			if (GetKeyState(VK_ESCAPE) & 0xFF00)
+			if (GetKeyState(VK_BACK) & 0xFF00)
 				break;
 		}
 		else if(g_bFocus)
@@ -291,17 +303,22 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 }
 
 int PASCAL WinMain(HINSTANCE hInstance,
-				   HINSTANCE hPrevInstance,
-					LPSTR lpCmdLine,
-					int nCmdShow)
+	HINSTANCE hPrevInstance,
+	LPSTR lpCmdLine,
+	int nCmdShow)
 {
+
+	//test
+	//0x3000000h или 50331648 десятичное
+	//int perspective_distance = ((3*1024)<<14);
+	//int debug = 0;
 
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	g_hInst = hInstance;
 
-	WNDCLASS wcl = {0};
+	WNDCLASS wcl = { 0 };
 	wcl.lpfnWndProc = WndProc;
 	wcl.hInstance = hInstance;
 	wcl.lpszClassName = "Sample";
@@ -313,73 +330,86 @@ int PASCAL WinMain(HINSTANCE hInstance,
 	//wcl.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
 	//wcl.lpszMenuName = NULL;
 
-	if(!RegisterClass(&wcl))
+	if (!RegisterClass(&wcl))
 		return 0;
 
-#ifndef FULL_SCREEN
-	g_hWnd = CreateWindow("Sample", "Tomb Raider 1 Ed Kurlyak",
-					WS_OVERLAPPEDWINDOW,
-					0, 0,
-					SCREEN_WIDTH, SCREEN_HEIGHT,
-					NULL,
-					NULL,
-					hInstance,
-					NULL);
-
-#endif
-
-#ifdef FULL_SCREEN
+	if (!FULL_SCREEN)
+	{
 		g_hWnd = CreateWindow("Sample", "Tomb Raider 1 Ed Kurlyak",
-					WS_POPUP | WS_VISIBLE,
-					0, 0,
-					SCREEN_WIDTH, SCREEN_HEIGHT,
-					NULL,
-					NULL,
-					hInstance,
-					NULL);
-		
-#endif
+			WS_OVERLAPPEDWINDOW,
+			0, 0,
+			Screen_GetResWidth(), Screen_GetResHeight(),
+			NULL,
+			NULL,
+			hInstance,
+			NULL);
 
-if(!g_hWnd)
+	}
+
+	else if (FULL_SCREEN)
+	{
+		g_hWnd = CreateWindow("Sample", "Tomb Raider 1 Ed Kurlyak",
+			WS_POPUP | WS_VISIBLE,
+			0, 0,
+			Screen_GetResWidth(), Screen_GetResHeight(),
+			NULL,
+			NULL,
+			hInstance,
+			NULL);
+
+	}
+
+	if (!g_hWnd)
 		return 0;
 
-#ifndef FULL_SCREEN
+	if (!FULL_SCREEN)
+	{
 
-	RECT WindowRect = {0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
 
-	AdjustWindowRectEx(&WindowRect,
-		GetWindowStyle(g_hWnd),
-		GetMenu(g_hWnd) != NULL,
-		GetWindowExStyle(g_hWnd));
+		RECT WindowRect = { 0,0,Screen_GetResWidth(),Screen_GetResHeight() };
 
-	UINT WidthScreen = GetSystemMetrics(SM_CXSCREEN);
-	UINT HeightScreen = GetSystemMetrics(SM_CYSCREEN);
+		AdjustWindowRectEx(&WindowRect,
+			GetWindowStyle(g_hWnd),
+			GetMenu(g_hWnd) != NULL,
+			GetWindowExStyle(g_hWnd));
 
-	UINT WidthX = WindowRect.right - WindowRect.left;
-	UINT WidthY = WindowRect.bottom - WindowRect.top;
+		UINT WidthScreen = GetSystemMetrics(SM_CXSCREEN);
+		UINT HeightScreen = GetSystemMetrics(SM_CYSCREEN);
 
-	UINT PosX =  (WidthScreen - WidthX)/2;
-	UINT PosY =  (HeightScreen - WidthY)/2;
-	
-	MoveWindow(g_hWnd,
-		PosX,
-        PosY,
-        WidthX,
-        WidthY,
-        FALSE);
-#endif
+		UINT WidthX = WindowRect.right - WindowRect.left;
+		UINT WidthY = WindowRect.bottom - WindowRect.top;
+
+		UINT PosX = (WidthScreen - WidthX) / 2;
+		UINT PosY = (HeightScreen - WidthY) / 2;
+
+		MoveWindow(g_hWnd,
+			PosX,
+			PosY,
+			WidthX,
+			WidthY,
+			FALSE);
+	}
 
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
 
 	ShowCursor(FALSE);
 
-#ifdef FULL_SCREEN
-	if (SetDisplayMode())
-    {
-        //std::cout << "Режим 800x600 установлен успешно." << std::endl;
-    }
-#endif
+	if (FULL_SCREEN)
+	{
+		if (SetDisplayMode())
+		{
+			//std::cout << "Режим 800x600 установлен успешно." << std::endl;
+		}
+	}
+
+
+	//новое для ТР1
+	Init_GameFlow();
+
+	//GS_CONTROL_DEFAULT_KEYS
+	g_Config.input.layout = GS_CONTROL_USER_KEYS;
+
 
 	S_SeedRandom();
 
@@ -395,16 +425,131 @@ if(!g_hWnd)
 	//x, y, width, height, nearz, farz, view_angle, scrwidth, scrheight, backbuffer_memory
 	//20480 = 0x5000
 	unsigned char *pBackBuff = 0;
-	phd_InitWindow(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 10, 20480, 80, SCREEN_WIDTH, SCREEN_HEIGHT, pBackBuff);
+	phd_InitWindow(0, 0, Screen_GetResWidth(), Screen_GetResHeight(), 10, 20480, 80, Screen_GetResWidth(), Screen_GetResHeight(), pBackBuff);
 
+
+	if(g_GameMemory)
+		free(g_GameMemory);
+
+	g_GameMemory = (int8_t*)malloc(g_Malloc_Size);
+	
+	if( !g_GameMemory )
+	{
+		MessageBox(NULL, "ERROR: Could not allocate enough memory", "INFO", MB_OK);
+	}
+
+
+	Init_Game_Malloc();
+
+	//Initialise_Level(20); //title.phd #20
+
+	Text_Init();
+	Text_RemoveAll();
+
+	g_GameFlow.gym_level_num = 0;
+	g_GameFlow.first_level_num = 1;
+	g_GameFlow.last_level_num = 15;
+	
+	if (select_game == VER_TR1)
+	{
+		g_GameFlow.title_level_num = 20;
+	}
+	else
+	{
+		g_GameFlow.title_level_num = 5;
+	}
+
+	g_GameFlow.level_count = 22;
+	g_Config.ui.bar_scale = 1.0f;
+	g_Config.healthbar_location = 0;
+	g_Config.healthbar_color = 3;
+	g_Config.airbar_location = 2;
+	g_Config.airbar_color = 1;
+
+	S_FrontEndCheck();
+
+	//new for tr1
+	//создаем палитру после загрузки уровня
+	//т.е. данных о палитре из файла уровня
+	//Create_BackBuffer();
+
+	int32_t gf_option = GF_EXIT_TO_TITLE;
+	bool intro_played = false;
+
+	bool loop_continue = true;
+	while (loop_continue)
+	{
+		int32_t gf_direction = gf_option & ~((1 << 6) - 1);
+		int32_t gf_param = gf_option & ((1 << 6) - 1);
+
+		switch (gf_direction)
+		{
+		case GF_START_GAME:
+			g_level_num_TR1 = gf_param;
+			gf_option = Start_New_Game(gf_param);
+			//gf_option = Start_New_Game(1);
+			
+			break;
+
+		case GF_START_SAVED_GAME:
+			S_LoadGame(&g_SaveGame, gf_param);
+			g_level_num_TR1 = 21;
+			gf_option = Start_New_Game(g_SaveGame.current_level );
+			break;
+
+		case GF_START_CINE:
+			//gf_option = GameFlow_InterpretSequence(gf_param, GFL_CUTSCENE);
+			break;
+
+		case GF_LEVEL_COMPLETE:
+			//gf_option = LevelCompleteSequence(gf_param);
+			break;
+
+		case GF_EXIT_TO_TITLE:
+			Text_RemoveAll();
+			//Output_DisplayPicture(g_GameFlow.main_menu_background_path);
+			g_level_num_TR1 = g_GameFlow.title_level_num;
+			Initialise_Level(g_GameFlow.title_level_num); //title.phd #20
+			Create_BackBuffer();
+
+			gf_option = Display_Inventory(INV_TITLE_MODE);
+			break;
+
+		case GF_EXIT_GAME:
+			loop_continue = false;
+			break;
+
+		default:
+			return 0;
+
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+	
+
+		//Init_Game_Malloc();
+
+	//Create_BackBuffer();
+		/*
 	if(select_game == VER_TR1)
 	{
 	//TOMB ORIGINAL
 
-	Start_New_Game(level_num);
+		Start_New_Game(level_num);
+
+	//Start_New_Game(option);
 
 	//Start_New_Game(0); //Level 0 - GYM - GYM.PHD 
-	//Start_New_Game(2); //Level 1 - Caves - LEVEL1.PHD 
+	//Start_New_Game(1); //Level 1 - Caves - LEVEL1.PHD 
 	//Start_New_Game(2); //Level 2 - City of Vilcabamba - LEVEL2.PHD
 	//Start_New_Game(3); //Level 3 - Lost Valley - LEVEL3A.PHD
 	//Start_New_Game(4); //Level 4 - Tomb of Qualopec - LEVEL3B.PHD
@@ -436,17 +581,19 @@ if(!g_hWnd)
 	}
 
 
+	*/
 
 	free(g_GameMemory);
 
 	Delete_BackBuffer();
 
-#ifdef FULL_SCREEN
-	if (RestorePreviousDisplayMode())
-    {
-        //std::cout << "Предыдущий режим восстановлен успешно." << std::endl;
-    }
-#endif
+	if (FULL_SCREEN)
+	{
+		if (RestorePreviousDisplayMode())
+		{
+			//std::cout << "Предыдущий режим восстановлен успешно." << std::endl;
+		}
+	}
 
 	DestroyWindow(g_hWnd);
 	UnregisterClass(wcl.lpszClassName, wcl.hInstance);

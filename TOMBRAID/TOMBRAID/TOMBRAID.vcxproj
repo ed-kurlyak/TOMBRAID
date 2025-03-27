@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>16.0.29124.152</_ProjectFileVersion>
+    <_ProjectFileVersion>16.0.35706.149</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
@@ -62,6 +62,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4311;4005;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <IgnoreSpecificDefaultLibraries>libc.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -159,6 +160,8 @@
     <ClCompile Include="SPECIFIC\game.cpp" />
     <ClCompile Include="SPECIFIC\gameflow.cpp" />
     <ClCompile Include="SPECIFIC\init.cpp" />
+    <ClCompile Include="SPECIFIC\input.cpp" />
+    <ClCompile Include="SPECIFIC\inventry.cpp" />
     <ClCompile Include="SPECIFIC\invfunc.cpp" />
     <ClCompile Include="SPECIFIC\invvars.cpp" />
     <ClCompile Include="SPECIFIC\items.cpp" />
@@ -171,13 +174,23 @@
     <ClCompile Include="SPECIFIC\laraswim.cpp" />
     <ClCompile Include="SPECIFIC\lot.cpp" />
     <ClCompile Include="SPECIFIC\matrix.cpp" />
+    <ClCompile Include="SPECIFIC\option.cpp" />
+    <ClCompile Include="SPECIFIC\option_compass.cpp" />
+    <ClCompile Include="SPECIFIC\option_control.cpp" />
+    <ClCompile Include="SPECIFIC\option_graphics.cpp" />
+    <ClCompile Include="SPECIFIC\option_passport.cpp" />
+    <ClCompile Include="SPECIFIC\option_sound.cpp" />
     <ClCompile Include="SPECIFIC\overlay.cpp" />
     <ClCompile Include="SPECIFIC\people.cpp" />
     <ClCompile Include="SPECIFIC\phd_math.cpp" />
+    <ClCompile Include="SPECIFIC\requester.cpp" />
+    <ClCompile Include="SPECIFIC\savegame.cpp" />
     <ClCompile Include="SPECIFIC\SCALESPR.CPP" />
+    <ClCompile Include="SPECIFIC\screen.cpp" />
     <ClCompile Include="SPECIFIC\setup.cpp" />
     <ClCompile Include="SPECIFIC\sound.cpp" />
     <ClCompile Include="SPECIFIC\sphere.cpp" />
+    <ClCompile Include="SPECIFIC\text.cpp" />
     <ClCompile Include="SPECIFIC\timer.cpp" />
     <ClCompile Include="SPECIFIC\vars.cpp" />
     <ClCompile Include="SPECIFIC\winmain.cpp" />
@@ -271,15 +284,20 @@
     <ClInclude Include="SPECIFIC\game.h" />
     <ClInclude Include="SPECIFIC\gameflow.h" />
     <ClInclude Include="SPECIFIC\init.h" />
+    <ClInclude Include="SPECIFIC\input.h" />
     <ClInclude Include="SPECIFIC\inv.h" />
     <ClInclude Include="SPECIFIC\items.h" />
     <ClInclude Include="SPECIFIC\lara.h" />
     <ClInclude Include="SPECIFIC\lot.h" />
     <ClInclude Include="SPECIFIC\matrix.h" />
+    <ClInclude Include="SPECIFIC\option.h" />
     <ClInclude Include="SPECIFIC\overlay.h" />
     <ClInclude Include="SPECIFIC\people.h" />
     <ClInclude Include="SPECIFIC\phd_math.h" />
+    <ClInclude Include="SPECIFIC\requester.h" />
+    <ClInclude Include="SPECIFIC\savegame.h" />
     <ClInclude Include="SPECIFIC\SCALESPR.H" />
+    <ClInclude Include="SPECIFIC\screen.h" />
     <ClInclude Include="SPECIFIC\setup.h" />
     <ClInclude Include="SPECIFIC\sound.h" />
     <ClInclude Include="SPECIFIC\sphere.h" />

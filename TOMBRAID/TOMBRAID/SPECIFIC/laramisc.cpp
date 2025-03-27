@@ -34,9 +34,11 @@ void LaraControl(int16_t item_num)
     ROOM_INFO *r = &g_RoomInfo[item->room_number];
     int32_t room_submerged = r->flags & RF_UNDERWATER;
 
+    /*
     if (g_Input.level_skip_cheat) {
         g_LevelComplete = true;
     }
+    */
 
     if (g_Input.health_cheat) {
         item->hit_points +=
@@ -163,7 +165,7 @@ void LaraControl(int16_t item_num)
     }
 
 	//включил god mode
-	item->hit_points = LARA_HITPOINTS;
+	//item->hit_points = LARA_HITPOINTS;
 
 	if (item->hit_points <= 0)
 	{
@@ -505,31 +507,39 @@ void InitialiseLara()
     g_Lara.LOT.fly = STEP_L;
 
     InitialiseLaraInventory(g_CurrentLevel);
+
+    //g_Lara.pistols.ammo = 65535;
+//g_Lara.shotgun.ammo = 65535;
+//g_Lara.magnums.ammo = 65535;
+    g_Lara.uzis.ammo = 65535;
+    Inv_AddItem(O_UZI_ITEM);
+
+    for ( int i = 0; i < 255; i++ )
+    {
+        Inv_AddItem(O_BIGMEDI_ITEM);
+        Inv_AddItem(O_MEDI_ITEM);
+    }
+    //Inv_AddItem(O_UZI_AMMO_ITEM);
+
+    //------------------------
+    g_Lara.request_gun_type = LGT_UNARMED;
+    //g_Lara.request_gun_type = LGT_PISTOLS;
+
+    /* заменить на этот код ниже
+    g_Lara.gun_status = start->gun_status;
+    g_Lara.gun_type = start->gun_type;
+    g_Lara.request_gun_type = start->gun_type;
+    */
+
+
 }
 
 void InitialiseLaraInventory(int32_t level_num)
 {
-	LaraInitialiseMeshes(level_num);
-
-	g_Lara.pistols.ammo = 65535;
-	g_Lara.shotgun.ammo = 65535;
-	g_Lara.magnums.ammo = 65535;
-	g_Lara.uzis.ammo = 65535;
-
-	//------------------------
-	g_Lara.request_gun_type = LGT_UNARMED;
-	//g_Lara.request_gun_type = LGT_PISTOLS;
-
-	/* заменить на этот код ниже
-    g_Lara.gun_status = start->gun_status;
-    g_Lara.gun_type = start->gun_type;
-    g_Lara.request_gun_type = start->gun_type;
-	*/
-
 	//------------------------
 
 
-	/*
+	
     Inv_RemoveAllItems();
 
     START_INFO *start = &g_SaveGame.start[level_num];
@@ -594,7 +604,9 @@ void InitialiseLaraInventory(int32_t level_num)
     LaraInitialiseMeshes(level_num);
     InitialiseNewWeapon();
 
-	*/
+
+    
+	
 }
 
 void LaraInitialiseMeshes(int32_t level_num)

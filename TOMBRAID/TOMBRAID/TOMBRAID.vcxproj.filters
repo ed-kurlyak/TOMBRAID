@@ -153,6 +153,12 @@
     <ClCompile Include="SPECIFIC\init.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SPECIFIC\input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPECIFIC\inventry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="SPECIFIC\invfunc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -228,6 +234,24 @@
     <ClCompile Include="objects\natla.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SPECIFIC\option.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPECIFIC\option_compass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPECIFIC\option_control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPECIFIC\option_graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPECIFIC\option_passport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPECIFIC\option_sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="SPECIFIC\overlay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -264,6 +288,9 @@
     <ClCompile Include="objects\rat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SPECIFIC\requester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="effects\ricochet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -276,10 +303,16 @@
     <ClCompile Include="effects\sand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SPECIFIC\savegame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="SPECIFIC\SCALESPR.CPP">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="objects\scion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPECIFIC\screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SPECIFIC\setup.cpp">
@@ -310,6 +343,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="traps\teeth_trap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPECIFIC\text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="traps\thors_hammer.cpp">
@@ -485,6 +521,9 @@
     <ClInclude Include="SPECIFIC\init.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SPECIFIC\input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="SPECIFIC\inv.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -539,6 +578,9 @@
     <ClInclude Include="objects\natla.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SPECIFIC\option.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="SPECIFIC\overlay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -575,6 +617,9 @@
     <ClInclude Include="objects\rat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SPECIFIC\requester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="effects\ricochet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -587,10 +632,16 @@
     <ClInclude Include="effects\sand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SPECIFIC\savegame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="SPECIFIC\SCALESPR.H">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="objects\scion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SPECIFIC\screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SPECIFIC\setup.h">

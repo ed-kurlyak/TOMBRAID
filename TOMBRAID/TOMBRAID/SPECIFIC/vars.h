@@ -20,11 +20,14 @@
 #include "const.h"
 #include "types.h"
 
+extern int g_level_num_TR1;
+
+extern GAMEFLOW g_GameFlow;
 
 //раскоментировать закоментировать учет аспекта в
 //matrix.cpp phd_GenerateW2V()
-extern int SCREEN_WIDTH;
-extern int SCREEN_HEIGHT;
+//extern int SCREEN_WIDTH;
+//extern int SCREEN_HEIGHT;
 
 extern int color_tor_lighting;
 extern int color_tor_lighting2;
@@ -37,6 +40,9 @@ extern int CurrentRoom;
 extern int g_CameraUnderwater;
 
 extern INPUT_STATE g_Input;
+extern INPUT_STATE g_InputDB;
+extern INPUT_STATE g_OldInputDB;
+
 
 extern int16_t m_InterpolatedBounds[6];
 
@@ -50,8 +56,8 @@ extern float g_SurfaceMinY;
 extern float g_SurfaceMaxX;
 extern float g_SurfaceMaxY;
 
-extern int32_t g_CenterX;
-extern int32_t g_CenterY;
+//extern int32_t ViewPort_GetCenterX();
+//extern int32_t ViewPort_GetCenterY();
 
 extern int32_t surfacenum;
 
@@ -67,7 +73,7 @@ extern int16_t		info3d_buffer[MAX_POLYGONS*30];		// buffer for print info
 extern PHD_VBUF m_VBuf[1500];
 
 extern "C" char * phd_winptr;
-extern "C" int phd_winwidth;
+//extern "C" int phd_winwidth;
 
 extern "C" char depthq_table[32][256];
 extern "C" char	gouraud_table[256][32];
@@ -209,3 +215,11 @@ extern int32_t g_InvExtraData[8];
 extern int16_t g_InvChosen;
 
 extern RESOLUTION g_AvailableResolutions[RESOLUTIONS_SIZE];
+
+
+typedef struct {
+    GAME_STRING_ID key;
+    char *string;
+} STRING_DEF;
+
+extern CONFIG g_Config;

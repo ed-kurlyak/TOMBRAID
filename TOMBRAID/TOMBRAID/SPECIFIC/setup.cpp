@@ -8,6 +8,8 @@
 #include "items.h"
 #include "winmain.h"
 #include "overlay.h"
+#include "text.h"
+#include "savegame.h"
 
 int Initialise_Level_Flags()
 {
@@ -70,13 +72,16 @@ void Init_Colours()
 
 int Initialise_Level(int LevelNum)
 {
-	if(LevelNum == 0x15) //21d
+	//if(LevelNum == 0x15) //21d
+    
+    if (g_level_num_TR1 == 21)
 	{
 		LevelNum = g_SaveGame.current_level;
 	}
 
 	g_CurrentLevel = LevelNum;
 
+	Text_RemoveAll();
 	Initialise_Game_Flags();
 
 	g_Lara.item_number = NO_ITEM;
@@ -100,18 +105,15 @@ int Initialise_Level(int LevelNum)
 	Overlay_Init();
 
 	Init_Colours();
-/*
-    Overlay_Init();
 
     g_HealthBarTimer = 100;
-    Sound_ResetEffects();
+    //Sound_ResetEffects();
 
-    if (level_type == GFL_SAVED) {
+    
+    if (g_level_num_TR1 == 21)
+    {
         ExtractSaveGameInfo();
     }
-
-	*/
-
 	
 	phd_AlterFOV(80 * PHD_DEGREE);
 

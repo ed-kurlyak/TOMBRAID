@@ -3,6 +3,7 @@
 #include "lara.h"
 #include "vars.h"
 #include "collide.h"
+#include "screen.h"
 
 #include "..\\objects\\wolf.h"
 #include "..\\objects\\bear.h"
@@ -305,8 +306,8 @@ bool Load_Rooms(FILE *fp)
 
         //инициализация переменных
         g_RoomInfo[i].bound_active = 0;
-        g_RoomInfo[i].left = SCREEN_WIDTH - 1;
-        g_RoomInfo[i].top = SCREEN_HEIGHT - 1;
+        g_RoomInfo[i].left = Screen_GetResWidth() - 1;
+        g_RoomInfo[i].top = Screen_GetResHeight() - 1;
         g_RoomInfo[i].bottom = 0;
         g_RoomInfo[i].right = 0;
         g_RoomInfo[i].item_number = -1;
@@ -568,12 +569,12 @@ void BaddyObjects()
     SetupAlligator(&g_Objects[O_ALLIGATOR]);
     SetupApe(&g_Objects[O_APE]);
 
+	
     SetupWarrior(&g_Objects[O_WARRIOR1]);
     SetupWarrior2(&g_Objects[O_WARRIOR2]);
     SetupWarrior3(&g_Objects[O_WARRIOR3]);
     SetupCentaur(&g_Objects[O_CENTAUR]);
     SetupMummy(&g_Objects[O_MUMMY]);
-	
     SetupSkateKid(&g_Objects[O_MERCENARY1]);
     SetupCowboy(&g_Objects[O_MERCENARY2]);
     SetupBaldy(&g_Objects[O_MERCENARY3]);

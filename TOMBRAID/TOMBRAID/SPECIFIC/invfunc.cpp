@@ -3,17 +3,18 @@
 #include "3d_gen.h"
 //#include "game/gameflow.h"
 #include "items.h"
-//#include "overlay.h"
-//#include "text.h"
+#include "overlay.h"
+#include "text.h"
 #include "const.h"
 #include "types.h"
 #include "vars.h"
 #include <windows.h>
+#include <stdio.h>
 
 //#include <stdint.h>
 //#include <stdio.h>
 
-/*
+
 TEXTSTRING *g_InvItemText[2] = { NULL, NULL };
 TEXTSTRING *g_InvRingText = NULL;
 
@@ -31,23 +32,22 @@ void RingIsOpen(RING_INFO *ring)
     if (!g_InvRingText) {
         switch (ring->type) {
         case RT_MAIN:
-            g_InvRingText =
-                Text_Create(0, 26, g_GameFlow.strings[GS_HEADING_INVENTORY]);
+            g_InvRingText = Text_Create(0, 26, g_GameFlow.strings[GS_HEADING_INVENTORY]);
             break;
 
         case RT_OPTION:
-            if (g_InvMode == INV_DEATH_MODE) {
-                g_InvRingText = Text_Create(
-                    0, 26, g_GameFlow.strings[GS_HEADING_GAME_OVER]);
-            } else {
-                g_InvRingText =
-                    Text_Create(0, 26, g_GameFlow.strings[GS_HEADING_OPTION]);
+            if (g_InvMode == INV_DEATH_MODE)
+			{
+                g_InvRingText = Text_Create(0, 26, g_GameFlow.strings[GS_HEADING_GAME_OVER]);
+            }
+			else
+			{
+                g_InvRingText = Text_Create(0, 26, g_GameFlow.strings[GS_HEADING_OPTION]);
             }
             break;
 
         case RT_KEYS:
-            g_InvRingText =
-                Text_Create(0, 26, g_GameFlow.strings[GS_HEADING_ITEMS]);
+            g_InvRingText = Text_Create(0, 26, g_GameFlow.strings[GS_HEADING_ITEMS]);
             break;
         }
 
@@ -236,7 +236,7 @@ void RingNotActive(INVENTORY_ITEM *inv_item)
 
     case O_MEDI_OPTION:
         g_HealthBarTimer = 40;
-        Overlay_DrawHealthBar();
+        //Overlay_DrawHealthBar();
         if (!g_InvItemText[IT_QTY] && qty > 1) {
             sprintf(temp_text, "%d", qty);
             Overlay_MakeAmmoString(temp_text);
@@ -248,7 +248,7 @@ void RingNotActive(INVENTORY_ITEM *inv_item)
 
     case O_BIGMEDI_OPTION:
         g_HealthBarTimer = 40;
-        Overlay_DrawHealthBar();
+        //Overlay_DrawHealthBar();
         if (!g_InvItemText[IT_QTY] && qty > 1) {
             sprintf(temp_text, "%d", qty);
             Overlay_MakeAmmoString(temp_text);
@@ -292,8 +292,6 @@ void RingActive()
         g_InvItemText[IT_QTY] = NULL;
     }
 }
-*/
-
 
 
 int32_t Inv_AddItem(int32_t item_num)
@@ -335,7 +333,7 @@ int32_t Inv_AddItem(int32_t item_num)
     }
 
 
-/*
+
     switch (item_num) {
     case O_GUN_ITEM:
     case O_GUN_OPTION:
@@ -474,7 +472,7 @@ int32_t Inv_AddItem(int32_t item_num)
         return 1;
     }
 
-    */
+    
 
     return 0;
 }
@@ -555,18 +553,18 @@ int32_t Inv_RequestItem(int item_num)
         }
     }
 
-	/*
+	
     for (int i = 0; i < g_InvKeysObjects; i++) {
         if (g_InvKeysList[i]->object_number == item_num_option) {
             return g_InvKeysQtys[i];
         }
     }
-	*/
+	
 
     return 0;
 }
 
-/*
+
 
 void Inv_RemoveAllItems()
 {
@@ -576,7 +574,7 @@ void Inv_RemoveAllItems()
     g_InvKeysObjects = 0;
     g_InvKeysCurrent = 0;
 }
-*/
+
 int32_t Inv_RemoveItem(int32_t item_num)
 {
     int32_t item_num_option = Inv_GetItemOption(item_num);
@@ -610,7 +608,7 @@ int32_t Inv_RemoveItem(int32_t item_num)
         }
     }
 
-	/*
+	
     for (int i = 0; i < g_InvOptionObjects; i++) {
         if (g_InvOptionList[i]->object_number == item_num_option) {
             g_InvOptionObjects--;
@@ -620,7 +618,7 @@ int32_t Inv_RemoveItem(int32_t item_num)
             return 1;
         }
     }
-	*/
+	
 
     return 0;
 }
@@ -733,7 +731,7 @@ int32_t Inv_GetItemOption(int32_t item_num)
 }
 
 
-/*
+
 
 void RemoveInventoryText()
 {
@@ -1016,4 +1014,3 @@ void Inv_RingMotionItemDeselect(RING_INFO *ring, INVENTORY_ITEM *inv_item)
     imo->item_ztrans_rate = -inv_item->ztrans_sel / imo->count;
 }
 
-*/

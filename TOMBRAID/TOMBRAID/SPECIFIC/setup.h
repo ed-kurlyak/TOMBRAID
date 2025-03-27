@@ -4,6 +4,7 @@
 #include "lot.h"
 
 int Initialise_Level_Flags();
+//int Initialise_Level(int LevelNum);
 int Initialise_Level(int LevelNum);
 void Initialise_Game_Flags();
 int Compose_Colour(int inputR, int inputG, int inputB);

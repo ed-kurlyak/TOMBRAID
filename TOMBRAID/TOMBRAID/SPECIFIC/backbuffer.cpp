@@ -2,6 +2,7 @@
 #include "const.h"
 #include "vars.h"
 //#include "header.h"
+#include "screen.h"
 
 
 MGLDC* windc = NULL;
@@ -78,7 +79,7 @@ void Create_BackBuffer()
 
 	MGL_getPixelFormat(windc, &pf);
 
-	if ((dibdc = MGL_createMemoryDC(SCREEN_WIDTH, SCREEN_HEIGHT, 8, &pf)) == NULL)
+	if ((dibdc = MGL_createMemoryDC(Screen_GetResWidth(), Screen_GetResHeight(), 8, &pf)) == NULL)
 		MGL_fatalError("Unable to create Memory DC!");
 
 	Create_Normal_Palette();
@@ -95,11 +96,11 @@ void Clear_BackBuffer()
 	phd_winptr_my = (char*)dibdc->surface;
 
 	//очищаем m_BackBuffer (экран)
-	for (int x = 0; x < SCREEN_WIDTH; x++)
+	for (int x = 0; x < Screen_GetResWidth(); x++)
 	{
-		for (int y = 0; y < SCREEN_HEIGHT; y++)
+		for (int y = 0; y < Screen_GetResHeight(); y++)
 		{
-			int Index = y * SCREEN_WIDTH + x;
+			int Index = y * Screen_GetResWidth() + x;
 
 			phd_winptr_my[Index + 0] = 0;
 		}
@@ -115,7 +116,7 @@ void Present_BackBuffer()
 	HDC hdcScreen = GetDC(g_hWnd);
 	MGL_setWinDC(windc, hdcScreen);
 
-	MGL_bitBltCoord(windc, dibdc, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, MGL_REPLACE_MODE);
+	MGL_bitBltCoord(windc, dibdc, 0, 0, Screen_GetResWidth(), Screen_GetResHeight(), 0, 0, MGL_REPLACE_MODE);
 
 	ReleaseDC(g_hWnd, hdcScreen);
 

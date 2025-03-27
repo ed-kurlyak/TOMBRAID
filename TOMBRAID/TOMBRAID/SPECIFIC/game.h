@@ -8,6 +8,7 @@ void Initialise_Camera();
 int Control_Phase(int32_t nframes, int32_t demo_mode);
 int Get_Key_State(int key);
 void Input_Update();
+INPUT_STATE Input_GetDebounced(INPUT_STATE input);
 //void LaraControl(int16_t item_num);
 int Draw_Phase_Game();
 void S_InitialisePolyList();
@@ -43,3 +44,8 @@ int32_t CalcFogShade(int32_t depth);
 //int32_t CalculateTarget(PHD_VECTOR *target, ITEM_INFO *item, LOT_INFO *LOT);
 //int32_t UpdateLOT(LOT_INFO *LOT, int32_t expansion);
 //int32_t SearchLOT(LOT_INFO *LOT, int32_t expansion);
+
+int32_t S_SaveGame(SAVEGAME_INFO *save, int32_t slot);
+int32_t S_LoadGame(SAVEGAME_INFO *save, int32_t slot);
+void GetSavedGamesList(REQUEST_INFO *req);
+int32_t S_FrontEndCheck();

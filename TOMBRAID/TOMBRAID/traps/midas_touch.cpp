@@ -78,10 +78,10 @@ void MidasCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
     }
 
     if (g_InvChosen == -1) {
-        //Display_Inventory(INV_KEYS_MODE);
+        Display_Inventory(INV_KEYS_MODE);
     }
 
-    //if (g_InvChosen == O_LEADBAR_OPTION)
+    if (g_InvChosen == O_LEADBAR_OPTION)
 	{
         Inv_RemoveItem(O_LEADBAR_OPTION);
         Inv_AddItem(O_PUZZLE_ITEM1);

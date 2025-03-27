@@ -43,8 +43,8 @@ void KeyHoleCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
         return;
     }
 
-    //if ((g_InvChosen == -1 && !g_Input.action)
-	if ((!g_Input.action)|| g_Lara.gun_status != LGS_ARMLESS || lara_item->gravity_status) {
+    if ((g_InvChosen == -1 && !g_Input.action)
+        || g_Lara.gun_status != LGS_ARMLESS || lara_item->gravity_status) {
         return;
     }
 
@@ -58,37 +58,37 @@ void KeyHoleCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
             g_PickUpX = lara_item->pos.x;
             g_PickUpY = lara_item->pos.y;
             g_PickUpZ = lara_item->pos.z;
-//            Sound_Effect(SFX_LARA_NO, &lara_item->pos, SPM_NORMAL);
+            Sound_Effect(SFX_LARA_NO, &lara_item->pos, SPM_NORMAL);
         }
         return;
     }
 
     if (g_InvChosen == -1)
 	{
-        //Display_Inventory(INV_KEYS_MODE);
+        Display_Inventory(INV_KEYS_MODE);
     } else
 	{
         g_PickUpY = lara_item->pos.y - 1;
     }
 
-	/*
+	
     if (g_InvChosen == -1 && g_InvKeysObjects)
 	{
         return;
     }
-	*/
+	
 
-	/*
+	
     if (g_InvChosen != -1)
 	{
         g_PickUpY = lara_item->pos.y - 1;
     }
-	*/
+	
 
     int32_t correct = 0;
     switch (item->object_number) {
     case O_KEY_HOLE1:
-        //if (g_InvChosen == O_KEY_OPTION1)
+        if (g_InvChosen == O_KEY_OPTION1)
 		{
             Inv_RemoveItem(O_KEY_OPTION1);
             correct = 1;
@@ -96,7 +96,7 @@ void KeyHoleCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
         break;
 
     case O_KEY_HOLE2:
-        //if (g_InvChosen == O_KEY_OPTION2)
+        if (g_InvChosen == O_KEY_OPTION2)
 		{
             Inv_RemoveItem(O_KEY_OPTION2);
             correct = 1;
@@ -104,7 +104,7 @@ void KeyHoleCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
         break;
 
     case O_KEY_HOLE3:
-        //if (g_InvChosen == O_KEY_OPTION3)
+        if (g_InvChosen == O_KEY_OPTION3)
 		{
             Inv_RemoveItem(O_KEY_OPTION3);
             correct = 1;
@@ -112,7 +112,7 @@ void KeyHoleCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
         break;
 
     case O_KEY_HOLE4:
-        //if (g_InvChosen == O_KEY_OPTION4)
+        if (g_InvChosen == O_KEY_OPTION4)
 		{
             Inv_RemoveItem(O_KEY_OPTION4);
             correct = 1;

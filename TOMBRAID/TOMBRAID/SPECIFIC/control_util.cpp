@@ -1,5 +1,7 @@
 #include "control_util.h"
 
+#include "..//traps//movable_block.h"
+
 #include <windows.h>
 #include "vars.h"
 
@@ -687,3 +689,78 @@ int GetSecretCount()
 
     return count;
 }
+
+/*
+void FlipMap()
+{
+    //Sound_StopAmbientSounds();
+
+    for (int i = 0; i < g_RoomCount; i++) {
+        ROOM_INFO *r = &g_RoomInfo[i];
+        if (r->flipped_room < 0) {
+            continue;
+        }
+
+        RemoveRoomFlipItems(r);
+
+        ROOM_INFO *flipped = &g_RoomInfo[r->flipped_room];
+        ROOM_INFO temp = *r;
+        *r = *flipped;
+        *flipped = temp;
+
+        r->flipped_room = flipped->flipped_room;
+        flipped->flipped_room = -1;
+
+        // XXX: is this really necessary given the assignments above?
+        r->item_number = flipped->item_number;
+        r->fx_number = flipped->fx_number;
+
+        AddRoomFlipItems(r);
+    }
+
+    g_FlipStatus = !g_FlipStatus;
+}
+
+void RemoveRoomFlipItems(ROOM_INFO *r)
+{
+    for (int16_t item_num = r->item_number; item_num != NO_ITEM;
+         item_num = g_Items[item_num].next_item) {
+        ITEM_INFO *item = &g_Items[item_num];
+
+        switch (item->object_number) {
+        case O_MOVABLE_BLOCK:
+        case O_MOVABLE_BLOCK2:
+        case O_MOVABLE_BLOCK3:
+        case O_MOVABLE_BLOCK4:
+            AlterFloorHeight(item, WALL_L);
+            break;
+
+        case O_ROLLING_BLOCK:
+            AlterFloorHeight(item, WALL_L * 2);
+            break;
+        }
+    }
+}
+
+void AddRoomFlipItems(ROOM_INFO *r)
+{
+    for (int16_t item_num = r->item_number; item_num != NO_ITEM;
+         item_num = g_Items[item_num].next_item) {
+        ITEM_INFO *item = &g_Items[item_num];
+
+        switch (item->object_number) {
+        case O_MOVABLE_BLOCK:
+        case O_MOVABLE_BLOCK2:
+        case O_MOVABLE_BLOCK3:
+        case O_MOVABLE_BLOCK4:
+            AlterFloorHeight(item, -WALL_L);
+            break;
+
+        case O_ROLLING_BLOCK:
+            AlterFloorHeight(item, -WALL_L * 2);
+            break;
+        }
+    }
+}
+
+*/

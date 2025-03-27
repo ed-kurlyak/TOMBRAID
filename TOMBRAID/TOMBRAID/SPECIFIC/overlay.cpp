@@ -3,15 +3,15 @@
 //#include "config.h"
 //#include "game/clock.h"
 //#include "game/output.h"
-//#include "game/screen.h"
-//#include "game/text.h"
+#include "screen.h"
+#include "text.h"
 #//include "game/viewport.h"
 #include "const.h"
 #include "types.h"
 #include "vars.h"
 #include "draw.h"
 
-//#include <stdio.h>
+#include <stdio.h>
 
 #define COLOR_STEPS 5
 #define MAX_PICKUP_COLUMNS 4
@@ -81,9 +81,14 @@ static RGB888 m_ColorBarMap[][COLOR_STEPS] = {
 /*
 static void Overlay_GetBarLocation(
     int8_t bar_location, int32_t width, int32_t height, int32_t *x, int32_t *y);
-static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type);
-static void Overlay_OnAmmoTextRemoval(const TEXTSTRING *textstring);
+
+    */
+    static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type);
+
+    /*
+    static void Overlay_OnAmmoTextRemoval(const TEXTSTRING *textstring);
 static void Overlay_OnFPSTextRemoval(const TEXTSTRING *textstring);
+*/
 
 static void Overlay_GetBarLocation(
     int8_t bar_location, int32_t width, int32_t height, int32_t *x, int32_t *y)
@@ -92,6 +97,9 @@ static void Overlay_GetBarLocation(
     const int32_t screen_margin_v = 18;
     const int32_t bar_spacing = 8;
 
+    *x = screen_margin_h;
+
+    
     if (bar_location == T1M_BL_TOP_LEFT || bar_location == T1M_BL_BOTTOM_LEFT) {
         *x = screen_margin_h;
     } else if (
@@ -102,7 +110,12 @@ static void Overlay_GetBarLocation(
     } else {
         *x = (Screen_GetResWidthDownscaled() - width) / 2;
     }
+    
 
+
+    *y = screen_margin_v + m_BarOffsetY[bar_location];
+
+    
     if (bar_location == T1M_BL_TOP_LEFT || bar_location == T1M_BL_TOP_CENTER
         || bar_location == T1M_BL_TOP_RIGHT) {
         *y = screen_margin_v + m_BarOffsetY[bar_location];
@@ -136,36 +149,47 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
 
     int32_t x = 0;
     int32_t y = 0;
-    if (bar_type == BT_LARA_HEALTH) {
-        Overlay_GetBarLocation(
-            g_Config.healthbar_location, width, height, &x, &y);
+    if (bar_type == BT_LARA_HEALTH)
+    {
+        //g_Config.healthbar_location = 0
+        Overlay_GetBarLocation(g_Config.healthbar_location, width, height, &x, &y);
         bar_color = g_Config.healthbar_color;
-    } else if (bar_type == BT_LARA_AIR) {
+        //bar_color = 3;
+    }
+    else if (bar_type == BT_LARA_AIR)
+    {
+        //g_Config.airbar_location = 2
         Overlay_GetBarLocation(g_Config.airbar_location, width, height, &x, &y);
         bar_color = g_Config.airbar_color;
-    } else if (bar_type == BT_ENEMY_HEALTH) {
-        Overlay_GetBarLocation(
-            g_Config.enemy_healthbar_location, width, height, &x, &y);
-        bar_color = g_Config.enemy_healthbar_color;
+        //bar_color = 1;
+    }
+    else if (bar_type == BT_ENEMY_HEALTH)
+    {
+        //Overlay_GetBarLocation(g_Config.enemy_healthbar_location, width, height, &x, &y);
+        Overlay_GetBarLocation(0, width, height, &x, &y);
+        //bar_color = g_Config.enemy_healthbar_color;
+        //bar_color = 2;
     }
 
     int32_t padding = Screen_GetResWidth() <= 800 ? 1 : 2;
     int32_t border = 1;
     int32_t sx = Screen_GetRenderScale(x) - padding;
     int32_t sy = Screen_GetRenderScale(y) - padding;
-    int32_t sw =
-        Screen_GetRenderScale(width) * g_Config.ui.bar_scale + padding * 2;
-    int32_t sh =
-        Screen_GetRenderScale(height) * g_Config.ui.bar_scale + padding * 2;
+    int32_t sw = Screen_GetRenderScale(width) * g_Config.ui.bar_scale + padding * 2;
+    int32_t sh = Screen_GetRenderScale(height) * g_Config.ui.bar_scale + padding * 2;
 
+    //int32_t sw = 191;
+    //int32_t sh = 13;
+
+    
     // border
-    Output_DrawScreenFlatQuad(
-        sx - border, sy - border, sw + border, sh + border, rgb_border_dark);
-    Output_DrawScreenFlatQuad(
-        sx, sy, sw + border, sh + border, rgb_border_light);
+    Output_DrawScreenFlatQuad(sx - border, sy - border, sw + border, sh + border, rgb_border_dark, 200);
+    Output_DrawScreenFlatQuad(sx, sy, sw + border, sh + border, rgb_border_light, 200);
+    
 
     // background
-    Output_DrawScreenFlatQuad(sx, sy, sw, sh, rgb_bgnd);
+    Output_DrawScreenFlatQuad(sx, sy, sw, sh, rgb_bgnd, 190);
+    
 
     const int32_t blink_interval = 20;
     const int32_t blink_threshold = bar_type == BT_ENEMY_HEALTH ? 0 : 20;
@@ -180,7 +204,7 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
         sy = Screen_GetRenderScale(y);
         sw = Screen_GetRenderScale(width) * g_Config.ui.bar_scale;
         sh = Screen_GetRenderScale(height) * g_Config.ui.bar_scale;
-
+        /*
         if (g_Config.enable_smooth_bars) {
             for (int i = 0; i < COLOR_STEPS - 1; i++) {
                 RGB888 c1 = m_ColorBarMap[bar_color][i];
@@ -189,22 +213,34 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
                 int32_t lsh = sy + (i + 1) * sh / (COLOR_STEPS - 1) - lsy;
                 Output_DrawScreenGradientQuad(sx, lsy, sw, lsh, c1, c1, c2, c2);
             }
-        } else {
-            for (int i = 0; i < COLOR_STEPS; i++) {
+        } else 
+        
+        {
+            for (int i = 0; i < COLOR_STEPS; i++)
+            {
                 RGB888 color = m_ColorBarMap[bar_color][i];
                 int32_t lsy = sy + i * sh / COLOR_STEPS;
                 int32_t lsh = sy + (i + 1) * sh / COLOR_STEPS - lsy;
                 Output_DrawScreenFlatQuad(sx, lsy, sw, lsh, color);
             }
         }
+        */
+
+        //red
+        //RGB888 color = { 160, 40, 28 };
+        RGB888 color = m_ColorBarMap[bar_color][0];
+        Output_DrawScreenFlatQuad(sx, sy, sw, sh, color, 180);
     }
 }
+
+
 
 static void Overlay_OnAmmoTextRemoval(const TEXTSTRING *textstring)
 {
     m_AmmoText = NULL;
 }
 
+/*
 static void Overlay_OnFPSTextRemoval(const TEXTSTRING *textstring)
 {
     m_FPSText = NULL;
@@ -217,7 +253,7 @@ void Overlay_Init()
     }
 }
 
-/*
+
 void Overlay_DrawHealthBar()
 {
     static int32_t old_hit_points = 0;
@@ -242,8 +278,8 @@ void Overlay_DrawHealthBar()
         g_HealthBarTimer = 0;
     }
 
-    int32_t show = g_HealthBarTimer > 0 || hit_points <= 0
-        || g_Lara.gun_status == LGS_READY;
+    int32_t show = g_HealthBarTimer > 0 || hit_points <= 0 || g_Lara.gun_status == LGS_READY;
+    /*
     switch (g_Config.healthbar_showing_mode) {
     case T1M_BSM_ALWAYS:
         show = 1;
@@ -258,17 +294,29 @@ void Overlay_DrawHealthBar()
         show = hit_points <= (LARA_HITPOINTS * 20) / 100;
         break;
     }
-    if (!show) {
+    */
+
+    show |= hit_points <= (LARA_HITPOINTS * 20) / 100;
+
+    if (!show)
+    {
         return;
     }
 
     Overlay_DrawBar(hit_points, LARA_HITPOINTS, BT_LARA_HEALTH);
 }
 
+
 void Overlay_DrawAirBar()
 {
-    int32_t show = g_Lara.water_status == LWS_UNDERWATER
-        || g_Lara.water_status == LWS_SURFACE;
+    int32_t show = g_Lara.water_status == LWS_UNDERWATER || g_Lara.water_status == LWS_SURFACE;
+
+    if (!show)
+    {
+        return;
+    }
+
+/*
     switch (g_Config.airbar_showing_mode) {
     case T1M_BSM_ALWAYS:
         show = 1;
@@ -283,10 +331,15 @@ void Overlay_DrawAirBar()
         show = g_Lara.air <= (LARA_AIR * 20) / 100;
         break;
     }
-    if (!show) {
+    */
+    show |= g_Lara.air <= (LARA_AIR * 20) / 100;
+
+/*
+    if (!show)
+    {
         return;
     }
-
+    */
     int air = g_Lara.air;
     if (air < 0) {
         air = 0;
@@ -296,7 +349,7 @@ void Overlay_DrawAirBar()
 
     Overlay_DrawBar(air, LARA_AIR, BT_LARA_AIR);
 }
-
+/*
 void Overlay_DrawEnemyBar()
 {
     if (!g_Config.enable_enemy_healthbar || !g_Lara.target) {
@@ -310,6 +363,7 @@ void Overlay_DrawEnemyBar()
         BT_ENEMY_HEALTH);
 }
 
+*/
 void Overlay_DrawAmmoInfo()
 {
     const double scale = 0.8;
@@ -362,7 +416,7 @@ void Overlay_DrawAmmoInfo()
         ? text_height + screen_margin_v + m_BarOffsetY[T1M_BL_TOP_RIGHT]
         : text_height + screen_margin_v;
 }
-*/
+
 void Overlay_DrawPickups()
 {
     static int32_t old_game_timer = 0;
@@ -372,10 +426,10 @@ void Overlay_DrawPickups()
     if (time > 0 && time < 60)
 	{
         int32_t sprite_height =
-            MIN(SCREEN_WIDTH, SCREEN_HEIGHT * 320 / 200) / 10;
+            MIN(Screen_GetResWidth(), Screen_GetResHeight() * 320 / 200) / 10;
         int32_t sprite_width = sprite_height * 4 / 3;
-        int32_t y = SCREEN_HEIGHT - sprite_height;
-        int32_t x = SCREEN_WIDTH - sprite_height;
+        int32_t y = Screen_GetResHeight() - sprite_height;
+        int32_t x = Screen_GetResWidth() - sprite_height;
         for (int i = 0; i < MAX_PICKUPS; i++) {
             DISPLAYPU *pu = &m_Pickups[i];
             pu->duration -= time;
@@ -389,7 +443,7 @@ void Overlay_DrawPickups()
                     x, y, Screen_GetRenderScaleGLRage(12288), pu->sprnum, 4096);
 
                 if (i % MAX_PICKUP_COLUMNS == MAX_PICKUP_COLUMNS - 1) {
-                    x = SCREEN_WIDTH - sprite_height;
+                    x = Screen_GetResWidth() - sprite_height;
                     y -= sprite_height;
                 } else {
                     x -= sprite_width;
@@ -402,7 +456,7 @@ void Overlay_DrawPickups()
 int32_t Screen_GetRenderScaleGLRage(int32_t unit)
 {
     // GLRage-style UI scaler
-    double result = SCREEN_WIDTH;
+    double result = Screen_GetResWidth();
     result *= unit;
     result /= 800.0;
 
@@ -446,22 +500,26 @@ void Overlay_DrawFPSInfo()
 
 void Overlay_DrawGameInfo()
 {
-    /*if (g_OverlayFlag > 0)
+    if (g_OverlayFlag > 0)
      {
+     
         Overlay_DrawHealthBar();
         Overlay_DrawAirBar();
-        Overlay_DrawEnemyBar();
-        */
+        
+        //Overlay_DrawEnemyBar();
+        
         Overlay_DrawPickups();
 
-        /*
+       
     }
 
+    
+
     Overlay_DrawAmmoInfo();
-    Overlay_DrawFPSInfo();
+    //Overlay_DrawFPSInfo();
 
     Text_Draw();
-    */
+    
 }
 
 void Overlay_AddPickup(int16_t object_num)
@@ -474,7 +532,7 @@ void Overlay_AddPickup(int16_t object_num)
         }
     }
 }
-/*
+
 void Overlay_MakeAmmoString(char *string)
 {
     char *c;
@@ -489,4 +547,3 @@ void Overlay_MakeAmmoString(char *string)
         }
     }
 }
-*/

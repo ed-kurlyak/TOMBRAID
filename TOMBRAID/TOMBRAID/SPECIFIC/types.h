@@ -15,6 +15,55 @@
 #define uint8_t unsigned char
 #define int8_t char
 
+typedef enum {
+    T1M_BL_TOP_LEFT = 0,
+    T1M_BL_TOP_CENTER = 1,
+    T1M_BL_TOP_RIGHT = 2,
+    T1M_BL_BOTTOM_LEFT = 3,
+    T1M_BL_BOTTOM_CENTER = 4,
+    T1M_BL_BOTTOM_RIGHT = 5,
+} T1M_BAR_LOCATION;
+
+
+/*
+
+#define GS_NUMBER_OF 95
+
+typedef enum GAMEFLOW_LEVEL_TYPE {
+    GFL_TITLE = 0,
+    GFL_NORMAL = 1,
+    GFL_SAVED = 2,
+    GFL_DEMO = 3,
+    GFL_CUTSCENE = 4,
+    GFL_GYM = 5,
+    GFL_CURRENT = 6, // legacy level type for reading TombATI's savegames
+} GAMEFLOW_LEVEL_TYPE;
+
+
+
+typedef struct GAMEFLOW_LEVEL {
+    GAMEFLOW_LEVEL_TYPE level_type;
+    int16_t music;
+    const char *level_title;
+    const char *level_file;
+    const char *key1;
+    const char *key2;
+    const char *key3;
+    const char *key4;
+    const char *pickup1;
+    const char *pickup2;
+    const char *puzzle1;
+    const char *puzzle2;
+    const char *puzzle3;
+    const char *puzzle4;
+    int8_t demo;
+    int16_t secrets;
+} GAMEFLOW_LEVEL;
+
+*/
+
+
+
 #pragma pack(push,foo,1)
 
 typedef enum {
@@ -1148,6 +1197,48 @@ typedef enum GAME_STRING_ID {
     GS_NUMBER_OF,
 } GAME_STRING_ID;
 
+//------------------------------------
+
+typedef struct GAMEFLOW_LEVEL {
+    GAMEFLOW_LEVEL_TYPE level_type;
+    int16_t music;
+    const char *level_title;
+    const char *level_file;
+    const char *key1;
+    const char *key2;
+    const char *key3;
+    const char *key4;
+    const char *pickup1;
+    const char *pickup2;
+    const char *puzzle1;
+    const char *puzzle2;
+    const char *puzzle3;
+    const char *puzzle4;
+    int8_t demo;
+    int16_t secrets;
+} GAMEFLOW_LEVEL;
+
+typedef struct GAMEFLOW {
+    const char *main_menu_background_path;
+    int32_t gym_level_num;
+    int32_t first_level_num;
+    int32_t last_level_num;
+    int32_t title_level_num;
+    int32_t level_count;
+    const char *save_game_fmt;
+    int8_t has_demo;
+    int32_t demo_delay;
+    int8_t enable_game_modes;
+    int8_t enable_save_crystals;
+
+    GAMEFLOW_LEVEL levels[22];
+    const char *strings[GS_NUMBER_OF];
+} GAMEFLOW;
+
+//------------------------------------
+
+
+
 typedef enum BAR_TYPE {
     BT_LARA_HEALTH = 0,
     BT_LARA_AIR = 1,
@@ -1469,6 +1560,7 @@ typedef struct LARA_INFO {
     LOT_INFO LOT;
 } LARA_INFO;
 
+
 typedef struct START_INFO {
     uint16_t pistol_ammo;
     uint16_t magnum_ammo;
@@ -1488,7 +1580,7 @@ typedef struct START_INFO {
 } START_INFO;
 
 typedef struct SAVEGAME_INFO {
-    START_INFO *start;
+    START_INFO start[22];
     uint32_t timer;
     uint32_t kills;
     uint16_t secrets;
@@ -1796,6 +1888,7 @@ typedef struct REQUEST_INFO {
     uint16_t flags;
     const char *heading_text;
     char *item_texts;
+    //char *item_texts[16][48]; //тут надо массив m_LoadSaveGameStrings
     int16_t item_text_len;
     TEXTSTRING *heading;
     TEXTSTRING *background;
@@ -1964,5 +2057,104 @@ typedef enum INPUT_LAYOUT {
     INPUT_LAYOUT_USER,
     INPUT_LAYOUT_NUMBER_OF,
 } INPUT_LAYOUT;
+
+//typedef struct APP_CONFIG {
+struct CONFIG {
+	/*
+    bool disable_healing_between_levels;
+    bool disable_medpacks;
+    bool disable_magnums;
+    bool disable_uzis;
+    bool disable_shotgun;
+    bool enable_enemy_healthbar;
+    bool enable_enhanced_look;
+    bool enable_numeric_keys;
+    bool enable_shotgun_flash;
+    bool enable_cheats;
+    bool enable_tr3_sidesteps;
+    bool enable_braid;
+    bool enable_compass_stats;
+    bool enable_timer_in_inventory;
+    bool enable_smooth_bars;
+    int8_t healthbar_showing_mode;
+    int8_t healthbar_location;
+    int8_t healthbar_color;
+    int8_t airbar_showing_mode;
+    int8_t airbar_location;
+    int8_t airbar_color;
+    int8_t enemy_healthbar_location;
+    int8_t enemy_healthbar_color;
+    bool fix_tihocan_secret_sound;
+    bool fix_pyramid_secret_trigger;
+    bool fix_secrets_killing_music;
+    bool fix_descending_glitch;
+    bool fix_wall_jump_glitch;
+    bool fix_qwop_glitch;
+    int32_t fov_value;
+    bool fov_vertical;
+    bool disable_demo;
+    bool disable_fmv;
+    bool disable_cine;
+    bool disable_music_in_menu;
+    int32_t resolution_width;
+    int32_t resolution_height;
+    bool enable_xbox_one_controller;
+    float brightness;
+    bool enable_round_shadow;
+    bool enable_3d_pickups;
+
+    struct {
+        int32_t layout;
+    } input;
+
+    struct {
+        uint32_t perspective : 1;
+        uint32_t bilinear : 1;
+        uint32_t fps_counter : 1;
+    } render_flags;
+
+    struct {
+        double text_scale;
+        double bar_scale;
+    } ui;
+
+    int32_t sound_volume;
+    int32_t music_volume;
+
+    SCREENSHOT_FORMAT screenshot_format;
+	*/
+
+    int8_t healthbar_showing_mode;
+    int8_t healthbar_location;
+    int8_t healthbar_color;
+    int8_t airbar_showing_mode;
+    int8_t airbar_location;
+    int8_t airbar_color;
+
+	bool enable_compass_stats;
+
+    struct render_flags
+	{
+        uint32_t perspective : 1;
+        uint32_t bilinear : 1;
+        uint32_t fps_counter : 1;
+    } render_flags;
+
+	struct input
+	{
+        int32_t layout;
+    } input;
+
+	float brightness;
+
+    struct ui{
+        double text_scale;
+        double bar_scale;
+    } ui;
+
+    int32_t sound_volume;
+    int32_t music_volume;
+
+};
 
 #pragma pack(pop,foo)

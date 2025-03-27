@@ -1,6 +1,7 @@
 #include <windows.h>
 
 #include "game.h"
+#include "text.h"
 #include "draw.h"
 #include "control_util.h"
 #include "vars.h"
@@ -20,14 +21,121 @@
 #include "backbuffer.h"
 #include "overlay.h"
 
+#include "option.h"
+#include "screen.h"
+
+static int32_t m_MedipackCoolDown = 0;
+
+int LevelStats(int32_t level_num)
+{
+    char string[100];
+    char time_str[100];
+    TEXTSTRING* txt;
+
+    Text_RemoveAll();
+
+    // heading
+    sprintf(string, "%s", g_GameFlow.levels[level_num].level_title);
+    txt = Text_Create(0, -50, string);
+    Text_CentreH(txt, 1);
+    Text_CentreV(txt, 1);
+
+    // time taken
+    int32_t seconds = g_SaveGame.timer / 30;
+    int32_t hours = seconds / 3600;
+    int32_t minutes = (seconds / 60) % 60;
+    seconds %= 60;
+
+    if (hours)
+    {
+        sprintf(time_str, "%d:%d%d:%d%d", hours, minutes / 10, minutes % 10, seconds / 10, seconds % 10);
+    }
+    else
+    {
+        sprintf(time_str, "%d:%d%d", minutes, seconds / 10, seconds % 10);
+    }
+
+    sprintf(string, g_GameFlow.strings[GS_STATS_TIME_TAKEN_FMT], time_str);
+    
+    txt = Text_Create(0, 70, string);
+    Text_CentreH(txt, 1);
+    Text_CentreV(txt, 1);
+
+    // secrets
+    int32_t secrets_taken = 0;
+    int32_t secrets_total = MAX_SECRETS;
+    do {
+        if (g_SaveGame.secrets & 1)
+        {
+            secrets_taken++;
+        }
+
+        g_SaveGame.secrets >>= 1;
+        secrets_total--;
+    } while (secrets_total);
+    
+    sprintf(string, g_GameFlow.strings[GS_STATS_SECRETS_FMT], secrets_taken, g_GameFlow.levels[level_num].secrets);
+    
+    txt = Text_Create(0, 40, string);
+    Text_CentreH(txt, 1);
+    Text_CentreV(txt, 1);
+
+
+    // pickups
+    sprintf(string, g_GameFlow.strings[GS_STATS_PICKUPS_FMT], g_SaveGame.pickups);
+    txt = Text_Create(0, 10, string);
+    Text_CentreH(txt, 1);
+    Text_CentreV(txt, 1);
+
+    // kills
+    sprintf(string, g_GameFlow.strings[GS_STATS_KILLS_FMT], g_SaveGame.kills);
+    txt = Text_Create(0, -20, string);
+    Text_CentreH(txt, 1);
+    Text_CentreV(txt, 1);
+
+
+    //wait till action key release
+    //while (g_Input.select || g_Input.deselect)
+    while (!g_Input.select && !g_Input.deselect)
+    {
+        Input_Update();
+        S_InitialisePolyList();
+        Clear_BackBuffer();
+        //Output_CopyBufferToScreen(); draw picture
+        Input_Update();
+        Text_Draw();
+        
+        S_OutputPolyList();
+        S_DumpScreen();
+    }
+
+    if (level_num == g_GameFlow.last_level_num)
+    {
+        return 1;
+        //exit to inventory
+        //return GF_EXIT_TO_TITLE;
+    }
+
+    return 0;
+    
+
+}
+
 #define VK_1 0x31
 #define VK_2 0x32
 #define VK_3 0x33
 #define VK_4 0x34
+//#define VK_5 0x35
+//#define VK_6 0x36
+//#define VK_7 0x37
+#define VK_8 0x38
+#define VK_9 0x39
+
 
 int Game_Loop(int demo_mode)
 {
 	int32_t nframes=1, game_over = false;
+	g_OverlayFlag = 1;
 
 	Initialise_Camera();
 
@@ -38,12 +146,25 @@ int Game_Loop(int demo_mode)
 	//while (!g_bWindowClosed)
 	
 	while(!game_over)
+    //while(1)
 	{
 		//draw fase
 		nframes = Draw_Phase_Game();
 		//control fase
 		game_over = Control_Phase(nframes, demo_mode);
+        
+        if (game_over == 1)
+            break;
 	}
+
+
+    if (game_over == 1)
+    {
+        if (LevelStats(g_CurrentLevel))
+            return GF_EXIT_TO_TITLE;
+
+        return GF_START_GAME | (g_CurrentLevel + 1 & ((1 << 6) - 1));
+    }
 
 	return game_over;
 
@@ -283,8 +404,66 @@ void CalculateCamera()
 */
 int Control_Phase(int32_t nframes, int32_t demo_mode)
 {
+	int32_t return_val = 0;
+
+    if (g_LevelComplete)
+    {
+        return 1;
+    }
 
 	Input_Update();
+
+    if (g_Lara.death_count > DEATH_WAIT || (g_Lara.death_count > DEATH_WAIT_MIN && g_Input.any && !g_Input.fly_cheat) || g_OverlayFlag == 2)
+    {
+        if (demo_mode)
+        {
+            return GF_EXIT_TO_TITLE;
+        }
+        if (g_OverlayFlag == 2)
+        {
+            g_OverlayFlag = 1;
+            return_val = Display_Inventory(INV_DEATH_MODE);
+            if (return_val != GF_NOP)
+            {
+                return return_val;
+            }
+        }
+        else
+        {
+            g_OverlayFlag = 2;
+        }
+    }
+
+	if ((g_Input.option || g_Input.save || g_Input.load || g_OverlayFlag <= 0) && !g_Lara.death_count)
+	{
+            if (g_OverlayFlag > 0)
+			{
+                if (g_Input.load)
+				{
+                    g_OverlayFlag = -1;
+                } else if (g_Input.save)
+				{
+                    g_OverlayFlag = -2;
+                }
+				else
+				{
+                    g_OverlayFlag = 0;
+                }
+            } else {
+                if (g_OverlayFlag == -1) {
+                    return_val = Display_Inventory(INV_LOAD_MODE);
+                } else if (g_OverlayFlag == -2) {
+                    return_val = Display_Inventory(INV_SAVE_MODE);
+                } else {
+                    return_val = Display_Inventory(INV_GAME_MODE);
+                }
+
+                g_OverlayFlag = 1;
+                if (return_val != GF_NOP) {
+                    return return_val;
+                }
+            }
+        }
 
 	int16_t item_num = g_NextItemActive;
 
@@ -314,6 +493,7 @@ int Control_Phase(int32_t nframes, int32_t demo_mode)
 	CalculateCamera();
 	Sound_UpdateEffects();
 	g_SaveGame.timer++;
+    g_HealthBarTimer--;
 	SpinMessageLoop();
 
 	return g_bWindowClosed;
@@ -347,6 +527,29 @@ void Input_Update()
 	    g_Input.step_left = Get_Key_State(VK_HOME); //num pad 7
 	    g_Input.step_right = Get_Key_State(VK_PRIOR); //num pad 9
 		g_Input.draw = Get_Key_State(VK_SPACE);
+        g_Input.select = Get_Key_State(VK_CONTROL) || Get_Key_State(VK_RETURN);
+        g_Input.deselect = Get_Key_State(VK_ESCAPE);
+
+        if (m_MedipackCoolDown)
+        {
+            m_MedipackCoolDown--;
+        }
+        else
+        {
+            if (Get_Key_State(VK_8) && Inv_RequestItem(O_MEDI_OPTION))
+            {
+                UseItem(O_MEDI_OPTION);
+                m_MedipackCoolDown = FRAMES_PER_SECOND / 2;
+            }
+            else if (Get_Key_State(VK_9) && Inv_RequestItem(O_BIGMEDI_OPTION))
+            {
+                UseItem(O_BIGMEDI_OPTION);
+                m_MedipackCoolDown = FRAMES_PER_SECOND / 2;
+            }
+        }
+
+		//g_Input.option = S_Input_Key(INPUT_KEY_OPTION) && g_Camera.type != CAM_CINEMATIC;
+		g_Input.option = Get_Key_State(VK_ESCAPE) && g_Camera.type != CAM_CINEMATIC;
 
 		if (Get_Key_State(VK_1) && Inv_RequestItem(O_GUN_ITEM))
 		{
@@ -364,7 +567,26 @@ void Input_Update()
 		{
 			g_Lara.request_gun_type = LGT_UZIS;
         }
+
+		if (!g_ModeLock && g_Camera.type != CAM_CINEMATIC)
+		{
+	        g_Input.save = Get_Key_State(VK_F5);
+		    g_Input.load = Get_Key_State(VK_F6);
+		}
+
+		g_InputDB = Input_GetDebounced(g_Input);
+
+		//SpinMessageLoop();
 }
+
+INPUT_STATE Input_GetDebounced(INPUT_STATE input)
+{
+    INPUT_STATE result;
+    result.any = input.any & ~g_OldInputDB.any;
+    g_OldInputDB = input;
+    return result;
+}
+
 
 /*
 void LaraControl(int16_t item_num)
@@ -668,8 +890,8 @@ void DrawRooms(int16_t current_room)
 
 	g_PhdLeft = 0;
 	g_PhdTop = 0;
-	g_PhdRight = SCREEN_WIDTH - 1;
-	g_PhdBottom = SCREEN_HEIGHT - 1;
+	g_PhdRight = Screen_GetResWidth() - 1;
+	g_PhdBottom = Screen_GetResHeight() - 1;
 	
 	r->left = g_PhdLeft;
 	r->top = g_PhdTop;
@@ -1193,8 +1415,8 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
             zv /= g_PhdPersp;
             int32_t xs, ys;
             if (zv) {
-                xs = g_CenterX + xv / zv;
-                ys = g_CenterY + yv / zv;
+                xs = ViewPort_GetCenterX() + xv / zv;
+                ys = ViewPort_GetCenterY() + yv / zv;
             }
 			else
 			{
@@ -1407,10 +1629,10 @@ void PrintRooms(int16_t room_number)
 
     phd_PopMatrix();
 
-    r->left = SCREEN_WIDTH - 1;
+    r->left = Screen_GetResWidth() - 1;
     r->bottom = 0;
     r->right = 0;
-    r->top = SCREEN_HEIGHT - 1;
+    r->top = Screen_GetResHeight() - 1;
 
 }
 /*
@@ -1549,8 +1771,14 @@ void ShiftItem(ITEM_INFO *item, COLL_INFO *coll)
 
 int32_t CalcFogShade(int32_t depth)
 {
+    /*
     int32_t fog_begin = DRAW_DIST_FADE;
     int32_t fog_end = DRAW_DIST_MAX;
+	*/
+
+	int32_t fog_begin = DRAW_DIST_MAX; //0x5000 my - 22528 git value
+	int32_t fog_end = DRAW_DIST_FADE; //0x8000 my - 30720 git value
+
 
     if (depth < fog_begin) {
         return 0;
@@ -1779,3 +2007,197 @@ int32_t CalculateTarget(PHD_VECTOR *target, ITEM_INFO *item, LOT_INFO *LOT)
     return TARGET_NONE;
 }
 */
+
+
+int32_t S_SaveGame(SAVEGAME_INFO *save, int32_t slot)
+{
+    char filename[80];
+    sprintf(filename, g_GameFlow.save_game_fmt, slot);
+    //LOG_DEBUG("%s", filename);
+
+    FILE *fp = fopen(filename, "wb");
+    
+    if (!fp)
+    {
+        return 0;
+    }
+
+    for (int i = 0; i < g_GameFlow.level_count; i++)
+    {
+        if (g_GameFlow.levels[i].level_type == GFL_CURRENT)
+        {
+            save->start[i] = save->start[save->current_level];
+        }
+    }
+
+    sprintf(filename, "%s", g_GameFlow.levels[g_SaveGame.current_level].level_title);
+    fwrite(filename, sizeof(char), 75, fp);
+    fwrite(&g_SaveCounter, sizeof(int32_t), 1, fp);
+
+    if (!save->start)
+	{
+        //Shell_ExitSystem("null save->start");
+        return 0;
+    }
+    fwrite(&save->start[0], sizeof(START_INFO), g_GameFlow.level_count, fp);
+    fwrite(&save->timer, sizeof(uint32_t), 1, fp);
+    fwrite(&save->kills, sizeof(uint32_t), 1, fp);
+    fwrite(&save->secrets, sizeof(uint16_t), 1, fp);
+    fwrite(&save->current_level, sizeof(uint16_t), 1, fp);
+    fwrite(&save->pickups, sizeof(uint8_t), 1, fp);
+    fwrite(&save->bonus_flag, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_pickup1, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_pickup2, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_puzzle1, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_puzzle2, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_puzzle3, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_puzzle4, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_key1, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_key2, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_key3, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_key4, sizeof(uint8_t), 1, fp);
+    fwrite(&save->num_leadbar, sizeof(uint8_t), 1, fp);
+    fwrite(&save->challenge_failed, sizeof(uint8_t), 1, fp);
+    fwrite(&save->buffer[0], sizeof(char), MAX_SAVEGAME_BUFFER, fp);
+    fclose(fp);
+
+    REQUEST_INFO *req = &g_LoadSaveGameRequester;
+    req->item_flags[slot] &= ~RIF_BLOCKED;
+
+    sprintf(&req->item_texts[req->item_text_len * slot], "%s %d", filename, g_SaveCounter);
+    g_SavedGamesCount++;
+    g_SaveCounter++;
+    return 1;
+}
+
+int32_t S_LoadGame(SAVEGAME_INFO *save, int32_t slot)
+{
+    char filename[80];
+    sprintf(filename, g_GameFlow.save_game_fmt, slot);
+    //LOG_DEBUG("%s", filename);
+    FILE *fp = fopen(filename, "rb");
+    if (!fp) {
+        return 0;
+    }
+    fread(filename, sizeof(char), 75, fp);
+    int32_t counter;
+
+    fread(&counter, sizeof(int32_t), 1, fp);
+
+    if (!save->start)
+	{
+        //Shell_ExitSystem("null save->start");
+        return 0;
+    }
+    fread(&save->start[0], sizeof(START_INFO), g_GameFlow.level_count, fp);
+    fread(&save->timer, sizeof(uint32_t), 1, fp);
+    fread(&save->kills, sizeof(uint32_t), 1, fp);
+    fread(&save->secrets, sizeof(uint16_t), 1, fp);
+    fread(&save->current_level, sizeof(uint16_t), 1, fp);
+    fread(&save->pickups, sizeof(uint8_t), 1, fp);
+    fread(&save->bonus_flag, sizeof(uint8_t), 1, fp);
+    fread(&save->num_pickup1, sizeof(uint8_t), 1, fp);
+    fread(&save->num_pickup2, sizeof(uint8_t), 1, fp);
+    fread(&save->num_puzzle1, sizeof(uint8_t), 1, fp);
+    fread(&save->num_puzzle2, sizeof(uint8_t), 1, fp);
+    fread(&save->num_puzzle3, sizeof(uint8_t), 1, fp);
+    fread(&save->num_puzzle4, sizeof(uint8_t), 1, fp);
+    fread(&save->num_key1, sizeof(uint8_t), 1, fp);
+    fread(&save->num_key2, sizeof(uint8_t), 1, fp);
+    fread(&save->num_key3, sizeof(uint8_t), 1, fp);
+    fread(&save->num_key4, sizeof(uint8_t), 1, fp);
+    fread(&save->num_leadbar, sizeof(uint8_t), 1, fp);
+    fread(&save->challenge_failed, sizeof(uint8_t), 1, fp);
+    int val = fread(&save->buffer[0], sizeof(char), MAX_SAVEGAME_BUFFER, fp);
+    fclose(fp);
+
+    
+
+    /*
+    for (int i = 0; i < g_GameFlow.level_count; i++)
+    {
+        if (g_GameFlow.levels[i].level_type == GFL_CURRENT)
+        {
+            save->start[save->current_level] = save->start[i];
+        }
+    }
+    */
+
+    //save->start[save->current_level] = save->start[21];
+
+    return 1;
+}
+
+
+void GetSavedGamesList(REQUEST_INFO *req)
+{
+    int32_t height = Screen_GetResHeight();
+
+    if (height <= 200) {
+        req->y = -32;
+        req->vis_lines = 5;
+    } else if (height <= 384) {
+        req->y = -62;
+        req->vis_lines = 8;
+    } else if (height <= 480) {
+        req->y = -90;
+        req->vis_lines = 10;
+    } else {
+        req->y = -100;
+        req->vis_lines = 12;
+    }
+
+    if (req->requested >= req->vis_lines) {
+        req->line_offset = req->requested - req->vis_lines + 1;
+    }
+}
+
+int32_t S_FrontEndCheck()
+{
+    REQUEST_INFO *req = &g_LoadSaveGameRequester;
+
+    req->items = 0;
+    g_SaveCounter = 0;
+    g_SavedGamesCount = 0;
+    for (int i = 0; i < MAX_SAVE_SLOTS; i++)
+    {
+        char filename[80];
+        sprintf(filename, g_GameFlow.save_game_fmt, i);
+
+        FILE *fp = fopen(filename, "rb");
+        if (fp)
+        {
+            fread(filename, sizeof(char), 75, fp);
+            int32_t counter = 0;
+            fread(&counter, sizeof(int32_t), 1, fp);
+            fclose(fp);
+
+            req->item_flags[req->items] &= ~RIF_BLOCKED;
+
+            sprintf(&req->item_texts[req->items * req->item_text_len], "%s %d", filename, counter);
+
+            if (counter > g_SaveCounter)
+            {
+                g_SaveCounter = counter;
+                req->requested = i;
+            }
+
+            g_SavedGamesCount++;
+
+
+
+        }
+        else
+        {
+            req->item_flags[req->items] |= RIF_BLOCKED;
+
+            sprintf(&req->item_texts[req->items * req->item_text_len], g_GameFlow.strings[GS_MISC_EMPTY_SLOT_FMT], i + 1);
+        }
+
+        req->items++;
+    }
+
+    g_SaveCounter++;
+
+    return 1;
+}

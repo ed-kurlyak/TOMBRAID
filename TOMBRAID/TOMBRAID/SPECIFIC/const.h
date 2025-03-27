@@ -27,18 +27,20 @@
 #define Z_NEAR (20 << W2V_SHIFT)
 //#define Z_NEAR (127 << W2V_SHIFT)
 
-#define DRAW_DISTANCE_MAX ((20 * 1024) << W2V_SHIFT)
+//20 * 1024 = 0x5000
+//#define DRAW_DISTANCE_MAX ((20 * 1024) << W2V_SHIFT)
+#define DRAW_DISTANCE_MAX 0x5000 << W2V_SHIFT
 #define DRAW_DISTANCE_MIN 20 <<  W2V_SHIFT
 
 #define MAX_SOUND_SAMPLES 370
 
 #define SQUARE(A) ((A) * (A))
 
-#define CENTER_X (SCREEN_WIDTH / 2)
-#define CENTER_Y (SCREEN_HEIGHT / 2)  
+//#define Center_X (SCREEN_WIDTH / 2)
+//#define Center_Y (SCREEN_HEIGHT / 2)  
 
-#define WIEVPORT_CENTER_X (SCREEN_WIDTH / 2)
-#define WIEVPORT_CENTER_Y (SCREEN_HEIGHT / 2)
+//#define WIEVPORT_CENTER_X (SCREEN_WIDTH / 2)
+//#define WIEVPORT_CENTER_Y (SCREEN_HEIGHT / 2)
 
 #define PHD_ONE 0x10000
 #define PHD_DEGREE (PHD_ONE / 360) // = 182

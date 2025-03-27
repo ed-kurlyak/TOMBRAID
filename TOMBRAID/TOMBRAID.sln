@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29306.81
+VisualStudioVersion = 16.0.35731.53
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TOMBRAID", "TOMBRAID\TOMBRAID.vcxproj", "{7F247EFF-536A-408B-BB88-623267B0DFA0}"
 EndProject
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {32AF8360-6AA9-4FD6-AB4C-BD305921253A}
+		SolutionGuid = {42686273-015C-4C30-8CCD-776ADFC95A71}
 	EndGlobalSection
 EndGlobal

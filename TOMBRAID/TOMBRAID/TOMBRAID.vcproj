@@ -370,6 +370,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SPECIFIC\input.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SPECIFIC\inventry.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SPECIFIC\invfunc.cpp"
 				>
 			</File>
@@ -470,6 +478,30 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SPECIFIC\option.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SPECIFIC\option_compass.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SPECIFIC\option_control.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SPECIFIC\option_graphics.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SPECIFIC\option_passport.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SPECIFIC\option_sound.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SPECIFIC\overlay.cpp"
 				>
 			</File>
@@ -518,6 +550,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SPECIFIC\requester.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\effects\ricochet.cpp"
 				>
 			</File>
@@ -534,11 +570,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SPECIFIC\savegame.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SPECIFIC\SCALESPR.CPP"
 				>
 			</File>
 			<File
 				RelativePath=".\objects\scion.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SPECIFIC\screen.cpp"
 				>
 			</File>
 			<File
@@ -579,6 +623,10 @@
 			</File>
 			<File
 				RelativePath=".\traps\teeth_trap.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SPECIFIC\text.cpp"
 				>
 			</File>
 			<File
@@ -816,6 +864,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SPECIFIC\input.h"
+				>
+			</File>
+			<File
 				RelativePath=".\SPECIFIC\inv.h"
 				>
 			</File>
@@ -888,6 +940,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SPECIFIC\option.h"
+				>
+			</File>
+			<File
 				RelativePath=".\SPECIFIC\overlay.h"
 				>
 			</File>
@@ -936,6 +992,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SPECIFIC\requester.h"
+				>
+			</File>
+			<File
 				RelativePath=".\effects\ricochet.h"
 				>
 			</File>
@@ -952,11 +1012,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SPECIFIC\savegame.h"
+				>
+			</File>
+			<File
 				RelativePath=".\SPECIFIC\SCALESPR.H"
 				>
 			</File>
 			<File
 				RelativePath=".\objects\scion.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SPECIFIC\screen.h"
 				>
 			</File>
 			<File

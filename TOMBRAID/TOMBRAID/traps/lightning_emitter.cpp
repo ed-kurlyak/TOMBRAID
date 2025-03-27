@@ -7,7 +7,8 @@
 #include "..\\SPECIFIC\\init.h"
 #include "..\\SPECIFIC\\items.h"
 //#include "game/output.h"
-#include "..\\SPECIFIC\\winmain.h"
+//#include "..\\SPECIFIC\\winmain.h"
+#include "..\\SPECIFIC\\screen.h"
 //#include "game/sound.h"
 #include "..\\SPECIFIC\\sphere.h"
 //#include "game/viewport.h"
@@ -211,11 +212,11 @@ void DrawLightning(ITEM_INFO *item)
 		
         if (i > 0)
 		{
-            Output_DrawLightningSegment(x1, y1 + l->wibble[i - 1].y, z1, x2, y2, z2, SCREEN_WIDTH / 6);
+            Output_DrawLightningSegment(x1, y1 + l->wibble[i - 1].y, z1, x2, y2, z2, Screen_GetResWidth() / 6);
         }
 		else
 		{
-            Output_DrawLightningSegment(x1, y1, z1, x2, y2, z2, SCREEN_WIDTH / 6);
+            Output_DrawLightningSegment(x1, y1, z1, x2, y2, z2, Screen_GetResWidth() / 6);
         }
 		
 
@@ -269,11 +270,11 @@ void DrawLightning(ITEM_INFO *item)
             if (j > 0)
 			{
                 Output_DrawLightningSegment(x1, y1 + l->shoot[i][j - 1].y, z1, x2, y2, z2,
-                    SCREEN_WIDTH / 16);
+                    Screen_GetResWidth() / 16);
             }
 			else
 			{
-                Output_DrawLightningSegment(x1, y1, z1, x2, y2, z2, SCREEN_WIDTH / 16);
+                Output_DrawLightningSegment(x1, y1, z1, x2, y2, z2, Screen_GetResWidth() / 16);
             }
 			
 

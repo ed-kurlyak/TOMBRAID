@@ -3,7 +3,8 @@
 #include "matrix.h"
 #include "phd_math.h"
 #include "vars.h"
-#include "winmain.h"
+//#include "winmain.h"
+#include "screen.h"
 //#include "config.h"
 //#include "game/output.h"
 //#include "game/screen.h"
@@ -96,8 +97,7 @@ void phd_AlterFOV(PHD_ANGLE fov)
 	/*
 	if (g_Config.fov_vertical)
 	{
-        double aspect_ratio =
-            SCREEN_WIDTH / (double)SCREEN_HEIGHT;
+        //double aspect_ratio = SCREEN_WIDTH / (double)SCREEN_HEIGHT;
         double fov_rad_h = fov * PI / 32760;
         double fov_rad_v = 2 * atan(aspect_ratio * tan(fov_rad_h / 2));
         //fov = round((fov_rad_v / PI) * 32760);
@@ -108,7 +108,7 @@ void phd_AlterFOV(PHD_ANGLE fov)
     int16_t c = phd_cos(fov / 2);
     int16_t s = phd_sin(fov / 2);
 	if(!lara_dist)
-		g_PhdPersp = ((SCREEN_WIDTH / 2) * c) / s;
+		g_PhdPersp = ((Screen_GetResWidth() / 2) * c) / s;
 	else
-		g_PhdPersp = ((SCREEN_HEIGHT / 2) * c) / s;
+		g_PhdPersp = ((Screen_GetResHeight() / 2) * c) / s;
 }

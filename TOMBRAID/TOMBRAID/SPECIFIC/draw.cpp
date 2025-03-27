@@ -17,6 +17,8 @@
 #include "collide.h"
 #include "sphere.h"
 #include "sound.h"
+#include "setup.h"
+#include "screen.h"
 #include "..\\OBJECTS\\switch.h"
 #include "..\\OBJECTS\\keyhole.h"
 #include "..\\OBJECTS\\puzzle_hole.h"
@@ -353,10 +355,10 @@ int S_GetObjectBounds(int16_t *bptr)
         }
     }
 
-    x_min += SCREEN_WIDTH / 2;
-    x_max += SCREEN_WIDTH / 2;
-    y_min += SCREEN_HEIGHT / 2;
-    y_max += SCREEN_HEIGHT;
+    x_min += ViewPort_GetCenterX();
+    x_max += ViewPort_GetCenterX();
+    y_min += ViewPort_GetCenterY();
+    y_max += ViewPort_GetCenterY();
 
     if (!num_z || x_min > g_PhdRight || y_min > g_PhdBottom || x_max < g_PhdLeft
         || y_max < g_PhdTop) {
@@ -453,8 +455,8 @@ int16_t *Output_CalcObjectVertices(int16_t *obj_ptr)
         } else {
             clip_flags = 0;
 
-            int32_t xs = WIEVPORT_CENTER_X + xv / (zv / g_PhdPersp);
-            int32_t ys = WIEVPORT_CENTER_Y + yv / (zv / g_PhdPersp);
+            int32_t xs = ViewPort_GetCenterX() + xv / (zv / g_PhdPersp);
+            int32_t ys = ViewPort_GetCenterY() + yv / (zv / g_PhdPersp);
 
             if (xs < g_PhdLeft) {
                 if (xs < -32760) {
@@ -566,8 +568,47 @@ int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 	POINT_INFO points[4];
     PHD_TEXTURE *tex;
 	int32_t vert_count = 4;
+	//int32_t vert_count = 0;
 
 	int num_TexturedQuad = number;
+
+	//перед вызовом DrawObjectGT4
+	//obj_ptr + 0 количество GT4 = index 1 - 2 байта
+	//obj_ptr + 1 vert #1 = index 2 - 2 байта
+	//obj_ptr + 2 vert #2 = index 3 - 2 байта
+	//obj_ptr + 3 vert #3 = index 4 - 2 байта
+	//obj_ptr + 4 vert #4 = index 5 - 2 байта
+	//obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
+	
+	//внутри DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
+	//obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
+	//obj_ptr + 1 vert #2 in 2 bytes + 2 bytes 
+	//obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
+	//obj_ptr + 3 vert #4 in 2 bytes + 6 bytes
+	//obj_ptr + 4 g_PhdTextureInfo in 2 bytes
+
+	//вычисление текстуры
+	//start memory obj_ptr = byte4(1122) byte4(3344) texinfo byte4(5500)
+	//вычисление текстуры eax = obj_ptr
+	//mov eax, [eax + 6] => start memory obj = byte4(11 22) byte4(33 => eax = 00 00 55 44
+	//sar eax >> 16 => eax = 55
+
+	//sizeof(PHD_TEXTURE) = 20 bytes
+	//sizeof(PHD_VBUF) = 32 bytes
+	//sizeof(obj) = 12 bytes
+	
+	//------------------
+	//vert buff VERT m_VBuf -> sizeof(PHD_VBUF) = 32
+	// x	+0
+	// y	+4
+	// z	+8
+	// xs	+12
+	// yx	+16
+	// dist	+20
+	// clip	+22
+	// g	+24
+	// tu	+26
+	// tv	+28
 
 	if(number > 0)
 	{
@@ -580,6 +621,56 @@ int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number)
         vns[3] = &m_VBuf[*obj_ptr++];
 
 		tex = &g_PhdTextureInfo[*obj_ptr++];
+        
+		/*
+		//результат if ноль инвертируем
+		//все вершины с разных сторон (зритель близко к полигону)
+		int clip_flags1 = 1;
+		int clip_flags2 = 2;
+		int clip_flags3 = 4;
+		int clip_flags4 = 8;
+
+		//нету вобще отсечения
+		int clip_flags1 = 0;
+		int clip_flags2 = 0;
+		int clip_flags3 = 0;
+		int clip_flags4 = 0;
+		*/
+
+		/*
+		результат if 1 инвертируем
+
+		//все вершины с одной стороны экрана - полигон не видим
+		int clip_flags1 = 1;
+		int clip_flags2 = 1;
+		int clip_flags3 = 1;
+		int clip_flags4 = 1;
+		*/
+
+
+		//вариант 1 - все вершины с разных сторон (зритель близко к полигону)
+		//вариант 2 - нету вобще отсечения (в пределах экрана)
+		//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+
+		/*
+		//вариант 1 - все вершины с разных сторон (зритель близко к полигону)
+		int clip_flags1 = 1;
+		int clip_flags2 = 2;
+		int clip_flags3 = 4;
+		int clip_flags4 = 8;
+
+		//вариант 2 - нету вобще отсечения (в пределах экрана)
+		int clip_flags1 = 0;
+		int clip_flags2 = 0;
+		int clip_flags3 = 0;
+		int clip_flags4 = 0;
+		
+		//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+		int clip_flags1 = 1;
+		int clip_flags2 = 1;
+		int clip_flags3 = 1;
+		int clip_flags4 = 1;
+		*/
 		
 		//если вариант 1 и 2
 		if ( !(vns[0]->clip & vns[1]->clip & vns[2]->clip & vns[3]->clip) )
@@ -661,6 +752,55 @@ int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 
 						sort3dptr += 2;
 
+						//info3dptr 2 bytes - 16 бит
+						//0 draw routine
+						//1 texture page
+						//2 num coords ie vert count
+						//3 vert1
+						//4 vert2
+						//5 vert3
+
+						//info3dptr[0] = tex->drawtype;
+						//info3dptr[1] = tex->tpage;
+						//info3dptr[2] = vert_count;
+
+						/*
+						if(depth > perspective_distance)
+						{
+							
+							info[0] = tex->drawtype;
+							//info[1] = tex->tpage;
+							info[2] = vert_count;
+
+							if(vert_count > 0)
+							{
+								int32_t indx = 0;
+
+								info += 3; //пропускаем drawType, texNum, vertNumbrs
+
+								do {
+
+									info[0] = (short int) vertices[indx].x; //edx
+									info[1] = (short int) vertices[indx].y; //edx + 4
+									
+									//vertices[0].z ; //edx + 8
+									
+									info[2] = (short int) (vertices[indx].u / vertices[indx].z); //edx + 12 = 0Ch
+									info[4] = (short int) (vertices[indx].v / vertices[indx].z); //edx + 10 = 0Ch
+
+									info += 5;
+									indx++;
+
+								} while ( indx < vert_count );
+
+								info3dptr = info;
+								
+							}
+
+							
+						}
+						else // if(depth > perspective_distance)
+							*/
 						{
 							info[0] = tex->drawtype + 2;
 							info[1] = tex->tpage;
@@ -695,6 +835,9 @@ int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 							surfacenum++;
 
 						} // if(depth > perspective_distance)
+
+						//surfacenum++;
+
 					} // if(vert_count)
 
 					//goto LABEL_32;
@@ -750,6 +893,7 @@ int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 
 					if ( vert_count )
 					{
+						//v27 = &vertices[0];
 						goto ClipVerts;
 				    }
 
@@ -779,9 +923,48 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 	VBUF vertices[8];
 	POINT_INFO points[3];
     PHD_TEXTURE *tex;
+	//int32_t vert_count = 3;
 	int32_t vert_count = 0;
 
 	int num_TexturedTri = number;
+
+	//перед вызовом DrawObjectGT4
+	//obj_ptr + 0 количество GT4 = index 1 - 2 байта
+	//obj_ptr + 1 vert #1 = index 2 - 2 байта
+	//obj_ptr + 2 vert #2 = index 3 - 2 байта
+	//obj_ptr + 3 vert #3 = index 4 - 2 байта
+	//obj_ptr + 4 vert #4 = index 5 - 2 байта
+	//obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
+	
+	//внутри DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
+	//obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
+	//obj_ptr + 1 vert #2 in 2 bytes + 2 bytes 
+	//obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
+	//obj_ptr + 3 vert #4 in 2 bytes + 6 bytes
+	//obj_ptr + 4 g_PhdTextureInfo in 2 bytes
+
+	//вычисление текстуры
+	//start memory obj_ptr = byte4(1122) byte4(3344) texinfo byte4(5500)
+	//вычисление текстуры eax = obj_ptr
+	//mov eax, [eax + 6] => start memory obj = byte4(11 22) byte4(33 => eax = 00 00 55 44
+	//sar eax >> 16 => eax = 55
+
+	//sizeof(PHD_TEXTURE) = 20 bytes
+	//sizeof(PHD_VBUF) = 32 bytes
+	//sizeof(obj) = 12 bytes
+	
+	//------------------
+	//vert buff VERT m_VBuf -> sizeof(PHD_VBUF) = 32
+	// x	+0
+	// y	+4
+	// z	+8
+	// xs	+12
+	// yx	+16
+	// dist	+20
+	// clip	+22
+	// g	+24
+	// tu	+26
+	// tv	+28
 
 	if(number > 0)
 	{
@@ -791,12 +974,65 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
         vns[0] = &m_VBuf[*obj_ptr++];
         vns[1] = &m_VBuf[*obj_ptr++];
         vns[2] = &m_VBuf[*obj_ptr++];
+        //vns[3] = &m_VBuf[*obj_ptr++];
 
 		tex = &g_PhdTextureInfo[*obj_ptr++];
+        
+		/*
+		//результат if ноль инвертируем
+		//все вершины с разных сторон (зритель близко к полигону)
+		int clip_flags1 = 1;
+		int clip_flags2 = 2;
+		int clip_flags3 = 4;
+		int clip_flags4 = 8;
 
+		//нету вобще отсечения
+		int clip_flags1 = 0;
+		int clip_flags2 = 0;
+		int clip_flags3 = 0;
+		int clip_flags4 = 0;
+		*/
+
+		/*
+		результат if 1 инвертируем
+
+		//все вершины с одной стороны экрана - полигон не видим
+		int clip_flags1 = 1;
+		int clip_flags2 = 1;
+		int clip_flags3 = 1;
+		int clip_flags4 = 1;
+		*/
+
+
+		//вариант 1 - все вершины с разных сторон (зритель близко к полигону)
+		//вариант 2 - нету вобще отсечения (в пределах экрана)
+		//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+
+		/*
+		//вариант 1 - все вершины с разных сторон (зритель близко к полигону)
+		int clip_flags1 = 1;
+		int clip_flags2 = 2;
+		int clip_flags3 = 4;
+		int clip_flags4 = 8;
+
+		//вариант 2 - нету вобще отсечения (в пределах экрана)
+		int clip_flags1 = 0;
+		int clip_flags2 = 0;
+		int clip_flags3 = 0;
+		int clip_flags4 = 0;
+		
+		//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+		int clip_flags1 = 1;
+		int clip_flags2 = 1;
+		int clip_flags3 = 1;
+		int clip_flags4 = 1;
+		*/
+		
+		//если вариант 1 и 2
 		//if ( !(vns[0]->clip & vns[1]->clip & vns[2]->clip & vns[3]->clip) )
 		if ( !(vns[0]->clip & vns[1]->clip & vns[2]->clip) )
 		{
+			//если вариант 1 и 2
 			//if (vns[0]->clip >= 0 && vns[1]->clip >= 0 && vns[2]->clip >= 0 && vns[3]->clip >= 0)
 			if (vns[0]->clip >= 0 && vns[1]->clip >= 0 && vns[2]->clip >= 0)
 			{
@@ -828,7 +1064,17 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 					vertices[2].v = vertices[2].z * tex->uv[2].v1;
 					vertices[2].g = vns[2]->g;
 
+					/*
+					vertices[3].x = (float) vns[3]->xs;
+					vertices[3].y = (float) vns[3]->ys;
+					vertices[3].z = 8589934592.0f / vns[3]->zv;
+					vertices[3].u = vertices[3].z * tex->uv[3].u1;
+					vertices[3].v = vertices[3].z * tex->uv[3].v1;
+					vertices[3].g = vns[3]->g;
+					*/
+
 					vert_count = 3;
+					
 
 					//если необходимо отсечение по границе экрана
 					//if (vns[0]->clip || vns[1]->clip || vns[2]->clip || vns[3]->clip) 
@@ -855,6 +1101,13 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 							depth = vns[2]->zv;
 						}
 
+						/*
+						if(depth < vns[3]->zv)
+						{
+							depth = vns[3]->zv;
+						}
+						*/
+
 						int32_t * sort = sort3dptr;
 						int16_t * info = info3dptr;
 		
@@ -863,6 +1116,54 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 
 						sort3dptr += 2;
 
+						//info3dptr 2 bytes - 16 бит
+						//0 draw routine
+						//1 texture page
+						//2 num coords ie vert count
+						//3 vert1
+						//4 vert2
+						//5 vert3
+
+						//info3dptr[0] = tex->drawtype;
+						//info3dptr[1] = tex->tpage;
+						//info3dptr[2] = vert_count;
+
+/*
+						if(depth > perspective_distance)
+						{
+							
+							info[0] = tex->drawtype;
+							//info[1] = tex->tpage;
+							info[2] = vert_count;
+
+							if(vert_count > 0)
+							{
+								int32_t indx = 0;
+
+								info += 3; //пропускаем drawType, texNum, vertNumbrs
+
+								do {
+
+									info[0] = (short int) vertices[indx].x; //edx
+									info[1] = (short int) vertices[indx].y; //edx + 4
+									
+									//vertices[0].z ; //edx + 8
+									
+									info[2] = (short int) (vertices[indx].u / vertices[indx].z); //edx + 12 = 0Ch
+									info[4] = (short int) (vertices[indx].v / vertices[indx].z); //edx + 10 = 0Ch
+
+									info += 5;
+									indx++;
+
+								} while ( indx < vert_count );
+
+								info3dptr = info;
+							}
+
+							
+						}
+						else // if(depth > perspective_distance)
+						*/
 						{
 							info[0] = tex->drawtype + 2;
 							info[1] = tex->tpage;
@@ -898,6 +1199,8 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 
 						} // if(depth > perspective_distance)
 
+						//surfacenum++;
+
 					} // if(vert_count)
 
 					//goto LABEL_32;
@@ -920,6 +1223,9 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 					points[0].v = tex->uv[0].v1;
 					points[0].g = vns[0]->g;
 
+
+
+
 					points[1].xs = (float) vns[1]->xs;
 					points[1].ys = (float) vns[1]->ys;
 					points[1].xv = (float) vns[1]->xv;
@@ -928,6 +1234,9 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 					points[1].u = tex->uv[1].u1;
 					points[1].v = tex->uv[1].v1;
 					points[1].g = vns[1]->g;
+
+
+
 
 					points[2].xs = (float) vns[2]->xs;
 					points[2].ys = (float) vns[2]->ys;
@@ -943,6 +1252,7 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 
 					if ( vert_count )
 					{
+						//v27 = &vertices[0];
 						goto ClipVerts;
 				    }
 
@@ -971,10 +1281,51 @@ int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number)
 {
     PHD_VBUF *vns[4];
 	VBUF2 vertices[8];
+	//POINT_INFO points[4];
+    //PHD_TEXTURE *tex;
 	int color;
+	//int32_t vert_count = 4;
 	int32_t vert_count = 0;
 
 	int num_TexturedQuad = number;
+
+	//перед вызовом DrawObjectGT4
+	//obj_ptr + 0 количество GT4 = index 1 - 2 байта
+	//obj_ptr + 1 vert #1 = index 2 - 2 байта
+	//obj_ptr + 2 vert #2 = index 3 - 2 байта
+	//obj_ptr + 3 vert #3 = index 4 - 2 байта
+	//obj_ptr + 4 vert #4 = index 5 - 2 байта
+	//obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
+	
+	//внутри DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
+	//obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
+	//obj_ptr + 1 vert #2 in 2 bytes + 2 bytes 
+	//obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
+	//obj_ptr + 3 vert #4 in 2 bytes + 6 bytes
+	//obj_ptr + 4 g_PhdTextureInfo in 2 bytes
+
+	//вычисление текстуры
+	//start memory obj_ptr = byte4(1122) byte4(3344) texinfo byte4(5500)
+	//вычисление текстуры eax = obj_ptr
+	//mov eax, [eax + 6] => start memory obj = byte4(11 22) byte4(33 => eax = 00 00 55 44
+	//sar eax >> 16 => eax = 55
+
+	//sizeof(PHD_TEXTURE) = 20 bytes
+	//sizeof(PHD_VBUF) = 32 bytes
+	//sizeof(obj) = 12 bytes
+	
+	//------------------
+	//vert buff VERT m_VBuf -> sizeof(PHD_VBUF) = 32
+	// x	+0
+	// y	+4
+	// z	+8
+	// xs	+12
+	// yx	+16
+	// dist	+20
+	// clip	+22
+	// g	+24
+	// tu	+26
+	// tv	+28
 
 	if(number > 0)
 	{
@@ -986,10 +1337,63 @@ int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number)
         vns[2] = &m_VBuf[*obj_ptr++];
         vns[3] = &m_VBuf[*obj_ptr++];
 
+		//tex = &g_PhdTextureInfo[*obj_ptr++];
 		color = *obj_ptr++;
+        
+		/*
+		//результат if ноль инвертируем
+		//все вершины с разных сторон (зритель близко к полигону)
+		int clip_flags1 = 1;
+		int clip_flags2 = 2;
+		int clip_flags3 = 4;
+		int clip_flags4 = 8;
+
+		//нету вобще отсечения
+		int clip_flags1 = 0;
+		int clip_flags2 = 0;
+		int clip_flags3 = 0;
+		int clip_flags4 = 0;
+		*/
+
+		/*
+		результат if 1 инвертируем
+
+		//все вершины с одной стороны экрана - полигон не видим
+		int clip_flags1 = 1;
+		int clip_flags2 = 1;
+		int clip_flags3 = 1;
+		int clip_flags4 = 1;
+		*/
+
+
+		//вариант 1 - все вершины с разных сторон (зритель близко к полигону)
+		//вариант 2 - нету вобще отсечения (в пределах экрана)
+		//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+
+		/*
+		//вариант 1 - все вершины с разных сторон (зритель близко к полигону)
+		int clip_flags1 = 1;
+		int clip_flags2 = 2;
+		int clip_flags3 = 4;
+		int clip_flags4 = 8;
+
+		//вариант 2 - нету вобще отсечения (в пределах экрана)
+		int clip_flags1 = 0;
+		int clip_flags2 = 0;
+		int clip_flags3 = 0;
+		int clip_flags4 = 0;
 		
+		//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+		int clip_flags1 = 1;
+		int clip_flags2 = 1;
+		int clip_flags3 = 1;
+		int clip_flags4 = 1;
+		*/
+		
+		//если вариант 1 и 2
 		if ( !(vns[0]->clip & vns[1]->clip & vns[2]->clip & vns[3]->clip) )
 		{
+			//если вариант 1 и 2
 			if (vns[0]->clip >= 0 && vns[1]->clip >= 0 && vns[2]->clip >= 0 && vns[3]->clip >= 0)
 			{
 				//псевдоскалярное косое умножение векторов
@@ -1038,8 +1442,60 @@ int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number)
 						sort[1] = depth;
 
 						sort3dptr += 2;
+
+						//info3dptr 2 bytes - 16 бит
+						//0 draw routine
+						//1 texture page
+						//2 num coords ie vert count
+						//3 vert1
+						//4 vert2
+						//5 vert3
+
+						//info3dptr[0] = tex->drawtype;
+						//info3dptr[1] = tex->tpage;
+						//info3dptr[2] = vert_count;
+
+						/*
+						if(depth > perspective_distance)
 						{
+							
+							info[0] = tex->drawtype;
+							//info[1] = tex->tpage;
+							info[2] = vert_count;
+
+							if(vert_count > 0)
+							{
+								int32_t indx = 0;
+
+								info += 3; //пропускаем drawType, texNum, vertNumbrs
+
+								do {
+
+									info[0] = (short int) vertices[indx].x; //edx
+									info[1] = (short int) vertices[indx].y; //edx + 4
+									
+									//vertices[0].z ; //edx + 8
+									
+									info[2] = (short int) (vertices[indx].u / vertices[indx].z); //edx + 12 = 0Ch
+									info[4] = (short int) (vertices[indx].v / vertices[indx].z); //edx + 10 = 0Ch
+
+									info += 5;
+									indx++;
+
+								} while ( indx < vert_count );
+
+								info3dptr = info;
+								
+							}
+
+							
+						}
+						else // if(depth > perspective_distance)
+							*/
+						{
+							//info[0] = tex->drawtype;
 							info[0] = 6;
+							//info[1] = tex->tpage;
 							info[1] = color;
 							info[2] = vert_count;
 
@@ -1056,6 +1512,12 @@ int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number)
 									info[1] = (short int) vertices[indx].y; //edx + 4
 									info[2] = (short int) vertices[indx].g;
 
+									/*
+									*(float*)&info[3] = vertices[indx].z;
+									*(float*)&info[5] = vertices[indx].u;
+									*(float*)&info[7] = vertices[indx].v;
+									*/
+
 									info += 3;
 									indx++;
 
@@ -1069,12 +1531,107 @@ int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number)
 
 						} // if(depth > perspective_distance)
 
+						//surfacenum++;
+
 					} // if(vert_count)
 
 					goto LABEL_32;
 
 				} //if kosoe > 0
 			}
+			/*
+			else // if && clip
+			{
+				//отбрасывание задних поверхностей
+				//если поверхность обращена от зрителя - пропускаем ее
+				if ( phd_VisibleZClip(vns[0], vns[1], vns[2]) )
+				{
+
+					points[0].xs = (float) vns[0]->xs;
+					points[0].ys = (float) vns[0]->ys;
+					
+					//points[0].z = 8589934592.0f / vns[0]->zv;
+					//points[0].u = points[0].z * tex->uv[0].u1;
+					//points[0].v = points[0].z * tex->uv[0].v1;
+
+					points[0].xv = (float) vns[0]->xv;
+					points[0].yv = (float) vns[0]->yv;
+					points[0].zv = (float) vns[0]->zv;
+					points[0].u = tex->uv[0].u1;
+					points[0].v = tex->uv[0].v1;
+					points[0].g = vns[0]->g;
+
+
+
+
+					points[1].xs = (float) vns[1]->xs;
+					points[1].ys = (float) vns[1]->ys;
+					
+					//points[0].z = 8589934592.0f / vns[0]->zv;
+					//points[0].u = points[0].z * tex->uv[0].u1;
+					//points[0].v = points[0].z * tex->uv[0].v1;
+					
+					points[1].xv = (float) vns[1]->xv;
+					points[1].yv = (float) vns[1]->yv;
+					points[1].zv = (float) vns[1]->zv;
+					points[1].u = tex->uv[1].u1;
+					points[1].v = tex->uv[1].v1;
+					points[1].g = vns[1]->g;
+
+
+
+
+					points[2].xs = (float) vns[2]->xs;
+					points[2].ys = (float) vns[2]->ys;
+					
+					//points[0].z = 8589934592.0f / vns[0]->zv;
+					//points[0].u = points[0].z * tex->uv[0].u1;
+					//points[0].v = points[0].z * tex->uv[0].v1;
+
+
+					points[2].xv = (float) vns[2]->xv;
+					points[2].yv = (float) vns[2]->yv;
+					points[2].zv = (float) vns[2]->zv;
+					points[2].u = tex->uv[2].u1;
+					points[2].v = tex->uv[2].v1;
+					points[2].g = vns[2]->g;
+
+
+
+					points[3].xs = (float) vns[3]->xs;
+					points[3].ys = (float) vns[3]->ys;
+					
+					//points[0].z = 8589934592.0f / vns[0]->zv;
+					//points[0].u = points[0].z * tex->uv[0].u1;
+					//points[0].v = points[0].z * tex->uv[0].v1;
+
+					points[3].xv = (float) vns[3]->xv;
+					points[3].yv = (float) vns[3]->yv;
+					points[3].zv = (float) vns[3]->zv;
+					points[3].u = tex->uv[3].u1;
+					points[3].v = tex->uv[3].v1;
+					points[3].g = vns[3]->g;
+
+
+					//vert_count = 4;
+
+					vert_count = ZedClipper(4, &points[0], &vertices[0]);
+
+					
+					if ( vert_count )
+					{
+						//v27 = &vertices[0];
+						goto ClipVerts;
+				    }
+
+					goto Skip_ClipVerts;
+
+				} // if ( phd_VisibleZClip
+				
+				
+			}	//else if any clip
+			*/
+
 		}
 LABEL_32:
 
@@ -1088,14 +1645,57 @@ LABEL_32:
     return obj_ptr;
 }
 
+//-------------------------------------------
+
 int16_t *DrawObjectG3(int16_t *obj_ptr, int32_t number)
 {
     PHD_VBUF *vns[4];
 	VBUF2 vertices[8];
+//	POINT_INFO points[4];
+    //PHD_TEXTURE *tex;
 	int color;
+	//int32_t vert_count = 4;
 	int32_t vert_count = 0;
 
 	int num_TexturedQuad = number;
+
+	//перед вызовом DrawObjectGT4
+	//obj_ptr + 0 количество GT4 = index 1 - 2 байта
+	//obj_ptr + 1 vert #1 = index 2 - 2 байта
+	//obj_ptr + 2 vert #2 = index 3 - 2 байта
+	//obj_ptr + 3 vert #3 = index 4 - 2 байта
+	//obj_ptr + 4 vert #4 = index 5 - 2 байта
+	//obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
+	
+	//внутри DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
+	//obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
+	//obj_ptr + 1 vert #2 in 2 bytes + 2 bytes 
+	//obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
+	//obj_ptr + 3 vert #4 in 2 bytes + 6 bytes
+	//obj_ptr + 4 g_PhdTextureInfo in 2 bytes
+
+	//вычисление текстуры
+	//start memory obj_ptr = byte4(1122) byte4(3344) texinfo byte4(5500)
+	//вычисление текстуры eax = obj_ptr
+	//mov eax, [eax + 6] => start memory obj = byte4(11 22) byte4(33 => eax = 00 00 55 44
+	//sar eax >> 16 => eax = 55
+
+	//sizeof(PHD_TEXTURE) = 20 bytes
+	//sizeof(PHD_VBUF) = 32 bytes
+	//sizeof(obj) = 12 bytes
+	
+	//------------------
+	//vert buff VERT m_VBuf -> sizeof(PHD_VBUF) = 32
+	// x	+0
+	// y	+4
+	// z	+8
+	// xs	+12
+	// yx	+16
+	// dist	+20
+	// clip	+22
+	// g	+24
+	// tu	+26
+	// tv	+28
 
 	if(number > 0)
 	{
@@ -1105,11 +1705,65 @@ int16_t *DrawObjectG3(int16_t *obj_ptr, int32_t number)
         vns[0] = &m_VBuf[*obj_ptr++];
         vns[1] = &m_VBuf[*obj_ptr++];
         vns[2] = &m_VBuf[*obj_ptr++];
+        //vns[3] = &m_VBuf[*obj_ptr++];
 
+		//tex = &g_PhdTextureInfo[*obj_ptr++];
 		color = *obj_ptr++;
+        
+		/*
+		//результат if ноль инвертируем
+		//все вершины с разных сторон (зритель близко к полигону)
+		int clip_flags1 = 1;
+		int clip_flags2 = 2;
+		int clip_flags3 = 4;
+		int clip_flags4 = 8;
+
+		//нету вобще отсечения
+		int clip_flags1 = 0;
+		int clip_flags2 = 0;
+		int clip_flags3 = 0;
+		int clip_flags4 = 0;
+		*/
+
+		/*
+		результат if 1 инвертируем
+
+		//все вершины с одной стороны экрана - полигон не видим
+		int clip_flags1 = 1;
+		int clip_flags2 = 1;
+		int clip_flags3 = 1;
+		int clip_flags4 = 1;
+		*/
+
+
+		//вариант 1 - все вершины с разных сторон (зритель близко к полигону)
+		//вариант 2 - нету вобще отсечения (в пределах экрана)
+		//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+
+		/*
+		//вариант 1 - все вершины с разных сторон (зритель близко к полигону)
+		int clip_flags1 = 1;
+		int clip_flags2 = 2;
+		int clip_flags3 = 4;
+		int clip_flags4 = 8;
+
+		//вариант 2 - нету вобще отсечения (в пределах экрана)
+		int clip_flags1 = 0;
+		int clip_flags2 = 0;
+		int clip_flags3 = 0;
+		int clip_flags4 = 0;
 		
+		//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+		int clip_flags1 = 1;
+		int clip_flags2 = 1;
+		int clip_flags3 = 1;
+		int clip_flags4 = 1;
+		*/
+		
+		//если вариант 1 и 2
 		if ( !(vns[0]->clip & vns[1]->clip & vns[2]->clip) )
 		{
+			//если вариант 1 и 2
 			if (vns[0]->clip >= 0 && vns[1]->clip >= 0 && vns[2]->clip >= 0)
 			{
 				//псевдоскалярное косое умножение векторов
@@ -1155,8 +1809,59 @@ int16_t *DrawObjectG3(int16_t *obj_ptr, int32_t number)
 
 						sort3dptr += 2;
 
+						//info3dptr 2 bytes - 16 бит
+						//0 draw routine
+						//1 texture page
+						//2 num coords ie vert count
+						//3 vert1
+						//4 vert2
+						//5 vert3
+
+						//info3dptr[0] = tex->drawtype;
+						//info3dptr[1] = tex->tpage;
+						//info3dptr[2] = vert_count;
+
+						/*
+						if(depth > perspective_distance)
 						{
+							
+							info[0] = tex->drawtype;
+							//info[1] = tex->tpage;
+							info[2] = vert_count;
+
+							if(vert_count > 0)
+							{
+								int32_t indx = 0;
+
+								info += 3; //пропускаем drawType, texNum, vertNumbrs
+
+								do {
+
+									info[0] = (short int) vertices[indx].x; //edx
+									info[1] = (short int) vertices[indx].y; //edx + 4
+									
+									//vertices[0].z ; //edx + 8
+									
+									info[2] = (short int) (vertices[indx].u / vertices[indx].z); //edx + 12 = 0Ch
+									info[4] = (short int) (vertices[indx].v / vertices[indx].z); //edx + 10 = 0Ch
+
+									info += 5;
+									indx++;
+
+								} while ( indx < vert_count );
+
+								info3dptr = info;
+								
+							}
+
+							
+						}
+						else // if(depth > perspective_distance)
+							*/
+						{
+							//info[0] = tex->drawtype;
 							info[0] = 6;
+							//info[1] = tex->tpage;
 							info[1] = color;
 							info[2] = vert_count;
 
@@ -1173,6 +1878,12 @@ int16_t *DrawObjectG3(int16_t *obj_ptr, int32_t number)
 									info[1] = (short int) vertices[indx].y; //edx + 4
 									info[2] = (short int) vertices[indx].g;
 
+									/*
+									*(float*)&info[3] = vertices[indx].z;
+									*(float*)&info[5] = vertices[indx].u;
+									*(float*)&info[7] = vertices[indx].v;
+									*/
+
 									info += 3;
 									indx++;
 
@@ -1186,17 +1897,112 @@ int16_t *DrawObjectG3(int16_t *obj_ptr, int32_t number)
 
 						} // if(depth > perspective_distance)
 
+						//surfacenum++;
+
 					} // if(vert_count)
 
 					goto LABEL_32;
 
 				} //if kosoe > 0
 			}
+			/*
+			else // if && clip
+			{
+				//отбрасывание задних поверхностей
+				//если поверхность обращена от зрителя - пропускаем ее
+				if ( phd_VisibleZClip(vns[0], vns[1], vns[2]) )
+				{
+
+					points[0].xs = (float) vns[0]->xs;
+					points[0].ys = (float) vns[0]->ys;
+					
+					//points[0].z = 8589934592.0f / vns[0]->zv;
+					//points[0].u = points[0].z * tex->uv[0].u1;
+					//points[0].v = points[0].z * tex->uv[0].v1;
+
+					points[0].xv = (float) vns[0]->xv;
+					points[0].yv = (float) vns[0]->yv;
+					points[0].zv = (float) vns[0]->zv;
+					points[0].u = tex->uv[0].u1;
+					points[0].v = tex->uv[0].v1;
+					points[0].g = vns[0]->g;
+
+
+
+
+					points[1].xs = (float) vns[1]->xs;
+					points[1].ys = (float) vns[1]->ys;
+					
+					//points[0].z = 8589934592.0f / vns[0]->zv;
+					//points[0].u = points[0].z * tex->uv[0].u1;
+					//points[0].v = points[0].z * tex->uv[0].v1;
+					
+					points[1].xv = (float) vns[1]->xv;
+					points[1].yv = (float) vns[1]->yv;
+					points[1].zv = (float) vns[1]->zv;
+					points[1].u = tex->uv[1].u1;
+					points[1].v = tex->uv[1].v1;
+					points[1].g = vns[1]->g;
+
+
+
+
+					points[2].xs = (float) vns[2]->xs;
+					points[2].ys = (float) vns[2]->ys;
+					
+					//points[0].z = 8589934592.0f / vns[0]->zv;
+					//points[0].u = points[0].z * tex->uv[0].u1;
+					//points[0].v = points[0].z * tex->uv[0].v1;
+
+
+					points[2].xv = (float) vns[2]->xv;
+					points[2].yv = (float) vns[2]->yv;
+					points[2].zv = (float) vns[2]->zv;
+					points[2].u = tex->uv[2].u1;
+					points[2].v = tex->uv[2].v1;
+					points[2].g = vns[2]->g;
+
+
+
+					points[3].xs = (float) vns[3]->xs;
+					points[3].ys = (float) vns[3]->ys;
+					
+					//points[0].z = 8589934592.0f / vns[0]->zv;
+					//points[0].u = points[0].z * tex->uv[0].u1;
+					//points[0].v = points[0].z * tex->uv[0].v1;
+
+					points[3].xv = (float) vns[3]->xv;
+					points[3].yv = (float) vns[3]->yv;
+					points[3].zv = (float) vns[3]->zv;
+					points[3].u = tex->uv[3].u1;
+					points[3].v = tex->uv[3].v1;
+					points[3].g = vns[3]->g;
+
+
+					//vert_count = 4;
+
+					vert_count = ZedClipper(4, &points[0], &vertices[0]);
+
+					
+					if ( vert_count )
+					{
+						//v27 = &vertices[0];
+						goto ClipVerts;
+				    }
+
+					goto Skip_ClipVerts;
+
+				} // if ( phd_VisibleZClip
+				
+				
+			}	//else if any clip
+			*/
 
 		}
 LABEL_32:
 
 			num_TexturedQuad--;
+		 // if not all clip
 
     } while (num_TexturedQuad > 0);
 
@@ -1204,6 +2010,76 @@ LABEL_32:
 
     return obj_ptr;
 }
+
+/*
+int32_t ZedClipper2(int32_t vertex_count, POINT_INFO *Source, VBUF *Vertices)
+{
+    float Scale;
+    //vector3 Vertices[8];
+
+	//последняя вершина
+	POINT_INFO *l = &Source[Num - 1];
+    int j = 0;
+
+    for (int i = 0; i < Num; i++)
+	{
+		//сюда записываем результат
+        vector3 *v1 = &Vertices[j];
+        //последняя вершина v2
+		vector3 *v2 = l;
+        //нулевая (первая) вершина l
+		l = &Source[i];
+
+        if (v2->z < m_ZNear)
+		{
+            if (l->z < m_ZNear)
+			{
+                continue;
+            }
+            Scale = (m_ZNear - l->z) / (v2->z - l->z);
+			v1->x = (v2->x - l->x) * Scale + l->x;
+            v1->y = (v2->y - l->y) * Scale + l->y;
+            v1->z = (v2->z - l->z) * Scale + l->z;
+            v1->tu = (v2->tu - l->tu) * Scale + l->tu;
+            v1->tv = (v2->tv - l->tv) * Scale + l->tv;
+			v1 = &Vertices[++j];
+        }
+
+		if (l->z < m_ZNear)
+		{
+            Scale = (m_ZNear - l->z) / (v2->z - l->z);
+            v1->x = (v2->x - l->x) * Scale + l->x;
+            v1->y = (v2->y - l->y) * Scale + l->y;
+            v1->z = (v2->z - l->z) * Scale + l->z;
+            v1->tu = (v2->tu - l->tu) * Scale + l->tu;
+            v1->tv = (v2->tv - l->tv) * Scale + l->tv;
+			v1 = &Vertices[++j];
+        }
+		else
+		{
+            v1->x = l->x;
+            v1->y = l->y;
+            v1->z = l->z;
+            v1->tu = l->tu;
+            v1->tv = l->tv;
+			v1 = &Vertices[++j];
+        }
+    }
+
+    if (j < 3)
+	{
+        return 0;
+    }
+
+	for ( int i = 0; i < j; i++ )
+	{
+		Source[i] = Vertices[i];
+	}
+
+	return j;
+}
+
+*/
 
 int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices)
 {
@@ -1214,9 +2090,11 @@ int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices)
 	
 	int j = 0;
 
+	//float near_z = ZNear;
 	float near_z = Z_NEAR;
 
 	float persp_o_near_z = g_PhdPersp / near_z;
+	//float persp_o_near_z = near_z / g_PhdPersp;
 
 	if(vertex_count == 0)
 		return 0;
@@ -1241,10 +2119,10 @@ int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices)
 			clip = (near_z - pts0->zv) / (pts1->zv - pts0->zv);
 
 			v->x = ((pts1->xv - pts0->xv) * clip + pts0->xv) * persp_o_near_z
-					+ g_CenterX;
+					+ ViewPort_GetCenterX();
 	
 			v->y = ((pts1->yv - pts0->yv) * clip + pts0->yv) * persp_o_near_z
-					+ g_CenterY;
+					+ ViewPort_GetCenterY();
             
 			v->z = 8589934592.0f / near_z;
 
@@ -1254,6 +2132,9 @@ int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices)
 			v->g = (pts1->g - pts0->g) * clip + pts0->g;
 
 			v++;
+
+			//j++;
+
 		}
 
 		if (near_z > pts0->zv)
@@ -1261,10 +2142,10 @@ int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices)
             clip = (near_z - pts0->zv) / (pts1->zv - pts0->zv);
             
 			v->x = ((pts1->xv - pts0->xv) * clip + pts0->xv) * persp_o_near_z
-                + g_CenterX;
+                + ViewPort_GetCenterX();
 
             v->y = ((pts1->yv - pts0->yv) * clip + pts0->yv) * persp_o_near_z
-                + g_CenterY;
+                + ViewPort_GetCenterY();
             
 			v->z = 8589934592.0f / near_z;
 
@@ -1274,6 +2155,8 @@ int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices)
             v->g = (pts1->g - pts0->g) * clip + pts0->g;
 
             v++;
+			
+			//j++;
         }
 		else
 		{
@@ -1287,11 +2170,105 @@ int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices)
             v->g= pts0->g;
 
             v++;
+
+			//j++;
         }
 	}
 
 	int32_t count = (int32_t) (v - vertices);
     return count < 3 ? 0 : count;
+
+	//if( j < 3 )
+	//	return 0;
+
+	//return j;
+
+
+	/*
+    int32_t i;
+    int32_t count;
+    POINT_INFO *pts0;
+    POINT_INFO *pts1;
+    
+	GFX_3D_Vertex *v;
+    float clip;
+    float persp_o_near_z;
+    float multiplier;
+
+    multiplier = 0.0625f * g_Config.brightness;
+    float near_z = Output_GetNearZ();
+    persp_o_near_z = g_PhdPersp / near_z;
+
+    v = &vertices[0];
+    pts0 = &pts[vertex_count - 1];
+    for (i = 0; i < vertex_count; i++) {
+        pts1 = pts0;
+        pts0 = &pts[i];
+        if (near_z > pts1->zv) {
+            if (near_z > pts0->zv) {
+                continue;
+            }
+
+            clip = (near_z - pts0->zv) / (pts1->zv - pts0->zv);
+            v->x = ((pts1->xv - pts0->xv) * clip + pts0->xv) * persp_o_near_z
+                + ViewPort_GetCenterX();
+            v->y = ((pts1->yv - pts0->yv) * clip + pts0->yv) * persp_o_near_z
+                + ViewPort_GetCenterY();
+            v->z = near_z * 0.0001f;
+
+            v->w = 65536.0f / near_z;
+            v->s = v->w * ((pts1->u - pts0->u) * clip + pts0->u) * 0.00390625f;
+            v->t = v->w * ((pts1->v - pts0->v) * clip + pts0->v) * 0.00390625f;
+
+            v->r = v->g = v->b =
+                (8192.0f - ((pts1->g - pts0->g) * clip + pts0->g)) * multiplier;
+            Output_ApplyWaterEffect(&v->r, &v->g, &v->b);
+
+            v++;
+        }
+
+        if (near_z > pts0->zv) {
+            clip = (near_z - pts0->zv) / (pts1->zv - pts0->zv);
+            v->x = ((pts1->xv - pts0->xv) * clip + pts0->xv) * persp_o_near_z
+                + ViewPort_GetCenterX();
+            v->y = ((pts1->yv - pts0->yv) * clip + pts0->yv) * persp_o_near_z
+                + ViewPort_GetCenterY();
+            v->z = near_z * 0.0001f;
+
+            v->w = 65536.0f / near_z;
+            v->s = v->w * ((pts1->u - pts0->u) * clip + pts0->u) * 0.00390625f;
+            v->t = v->w * ((pts1->v - pts0->v) * clip + pts0->v) * 0.00390625f;
+
+            v->r = v->g = v->b =
+                (8192.0f - ((pts1->g - pts0->g) * clip + pts0->g)) * multiplier;
+            Output_ApplyWaterEffect(&v->r, &v->g, &v->b);
+
+            v++;
+        } else {
+            v->x = pts0->xs;
+            v->y = pts0->ys;
+            v->z = pts0->zv * 0.0001f;
+
+            v->w = 65536.0f / pts0->zv;
+            v->s = pts0->u * v->w * 0.00390625f;
+            v->t = pts0->v * v->w * 0.00390625f;
+
+            v->r = v->g = v->b = (8192.0f - pts0->g) * multiplier;
+            Output_ApplyWaterEffect(&v->r, &v->g, &v->b);
+
+            v++;
+        }
+    }
+
+    count = v - vertices;
+    return count < 3 ? 0 : count;
+
+	
+	
+	//return count < 3 ? 0 : count;
+
+	*/
+	
 
 	return 1;
 }
@@ -1465,17 +2442,25 @@ int32_t ClipVertices(int32_t num, VBUF *source)
     }
 
 	return j;
+	
+	
+    
+	//return 1;
 }
 
 //---------------------------------
 
 int32_t ClipVertices2(int32_t num, VBUF2 *source)
 {
+	
+	
     float scale;
     VBUF2 vertices[8];
 
     VBUF2 *l = &source[num - 1];
     int j = 0;
+	
+	
 
     for (int i = 0; i < num; i++)
 	{
@@ -1604,6 +2589,10 @@ int32_t ClipVertices2(int32_t num, VBUF2 *source)
     }
 
 	return j;
+	
+	
+    
+	//return 1;
 }
 
 void Output_CalculateStaticLight(int16_t adder)
@@ -2191,7 +3180,8 @@ void TestTriggers(int16_t *data, int32_t heavy)
 
         switch (TRIG_BITS(trigger))
 		{
-        case TO_OBJECT: {
+        case TO_OBJECT:
+        {
             ITEM_INFO *item = &g_Items[value];
 
             if (item->flags & IF_ONESHOT)
@@ -2415,8 +3405,8 @@ void DrawLara(ITEM_INFO *item)
 
 	g_PhdLeft = 0;
 	g_PhdTop = 0;
-	g_PhdBottom = SCREEN_HEIGHT - 1;
-	g_PhdRight = SCREEN_WIDTH - 1;
+	g_PhdRight = Screen_GetResWidth() - 1;
+    g_PhdBottom = Screen_GetResHeight() - 1;
 
     if (g_Lara.hit_direction < 0)
 	{
@@ -4623,7 +5613,7 @@ int16_t *CalcRoomVertices(int16_t *obj_ptr)
             int16_t clip_flags = 0;
             int32_t depth = zv >> W2V_SHIFT;
 
-            if (depth > DRAW_DIST_MAX)
+            if (depth > DRAW_DIST_FADE)
 			{
                 m_VBuf[i].g = 0x1FFF;
                 clip_flags |= 16;
@@ -4639,8 +5629,8 @@ int16_t *CalcRoomVertices(int16_t *obj_ptr)
 				
             }
 
-            int32_t xs = CENTER_X + xv / (zv / g_PhdPersp);
-            int32_t ys = CENTER_Y + yv / (zv / g_PhdPersp);
+            int32_t xs = ViewPort_GetCenterX() + xv / (zv / g_PhdPersp);
+            int32_t ys = ViewPort_GetCenterY() + yv / (zv / g_PhdPersp);
 
             if (g_IsWibbleEffect)
 			{
@@ -4913,8 +5903,8 @@ void DrawUnclippedItem(ITEM_INFO *item)
 
     g_PhdLeft = 0;
 	g_PhdTop = 0;
-	g_PhdRight = SCREEN_WIDTH - 1;
-	g_PhdBottom = SCREEN_HEIGHT - 1;
+	g_PhdRight = Screen_GetResWidth() - 1;
+	g_PhdBottom = Screen_GetResHeight() - 1;
 	
     DrawAnimatingItem(item);
 
@@ -5083,6 +6073,44 @@ void DrawSpriteItem(ITEM_INFO *item)
         item->shade);
 }
 
+void Output_DrawScreenSprite(
+    int32_t sx, int32_t sy, int32_t z, int32_t scale_h, int32_t scale_v,
+    int32_t sprnum, int16_t shade, uint16_t flags)
+{
+	PHDSPRITESTRUCT *sprite = &phdsprinfo[sprnum];
+    //PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];
+    int32_t x1 = sx + (scale_h * (sprite->x1 >> 3) / PHD_ONE);
+    int32_t x2 = sx + (scale_h * (sprite->x2 >> 3) / PHD_ONE);
+    int32_t y1 = sy + (scale_v * (sprite->y1 >> 3) / PHD_ONE);
+    int32_t y2 = sy + (scale_v * (sprite->y2 >> 3) / PHD_ONE);
+    //if (x2 >= 0 && y2 >= 0 && x1 < ViewPort_GetWidth() && y1 < ViewPort_GetHeight())
+	if (x2 >= 0 && y2 >= 0 && x1 < Screen_GetResWidth() && y1 < Screen_GetResHeight())
+	{
+        S_Output_DrawSprite(x1, y1, x2, y2, 8 * z, sprnum, 0);
+    }
+}
+
+
+void Output_DrawScreenSprite2D(
+    int32_t sx, int32_t sy, int32_t z, int32_t scale_h, int32_t scale_v,
+    int32_t sprnum, int16_t shade, uint16_t flags, int32_t page)
+{
+	PHDSPRITESTRUCT *sprite = &phdsprinfo[sprnum];
+    //PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];
+    int32_t x1 = sx + (scale_h * sprite->x1 / PHD_ONE);
+    int32_t x2 = sx + (scale_h * sprite->x2 / PHD_ONE);
+    int32_t y1 = sy + (scale_v * sprite->y1 / PHD_ONE);
+    int32_t y2 = sy + (scale_v * sprite->y2 / PHD_ONE);
+    //if (x2 >= 0 && y2 >= 0 && x1 < ViewPort_GetWidth() && y1 < ViewPort_GetHeight())
+	if (x2 >= 0 && y2 >= 0 && x1 < Screen_GetResWidth() && y1 < Screen_GetResHeight())
+	{
+        //S_Output_DrawSprite(x1, y1, x2, y2, 200, sprnum, 0);
+        S_Output_DrawSprite(x1, y1, x2, y2, z, sprnum, 0);
+    }
+}
+
+
+
 void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum, int16_t shade)
 {
 	
@@ -5121,15 +6149,15 @@ void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum, int16_t 
 
 	PHDSPRITESTRUCT *sprite = &phdsprinfo[sprnum];
 
-    int32_t x1 = CENTER_X + (xv + (sprite->x1 << W2V_SHIFT)) / zp;
-    int32_t y1 = CENTER_Y + (yv + (sprite->y1 << W2V_SHIFT)) / zp;
-    int32_t x2 = CENTER_X + (xv + (sprite->x2 << W2V_SHIFT)) / zp;
-    int32_t y2 = CENTER_Y + (yv + (sprite->y2 << W2V_SHIFT)) / zp;
+    int32_t x1 = ViewPort_GetCenterX() + (xv + (sprite->x1 << W2V_SHIFT)) / zp;
+    int32_t y1 = ViewPort_GetCenterY() + (yv + (sprite->y1 << W2V_SHIFT)) / zp;
+    int32_t x2 = ViewPort_GetCenterX() + (xv + (sprite->x2 << W2V_SHIFT)) / zp;
+    int32_t y2 = ViewPort_GetCenterY() + (yv + (sprite->y2 << W2V_SHIFT)) / zp;
     
 	g_PhdLeft = 0;
 	g_PhdTop = 0;
-	g_PhdRight = SCREEN_WIDTH - 1;
-	g_PhdBottom = SCREEN_HEIGHT - 1;
+	g_PhdRight = Screen_GetResWidth() - 1;
+	g_PhdBottom = Screen_GetResHeight() - 1;
 	
 	if (x2 >= g_PhdLeft && y2 >= g_PhdTop
         && x1 <= g_PhdRight && y1 <= g_PhdBottom)
@@ -5198,8 +6226,8 @@ void S_Output_DrawSprite(int16_t x1, int16_t y1, int16_t x2, int y2, int z, int 
 
 	g_PhdLeft = 0;
 	g_PhdTop = 0;
-	g_PhdRight = SCREEN_WIDTH - 1;
-	g_PhdBottom = SCREEN_HEIGHT - 1;
+	//g_PhdRight = SCREEN_WIDTH - 1;
+	//g_PhdBottom = SCREEN_HEIGHT - 1;
 
 	vertex_count = 4;
 
@@ -5285,8 +6313,9 @@ void Output_DrawUISprite(int32_t x, int32_t y, int32_t scale, int16_t sprnum, in
 
 	g_PhdLeft = 0;
 	g_PhdTop = 0;
-	g_PhdBottom = SCREEN_HEIGHT - 1;
-	g_PhdRight = SCREEN_WIDTH - 1;
+    g_PhdRight = Screen_GetResWidth() - 1;
+    g_PhdBottom = Screen_GetResHeight() - 1;
+	
 
 	if (x2 >= g_PhdLeft && y2 >= g_PhdTop
         && x1 <= g_PhdRight && y1 <= g_PhdBottom)
@@ -5294,6 +6323,118 @@ void Output_DrawUISprite(int32_t x, int32_t y, int32_t scale, int16_t sprnum, in
         S_Output_DrawSprite(x1, y1, x2, y2, 200, sprnum, shade);
     }
 }
+/*
+void Output_DrawScreenLine(int32_t sx, int32_t sy, int32_t w, int32_t h, int col)
+{
+    VBUF2 vertices[8];
+    //рисуем белую линию посредине молнии Тора
+    vertices[0].x = (float)sx;
+    vertices[0].y = (float)sy;
+    //vertices[0].z = depth;
+    vertices[0].g = col; //Compose_Colour(255, 255, 255);
+
+    vertices[1].x = (float)(sx + w);
+    vertices[1].y = (float)(sy + h);
+    //vertices[1].z = depth;
+    vertices[1].g = col; //Compose_Colour(255, 255, 255);
+
+    S_Output_DrawLine(vertices, 0);
+}
+*/
+
+void Output_DrawScreenBox(int32_t sx, int32_t sy, int32_t w, int32_t h)
+{
+	
+    //RGB888 rgb_border_light = Output_GetPaletteColor(15);
+    //RGB888 rgb_border_dark = Output_GetPaletteColor(31);
+
+    int rgb_border_light = 15;
+    int rgb_border_dark = 31;
+    Output_DrawScreenLine(sx - 1, sy - 1, w + 3, 0, rgb_border_light);
+    Output_DrawScreenLine(sx, sy, w + 1, 0, rgb_border_dark);
+    Output_DrawScreenLine(w + sx + 1, sy, 0, h + 1, rgb_border_light);
+    Output_DrawScreenLine(w + sx + 2, sy - 1, 0, h + 3, rgb_border_dark);
+    Output_DrawScreenLine(w + sx + 1, h + sy + 1, -w - 1, 0, rgb_border_light);
+    Output_DrawScreenLine(w + sx + 2, h + sy + 2, -w - 3, 0, rgb_border_dark);
+    Output_DrawScreenLine(sx - 1, h + sy + 2, 0, -3 - h, rgb_border_light);
+    Output_DrawScreenLine(sx, h + sy + 1, 0, -1 - h, rgb_border_dark);
+}
+
+void Output_DrawScreenFBox(int32_t sx, int32_t sy, int32_t w, int32_t h)
+{
+    //S_Output_DrawTranslucentQuad(sx, sy, sx + w, sy + h);
+
+    int32_t* sort = sort3dptr;
+    int16_t* info = info3dptr;
+
+    sort[0] = (int32_t)info;
+    sort[1] = 1200; //depth исправить как в ТР1
+
+    sort3dptr += 2;
+
+    info[0] = 7; //draw routine flat transparent shaded poly
+
+    //info[1] = Compose_Colour(30, 30, 30); //color исправить как в ТР1
+    info[1] = 24;
+    info[2] = 4; //num coords
+
+    info[3] = sx;
+    info[4] = sy;
+
+    info[5] = sx + w;
+    info[6] = sy;
+
+    info[7] = sx + w;
+    info[8] = sy + h;
+
+    info[9] = sx;
+    info[10] = sy + h;
+
+    info += 11;
+
+    info3dptr = info;
+
+    surfacenum++;
+
+
+}
+
+void Output_DrawScreenFlatQuad(int32_t sx, int32_t sy, int32_t w, int32_t h, RGB888 color, int depth)
+{
+    //S_Output_Draw2DQuad(sx, sy, sx + w, sy + h, color, color, color, color);
+
+    int32_t* sort = sort3dptr;
+    int16_t* info = info3dptr;
+
+    sort[0] = (int32_t)info;
+    sort[1] = depth; //depth
+
+    sort3dptr += 2;
+
+    info[0] = 5; //draw routine flat shaded poly
+    
+    info[1] = Compose_Colour(color.r, color.g, color.b); //color
+    info[2] = 4; //num coords
+    
+    info[3] = sx;
+    info[4] = sy;
+
+    info[5] = sx + w;
+    info[6] = sy;
+
+    info[7] = sx + w;
+    info[8] = sy + h;
+
+    info[9] = sx;
+    info[10] = sy + h;
+
+    info += 11;
+
+    info3dptr = info;
+
+    surfacenum++;
+}
+
 
 
 /*
@@ -5409,10 +6550,10 @@ void Output_DrawLightningSegment(int32_t x1, int32_t y1, int32_t z1, int32_t x2,
 
 	if (z1 >= Z_NEAR && z1 <= DRAW_DISTANCE_MAX && z2 >= Z_NEAR && z2 <= DRAW_DISTANCE_MAX)
 	{
-        x1 = CENTER_X + x1 / (z1 / g_PhdPersp);
-        y1 = CENTER_Y + y1 / (z1 / g_PhdPersp);
-        x2 = CENTER_X + x2 / (z2 / g_PhdPersp);
-        y2 = CENTER_Y + y2 / (z2 / g_PhdPersp);
+        x1 = ViewPort_GetCenterX() + x1 / (z1 / g_PhdPersp);
+        y1 = ViewPort_GetCenterY() + y1 / (z1 / g_PhdPersp);
+        x2 = ViewPort_GetCenterX() + x2 / (z2 / g_PhdPersp);
+        y2 = ViewPort_GetCenterY() + y2 / (z2 / g_PhdPersp);
         
 		int32_t thickness1 = (width << W2V_SHIFT) / (z1 / g_PhdPersp);
         int32_t thickness2 = (width << W2V_SHIFT) / (z2 / g_PhdPersp);
@@ -5462,15 +6603,35 @@ void S_Output_DrawLightningSegment(int x1, int y1, int z1, int thickness1, int x
     vertices[0].x = (float)(thickness1 / 2 + x1);
     vertices[0].y = (float)y1;
     //vertices[0].z = depth;
-    vertices[0].g = 0.0f; //Compose_Colour(255, 255, 255);
+    vertices[0].g = color_tor_lighting2; //Compose_Colour(255, 255, 255);
 
     vertices[1].x = (float) (thickness2 / 2 + x2);
     vertices[1].y = (float)y2;
     //vertices[1].z = depth;
-    vertices[1].g = 0.0f; //Compose_Colour(255, 255, 255);
+    vertices[1].g = color_tor_lighting2; //Compose_Colour(255, 255, 255);
 
 	S_Output_DrawLine(vertices, depth);
 }
+
+void Output_DrawScreenLine(int32_t sx, int32_t sy, int32_t w, int32_t h, int color)
+{
+    //S_Output_Draw2DLine(sx, sy, sx + w, sy + h, col, col);
+
+	VBUF2 vertices[8];
+
+	vertices[0].x = (float)sx;
+    vertices[0].y = (float)sy;
+    //vertices[0].z = depth;
+    vertices[0].g = color; //Compose_Colour(255, 255, 255);
+
+    vertices[1].x = (float)sx + w;
+    vertices[1].y = (float)sy + h;
+    //vertices[1].z = depth;
+    vertices[1].g = color; //Compose_Colour(255, 255, 255);
+
+	S_Output_DrawLine(vertices, 0);
+}
+
 
 void S_Output_DrawTriangle(VBUF2 * vertices, int vert_count, int depth)
 {
@@ -5522,7 +6683,8 @@ void S_Output_DrawLine(VBUF2 * vertices, int depth)
 	info[2] = (short int) vertices[0].y;
 	info[3] = (short int) vertices[1].x;
 	info[4] = (short int) vertices[1].y;
-	info[5] = color_tor_lighting2; //color 
+	//info[5] = color_tor_lighting2; //color 
+	info[5] = (short int) vertices[0].g; //color 
 	
 	info += 6;
 
@@ -5530,4 +6692,41 @@ void S_Output_DrawLine(VBUF2 * vertices, int depth)
 								
 	surfacenum++;
 
+}
+
+
+void Output_DrawSpriteRel(int32_t x, int32_t y, int32_t z, int16_t sprnum, int16_t shade)
+{
+    int32_t zv = g_PhdMatrixPtr->_20 * x + g_PhdMatrixPtr->_21 * y
+        + g_PhdMatrixPtr->_22 * z + g_PhdMatrixPtr->_23;
+    if (zv < Z_NEAR || zv > (DRAW_DIST_MAX << W2V_SHIFT)) {
+        return;
+    }
+
+    int32_t xv = g_PhdMatrixPtr->_00 * x + g_PhdMatrixPtr->_01 * y
+        + g_PhdMatrixPtr->_02 * z + g_PhdMatrixPtr->_03;
+    int32_t yv = g_PhdMatrixPtr->_10 * x + g_PhdMatrixPtr->_11 * y
+        + g_PhdMatrixPtr->_12 * z + g_PhdMatrixPtr->_13;
+    int32_t zp = zv / g_PhdPersp;
+
+    PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];
+    
+	int32_t x1 = ViewPort_GetCenterX() + (xv + (sprite->x1 << W2V_SHIFT)) / zp;
+    int32_t y1 = ViewPort_GetCenterY() + (yv + (sprite->y1 << W2V_SHIFT)) / zp;
+    int32_t x2 = ViewPort_GetCenterX() + (xv + (sprite->y1 << W2V_SHIFT)) / zp;
+    int32_t y2 = ViewPort_GetCenterY() + (yv + (sprite->y2 << W2V_SHIFT)) / zp;
+    
+	g_PhdLeft = 0;
+	g_PhdTop = 0;
+	g_PhdRight = Screen_GetResWidth() - 1;
+	g_PhdBottom = Screen_GetResHeight() - 1;
+	
+	
+	if (x2 >= g_PhdLeft && y2 >= g_PhdTop
+        && x1 <= g_PhdRight && y1 <= g_PhdBottom) {
+        int32_t depth = zv >> W2V_SHIFT;
+        shade += CalcFogShade(depth);
+        CLAMPG(shade, 0x1FFF);
+        S_Output_DrawSprite(x1, y1, x2, y2, zv, sprnum, shade);
+    }
 }

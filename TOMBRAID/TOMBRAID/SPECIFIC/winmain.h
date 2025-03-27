@@ -13,6 +13,8 @@ extern int lara_dist;
 extern int SCREEN_WIDTH;
 extern int SCREEN_HEIGHT;
 
+extern "C" int phd_winwidth;
+
 enum { VER_TR1, VER_TR_GOLD };
 
 extern int select_game;

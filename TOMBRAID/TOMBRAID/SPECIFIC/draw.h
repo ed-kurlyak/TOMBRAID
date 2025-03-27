@@ -85,9 +85,15 @@ void DrawUnclippedItem(ITEM_INFO *item);
 //int32_t Move3DPosTo3DPos(PHD_3DPOS *srcpos, PHD_3DPOS *destpos, int32_t velocity, PHD_ANGLE angadd);
 void DrawPickupItem(ITEM_INFO *item);
 void DrawSpriteItem(ITEM_INFO *item);
+void Output_DrawScreenSprite(int32_t sx, int32_t sy, int32_t z, int32_t scale_h, int32_t scale_v, int32_t sprnum, int16_t shade, uint16_t flags);
+void Output_DrawScreenSprite2D(int32_t sx, int32_t sy, int32_t z, int32_t scale_h, int32_t scale_v, int32_t sprnum, int16_t shade, uint16_t flags, int32_t page);
 void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum, int16_t shade);
 void S_Output_DrawSprite(int16_t x1, int16_t y1, int16_t x2, int y2, int z, int sprnum, int shade);
 void Output_DrawUISprite(int32_t x, int32_t y, int32_t scale, int16_t sprnum, int16_t shade);
+void Output_DrawScreenBox(int32_t sx, int32_t sy, int32_t w, int32_t h);
+void Output_DrawScreenFBox(int32_t sx, int32_t sy, int32_t w, int32_t h);
+
+void Output_DrawScreenFlatQuad(int32_t sx, int32_t sy, int32_t w, int32_t h, RGB888 color, int depth);
 
 //void AlignLaraPosition(PHD_VECTOR *vec, ITEM_INFO *item, ITEM_INFO *lara_item);
 //void TrapCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll);
@@ -96,6 +102,8 @@ void Output_CalcWibbleTable();
 void DrawEffect(int16_t fxnum);
 void Output_DrawLightningSegment(int32_t x1, int32_t y1, int32_t z1, int32_t x2, int32_t y2, int32_t z2, int32_t width);
 void S_Output_DrawLightningSegment(int x1, int y1, int z1, int thickness1, int x2, int y2, int z2, int thickness2);
+void Output_DrawScreenLine(int32_t sx, int32_t sy, int32_t w, int32_t h, int color);
 void S_Output_DrawTriangle(VBUF2 * vertices, int vert_count, int depth);
 void S_Output_DrawLine(VBUF2 * vertices, int depth);
 //int Compose_Colour(int inputR, int inputG, int inputB);
+void Output_DrawSpriteRel(int32_t x, int32_t y, int32_t z, int16_t sprnum, int16_t shade);
