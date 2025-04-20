@@ -511,6 +511,7 @@ void InitialiseLara()
     //g_Lara.pistols.ammo = 65535;
 //g_Lara.shotgun.ammo = 65535;
 //g_Lara.magnums.ammo = 65535;
+    /*
     g_Lara.uzis.ammo = 65535;
     Inv_AddItem(O_UZI_ITEM);
 
@@ -520,7 +521,7 @@ void InitialiseLara()
         Inv_AddItem(O_MEDI_ITEM);
     }
     //Inv_AddItem(O_UZI_AMMO_ITEM);
-
+    */
     //------------------------
     g_Lara.request_gun_type = LGT_UNARMED;
     //g_Lara.request_gun_type = LGT_PISTOLS;

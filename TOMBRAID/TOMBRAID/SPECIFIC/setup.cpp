@@ -10,6 +10,7 @@
 #include "overlay.h"
 #include "text.h"
 #include "savegame.h"
+#include "control_util.h"
 
 int Initialise_Level_Flags()
 {
@@ -23,23 +24,23 @@ int Initialise_Level_Flags()
 	return result;
 }
 
-// Функция для вычисления индекса ближайшего цвета
+//функция для вычисления индекса ближайшего цвета в палитре
 int Compose_Colour(int inputR, int inputG, int inputB)
 {
-    int closestIndex = 0; // Изначально считаем ближайшим первый элемент
-    int minDistance = INT_MAX; // Минимальная дистанция (изначально бесконечность)
+    int closestIndex = 0; //изначально считаем ближайшим первый элемент
+    int minDistance = INT_MAX; //минимальная дистанция (изначально бесконечность)
 
     for (int i = 0; i < 256; ++i)
     {
-        // Разница между входными цветами и цветами из палитры
+        //разница между входными цветами и цветами из палитры
         float redDiff = (float) (inputR - GamePalette[i].r);
         float greenDiff = (float)(inputG - GamePalette[i].g);
         float blueDiff = (float) (inputB - GamePalette[i].b);
 
-        // Вычисление квадратичного расстояния
+        //вычисление квадратичного расстояния
         int distance = (int)(pow(redDiff, 2) + pow(greenDiff, 2) + pow(blueDiff, 2));
 
-        // Проверка на минимальное расстояние
+        //проверка на минимальное расстояние
         if (distance < minDistance)
         {
             minDistance = distance;
@@ -47,34 +48,25 @@ int Compose_Colour(int inputR, int inputG, int inputB)
         }
     }
 
-    return closestIndex; // Возвращаем индекс ближайшего цвета
+    return closestIndex; //возвращаем индекс ближайшего цвета в палитре
 }
-
 
 void Init_Colours()
 {
-
 	//синяя молния Тора в комнате Тора уровень Монастырь Св.Франциска
-	color_tor_lighting = Compose_Colour(0, 0, 255);
+    //синяя молния уровень The Great Pyramid
+	ColorLighting1 = Compose_Colour(0, 0, 255);
 	//белая линия на молнии Тора в комнате Тора уровень Монастырь Св.Франциска
-	color_tor_lighting2 = Compose_Colour(255, 255, 255);
-
-	//цвет воды TR1 original - pal = 43
-	//int val1 = Compose_Colour(153, 178, 255);
-
-	//цвет воды TR1 original - pal = 43
-	//int val2 = Compose_Colour(114, 255, 255);
+    //белая линия на молнии уровень The Great Pyramid
+	ColorLighting2 = Compose_Colour(255, 255, 255);
 
 	int debug = 0;
-
-	
 }
 
 int Initialise_Level(int LevelNum)
 {
-	//if(LevelNum == 0x15) //21d
-    
-    if (g_level_num_TR1 == 21)
+    //21d = 0x15 marks saved level    
+    if (g_LevelNumTR == 21)
 	{
 		LevelNum = g_SaveGame.current_level;
 	}
@@ -96,9 +88,8 @@ int Initialise_Level(int LevelNum)
         InitialiseLara();
     }
 
-
-
 	g_Effects = (FX_INFO *)Game_Alloc(NUM_EFFECTS * sizeof(FX_INFO), GBUF_EFFECTS);
+
     InitialiseFXArray();
     InitialiseLOTArray();
 
@@ -108,9 +99,8 @@ int Initialise_Level(int LevelNum)
 
     g_HealthBarTimer = 100;
     //Sound_ResetEffects();
-
     
-    if (g_level_num_TR1 == 21)
+    if (g_LevelNumTR == 21)
     {
         ExtractSaveGameInfo();
     }
@@ -132,15 +122,18 @@ int Initialise_Level(int LevelNum)
 
 void Initialise_Game_Flags()
 {
-	for (int i = 0; i < MAX_FLIP_MAPS; i++) {
+	for (int i = 0; i < MAX_FLIP_MAPS; i++)
+    {
         g_FlipMapTable[i] = 0;
     }
 
-    for (int i = 0; i < MAX_CD_TRACKS; i++) {
+    for (int i = 0; i < MAX_CD_TRACKS; i++)
+    {
         g_MusicTrackFlags[i] = 0;
     }
 
-    for (int i = 0; i < O_NUMBER_OF; i++) {
+    for (int i = 0; i < O_NUMBER_OF; i++)
+    {
         g_Objects[i].loaded = 0;
     }
 
@@ -152,14 +145,13 @@ void Initialise_Game_Flags()
 
 bool Load_Level(int32_t LevelNum)
 {
-
 	char *szLevelName;
 
-	if(select_game == VER_TR1)
+	if(GameType == VER_TR1)
 	{
 		szLevelName = LevelNamesTR1[LevelNum];
 	}
-	else if(select_game == VER_TR_GOLD)
+	else if(GameType == VER_TR_GOLD)
 	{
 		szLevelName = LevelNamesGold[LevelNum];
 	}
@@ -168,6 +160,7 @@ bool Load_Level(int32_t LevelNum)
 
 	bool result = S_LoadLevel(szLevelName);
 
+    g_GameFlow.levels[LevelNum].secrets = GetSecretCount();
 
 	return result;
 }

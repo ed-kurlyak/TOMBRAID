@@ -12,9 +12,12 @@ void InitialiseItemArray(int32_t num_items)
 {
     g_NextItemActive = NO_ITEM;
     g_NextItemFree = g_LevelItemCount;
-    for (int i = g_LevelItemCount; i < num_items - 1; i++) {
+    
+    for (int i = g_LevelItemCount; i < num_items - 1; i++)
+    {
         g_Items[i].next_item = i + 1;
     }
+
     g_Items[num_items - 1].next_item = NO_ITEM;
 }
 
@@ -95,12 +98,14 @@ void InitialiseItem(int16_t item_num)
     item->touch_bits = 0;
     item->data = NULL;
 
-    if (item->flags & IF_NOT_VISIBLE) {
+    if (item->flags & IF_NOT_VISIBLE)
+    {
         item->status = IS_INVISIBLE;
         item->flags -= IF_NOT_VISIBLE;
     }
 
-    if ((item->flags & IF_CODE_BITS) == IF_CODE_BITS) {
+    if ((item->flags & IF_CODE_BITS) == IF_CODE_BITS)
+    {
         item->flags -= IF_CODE_BITS;
         item->flags |= IF_REVERSE;
         AddActiveItem(item_num);
@@ -114,11 +119,9 @@ void InitialiseItem(int16_t item_num)
     int32_t y_floor = (item->pos.x - r->x) >> WALL_SHIFT;
     FLOOR_INFO *floor = &r->floor[x_floor + y_floor * r->x_size];
     item->floor = floor->floor << 8;
-
-    if (g_SaveGame.bonus_flag & GBF_NGPLUS) {
-        item->hit_points *= 2;
-    }
-    if (object->initialise) {
+    
+    if (object->initialise)
+    {
         object->initialise(item_num);
     }
 }

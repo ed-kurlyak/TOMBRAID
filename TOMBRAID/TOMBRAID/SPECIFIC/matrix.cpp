@@ -41,7 +41,7 @@ void phd_GenerateW2V(PHD_3DPOS *viewpos)
     m_MatrixStack[0]._11 = TRIGMULT2(cx, cz);
     m_MatrixStack[0]._12 = TRIGMULT3(sx, cy, cz) + TRIGMULT2(sy, sz);
 
-	if( widescreen )
+	if( Widescreen )
 	{
 		float fAspect = 4.0f / 3.0f;
 		m_MatrixStack[0]._10 = (int)(m_MatrixStack[0]._10 * fAspect);

@@ -70,7 +70,7 @@ void S_DrawSprite(unsigned int dwFlags,int nX,int nY,int nZ,short int nSprite,sh
 		}
 	zp=zv/phd_persp;
 
-	pSpriteInfo=phdsprinfo+nSprite;
+	pSpriteInfo=g_PhdSpriteInfo+nSprite;
 	x1=pSpriteInfo->x1;
 	y1=pSpriteInfo->y1;
 	x2=pSpriteInfo->x2;
@@ -89,7 +89,7 @@ void S_DrawSprite(unsigned int dwFlags,int nX,int nY,int nZ,short int nSprite,sh
 		x2<<=W2V_SHIFT;
 		y2<<=W2V_SHIFT;
 		}
-	x1=(int)((xv+x1)/zp+phd_centerx); if (x1>=phd_winwidth) return;
+	x1=(int)((xv+x1)/zp+phd_centerx); if (x1>=g_PhdWinwidth) return;
 	y1=(int)((yv+y1)/zp+phd_centery); if (y1>=phd_winheight) return;
 	x2=(int)((xv+x2)/zp+phd_centerx); if (x2<0) return;
 	y2=(int)((yv+y2)/zp+phd_centery); if (y2<0) return;
@@ -186,13 +186,13 @@ void	S_DrawPickup( int x, int y, int scale, short int sprnum, short int shade, u
 	PHDSPRITESTRUCT *sptr;
 	int x1, y1, x2, y2;
 
-	sptr = &phdsprinfo[sprnum];
+	sptr = &g_PhdSpriteInfo[sprnum];
 	x1 = ((sptr->x1 * scale)>>16)+x;
 	x2 = ((sptr->x2 * scale)>>16)+x;
 	y1 = ((sptr->y1 * scale)>>16)+y;
 	y2 = ((sptr->y2 * scale)>>16)+y;
 
-	if (x2<0 || y2<0 || x1>=phd_winwidth || y1>=phd_winheight)
+	if (x2<0 || y2<0 || x1>=g_PhdWinwidth || y1>=phd_winheight)
 		return;
 
 	InsertSprite(200,x1,y1,x2,y2,sprnum,shade,-1,DRAW_TLV_WGT,0);
@@ -215,7 +215,7 @@ short int	*ins_room_sprite( short int *objptr, int num )
 		if ( vn->clip<0 )					// If Z Behind Us Ignore
 			continue;
 		zv =(int) vn->zv/phd_persp;
-		sptr = &phdsprinfo[*(objptr+1)];
+		sptr = &g_PhdSpriteInfo[*(objptr+1)];
 		x1 = (int)(( vn->xv + (sptr->x1<<W2V_SHIFT) )/zv + phd_centerx);
 		y1 = (int)(( vn->yv + (sptr->y1<<W2V_SHIFT) )/zv + phd_centery);
 		x2 = (int)(( vn->xv + (sptr->x2<<W2V_SHIFT) )/zv + phd_centerx);
@@ -229,7 +229,7 @@ short int	*ins_room_sprite( short int *objptr, int num )
 
 void	S_DrawSpriteSize( int x, int y, int z, int w, int h, short int sprnum, short int shade, uint16 flags )
 {
-	if (x+w<0 || y+h<0 || x>=phd_winwidth || y>=phd_winheight)
+	if (x+w<0 || y+h<0 || x>=g_PhdWinwidth || y>=phd_winheight)
 		return;
 
 	InsertSprite(z,x,y,x+w,y+h,sprnum,shade,-1,DRAW_TLV_WGT,0);
@@ -265,13 +265,13 @@ void S_DrawScreenSprite2d( int sx, int sy, int z, int scaleH, int scaleV, short 
 	PHDSPRITESTRUCT *sptr;
 	int x1, y1, x2, y2;
 
-	sptr = &phdsprinfo[sprnum];
+	sptr = &g_PhdSpriteInfo[sprnum];
 	x1 = ((sptr->x1 * scaleH)>>16) + sx;
 	y1 = ((sptr->y1 * scaleV)>>16) + sy;
 	x2 = ((sptr->x2 * scaleH)>>16) + sx;
 	y2 = ((sptr->y2 * scaleV)>>16) + sy;
 
-	if (x2<0 || y2<0 || x1>=phd_winwidth || y1>=phd_winheight)
+	if (x2<0 || y2<0 || x1>=g_PhdWinwidth || y1>=phd_winheight)
 		return;
 
 	int r,g,b;
@@ -309,13 +309,13 @@ void S_DrawScreenSprite( int sx, int sy, int z, int scaleH, int scaleV, short in
 	PHDSPRITESTRUCT *sptr;
 	int x1, y1, x2, y2;
 
-	sptr = &phdsprinfo[sprnum];
+	sptr = &g_PhdSpriteInfo[sprnum];
 	x1 = (((sptr->x1>>3) * scaleH)>>16) + sx;
 	x2 = (((sptr->x2>>3) * scaleH)>>16) + sx;
 	y1 = (((sptr->y1>>3) * scaleV)>>16) + sy;
 	y2 = (((sptr->y2>>3) * scaleV)>>16) + sy;
 
-	if (x2<0 || y2<0 || x1>=phd_winwidth || y1>=phd_winheight)
+	if (x2<0 || y2<0 || x1>=g_PhdWinwidth || y1>=phd_winheight)
 		return;
 
 	InsertSprite(z<<3,x1,y1,x2,y2,sprnum,shade,-1,DRAW_TLV_WGT,0);
@@ -355,14 +355,14 @@ void	draw_scaled_spriteC( short int *inptr )
 	x2 = (int)*(inptr+2);               // Get Bottom Right X
 	y2 = (int)*(inptr+3);               // Get Bottom Right Y
 
-	if ( x2<=x1 || y2<=y1 || x2<=0 || y2<=0 || x1>=phd_winxmax || y1>=phd_winymax )
+	if ( x2<=x1 || y2<=y1 || x2<=0 || y2<=0 || x1>=g_PhdWinxmax || y1>=g_PhdWinymax )
 		return;
 
 	dqptr = (unsigned char*)&depthq_table[(*(inptr+5))>>8][0];        // *(inptr+5) = DepthQ*8
-	sptr = &phdsprinfo[ *(inptr+4) ];
+	sptr = &g_PhdSpriteInfo[ *(inptr+4) ];
 	vadd = (int)(((sptr->height<<8)-0x4000)/(y2-y1) );
 	uadd = (int)(((sptr->width<<8)-0x4000)/(x2-x1) );
-	ssptr = (unsigned char*)texture_page_ptrs[sptr->tpage] + sptr->offset;
+	ssptr = (unsigned char*)TexturePagePtrs[sptr->tpage] + sptr->offset;
 
 	ustart = vstart = 0x4000;
 	if ( x1<0 )						// Clip On Screen Coordinates..
@@ -375,15 +375,15 @@ void	draw_scaled_spriteC( short int *inptr )
 		vstart -= vadd*y1;
 		y1 = 0;
 	}
-	if ( x2>phd_winxmax )
-		x2 = phd_winxmax+1;
-	if ( y2>phd_winymax )
-		y2 = phd_winymax+1;
+	if ( x2>g_PhdWinxmax )
+		x2 = g_PhdWinxmax+1;
+	if ( y2>g_PhdWinymax )
+		y2 = g_PhdWinymax+1;
 
 	x2 -= x1;
 	y2 -= y1;
-	pixptr = (unsigned char*)phd_winptr + (y1+phd_winymin)*phd_scrwidth + (x1+phd_winxmin);
-	pixadd = phd_scrwidth - x2;
+	pixptr = (unsigned char*)phd_winptr + (y1+g_PhdWinymin)*g_PhdScrwidth + (x1+g_PhdWinxmin);
+	pixadd = g_PhdScrwidth - x2;
 
 
 	

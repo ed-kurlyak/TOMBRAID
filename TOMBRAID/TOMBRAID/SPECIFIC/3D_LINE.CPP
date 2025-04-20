@@ -47,17 +47,17 @@ void	draw_poly_line( short int *iptr )
 		y2 = y1;
 		y1 = i;
 	}
-	if ( x2<0 || x1>phd_winxmax )			 	/* only draw n clip if can see*/
+	if ( x2<0 || x1>g_PhdWinxmax )			 	/* only draw n clip if can see*/
 		return;
 	if ( x1<0 )
 	{							 				/* is Left clipping required ?*/
 		y1 -= ((y2-y1)*x1)/(x2-x1);
 		x1=0;
   	}
-  	if ( x2>phd_winxmax )
+  	if ( x2>g_PhdWinxmax )
 	{					 						/* is Right clipping required ?*/
-  		y2=y1+((y2-y1)*(phd_winxmax-x1))/(x2-x1);
-  		x2=phd_winxmax;
+  		y2=y1+((y2-y1)*(g_PhdWinxmax-x1))/(x2-x1);
+  		x2=g_PhdWinxmax;
   	}
  	if ( y2 < y1 )
 	{						 					/* swap end coords so y1<y2*/
@@ -68,19 +68,19 @@ void	draw_poly_line( short int *iptr )
   		y2 = y1;
   		y1 = i;
   	}
- 	if ( y2<0 || y1 >phd_winymax )				/*only cont if line on screen*/
+ 	if ( y2<0 || y1 >g_PhdWinymax )				/*only cont if line on screen*/
 		return;
   	if (y1<0)
 	{											/*is Top clipping required ?*/
   		x1-=((x2-x1)*y1)/(y2-y1);
   		y1=0;
   	}
- 	if (y2>phd_winymax)
+ 	if (y2>g_PhdWinymax)
 	{											/*is bottom Clipping required ?*/
- 		x2=x1+((x2-x1)*(phd_winymax-y1))/(y2-y1);
- 		y2=phd_winymax;
+ 		x2=x1+((x2-x1)*(g_PhdWinymax-y1))/(y2-y1);
+ 		y2=g_PhdWinymax;
  	}
-	drawptr = phd_winptr+(phd_scrwidth*y1)+x1;
+	drawptr = phd_winptr+(g_PhdScrwidth*y1)+x1;
 	xdif = x2-x1;
 	ydif = y2-y1;
 	if ( xdif||ydif ) 			   				/*if x1<>x2 OR y1<>y2 then draw line*/
@@ -93,10 +93,10 @@ void	draw_poly_line( short int *iptr )
 			xdif = -xdif;
 		}
 		if ( ydif>=0 )
-			yadd = phd_scrwidth;
+			yadd = g_PhdScrwidth;
 		else
 		{
-			yadd = -phd_scrwidth;
+			yadd = -g_PhdScrwidth;
 			ydif = -ydif;
 		}
 		fraksum=0;

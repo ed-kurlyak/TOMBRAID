@@ -32,7 +32,7 @@
 #define DRAW_DISTANCE_MAX 0x5000 << W2V_SHIFT
 #define DRAW_DISTANCE_MIN 20 <<  W2V_SHIFT
 
-#define MAX_SOUND_SAMPLES 370
+//#define MAX_SOUND_SAMPLES 370
 
 #define SQUARE(A) ((A) * (A))
 

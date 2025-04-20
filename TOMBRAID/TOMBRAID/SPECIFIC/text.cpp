@@ -76,15 +76,18 @@ static void Text_DrawText(TEXTSTRING *textstring);
 
 void Text_Init()
 {
-    for (int i = 0; i < TEXT_MAX_STRINGS; i++) {
+    for (int i = 0; i < TEXT_MAX_STRINGS; i++)
+    {
         m_TextstringTable[i].flags.all = 0;
     }
+
     m_TextstringCount = 0;
 }
 
 TEXTSTRING *Text_Create(int16_t x, int16_t y, const char *string)
 {
-    if (m_TextstringCount == TEXT_MAX_STRINGS) {
+    if (m_TextstringCount == TEXT_MAX_STRINGS)
+    {
         return NULL;
     }
 
@@ -99,11 +102,13 @@ TEXTSTRING *Text_Create(int16_t x, int16_t y, const char *string)
         }
         result++;
     }
-    if (n >= TEXT_MAX_STRINGS) {
+    if (n >= TEXT_MAX_STRINGS)
+    {
         return NULL;
     }
 
-    if (!string) {
+    if (!string)
+    {
         return NULL;
     }
 
@@ -156,9 +161,11 @@ void Text_ChangeText(TEXTSTRING *textstring, const char *string)
 
 void Text_SetScale(TEXTSTRING *textstring, int32_t scale_h, int32_t scale_v)
 {
-    if (!textstring) {
+    if (!textstring)
+    {
         return;
     }
+
     textstring->scale.h = scale_h;
     textstring->scale.v = scale_v;
 }
@@ -250,33 +257,46 @@ void Text_AlignBottom(TEXTSTRING *textstring, bool enable)
 
 int32_t Text_GetWidth(TEXTSTRING *textstring)
 {
-    if (!textstring) {
+    if (!textstring)
+    {
         return 0;
     }
+
     int width = 0;
     char *ptr = textstring->string;
-    for (char letter = *ptr; *ptr; letter = *ptr++) {
-        if (letter == 0x7F || (letter > 10 && letter < 32)) {
+
+    for (char letter = *ptr; *ptr; letter = *ptr++)
+    {
+        if (letter == 0x7F || (letter > 10 && letter < 32))
+        {
             continue;
         }
 
-        if (letter == 32) {
+        if (letter == 32)
+        {
             width += textstring->word_spacing * textstring->scale.h / PHD_ONE;
             continue;
         }
 
-        if (letter >= 16) {
+        //тут возможно ошибка может быть отрицательный индекс массива
+        //оригинальный код
+        if (letter >= 16)
+        //if (letter >= 32 && letter <= 126) //этот мой код заменяет ошибочный
+        {
             letter = m_TextASCIIMap[letter - 32];
-        } else if (letter >= 11) {
+        }
+        else if (letter >= 11)
+        {
             letter = letter + 91;
-        } else {
+        }
+        else
+        {
             letter = letter + 81;
         }
 
-        width += ((m_TextSpacing[(uint8_t)letter] + textstring->letter_spacing)
-                  * textstring->scale.h)
-            / PHD_ONE;
+        width += ((m_TextSpacing[(uint8_t)letter] + textstring->letter_spacing) * textstring->scale.h) / PHD_ONE;
     }
+
     width -= textstring->letter_spacing;
     width &= 0xFFFE;
     return width;
@@ -284,13 +304,18 @@ int32_t Text_GetWidth(TEXTSTRING *textstring)
 
 void Text_Remove(TEXTSTRING *textstring)
 {
-    if (!textstring) {
+    if (!textstring)
+    {
         return;
     }
-    if (textstring->flags.active) {
-        if (textstring->on_remove) {
+    
+    if (textstring->flags.active)
+    {
+        if (textstring->on_remove)
+        {
             textstring->on_remove(textstring);
         }
+        
         textstring->flags.active = 0;
         m_TextstringCount--;
     }
@@ -298,20 +323,27 @@ void Text_Remove(TEXTSTRING *textstring)
 
 void Text_RemoveAll()
 {
-    for (int i = 0; i < TEXT_MAX_STRINGS; i++) {
+    for (int i = 0; i < TEXT_MAX_STRINGS; i++)
+    {
         TEXTSTRING *textstring = &m_TextstringTable[i];
-        if (textstring->flags.active) {
+        
+        if (textstring->flags.active)
+        {
             Text_Remove(textstring);
         }
     }
+
     Text_Init();
 }
 
 void Text_Draw()
 {
-    for (int i = 0; i < TEXT_MAX_STRINGS; i++) {
+    for (int i = 0; i < TEXT_MAX_STRINGS; i++)
+    {
         TEXTSTRING *textstring = &m_TextstringTable[i];
-        if (textstring->flags.active) {
+    
+        if (textstring->flags.active)
+        {
             Text_DrawText(textstring);
         }
     }
@@ -381,7 +413,11 @@ static void Text_DrawText(TEXTSTRING *textstring)
         }
 
         int32_t sprite_num = letter;
+        
+        //тут возможно ошибка может быть отрицательный индекс массива
+        //оригинальный код
         if (letter >= 16)
+        //if (letter >= 32 && letter <= 126) //этот мой код заменяет ошибочный
         {
             sprite_num = m_TextASCIIMap[letter - 32];
         }
@@ -411,22 +447,32 @@ static void Text_DrawText(TEXTSTRING *textstring)
 
     int32_t bwidth = 0;
     int32_t bheight = 0;
-    if (textstring->flags.background || textstring->flags.outline) {
-        if (textstring->bgnd_size.x) {
+
+    if (textstring->flags.background || textstring->flags.outline)
+    {
+        if (textstring->bgnd_size.x)
+        {
             bxpos += textwidth / 2;
             bxpos -= textstring->bgnd_size.x / 2;
             bwidth = textstring->bgnd_size.x + TEXT_BOX_OFFSET * 2;
-        } else {
+        }
+        else
+        {
             bwidth = textwidth + TEXT_BOX_OFFSET * 2;
         }
-        if (textstring->bgnd_size.y) {
+        
+        if (textstring->bgnd_size.y)
+        {
             bheight = textstring->bgnd_size.y;
-        } else {
+        }
+        else
+        {
             bheight = TEXT_HEIGHT + 7;
         }
     }
 
-    if (textstring->flags.background) {
+    if (textstring->flags.background)
+    {
         sx = Screen_GetRenderScale(bxpos);
         sy = Screen_GetRenderScale(bypos);
         sh = Screen_GetRenderScale(bwidth);
@@ -435,7 +481,8 @@ static void Text_DrawText(TEXTSTRING *textstring)
         Output_DrawScreenFBox(sx, sy, sh, sv);
     }
 
-    if (textstring->flags.outline) {
+    if (textstring->flags.outline)
+    {
         sx = Screen_GetRenderScale(bxpos);
         sy = Screen_GetRenderScale(bypos);
         sh = Screen_GetRenderScale(bwidth);

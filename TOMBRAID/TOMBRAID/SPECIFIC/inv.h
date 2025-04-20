@@ -59,6 +59,14 @@ extern INVENTORY_ITEM g_InvItemLarasHome;
 extern TEXTSTRING *g_InvItemText[];
 extern TEXTSTRING *g_InvRingText;
 
+void S_FadeInInventory(int32_t fade);
+void S_FadeOutInventory(int32_t fade);
+void Sound_StopAmbientSounds();
+void Sound_StopAllSamples();
+void S_SoundVolume(int Volume);
+void DoInventoryPicture();
+void S_FinishInventory();
+
 int32_t Display_Inventory(int inv_mode);
 void Construct_Inventory();
 void SelectMeshes(INVENTORY_ITEM *inv_item);

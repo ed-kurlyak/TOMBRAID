@@ -196,12 +196,12 @@ void Output_DrawShadow(int16_t size, int16_t *bptr, ITEM_INFO *item)
     int32_t x_add = (x1 - x0) * size / 1024;
     int32_t z_add = (z1 - z0) * size / 1024;
 
-    for (i = 0; i < g_ShadowInfo.vertex_count; i++) {
+    for (i = 0; i < g_ShadowInfo.vertex_count; i++)
+    {
         int32_t angle = (PHD_180 + i * PHD_360) / g_ShadowInfo.vertex_count;
-        g_ShadowInfo.vertex[i].x =
-            x_mid + (x_add * 2) * phd_sin(angle) / PHD_90;
-        g_ShadowInfo.vertex[i].z =
-            z_mid + (z_add * 2) * phd_cos(angle) / PHD_90;
+
+        g_ShadowInfo.vertex[i].x = x_mid + (x_add * 2) * phd_sin(angle) / PHD_90;
+        g_ShadowInfo.vertex[i].z = z_mid + (z_add * 2) * phd_cos(angle) / PHD_90;
         g_ShadowInfo.vertex[i].y = 0;
     }
 
@@ -209,28 +209,26 @@ void Output_DrawShadow(int16_t size, int16_t *bptr, ITEM_INFO *item)
     phd_TranslateAbs(item->pos.x, item->floor, item->pos.z);
     phd_RotY(item->pos.y_rot);
 
-    if (Output_CalcObjectVertices(&g_ShadowInfo.poly_count)) {
+    if (Output_CalcObjectVertices(&g_ShadowInfo.poly_count))
+    {
         int16_t clip_and = 1;
         int16_t clip_positive = 1;
         int16_t clip_or = 0;
-        for (i = 0; i < g_ShadowInfo.vertex_count; i++) {
+        for (i = 0; i < g_ShadowInfo.vertex_count; i++)
+        {
             clip_and &= m_VBuf[i].clip;
             clip_positive &= m_VBuf[i].clip >= 0;
             clip_or |= m_VBuf[i].clip;
         }
         PHD_VBUF *vn1 = &m_VBuf[0];
-        //PHD_VBUF *vn2 = &m_VBuf[g_Config.enable_round_shadow ? 4 : 1];
-        //PHD_VBUF *vn3 = &m_VBuf[g_Config.enable_round_shadow ? 8 : 2];
 		PHD_VBUF *vn2 = &m_VBuf[1];
         PHD_VBUF *vn3 = &m_VBuf[2];
 
-        bool visible =
-            ((int32_t)(((vn3->xs - vn2->xs) * (vn1->ys - vn2->ys)) - ((vn1->xs - vn2->xs) * (vn3->ys - vn2->ys)))
-             >= 0);
+        bool visible = ((int32_t)(((vn3->xs - vn2->xs) * (vn1->ys - vn2->ys)) - ((vn1->xs - vn2->xs) * (vn3->ys - vn2->ys))) >= 0);
 
-        if (!clip_and && clip_positive && visible) {
-            S_Output_DrawShadow(
-                &m_VBuf[0], clip_or ? 1 : 0, g_ShadowInfo.vertex_count);
+        if (!clip_and && clip_positive && visible)
+        {
+            S_Output_DrawShadow(&m_VBuf[0], clip_or ? 1 : 0, g_ShadowInfo.vertex_count);
         }
     }
 
@@ -239,6 +237,77 @@ void Output_DrawShadow(int16_t size, int16_t *bptr, ITEM_INFO *item)
 
 void S_Output_DrawShadow(PHD_VBUF *vbufs, int clip, int vertex_count)
 {
+
+    VBUF2 vertices[32];
+
+    for (int i = 0; i < vertex_count; i++)
+    {
+        VBUF2* vertex = &vertices[i];
+        PHD_VBUF* vbuf = &vbufs[i];
+        vertex->x = (float)vbuf->xs;
+        vertex->y = (float)vbuf->ys;
+        vertex->g = 24.0f;
+    }
+
+    int vert_count = 8;
+
+    if (clip)
+    {
+        vert_count = ClipVertices2(vert_count, &vertices[0]);
+
+        if (!vertex_count)
+        {
+            return;
+        }
+    }
+
+    if (vert_count)
+    {
+        int depth = (vbufs[0].zv + vbufs[1].zv + vbufs[2].zv + vbufs[3].zv
+            + vbufs[4].zv + vbufs[5].zv + vbufs[6].zv + vbufs[7].zv) / 8;
+
+        int32_t* sort = sort3dptr;
+        int16_t* info = info3dptr;
+
+        sort[0] = (int32_t)info;
+        sort[1] = depth;
+
+        sort3dptr += 2;
+
+        info[0] = 7;//draw type
+        info[1] = 24; //color / tex page
+        info[2] = vert_count;
+
+        info += 3;
+
+        int32_t indx = 0;
+
+        if (vert_count > 0)
+        {
+            do
+            {
+                info[0] = (short int)vertices[indx].x;
+                info[1] = (short int)vertices[indx].y;
+                //info[2] = (short int)vertices[indx].g;
+
+                //info += 3;
+                info += 2;
+                indx++;
+
+            } while (indx < vert_count);
+
+            info3dptr = info;
+
+            surfacenum++;
+
+        } // if(vert_count > 0)
+
+        
+    }
+
+    
+
+
     // needs to be more than 8 cause clipping might return more polygons.
     //GFX_3D_Vertex vertices[vertex_count * CLIP_VERTCOUNT_SCALE];
 	/*
@@ -2306,14 +2375,14 @@ int32_t ClipVertices(int32_t num, VBUF *source)
             v1->v = (v2->v - l->v) * scale + l->v;
             v1 = &vertices[++j];
         }
-		else if (v2->x > g_SurfaceMaxX)
+		else if (v2->x > g_PhdWinxmax)
 		{
-            if (l->x > g_SurfaceMaxX)
+            if (l->x > g_PhdWinxmax)
 			{
                 continue;
             }
-            scale = (g_SurfaceMaxX - l->x) / (v2->x - l->x);
-            v1->x = g_SurfaceMaxX;
+            scale = (g_PhdWinxmax - l->x) / (v2->x - l->x);
+            v1->x = g_PhdWinxmax;
             v1->y = (v2->y - l->y) * scale + l->y;
             v1->z = (v2->z - l->z) * scale + l->z;
             v1->g = (v2->g - l->g) * scale + l->g;
@@ -2333,10 +2402,10 @@ int32_t ClipVertices(int32_t num, VBUF *source)
             v1->v = (v2->v - l->v) * scale + l->v;
             v1 = &vertices[++j];
         }
-		else if (l->x > g_SurfaceMaxX)
+		else if (l->x > g_PhdWinxmax)
 		{
-            scale = (g_SurfaceMaxX - l->x) / (v2->x - l->x);
-            v1->x = g_SurfaceMaxX;
+            scale = (g_PhdWinxmax - l->x) / (v2->x - l->x);
+            v1->x = g_PhdWinxmax;
             v1->y = (v2->y - l->y) * scale + l->y;
             v1->z = (v2->z - l->z) * scale + l->z;
             v1->g = (v2->g - l->g) * scale + l->g;
@@ -2455,7 +2524,8 @@ int32_t ClipVertices2(int32_t num, VBUF2 *source)
 	
 	
     float scale;
-    VBUF2 vertices[8];
+    //VBUF2 vertices[8];
+    VBUF2 vertices[32];
 
     VBUF2 *l = &source[num - 1];
     int j = 0;
@@ -2480,14 +2550,14 @@ int32_t ClipVertices2(int32_t num, VBUF2 *source)
             v1->g = (v2->g - l->g) * scale + l->g;
             v1 = &vertices[++j];
         }
-		else if (v2->x > g_SurfaceMaxX)
+		else if (v2->x > g_PhdWinxmax)
 		{
-            if (l->x > g_SurfaceMaxX)
+            if (l->x > g_PhdWinxmax)
 			{
                 continue;
             }
-            scale = (g_SurfaceMaxX - l->x) / (v2->x - l->x);
-            v1->x = g_SurfaceMaxX;
+            scale = (g_PhdWinxmax - l->x) / (v2->x - l->x);
+            v1->x = g_PhdWinxmax;
             v1->y = (v2->y - l->y) * scale + l->y;
             v1->g = (v2->g - l->g) * scale + l->g;
             v1 = &vertices[++j];
@@ -2501,10 +2571,10 @@ int32_t ClipVertices2(int32_t num, VBUF2 *source)
             v1->g = (v2->g - l->g) * scale + l->g;
             v1 = &vertices[++j];
         }
-		else if (l->x > g_SurfaceMaxX)
+		else if (l->x > g_PhdWinxmax)
 		{
-            scale = (g_SurfaceMaxX - l->x) / (v2->x - l->x);
-            v1->x = g_SurfaceMaxX;
+            scale = (g_PhdWinxmax - l->x) / (v2->x - l->x);
+            v1->x = g_PhdWinxmax;
             v1->y = (v2->y - l->y) * scale + l->y;
             v1->g = (v2->g - l->g) * scale + l->g;
             v1 = &vertices[++j];
@@ -2593,8 +2663,8 @@ int32_t ClipVertices2(int32_t num, VBUF2 *source)
 	
     
 	//return 1;
-}
 
+}
 void Output_CalculateStaticLight(int16_t adder)
 {
     g_LsAdder = adder - 16 * 256;
@@ -3452,7 +3522,7 @@ void DrawLara(ITEM_INFO *item)
     // save matrix for hair
     saved_matrix = *g_PhdMatrixPtr;
 
-    //Output_DrawShadow(object->shadow_size, frame, item);
+    Output_DrawShadow(object->shadow_size, frame, item);
     phd_PushMatrix();
     phd_TranslateAbs(item->pos.x, item->pos.y, item->pos.z);
     phd_RotYXZ(item->pos.y_rot, item->pos.x_rot, item->pos.z_rot);
@@ -4085,7 +4155,7 @@ void DrawLaraInt(
 
     saved_matrix = *g_PhdMatrixPtr;
 
-    //Output_DrawShadow(object->shadow_size, bounds, item);
+    Output_DrawShadow(object->shadow_size, bounds, item);
     phd_PushMatrix();
     phd_TranslateAbs(item->pos.x, item->pos.y, item->pos.z);
     phd_RotYXZ(item->pos.y_rot, item->pos.x_rot, item->pos.z_rot);
@@ -6077,7 +6147,7 @@ void Output_DrawScreenSprite(
     int32_t sx, int32_t sy, int32_t z, int32_t scale_h, int32_t scale_v,
     int32_t sprnum, int16_t shade, uint16_t flags)
 {
-	PHDSPRITESTRUCT *sprite = &phdsprinfo[sprnum];
+	PHDSPRITESTRUCT *sprite = &g_PhdSpriteInfo[sprnum];
     //PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];
     int32_t x1 = sx + (scale_h * (sprite->x1 >> 3) / PHD_ONE);
     int32_t x2 = sx + (scale_h * (sprite->x2 >> 3) / PHD_ONE);
@@ -6091,25 +6161,21 @@ void Output_DrawScreenSprite(
 }
 
 
-void Output_DrawScreenSprite2D(
-    int32_t sx, int32_t sy, int32_t z, int32_t scale_h, int32_t scale_v,
-    int32_t sprnum, int16_t shade, uint16_t flags, int32_t page)
+void Output_DrawScreenSprite2D(int32_t sx, int32_t sy, int32_t z, int32_t scale_h,
+    int32_t scale_v, int32_t sprnum, int16_t shade, uint16_t flags, int32_t page)
 {
-	PHDSPRITESTRUCT *sprite = &phdsprinfo[sprnum];
-    //PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];
+	PHDSPRITESTRUCT *sprite = &g_PhdSpriteInfo[sprnum];
+
     int32_t x1 = sx + (scale_h * sprite->x1 / PHD_ONE);
     int32_t x2 = sx + (scale_h * sprite->x2 / PHD_ONE);
     int32_t y1 = sy + (scale_v * sprite->y1 / PHD_ONE);
     int32_t y2 = sy + (scale_v * sprite->y2 / PHD_ONE);
-    //if (x2 >= 0 && y2 >= 0 && x1 < ViewPort_GetWidth() && y1 < ViewPort_GetHeight())
+
 	if (x2 >= 0 && y2 >= 0 && x1 < Screen_GetResWidth() && y1 < Screen_GetResHeight())
 	{
-        //S_Output_DrawSprite(x1, y1, x2, y2, 200, sprnum, 0);
         S_Output_DrawSprite(x1, y1, x2, y2, z, sprnum, 0);
     }
 }
-
-
 
 void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum, int16_t shade)
 {
@@ -6147,7 +6213,7 @@ void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum, int16_t 
 	
     //PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];
 
-	PHDSPRITESTRUCT *sprite = &phdsprinfo[sprnum];
+	PHDSPRITESTRUCT *sprite = &g_PhdSpriteInfo[sprnum];
 
     int32_t x1 = ViewPort_GetCenterX() + (xv + (sprite->x1 << W2V_SHIFT)) / zp;
     int32_t y1 = ViewPort_GetCenterY() + (yv + (sprite->y1 << W2V_SHIFT)) / zp;
@@ -6172,78 +6238,6 @@ void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum, int16_t 
 
 void S_Output_DrawSprite(int16_t x1, int16_t y1, int16_t x2, int y2, int z, int sprnum, int shade)
 {
-	/*
-	float t1;
-    float t2;
-    float t3;
-    float t4;
-    float t5;
-    float vz;
-    float vshade;
-	int32_t vertex_count;
-	*/
-    //PHD_SPRITE *sprite;
-	//VBUF vertices[8];
-
-	//sprite = &g_PhdSpriteInfo[sprnum];
-
-	/*
-
-	t1 = ((int)sprite->offset & 0xFF) + 0.5f;
-    t2 = ((int)sprite->offset >> 8) + 0.5f;
-    t3 = ((int)sprite->width >> 8) + t1;
-    t4 = ((int)sprite->height >> 8) + t2;
-
-	vz = 8589934592.0f / z;
-
-    vertices[0].x = x1;
-    vertices[0].y = y1;
-    vertices[0].z = vz;
-    vertices[0].s = t1 * t5;
-    vertices[0].t = t2 * t5;
-    vertices[0].g = shade;
-
-	vertices[1].x = x2;
-    vertices[1].y = y1;
-    vertices[1].z = vz;
-    vertices[1].s = t3 * t5;
-    vertices[1].t = t2 * t5;
-    vertices[1].g = shade;
-
-	vertices[2].x = x2;
-    vertices[2].y = y2;
-    vertices[2].z = vz;
-    vertices[2].s = t3 * t5;
-    vertices[2].t = t4 * t5;
-    vertices[2].g = shade;
-
-	vertices[3].x = x1;
-    vertices[3].y = y2;
-    vertices[3].z = vz;
-    vertices[3].s = t1 * t5;
-    vertices[3].t = t4 * t5;
-    vertices[3].g = shade;
-
-	g_PhdLeft = 0;
-	g_PhdTop = 0;
-	//g_PhdRight = SCREEN_WIDTH - 1;
-	//g_PhdBottom = SCREEN_HEIGHT - 1;
-
-	vertex_count = 4;
-
-	if (x1 < 0 || y1 < 0 || x2 > g_PhdRight
-        || y2 > g_PhdBottom)
-	{
-        vertex_count = ClipVertices(vertex_count, vertices);
-    }
-
-	if (!vertex_count)
-	{
-        return;
-    }
-
-	*/
-
 	int32_t * sort = sort3dptr;
 	int16_t * info = info3dptr;
 		
@@ -6252,10 +6246,7 @@ void S_Output_DrawSprite(int16_t x1, int16_t y1, int16_t x2, int y2, int z, int 
 
 	sort3dptr += 2;
 
-	info[0] = 8; //scaled sprite
-	//info[1] = sprite->tpage;
-	//info[2] = vert_count;
-	//info += 2;
+	info[0] = 8; //scaled sprite draw func
 	info[1] = x1;
 	info[2] = y1;
 	info[3] = x2;
@@ -6268,43 +6259,12 @@ void S_Output_DrawSprite(int16_t x1, int16_t y1, int16_t x2, int y2, int z, int 
 	info3dptr = info;
 
 	surfacenum++;
-
-	/*
-
-	int32_t indx = 0;
-
-	if(vert_count > 0)
-	{
-
-		do
-		{
-			info[0] = (short int) vertices[indx].x; //edx
-			info[1] = (short int) vertices[indx].y; //edx + 4
-			info[2] = (short int) vertices[indx].g;
-
-			*(float*)&info[3] = vertices[indx].z;
-			*(float*)&info[5] = vertices[indx].u;
-			*(float*)&info[7] = vertices[indx].v;
-
-			info += 9;
-			indx++;
-
-		}while ( indx < vert_count );
-
-		info3dptr = info;
-								
-	} // if(vert_count > 0)
-							
-	surfacenum++;
-
-	*/
-    
 }
 
 void Output_DrawUISprite(int32_t x, int32_t y, int32_t scale, int16_t sprnum, int16_t shade)
 {
     //PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];
-	PHDSPRITESTRUCT *sprite = &phdsprinfo[sprnum];
+	PHDSPRITESTRUCT *sprite = &g_PhdSpriteInfo[sprnum];
 
 	int32_t x1 = x + (scale * sprite->x1 >> 16);
     int32_t x2 = x + (scale * sprite->x2 >> 16);
@@ -6603,12 +6563,12 @@ void S_Output_DrawLightningSegment(int x1, int y1, int z1, int thickness1, int x
     vertices[0].x = (float)(thickness1 / 2 + x1);
     vertices[0].y = (float)y1;
     //vertices[0].z = depth;
-    vertices[0].g = color_tor_lighting2; //Compose_Colour(255, 255, 255);
+    vertices[0].g = (float)ColorLighting2; //Compose_Colour(255, 255, 255);
 
     vertices[1].x = (float) (thickness2 / 2 + x2);
     vertices[1].y = (float)y2;
     //vertices[1].z = depth;
-    vertices[1].g = color_tor_lighting2; //Compose_Colour(255, 255, 255);
+    vertices[1].g = (float)ColorLighting2; //Compose_Colour(255, 255, 255);
 
 	S_Output_DrawLine(vertices, depth);
 }
@@ -6622,12 +6582,12 @@ void Output_DrawScreenLine(int32_t sx, int32_t sy, int32_t w, int32_t h, int col
 	vertices[0].x = (float)sx;
     vertices[0].y = (float)sy;
     //vertices[0].z = depth;
-    vertices[0].g = color; //Compose_Colour(255, 255, 255);
+    vertices[0].g = (float)color; //Compose_Colour(255, 255, 255);
 
     vertices[1].x = (float)sx + w;
     vertices[1].y = (float)sy + h;
     //vertices[1].z = depth;
-    vertices[1].g = color; //Compose_Colour(255, 255, 255);
+    vertices[1].g = (float)color; //Compose_Colour(255, 255, 255);
 
 	S_Output_DrawLine(vertices, 0);
 }
@@ -6644,7 +6604,7 @@ void S_Output_DrawTriangle(VBUF2 * vertices, int vert_count, int depth)
 	sort3dptr += 2;
 
 	info[0] = 6; //tex->drawtype;
-	info[1] = color_tor_lighting; //color tex->tpage;
+	info[1] = ColorLighting1; //color tex->tpage;
 	info[2] = vert_count;
 
 	info += 3;
@@ -6683,7 +6643,7 @@ void S_Output_DrawLine(VBUF2 * vertices, int depth)
 	info[2] = (short int) vertices[0].y;
 	info[3] = (short int) vertices[1].x;
 	info[4] = (short int) vertices[1].y;
-	//info[5] = color_tor_lighting2; //color 
+	//info[5] = ColorLighting2; //color 
 	info[5] = (short int) vertices[0].g; //color 
 	
 	info += 6;
@@ -6709,7 +6669,7 @@ void Output_DrawSpriteRel(int32_t x, int32_t y, int32_t z, int16_t sprnum, int16
         + g_PhdMatrixPtr->_12 * z + g_PhdMatrixPtr->_13;
     int32_t zp = zv / g_PhdPersp;
 
-    PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];
+    PHDSPRITESTRUCT*sprite = &g_PhdSpriteInfo[sprnum];
     
 	int32_t x1 = ViewPort_GetCenterX() + (xv + (sprite->x1 << W2V_SHIFT)) / zp;
     int32_t y1 = ViewPort_GetCenterY() + (yv + (sprite->y1 << W2V_SHIFT)) / zp;

@@ -8,12 +8,12 @@
 
 _DATA	SEGMENT PARA PUBLIC USE32 'DATA'
 
-	EXTERNDEF C phd_scrwidth:DWORD
+	EXTERNDEF C g_PhdScrwidth:DWORD
 	EXTERNDEF C phd_winptr:DWORD
-	EXTERNDEF C phd_winxmax:DWORD
-	EXTERNDEF C phd_winwidth:DWORD
+	EXTERNDEF C g_PhdWinxmax:DWORD
+	EXTERNDEF C g_PhdWinwidth:DWORD
 	EXTERNDEF C phd_winheight:DWORD
-	EXTERNDEF C phdsprinfo:DWORD
+	EXTERNDEF C g_PhdSpriteInfo:DWORD
 	EXTERNDEF C xbuffer:DWORD
 	EXTERNDEF C gouraud_table:BYTE
 	EXTERNDEF C depthq_table:BYTE
@@ -42,7 +42,7 @@ _flatA PROC PUBLIC
 		mov		esi,eax
 		shl		esi,3
 		add     esi,offset[xbuffer+2]        ; Get Address Xbuffer
-      imul    eax,[phd_scrwidth]      	 ; ebp = Line Pointer
+      imul    eax,[g_PhdScrwidth]      	 ; ebp = Line Pointer
 		add		eax,[phd_winptr]
 		mov		ebp,eax
 		cld									 ; Clear direction flag!
@@ -71,7 +71,7 @@ _flatA PROC PUBLIC
 @bout:	mov		ecx,ebx           	       	 ; copy to ecx
 		rep		stosb               	     ; store ecx bytes
 @@nexl:	add		esi,8						 ; increment Xbuffer
-		add		ebp,DWORD PTR[phd_scrwidth]	 ; Add screen width to LinePtr
+		add		ebp,DWORD PTR[g_PhdScrwidth]	 ; Add screen width to LinePtr
 		dec		edx
 		jnz		@@lineloop
 @@exit:	popad
@@ -106,7 +106,7 @@ _transA PROC PUBLIC
 		shl		ebp,3
 		add		ebp,offset[xbuffer+2]
 
-        imul    eax,[phd_scrwidth]
+        imul    eax,[g_PhdScrwidth]
 		add		eax,[phd_winptr]
 		mov		[esp],eax                    ; [esp] = Line ptr
 
@@ -118,9 +118,9 @@ _transA PROC PUBLIC
 		jns		@@x1ok
 		xor		edi,edi
 @@x1ok:	movsx	ecx,WORD PTR[ebp+4]          ; ecx = Xright
-		cmp		ecx,DWORD PTR[phd_winwidth]
+		cmp		ecx,DWORD PTR[g_PhdWinwidth]
 		jle		@@x2ok
-		mov		ecx,DWORD PTR[phd_winwidth]
+		mov		ecx,DWORD PTR[g_PhdWinwidth]
 @@x2ok: sub		ecx,edi						 ; ecx = Xdif
 		jle		@@nexline
 
@@ -208,7 +208,7 @@ _transA PROC PUBLIC
 		jnz		@@rout
 
 @@nexline:
-		mov		ebx,DWORD PTR[phd_scrwidth]
+		mov		ebx,DWORD PTR[g_PhdScrwidth]
 		add		ebp,8
 		add		[esp],ebx
 		dec		DWORD PTR[esp+T_YDIF]
@@ -245,7 +245,7 @@ _gourA PROC PUBLIC
 		add		ecx,offset[xbuffer]
 		mov		[esp+G_XBUF],ecx
 
-        imul    eax,[phd_scrwidth]      	; get Screen Pointer
+        imul    eax,[g_PhdScrwidth]      	; get Screen Pointer
 		add		eax,[phd_winptr]        	;
 		mov		[esp+G_LPTR],eax
 
@@ -263,7 +263,7 @@ _gourA PROC PUBLIC
 ;		jle		@@nexline
 		cmp		edi,ebx  					; if Xright<=Xleft Nextline
 		jge		@@nexline
-;		cmp		edi,[phd_winwidth]			; if Xleft>=Winwidth Nextline
+;		cmp		edi,[g_PhdWinwidth]			; if Xleft>=Winwidth Nextline
 ;		jge		@@nexline
 
 		mov		ecx,[eax+4]   				; ecx = Gleft
@@ -283,7 +283,7 @@ _gourA PROC PUBLIC
 		sub		ecx,edi                     ; ecx = Gleft + Xleft*Gadd
 		xor		edi,edi                     ; edi = Xleft = 0
 @@x1on:
-;		mov     edx,[phd_winwidth]          ; get winwidth in edx
+;		mov     edx,[g_PhdWinwidth]          ; get winwidth in edx
 ;		cmp		edx,ebp						; if Winwidth<Xright
 ;		jge     @@x2on
 ;		mov		ebp,edx						; Make Xright = Winwidth
@@ -393,7 +393,7 @@ _gourA PROC PUBLIC
 
 
 @@nexline:
-		mov		eax,[phd_scrwidth]		 ; add Screen Width to Line Ptr.
+		mov		eax,[g_PhdScrwidth]		 ; add Screen Width to Line Ptr.
 		add		DWORD PTR[esp+G_XBUF],16 ; increment Xbuffer
 		add		[esp+G_LPTR],eax
 		dec		DWORD PTR[esp+G_YDIF]
@@ -437,7 +437,7 @@ _gtmapA	PROC PUBLIC
 		add		ecx,offset[xbuffer]
 		mov		[esp+GTM_XBUF],ecx   		; save Xbuffer Ptr
 
-		imul	eax,[phd_scrwidth]
+		imul	eax,[g_PhdScrwidth]
 		add		eax,[phd_winptr]
 		mov		[esp+GTM_LPTR],eax          ; save LinePtr
 
@@ -711,7 +711,7 @@ _gtmapA	PROC PUBLIC
 		jnz		@@rout
 
 @@nexline:
-		mov		eax,[phd_scrwidth]
+		mov		eax,[g_PhdScrwidth]
 		add		DWORD PTR[esp+GTM_XBUF],32
 		add		[esp+GTM_LPTR],eax
 		dec		DWORD PTR[esp+GTM_YDIF]
@@ -751,7 +751,7 @@ _wgtmapA	PROC PUBLIC
 		add		ecx,offset[xbuffer]
 		mov		[esp+WGTM_XBUF],ecx			 ; get Xbuffer position
 
-		imul	eax,[phd_scrwidth]
+		imul	eax,[g_PhdScrwidth]
 		add		eax,[phd_winptr]
 		mov		[esp+WGTM_LPTR],eax          ; save LinePtr
 
@@ -1060,7 +1060,7 @@ _wgtmapA	PROC PUBLIC
 
 
 @@nexline:
-		mov		eax,[phd_scrwidth]
+		mov		eax,[g_PhdScrwidth]
 		add		DWORD PTR[esp+WGTM_XBUF],32
 		add		[esp+WGTM_LPTR],eax
 		dec		DWORD PTR[esp+WGTM_YDIF]

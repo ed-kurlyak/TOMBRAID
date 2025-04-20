@@ -82,7 +82,7 @@ void Create_BackBuffer()
 	if ((dibdc = MGL_createMemoryDC(Screen_GetResWidth(), Screen_GetResHeight(), 8, &pf)) == NULL)
 		MGL_fatalError("Unable to create Memory DC!");
 
-	Create_Normal_Palette();
+	//Create_Normal_Palette();
 
 }
 

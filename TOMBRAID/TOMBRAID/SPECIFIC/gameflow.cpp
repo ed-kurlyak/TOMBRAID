@@ -8,9 +8,7 @@
 #include "game.h"
 #include "vars.h"
 
-//uint32_t g_CurrentLevel;
-int g_bLevel_Loaded;
-
+int g_LevelLoaded;
 
 void Play_FMV(int v1, int v2)
 {
@@ -37,9 +35,6 @@ void Play_FMV_Init_Malloc(int v1, int v2)
 
 void Init_GameFlow()
 {
-
-	
-
 	g_GameFlow.strings[GS_HEADING_INVENTORY] = "INVENTORY";
 	g_GameFlow.strings[GS_HEADING_GAME_OVER] = "GAME OVER";
 	g_GameFlow.strings[GS_HEADING_OPTION] = "OPTION";
@@ -135,8 +130,6 @@ void Init_GameFlow()
     g_GameFlow.strings[GS_INV_ITEM_SOUND] = "Sound";
     g_GameFlow.strings[GS_INV_ITEM_CONTROLS] = "Controls";
     g_GameFlow.strings[GS_INV_ITEM_LARAS_HOME] = "Lara's Home";
-    //g_GameFlow.strings[0] = NULL;
-
 
 	//g_GameFlow.levels[0].level_type
 	//g_GameFlow.levels[0].music = 0;
@@ -153,12 +146,10 @@ void Init_GameFlow()
 	g_GameFlow.levels[0].puzzle3 = 0;
 	g_GameFlow.levels[0].puzzle4 = 0;
 	//g_GameFlow.levels[0].demo = 0
-	//g_GameFlow.levels[0].secrets = 0
+	g_GameFlow.levels[0].secrets = 0;
 
-
-	if (select_game == VER_TR1)
+	if (GameType == VER_TR1)
 	{
-
 		g_GameFlow.save_game_fmt = "saveati.%d";
 
 		//g_GameFlow.levels[1].level_type
@@ -175,9 +166,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[1].puzzle2 = 0;
 		g_GameFlow.levels[1].puzzle3 = 0;
 		g_GameFlow.levels[1].puzzle4 = 0;
-		//g_GameFlow.levels[1].demo = 0
-		//g_GameFlow.levels[1].secrets = 0
-
+		//g_GameFlow.levels[1].demo = 0;
+		g_GameFlow.levels[1].secrets = 0;
 
 		//g_GameFlow.levels[2].level_type
 		//g_GameFlow.levels[2].music = 0;
@@ -193,9 +183,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[2].puzzle2 = 0;
 		g_GameFlow.levels[2].puzzle3 = 0;
 		g_GameFlow.levels[2].puzzle4 = 0;
-		//g_GameFlow.levels[2].demo = 0
-		//g_GameFlow.levels[2].secrets = 0
-
+		//g_GameFlow.levels[2].demo = 0;
+		g_GameFlow.levels[2].secrets = 0;
 
 		//g_GameFlow.levels[3].level_type
 		//g_GameFlow.levels[3].music = 0;
@@ -211,9 +200,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[3].puzzle2 = 0;
 		g_GameFlow.levels[3].puzzle3 = 0;
 		g_GameFlow.levels[3].puzzle4 = 0;
-		//g_GameFlow.levels[3].demo = 0
-		//g_GameFlow.levels[3].secrets = 0
-
+		//g_GameFlow.levels[3].demo = 0;
+		g_GameFlow.levels[3].secrets = 0;
 
 		//g_GameFlow.levels[4].level_type
 		//g_GameFlow.levels[4].music = 0;
@@ -229,9 +217,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[4].puzzle2 = 0;
 		g_GameFlow.levels[4].puzzle3 = 0;
 		g_GameFlow.levels[4].puzzle4 = 0;
-		//g_GameFlow.levels[4].demo = 0
-		//g_GameFlow.levels[4].secrets = 0
-
+		//g_GameFlow.levels[4].demo = 0;
+		g_GameFlow.levels[4].secrets = 0;
 
 		//g_GameFlow.levels[5].level_type
 		//g_GameFlow.levels[5].music = 0;
@@ -247,10 +234,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[5].puzzle2 = 0;
 		g_GameFlow.levels[5].puzzle3 = 0;
 		g_GameFlow.levels[5].puzzle4 = 0;
-		//g_GameFlow.levels[5].demo = 0
-		//g_GameFlow.levels[5].secrets = 0
-
-
+		//g_GameFlow.levels[5].demo = 0;
+		g_GameFlow.levels[5].secrets = 0;
 
 		//g_GameFlow.levels[6].level_type
 		//g_GameFlow.levels[6].music = 0;
@@ -266,9 +251,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[6].puzzle2 = 0;
 		g_GameFlow.levels[6].puzzle3 = 0;
 		g_GameFlow.levels[6].puzzle4 = 0;
-		//g_GameFlow.levels[6].demo = 0
-		//g_GameFlow.levels[6].secrets = 0
-
+		//g_GameFlow.levels[6].demo = 0;
+		g_GameFlow.levels[6].secrets = 0;
 
 		//g_GameFlow.levels[7].level_type
 		//g_GameFlow.levels[7].music = 0;
@@ -284,9 +268,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[7].puzzle2 = 0;
 		g_GameFlow.levels[7].puzzle3 = 0;
 		g_GameFlow.levels[7].puzzle4 = 0;
-		//g_GameFlow.levels[7].demo = 0
-		//g_GameFlow.levels[7].secrets = 0
-
+		//g_GameFlow.levels[7].demo = 0;
+		g_GameFlow.levels[7].secrets = 0;
 
 		//g_GameFlow.levels[8].level_type
 		//g_GameFlow.levels[8].music = 0;
@@ -302,9 +285,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[8].puzzle2 = 0;
 		g_GameFlow.levels[8].puzzle3 = 0;
 		g_GameFlow.levels[8].puzzle4 = 0;
-		//g_GameFlow.levels[8].demo = 0
-		//g_GameFlow.levels[8].secrets = 0
-
+		//g_GameFlow.levels[8].demo = 0;
+		g_GameFlow.levels[8].secrets = 0;
 
 		//g_GameFlow.levels[9].level_type
 		//g_GameFlow.levels[9].music = 0;
@@ -320,9 +302,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[9].puzzle2 = 0;
 		g_GameFlow.levels[9].puzzle3 = 0;
 		g_GameFlow.levels[9].puzzle4 = 0;
-		//g_GameFlow.levels[9].demo = 0
-		//g_GameFlow.levels[9].secrets = 0
-
+		//g_GameFlow.levels[9].demo = 0;
+		g_GameFlow.levels[9].secrets = 0;
 
 		//g_GameFlow.levels[10].level_type
 		//g_GameFlow.levels[10].music = 0;
@@ -338,9 +319,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[10].puzzle2 = 0;
 		g_GameFlow.levels[10].puzzle3 = 0;
 		g_GameFlow.levels[10].puzzle4 = 0;
-		//g_GameFlow.levels[10].demo = 0
-		//g_GameFlow.levels[10].secrets = 0
-
+		//g_GameFlow.levels[10].demo = 0;
+		g_GameFlow.levels[10].secrets = 0;
 
 
 		//g_GameFlow.levels[11].level_type
@@ -357,10 +337,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[11].puzzle2 = "Scarab";
 		g_GameFlow.levels[11].puzzle3 = "Seal of Anubis";
 		g_GameFlow.levels[11].puzzle4 = "Ankh";
-		//g_GameFlow.levels[11].demo = 0
-		//g_GameFlow.levels[11].secrets = 0
-
-
+		//g_GameFlow.levels[11].demo = 0;
+		g_GameFlow.levels[11].secrets = 0;
 
 		//g_GameFlow.levels[12].level_type
 		//g_GameFlow.levels[12].music = 0;
@@ -376,9 +354,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[12].puzzle2 = "Scarab";
 		g_GameFlow.levels[12].puzzle3 = 0;
 		g_GameFlow.levels[12].puzzle4 = 0;
-		//g_GameFlow.levels[12].demo = 0
-		//g_GameFlow.levels[12].secrets = 0
-
+		//g_GameFlow.levels[12].demo = 0;
+		g_GameFlow.levels[12].secrets = 0;
 
 		//g_GameFlow.levels[13].level_type
 		//g_GameFlow.levels[13].music = 0;
@@ -394,10 +371,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[13].puzzle2 = "Pyramid Key";
 		g_GameFlow.levels[13].puzzle3 = 0;
 		g_GameFlow.levels[13].puzzle4 = 0;
-		//g_GameFlow.levels[13].demo = 0
-		//g_GameFlow.levels[13].secrets = 0
-
-
+		//g_GameFlow.levels[13].demo = 0;
+		g_GameFlow.levels[13].secrets = 0;
 
 		//g_GameFlow.levels[14].level_type
 		//g_GameFlow.levels[14].music = 0;
@@ -413,10 +388,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[14].puzzle2 = 0;
 		g_GameFlow.levels[14].puzzle3 = 0;
 		g_GameFlow.levels[14].puzzle4 = 0;
-		//g_GameFlow.levels[14].demo = 0
-		//g_GameFlow.levels[14].secrets = 0
-
-
+		//g_GameFlow.levels[14].demo = 0;
+		g_GameFlow.levels[14].secrets = 0;
 
 		//g_GameFlow.levels[15].level_type
 		//g_GameFlow.levels[15].music = 0;
@@ -432,11 +405,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[15].puzzle2 = 0;
 		g_GameFlow.levels[15].puzzle3 = 0;
 		g_GameFlow.levels[15].puzzle4 = 0;
-		//g_GameFlow.levels[15].demo = 0
-		//g_GameFlow.levels[15].secrets = 0
-
-
-
+		//g_GameFlow.levels[15].demo = 0;
+		g_GameFlow.levels[15].secrets = 0;
 
 		//g_GameFlow.levels[16].level_type
 		//g_GameFlow.levels[16].music = 0;
@@ -452,11 +422,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[16].puzzle2 = 0;
 		g_GameFlow.levels[16].puzzle3 = 0;
 		g_GameFlow.levels[16].puzzle4 = 0;
-		//g_GameFlow.levels[16].demo = 0
-		//g_GameFlow.levels[16].secrets = 0
-
-
-
+		//g_GameFlow.levels[16].demo = 0;
+		g_GameFlow.levels[16].secrets = 0;
 
 		//g_GameFlow.levels[17].level_type
 		//g_GameFlow.levels[17].music = 0;
@@ -472,11 +439,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[17].puzzle2 = 0;
 		g_GameFlow.levels[17].puzzle3 = 0;
 		g_GameFlow.levels[17].puzzle4 = 0;
-		//g_GameFlow.levels[17].demo = 0
-		//g_GameFlow.levels[17].secrets = 0
-
-
-
+		//g_GameFlow.levels[17].demo = 0;
+		g_GameFlow.levels[17].secrets = 0;
 
 		//g_GameFlow.levels[18].level_type
 		//g_GameFlow.levels[18].music = 0;
@@ -492,10 +456,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[18].puzzle2 = 0;
 		g_GameFlow.levels[18].puzzle3 = 0;
 		g_GameFlow.levels[18].puzzle4 = 0;
-		//g_GameFlow.levels[18].demo = 0
-		//g_GameFlow.levels[18].secrets = 0
-
-
+		//g_GameFlow.levels[18].demo = 0;
+		g_GameFlow.levels[18].secrets = 0;
 
 		//g_GameFlow.levels[19].level_type
 		//g_GameFlow.levels[19].music = 0;
@@ -511,11 +473,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[19].puzzle2 = 0;
 		g_GameFlow.levels[19].puzzle3 = 0;
 		g_GameFlow.levels[19].puzzle4 = 0;
-		//g_GameFlow.levels[19].demo = 0
-		//g_GameFlow.levels[19].secrets = 0
-
-
-
+		//g_GameFlow.levels[19].demo = 0;
+		g_GameFlow.levels[19].secrets = 0;
 
 		//g_GameFlow.levels[20].level_type
 		//g_GameFlow.levels[20].music = 0;
@@ -531,11 +490,8 @@ void Init_GameFlow()
 		g_GameFlow.levels[20].puzzle2 = 0;
 		g_GameFlow.levels[20].puzzle3 = 0;
 		g_GameFlow.levels[20].puzzle4 = 0;
-		//g_GameFlow.levels[20].demo = 0
-		//g_GameFlow.levels[20].secrets = 0
-
-
-
+		//g_GameFlow.levels[20].demo = 0;
+		g_GameFlow.levels[20].secrets = 0;
 
 		// уровень 21
 		// Этот уровень необходим для чтения файлов сохранений TombATI!
@@ -558,109 +514,98 @@ void Init_GameFlow()
 		g_GameFlow.levels[21].puzzle2 = 0;
 		g_GameFlow.levels[21].puzzle3 = 0;
 		g_GameFlow.levels[21].puzzle4 = 0;
-		//g_GameFlow.levels[21].demo = 0
-		//g_GameFlow.levels[21].secrets = 0
-
+		//g_GameFlow.levels[21].demo = 0;
+		g_GameFlow.levels[21].secrets = 0;
 	}
-
 	else
 	{
+		g_GameFlow.save_game_fmt = "saveuba.%d";
 
-	g_GameFlow.save_game_fmt = "saveuba.%d";
+		//g_GameFlow.levels[1].level_type
+		//g_GameFlow.levels[1].music = 0;
+		g_GameFlow.levels[1].level_title = "Return to Egypt";
+		g_GameFlow.levels[1].level_file = "data\\egypt.phd";
+		g_GameFlow.levels[1].key1 = "Gold Key";
+		g_GameFlow.levels[1].key2 = 0;
+		g_GameFlow.levels[1].key3 = 0;
+		g_GameFlow.levels[1].key4 = 0;
+		g_GameFlow.levels[1].pickup1 = 0;
+		g_GameFlow.levels[1].pickup2 = 0;
+		g_GameFlow.levels[1].puzzle1 = 0;
+		g_GameFlow.levels[1].puzzle2 = 0;
+		g_GameFlow.levels[1].puzzle3 = 0;
+		g_GameFlow.levels[1].puzzle4 = 0;
+		//g_GameFlow.levels[1].demo = 0;
+		g_GameFlow.levels[1].secrets = 0;
 
-	//g_GameFlow.levels[1].level_type
-//g_GameFlow.levels[1].music = 0;
-g_GameFlow.levels[1].level_title = "Return to Egypt";
-g_GameFlow.levels[1].level_file = "data\\egypt.phd";
-g_GameFlow.levels[1].key1 = "Gold Key";
-g_GameFlow.levels[1].key2 = 0;
-g_GameFlow.levels[1].key3 = 0;
-g_GameFlow.levels[1].key4 = 0;
-g_GameFlow.levels[1].pickup1 = 0;
-g_GameFlow.levels[1].pickup2 = 0;
-g_GameFlow.levels[1].puzzle1 = 0;
-g_GameFlow.levels[1].puzzle2 = 0;
-g_GameFlow.levels[1].puzzle3 = 0;
-g_GameFlow.levels[1].puzzle4 = 0;
-//g_GameFlow.levels[1].demo = 0
-//g_GameFlow.levels[1].secrets = 0
+		//g_GameFlow.levels[2].level_type
+		//g_GameFlow.levels[2].music = 0;
+		g_GameFlow.levels[2].level_title = "Temple of the Cat";
+		g_GameFlow.levels[2].level_file = "data\\cat.phd";
+		g_GameFlow.levels[2].key1 = "Ornate Key";
+		g_GameFlow.levels[2].key2 = 0;
+		g_GameFlow.levels[2].key3 = 0;
+		g_GameFlow.levels[2].key4 = 0;
+		g_GameFlow.levels[2].pickup1 = 0;
+		g_GameFlow.levels[2].pickup2 = 0;
+		g_GameFlow.levels[2].puzzle1 = 0;
+		g_GameFlow.levels[2].puzzle2 = 0;
+		g_GameFlow.levels[2].puzzle3 = 0;
+		g_GameFlow.levels[2].puzzle4 = 0;
+		//g_GameFlow.levels[2].demo = 0;
+		g_GameFlow.levels[2].secrets = 0;
 
+		//g_GameFlow.levels[3].level_type
+		//g_GameFlow.levels[3].music = 0;
+		g_GameFlow.levels[3].level_title = "Atlantean Stronghold";
+		g_GameFlow.levels[3].level_file = "data\\end.phd";
+		g_GameFlow.levels[3].key1 = 0;
+		g_GameFlow.levels[3].key2 = 0;
+		g_GameFlow.levels[3].key3 = 0;
+		g_GameFlow.levels[3].key4 = 0;
+		g_GameFlow.levels[3].pickup1 = 0;
+		g_GameFlow.levels[3].pickup2 = 0;
+		g_GameFlow.levels[3].puzzle1 = 0;
+		g_GameFlow.levels[3].puzzle2 = 0;
+		g_GameFlow.levels[3].puzzle3 = 0;
+		g_GameFlow.levels[3].puzzle4 = 0;
+		//g_GameFlow.levels[3].demo = 0;
+		g_GameFlow.levels[3].secrets = 0;
 
-//g_GameFlow.levels[2].level_type
-//g_GameFlow.levels[2].music = 0;
-g_GameFlow.levels[2].level_title = "Temple of the Cat";
-g_GameFlow.levels[2].level_file = "data\\cat.phd";
-g_GameFlow.levels[2].key1 = "Ornate Key";
-g_GameFlow.levels[2].key2 = 0;
-g_GameFlow.levels[2].key3 = 0;
-g_GameFlow.levels[2].key4 = 0;
-g_GameFlow.levels[2].pickup1 = 0;
-g_GameFlow.levels[2].pickup2 = 0;
-g_GameFlow.levels[2].puzzle1 = 0;
-g_GameFlow.levels[2].puzzle2 = 0;
-g_GameFlow.levels[2].puzzle3 = 0;
-g_GameFlow.levels[2].puzzle4 = 0;
-//g_GameFlow.levels[2].demo = 0
-//g_GameFlow.levels[2].secrets = 0
+		//g_GameFlow.levels[4].level_type
+		//g_GameFlow.levels[4].music = 0;
+		g_GameFlow.levels[4].level_title = "The Hive";
+		g_GameFlow.levels[4].level_file = "data\\end2.phd";
+		g_GameFlow.levels[4].key1 = 0;
+		g_GameFlow.levels[4].key2 = 0;
+		g_GameFlow.levels[4].key3 = 0;
+		g_GameFlow.levels[4].key4 = 0;
+		g_GameFlow.levels[4].pickup1 = 0;
+		g_GameFlow.levels[4].pickup2 = 0;
+		g_GameFlow.levels[4].puzzle1 = 0;
+		g_GameFlow.levels[4].puzzle2 = 0;
+		g_GameFlow.levels[4].puzzle3 = 0;
+		g_GameFlow.levels[4].puzzle4 = 0;
+		//g_GameFlow.levels[4].demo = 0;
+		g_GameFlow.levels[4].secrets = 0;
 
-
-//g_GameFlow.levels[3].level_type
-//g_GameFlow.levels[3].music = 0;
-g_GameFlow.levels[3].level_title = "Atlantean Stronghold";
-g_GameFlow.levels[3].level_file = "data\\end.phd";
-g_GameFlow.levels[3].key1 = 0;
-g_GameFlow.levels[3].key2 = 0;
-g_GameFlow.levels[3].key3 = 0;
-g_GameFlow.levels[3].key4 = 0;
-g_GameFlow.levels[3].pickup1 = 0;
-g_GameFlow.levels[3].pickup2 = 0;
-g_GameFlow.levels[3].puzzle1 = 0;
-g_GameFlow.levels[3].puzzle2 = 0;
-g_GameFlow.levels[3].puzzle3 = 0;
-g_GameFlow.levels[3].puzzle4 = 0;
-//g_GameFlow.levels[3].demo = 0
-//g_GameFlow.levels[3].secrets = 0
-
-
-//g_GameFlow.levels[4].level_type
-//g_GameFlow.levels[4].music = 0;
-g_GameFlow.levels[4].level_title = "The Hive";
-g_GameFlow.levels[4].level_file = "data\\end2.phd";
-g_GameFlow.levels[4].key1 = 0;
-g_GameFlow.levels[4].key2 = 0;
-g_GameFlow.levels[4].key3 = 0;
-g_GameFlow.levels[4].key4 = 0;
-g_GameFlow.levels[4].pickup1 = 0;
-g_GameFlow.levels[4].pickup2 = 0;
-g_GameFlow.levels[4].puzzle1 = 0;
-g_GameFlow.levels[4].puzzle2 = 0;
-g_GameFlow.levels[4].puzzle3 = 0;
-g_GameFlow.levels[4].puzzle4 = 0;
-//g_GameFlow.levels[4].demo = 0
-//g_GameFlow.levels[4].secrets = 0
-
-
-//g_GameFlow.levels[5].level_type
-//g_GameFlow.levels[5].music = 0;
-g_GameFlow.levels[5].level_title = "Title";
-g_GameFlow.levels[5].level_file = "data\\title.phd";
-g_GameFlow.levels[5].key1 = 0;
-g_GameFlow.levels[5].key2 = 0;
-g_GameFlow.levels[5].key3 = 0;
-g_GameFlow.levels[5].key4 = 0;
-g_GameFlow.levels[5].pickup1 = 0;
-g_GameFlow.levels[5].pickup2 = 0;
-g_GameFlow.levels[5].puzzle1 = 0;
-g_GameFlow.levels[5].puzzle2 = 0;
-g_GameFlow.levels[5].puzzle3 = 0;
-g_GameFlow.levels[5].puzzle4 = 0;
-//g_GameFlow.levels[5].demo = 0
-//g_GameFlow.levels[5].secrets = 0
-
-
-
+		//g_GameFlow.levels[5].level_type
+		//g_GameFlow.levels[5].music = 0;
+		g_GameFlow.levels[5].level_title = "Title";
+		g_GameFlow.levels[5].level_file = "data\\title.phd";
+		g_GameFlow.levels[5].key1 = 0;
+		g_GameFlow.levels[5].key2 = 0;
+		g_GameFlow.levels[5].key3 = 0;
+		g_GameFlow.levels[5].key4 = 0;
+		g_GameFlow.levels[5].pickup1 = 0;
+		g_GameFlow.levels[5].pickup2 = 0;
+		g_GameFlow.levels[5].puzzle1 = 0;
+		g_GameFlow.levels[5].puzzle2 = 0;
+		g_GameFlow.levels[5].puzzle3 = 0;
+		g_GameFlow.levels[5].puzzle4 = 0;
+		//g_GameFlow.levels[5].demo = 0;
+		g_GameFlow.levels[5].secrets = 0;
 	}
-
 }
 
 int Start_New_Game(int LevelNum)
@@ -701,24 +646,10 @@ int Start_New_Game(int LevelNum)
 	}
 
 	g_CurrentLevel = LevelNum;
+	g_LevelLoaded = 0;
 
-	g_bLevel_Loaded = 0;
-
-	//level types
-	/*
-	typedef enum GAMEFLOW_LEVEL_TYPE {
-    GFL_TITLE = 0,
-    GFL_NORMAL = 1,
-    GFL_SAVED = 2,
-    GFL_DEMO = 3,
-    GFL_CUTSCENE = 4,
-    GFL_GYM = 5,
-    GFL_CURRENT = 6, // legacy level type for reading TombATI's savegames
-		} GAMEFLOW_LEVEL_TYPE;
-		*/
-	//if saved level 0x15 type
-	//if(g_CurrentLevel != 0x15) //21d GFL_SAVED level type
-	if (g_level_num_TR1 != 0x15)
+	//если загру 0x15 type
+	if (g_LevelNumTR != 0x15)
 	{
 		Initialise_Level_Flags();
 	}

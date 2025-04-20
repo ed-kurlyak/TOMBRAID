@@ -151,10 +151,13 @@ void CreateStartInfo(int level_num)
     start->num_big_medis = Inv_RequestItem(O_BIGMEDI_ITEM);
     start->num_scions = Inv_RequestItem(O_SCION_ITEM);
 
-    start->gun_type = g_Lara.gun_type;
-    if (g_Lara.gun_status == LGS_READY) {
+    start->gun_type = (char)g_Lara.gun_type;
+    if (g_Lara.gun_status == LGS_READY)
+    {
         start->gun_status = LGS_READY;
-    } else {
+    }
+    else
+    {
         start->gun_status = LGS_ARMLESS;
     }
 }

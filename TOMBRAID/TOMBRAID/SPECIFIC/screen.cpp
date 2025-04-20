@@ -1,5 +1,6 @@
 #include "screen.h"
 #include "winmain.h"
+#include "vars.h"
 
 /*
 #include "3dsystem/3d_gen.h"
@@ -91,17 +92,17 @@ int32_t Screen_GetRenderScale(int32_t unit)
     int32_t baseWidth = 640;
     int32_t baseHeight = 480;
     int32_t scale_x = Screen_GetResWidth() > baseWidth
-        //? ((double)Screen_GetResWidth() * unit * g_Config.ui.text_scale)
-		? ((double)Screen_GetResWidth() * unit * 1.0f)
+        ? (int)((double)Screen_GetResWidth() * unit * g_Config.ui.text_scale)
+		//? ((double)Screen_GetResWidth() * unit * 1.0f)
             / baseWidth
-        //: unit * g_Config.ui.text_scale;
-		: unit * 1.0f;
+        : (int)(unit * g_Config.ui.text_scale);
+		//: unit * 1.0f;
     int32_t scale_y = Screen_GetResHeight() > baseHeight
-        //? ((double)Screen_GetResHeight() * unit * g_Config.ui.text_scale)
-		? ((double)Screen_GetResHeight() * unit * 1.0f)
+        ? (int)((double)Screen_GetResHeight() * unit * g_Config.ui.text_scale)
+		//? ((double)Screen_GetResHeight() * unit * 1.0f)
             / baseHeight
-        //: unit * g_Config.ui.text_scale;
-		: unit * 1.0f;
+        : (int)(unit * g_Config.ui.text_scale);
+		//: unit * 1.0f;
     return MIN(scale_x, scale_y);
 }
 
@@ -137,10 +138,10 @@ void Screen_ApplyResolution()
 
 int32_t ViewPort_GetCenterX()
 {
-    return Screen_GetResWidth() / 2.0f;
+    return (int)(Screen_GetResWidth() / 2.0f);
 }
 
 int32_t ViewPort_GetCenterY()
 {
-    return Screen_GetResHeight() / 2.0f;
+    return (int)(Screen_GetResHeight() / 2.0f);
 }

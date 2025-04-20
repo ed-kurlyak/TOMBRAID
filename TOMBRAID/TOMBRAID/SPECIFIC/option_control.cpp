@@ -12,7 +12,7 @@
 #include "vars.h"
 
 #include "input.h"
-
+#include "winmain.h"
 
 #define TOP_Y -60
 #define BORDER 4
@@ -32,6 +32,29 @@ static TEXTSTRING *m_TextA[INPUT_KEY_NUMBER_OF] = { 0 };
 static TEXTSTRING *m_TextB[INPUT_KEY_NUMBER_OF] = { 0 };
 
 static void Option_ControlShutdownText();
+
+static const TEXT_COLUMN_PLACEMENT CtrlTextPlacementNormal[] = {
+    // left column
+    { INPUT_KEY_UP, 0 },
+    { INPUT_KEY_DOWN, 0 },
+    { INPUT_KEY_LEFT, 0 },
+    { INPUT_KEY_RIGHT, 0 },
+    { INPUT_KEY_STEP_L, 0 },
+    { INPUT_KEY_STEP_R, 0 },
+    { INPUT_KEY_SLOW, 0 },
+    // right column
+    { INPUT_KEY_JUMP, 1 },
+    { INPUT_KEY_ACTION, 1 },
+    { INPUT_KEY_DRAW, 1 },
+    { INPUT_KEY_LOOK, 1 },
+    { INPUT_KEY_ROLL, 1 },
+    { -1, 1 },
+    { INPUT_KEY_OPTION, 1 },
+    // end
+    { -1, -1 },
+};
+
+/*
 static const TEXT_COLUMN_PLACEMENT CtrlTextPlacementNormal[] = {
     // left column
     { INPUT_KEY_UP, 0 },
@@ -60,7 +83,9 @@ static const TEXT_COLUMN_PLACEMENT CtrlTextPlacementNormal[] = {
     // end
     { -1, -1 },
 };
+*/
 
+/*
 static const TEXT_COLUMN_PLACEMENT CtrlTextPlacementCheats[] = {
     // left column
     { INPUT_KEY_UP, 0 },
@@ -89,6 +114,7 @@ static const TEXT_COLUMN_PLACEMENT CtrlTextPlacementCheats[] = {
     // end
     { -1, -1 },
 };
+*/
 
 static void Option_ControlInitText();
 static void Option_ControlUpdateText();
@@ -96,11 +122,9 @@ static void Option_ControlShutdownText();
 
 static void Option_ControlInitText()
 {
-    m_Text[0] = Text_Create(
-        0, TOP_Y - BORDER + (HEADER_HEIGHT + BORDER - ROW_HEIGHT) / 2,
-        g_GameFlow.strings
-            [g_Config.input.layout ? GS_CONTROL_USER_KEYS
-                                   : GS_CONTROL_DEFAULT_KEYS]);
+    m_Text[0] = Text_Create(0, TOP_Y - BORDER + (HEADER_HEIGHT + BORDER - ROW_HEIGHT) / 2,
+        g_GameFlow.strings[g_Config.input.layout ? GS_CONTROL_USER_KEYS : GS_CONTROL_DEFAULT_KEYS]);
+    
     Text_CentreH(m_Text[0], 1);
     Text_CentreV(m_Text[0], 1);
 
@@ -272,7 +296,8 @@ void Option_DefaultConflict()
 
 void Option_Control(INVENTORY_ITEM *inv_item)
 {
-    if (!m_Text[0]) {
+    if (!m_Text[0])
+    {
         Option_ControlInitText();
     }
 
@@ -304,7 +329,7 @@ void Option_Control(INVENTORY_ITEM *inv_item)
                 g_Config.input.layout ^= 1;
                 Option_ControlUpdateText();
                 Option_FlashConflicts();
-                //Settings_Write(); write keyboard layout
+                Settings_Write(); // write keyboard layout
             } else {
                 Text_RemoveBackground(m_TextA[m_KeyChange]);
                 Text_RemoveOutline(m_TextA[m_KeyChange]);
@@ -444,7 +469,7 @@ void Option_Control(INVENTORY_ITEM *inv_item)
             Text_AddOutline(m_TextA[m_KeyChange], 1);
             m_KeyMode = 3;
             Option_FlashConflicts();
-            //Settings_Write();
+            Settings_Write();
         }
         break;
     }
@@ -456,16 +481,14 @@ void Option_Control(INVENTORY_ITEM *inv_item)
         if (S_Input_ReadKeyCode() < 0 || S_Input_ReadKeyCode() != key_code) {
             m_KeyMode = 0;
             Option_FlashConflicts();
-            //Settings_Write();
+            Settings_Write();
         }
 
         m_KeyMode = 0;
         break;
     }
     }
-
-    //g_Input = (INPUT_STATE) { 0 };
-    //g_InputDB = (INPUT_STATE) { 0 };
-	memset(&g_Input, 0, sizeof(INPUT_STATE));
-	memset(&g_InputDB, 0, sizeof(INPUT_STATE));
+    
+    g_Input.any = 0;
+    g_InputDB.any = 0;
 }

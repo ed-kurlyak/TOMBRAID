@@ -83,8 +83,7 @@ bool S_LoadLevel(char * szLevelName)
 
 	FILE *fp = NULL;
 
-	fopen_s(&fp,szLevelName, "rb");
-	
+	fopen_s(&fp, szLevelName, "rb");
 
 	if(!fp)
 	{
@@ -187,14 +186,13 @@ bool Load_Texture_Pages(FILE *fp)
 
 	fread(&TexturePageCount, 4, 1, fp);
 
-    //uint8_t *Buff = (uint8_t *) Game_Alloc(TexturePageCount * 256 * 256, GBUF_TEXTURE_PAGES);
 	int8_t *Buff = (int8_t *) Game_Alloc(TexturePageCount * 256 * 256, GBUF_TEXTURE_PAGES);
 
 	fread(Buff, 256 * 256, TexturePageCount, fp);
 
 	for (int i = 0; i < TexturePageCount; i++)
 	{
-        texture_page_ptrs[i] = Buff;
+        TexturePagePtrs[i] = Buff;
         Buff += 256 * 256;
     }
 
@@ -294,9 +292,6 @@ bool Load_Rooms(FILE *fp)
 		{
             g_RoomInfo[i].static_mesh = NULL;
         }
-		
-
-
 
 		//flipped (альтернативные) комнаты
         fread(&g_RoomInfo[i].flipped_room, sizeof(uint16_t), 1, fp);
@@ -554,8 +549,6 @@ void BaddyObjects()
 
 	}
 
-	//------------------------------
-
 	SetupDino(&g_Objects[O_DINOSAUR]);
     SetupRaptor(&g_Objects[O_RAPTOR]);
     SetupLarson(&g_Objects[O_LARSON]);
@@ -568,8 +561,6 @@ void BaddyObjects()
     SetupCrocodile(&g_Objects[O_CROCODILE]);
     SetupAlligator(&g_Objects[O_ALLIGATOR]);
     SetupApe(&g_Objects[O_APE]);
-
-	
     SetupWarrior(&g_Objects[O_WARRIOR1]);
     SetupWarrior2(&g_Objects[O_WARRIOR2]);
     SetupWarrior3(&g_Objects[O_WARRIOR3]);
@@ -587,14 +578,14 @@ void BaddyObjects()
 
 void TrapObjects()
 {
-	g_Objects[O_FALLING_BLOCK].control = FallingBlockControl;	//35
+	g_Objects[O_FALLING_BLOCK].control = FallingBlockControl;	//obj# 35
     g_Objects[O_FALLING_BLOCK].floor = FallingBlockFloor;
     g_Objects[O_FALLING_BLOCK].ceiling = FallingBlockCeiling;
     g_Objects[O_FALLING_BLOCK].save_position = 1;
     g_Objects[O_FALLING_BLOCK].save_anim = 1;
     g_Objects[O_FALLING_BLOCK].save_flags = 1;
 
-	g_Objects[O_PENDULUM].control = PendulumControl; //36
+	g_Objects[O_PENDULUM].control = PendulumControl; //obj# 36
     g_Objects[O_PENDULUM].collision = TrapCollision;
     g_Objects[O_PENDULUM].shadow_size = UNIT_SHADOW / 2;
     g_Objects[O_PENDULUM].save_flags = 1;
@@ -602,16 +593,16 @@ void TrapObjects()
 
 	//-----------------------
 
-	SetupTeethTrap(&g_Objects[O_TEETH_TRAP]); //42
-    SetupRollingBall(&g_Objects[O_ROLLING_BALL]); //38
-    SetupSpikes(&g_Objects[O_SPIKES]); //37
-    SetupFallingCeilling(&g_Objects[O_FALLING_CEILING1]); //53
-    SetupFallingCeilling(&g_Objects[O_FALLING_CEILING2]); //54
-    SetupDamoclesSword(&g_Objects[O_DAMOCLES_SWORD]); //43
+	SetupTeethTrap(&g_Objects[O_TEETH_TRAP]); //obj# 42
+    SetupRollingBall(&g_Objects[O_ROLLING_BALL]); //obj# 38
+    SetupSpikes(&g_Objects[O_SPIKES]); //obj# 37
+    SetupFallingCeilling(&g_Objects[O_FALLING_CEILING1]); //obj# 53
+    SetupFallingCeilling(&g_Objects[O_FALLING_CEILING2]); //obj# 54
+    SetupDamoclesSword(&g_Objects[O_DAMOCLES_SWORD]); //obj# 43
 
 	//--------------------------
 
-	g_Objects[O_MOVABLE_BLOCK].initialise = InitialiseMovableBlock;  //48
+	g_Objects[O_MOVABLE_BLOCK].initialise = InitialiseMovableBlock;  //obj# 48
     g_Objects[O_MOVABLE_BLOCK].control = MovableBlockControl;
     g_Objects[O_MOVABLE_BLOCK].draw_routine = DrawMovableBlock;
     g_Objects[O_MOVABLE_BLOCK].collision = MovableBlockCollision;
@@ -619,7 +610,7 @@ void TrapObjects()
     g_Objects[O_MOVABLE_BLOCK].save_anim = 1;
     g_Objects[O_MOVABLE_BLOCK].save_flags = 1;
 
-	g_Objects[O_MOVABLE_BLOCK2].initialise = InitialiseMovableBlock;  //49
+	g_Objects[O_MOVABLE_BLOCK2].initialise = InitialiseMovableBlock;  //obj# 49
     g_Objects[O_MOVABLE_BLOCK2].control = MovableBlockControl;
     g_Objects[O_MOVABLE_BLOCK2].draw_routine = DrawMovableBlock;
     g_Objects[O_MOVABLE_BLOCK2].collision = MovableBlockCollision;
@@ -628,7 +619,7 @@ void TrapObjects()
     g_Objects[O_MOVABLE_BLOCK2].save_flags = 1;
 
 
-	g_Objects[O_MOVABLE_BLOCK3].initialise = InitialiseMovableBlock;  //50
+	g_Objects[O_MOVABLE_BLOCK3].initialise = InitialiseMovableBlock;  //obj# 50
     g_Objects[O_MOVABLE_BLOCK3].control = MovableBlockControl;
     g_Objects[O_MOVABLE_BLOCK3].draw_routine = DrawMovableBlock;
     g_Objects[O_MOVABLE_BLOCK3].collision = MovableBlockCollision;
@@ -636,7 +627,7 @@ void TrapObjects()
     g_Objects[O_MOVABLE_BLOCK3].save_anim = 1;
     g_Objects[O_MOVABLE_BLOCK3].save_flags = 1;
 
-	g_Objects[O_MOVABLE_BLOCK4].initialise = InitialiseMovableBlock;  //41
+	g_Objects[O_MOVABLE_BLOCK4].initialise = InitialiseMovableBlock;  //obj# 41
     g_Objects[O_MOVABLE_BLOCK4].control = MovableBlockControl;
     g_Objects[O_MOVABLE_BLOCK4].draw_routine = DrawMovableBlock;
     g_Objects[O_MOVABLE_BLOCK4].collision = MovableBlockCollision;
@@ -644,297 +635,274 @@ void TrapObjects()
     g_Objects[O_MOVABLE_BLOCK4].save_anim = 1;
     g_Objects[O_MOVABLE_BLOCK4].save_flags = 1;
 	
-	g_Objects[O_ROLLING_BLOCK].initialise = InitialiseRollingBlock;  //52
+	g_Objects[O_ROLLING_BLOCK].initialise = InitialiseRollingBlock;  //obj# 52
     g_Objects[O_ROLLING_BLOCK].control = RollingBlockControl;
     g_Objects[O_ROLLING_BLOCK].save_position = 1;
     g_Objects[O_ROLLING_BLOCK].save_anim = 1;
     g_Objects[O_ROLLING_BLOCK].save_flags = 1;
 
-	//--------------------
+    SetupLightningEmitter(&g_Objects[O_LIGHTNING_EMITTER]); //obj# 46
+    SetupThorsHandle(&g_Objects[O_THORS_HANDLE]); //obj# 44
+    SetupThorsHead(&g_Objects[O_THORS_HEAD]); //obj# 45
+    SetupMidasTouch(&g_Objects[O_MIDAS_TOUCH]); //obj# 128
 
-    SetupLightningEmitter(&g_Objects[O_LIGHTNING_EMITTER]); //46
-    SetupThorsHandle(&g_Objects[O_THORS_HANDLE]); //44
-    SetupThorsHead(&g_Objects[O_THORS_HEAD]); //45
-    SetupMidasTouch(&g_Objects[O_MIDAS_TOUCH]); //128
+	g_Objects[O_DART_EMITTER].control = DartEmitterControl;  //obj# 40
 
-	//--------------------
-
-	g_Objects[O_DART_EMITTER].control = DartEmitterControl;  //40
-
-	g_Objects[O_DARTS].collision = ObjectCollision;	//39
+	g_Objects[O_DARTS].collision = ObjectCollision;	//obj# 39
     g_Objects[O_DARTS].control = DartsControl;
     g_Objects[O_DARTS].shadow_size = UNIT_SHADOW / 2;
     g_Objects[O_DARTS].save_flags = 1;
 
-	//--------------------
-
-	g_Objects[O_DART_EFFECT].control = DartEffectControl;	//160
+	g_Objects[O_DART_EFFECT].control = DartEffectControl;	//obj# 160
     g_Objects[O_DART_EFFECT].draw_routine = DrawSpriteItem;
 
-	//---------------------
-    SetupFlameEmitter(&g_Objects[O_FLAME_EMITTER]); //179
-    SetupFlame(&g_Objects[O_FLAME]); //178
-    SetupLavaEmitter(&g_Objects[O_LAVA_EMITTER]); //177
-    SetupLava(&g_Objects[O_LAVA]); //176
-    SetupLavaWedge(&g_Objects[O_LAVA_WEDGE]); //180
+    SetupFlameEmitter(&g_Objects[O_FLAME_EMITTER]); //obj# 179
+    SetupFlame(&g_Objects[O_FLAME]); //obj# 178
+    SetupLavaEmitter(&g_Objects[O_LAVA_EMITTER]); //obj# 177
+    SetupLava(&g_Objects[O_LAVA]); //obj# 176
+    SetupLavaWedge(&g_Objects[O_LAVA_WEDGE]); //obj# 180
 
 	
 }
 
 void ObjectObjects()
 {
-	g_Objects[O_CAMERA_TARGET].draw_routine = DrawDummyItem; //169
-    //--------------
-	g_Objects[O_BRIDGE_FLAT].floor = BridgeFlatFloor;	 //68
+	g_Objects[O_CAMERA_TARGET].draw_routine = DrawDummyItem; //obj# 169
+    
+	g_Objects[O_BRIDGE_FLAT].floor = BridgeFlatFloor;	 //obj# 68
     g_Objects[O_BRIDGE_FLAT].ceiling = BridgeFlatCeiling;
-	//--------------
-	g_Objects[O_BRIDGE_TILT1].floor = BridgeTilt1Floor;	 //69
+	
+	g_Objects[O_BRIDGE_TILT1].floor = BridgeTilt1Floor;	 //obj# 69
     g_Objects[O_BRIDGE_TILT1].ceiling = BridgeTilt1Ceiling;
-	//--------------
-	g_Objects[O_BRIDGE_TILT2].floor = BridgeTilt2Floor;	 // 70
+	
+	g_Objects[O_BRIDGE_TILT2].floor = BridgeTilt2Floor;	 //obj# 70
     g_Objects[O_BRIDGE_TILT2].ceiling = BridgeTilt2Ceiling;
-	//--------------
+	
 	if(g_Objects[O_DRAW_BRIDGE].loaded)
 	{
-		g_Objects[O_DRAW_BRIDGE].ceiling = DrawBridgeCeiling;	// 41
+		g_Objects[O_DRAW_BRIDGE].ceiling = DrawBridgeCeiling;	//obj# 41
 		g_Objects[O_DRAW_BRIDGE].collision = DrawBridgeCollision;
 		g_Objects[O_DRAW_BRIDGE].control = CogControl;
 		g_Objects[O_DRAW_BRIDGE].save_anim = 1;
 		g_Objects[O_DRAW_BRIDGE].save_flags = 1;
 		g_Objects[O_DRAW_BRIDGE].floor = DrawBridgeFloor;
 	}
-    //--------------
-	g_Objects[O_SWITCH_TYPE1].control = SwitchControl;	 // 55
+    
+	g_Objects[O_SWITCH_TYPE1].control = SwitchControl;	 //obj# 55
     g_Objects[O_SWITCH_TYPE1].collision = SwitchCollision;
     g_Objects[O_SWITCH_TYPE1].save_anim = 1;
     g_Objects[O_SWITCH_TYPE1].save_flags = 1;
-	//--------------
-	g_Objects[O_SWITCH_TYPE2].control = SwitchControl;	// 56
+	
+	g_Objects[O_SWITCH_TYPE2].control = SwitchControl;	//obj# 56
     g_Objects[O_SWITCH_TYPE2].collision = SwitchCollision2;
     g_Objects[O_SWITCH_TYPE2].save_anim = 1;
     g_Objects[O_SWITCH_TYPE2].save_flags = 1;
-	//--------------
 	
-	g_Objects[O_DOOR_TYPE1].initialise = InitialiseDoor;	// 57
+	g_Objects[O_DOOR_TYPE1].initialise = InitialiseDoor;	//obj# 57
     g_Objects[O_DOOR_TYPE1].control = DoorControl;
     g_Objects[O_DOOR_TYPE1].draw_routine = DrawUnclippedItem;
     g_Objects[O_DOOR_TYPE1].collision = DoorCollision;
     g_Objects[O_DOOR_TYPE1].save_anim = 1;
     g_Objects[O_DOOR_TYPE1].save_flags = 1;
-	//--------------
-	g_Objects[O_DOOR_TYPE2].initialise = InitialiseDoor;	// 58
+
+	g_Objects[O_DOOR_TYPE2].initialise = InitialiseDoor;	//obj# 58
     g_Objects[O_DOOR_TYPE2].control = DoorControl;
     g_Objects[O_DOOR_TYPE2].draw_routine = DrawUnclippedItem;
     g_Objects[O_DOOR_TYPE2].collision = DoorCollision;
     g_Objects[O_DOOR_TYPE2].save_anim = 1;
     g_Objects[O_DOOR_TYPE2].save_flags = 1;
-	//--------------
-	g_Objects[O_DOOR_TYPE3].initialise = InitialiseDoor;	// 59
+
+	g_Objects[O_DOOR_TYPE3].initialise = InitialiseDoor;	//obj# 59
     g_Objects[O_DOOR_TYPE3].control = DoorControl;
     g_Objects[O_DOOR_TYPE3].draw_routine = DrawUnclippedItem;
     g_Objects[O_DOOR_TYPE3].collision = DoorCollision;
     g_Objects[O_DOOR_TYPE3].save_anim = 1;
     g_Objects[O_DOOR_TYPE3].save_flags = 1;
-	//--------------
-    g_Objects[O_DOOR_TYPE4].initialise = InitialiseDoor;	// 60
+
+    g_Objects[O_DOOR_TYPE4].initialise = InitialiseDoor;	//obj# 60
     g_Objects[O_DOOR_TYPE4].control = DoorControl;
     g_Objects[O_DOOR_TYPE4].draw_routine = DrawUnclippedItem;
     g_Objects[O_DOOR_TYPE4].collision = DoorCollision;
     g_Objects[O_DOOR_TYPE4].save_anim = 1;
     g_Objects[O_DOOR_TYPE4].save_flags = 1;
-	//--------------
+
 	//решетка под водой Мидас начало уровня
-	g_Objects[O_DOOR_TYPE5].initialise = InitialiseDoor;	// 61
+	g_Objects[O_DOOR_TYPE5].initialise = InitialiseDoor;	//obj# 61
     g_Objects[O_DOOR_TYPE5].control = DoorControl;
     g_Objects[O_DOOR_TYPE5].draw_routine = DrawUnclippedItem;
     g_Objects[O_DOOR_TYPE5].collision = DoorCollision;
     g_Objects[O_DOOR_TYPE5].save_anim = 1;
     g_Objects[O_DOOR_TYPE5].save_flags = 1;
-	//--------------
-	g_Objects[O_DOOR_TYPE6].initialise = InitialiseDoor;	// 62
+
+	g_Objects[O_DOOR_TYPE6].initialise = InitialiseDoor;	//obj# 62
     g_Objects[O_DOOR_TYPE6].control = DoorControl;
     g_Objects[O_DOOR_TYPE6].draw_routine = DrawUnclippedItem;
     g_Objects[O_DOOR_TYPE6].collision = DoorCollision;
     g_Objects[O_DOOR_TYPE6].save_anim = 1;
     g_Objects[O_DOOR_TYPE6].save_flags = 1;
-	//--------------
-	g_Objects[O_DOOR_TYPE7].initialise = InitialiseDoor;	// 63
+
+	g_Objects[O_DOOR_TYPE7].initialise = InitialiseDoor;	//obj# 63
     g_Objects[O_DOOR_TYPE7].control = DoorControl;
     g_Objects[O_DOOR_TYPE7].draw_routine = DrawUnclippedItem;
     g_Objects[O_DOOR_TYPE7].collision = DoorCollision;
     g_Objects[O_DOOR_TYPE7].save_anim = 1;
     g_Objects[O_DOOR_TYPE7].save_flags = 1;
-	//---------------
-	g_Objects[O_DOOR_TYPE8].initialise = InitialiseDoor;	// 64
+	
+	g_Objects[O_DOOR_TYPE8].initialise = InitialiseDoor;	//obj# 64
     g_Objects[O_DOOR_TYPE8].control = DoorControl;
     g_Objects[O_DOOR_TYPE8].draw_routine = DrawUnclippedItem;
     g_Objects[O_DOOR_TYPE8].collision = DoorCollision;
     g_Objects[O_DOOR_TYPE8].save_anim = 1;
     g_Objects[O_DOOR_TYPE8].save_flags = 1;
 	
-	//--------------
-	g_Objects[O_TRAPDOOR].control = TrapDoorControl; // 65
+	g_Objects[O_TRAPDOOR].control = TrapDoorControl; //obj# 65
     g_Objects[O_TRAPDOOR].floor = TrapDoorFloor;
     g_Objects[O_TRAPDOOR].ceiling = TrapDoorCeiling;
     g_Objects[O_TRAPDOOR].save_anim = 1;
     g_Objects[O_TRAPDOOR].save_flags = 1;
 
-	g_Objects[O_TRAPDOOR2].control = TrapDoorControl; // 66
+	g_Objects[O_TRAPDOOR2].control = TrapDoorControl; //obj# 66
     g_Objects[O_TRAPDOOR2].floor = TrapDoorFloor;
     g_Objects[O_TRAPDOOR2].ceiling = TrapDoorCeiling;
     g_Objects[O_TRAPDOOR2].save_anim = 1;
     g_Objects[O_TRAPDOOR2].save_flags = 1;
 
-
-	//------------------
-    SetupCog(&g_Objects[O_COG_1]); // 74
-    SetupCog(&g_Objects[O_COG_2]); // 75
-    SetupCog(&g_Objects[O_COG_3]); // 76
-    SetupMovingBar(&g_Objects[O_MOVING_BAR]); // 47
-	//---------------
-	g_Objects[O_PICKUP_ITEM1].draw_routine = DrawPickupItem;  // 141
+    SetupCog(&g_Objects[O_COG_1]); //obj# 74
+    SetupCog(&g_Objects[O_COG_2]); //obj# 75
+    SetupCog(&g_Objects[O_COG_3]); //obj# 76
+    SetupMovingBar(&g_Objects[O_MOVING_BAR]); //obj# 47
+	
+	g_Objects[O_PICKUP_ITEM1].draw_routine = DrawPickupItem;  //obj# 141
     g_Objects[O_PICKUP_ITEM1].collision = PickUpCollision;
     g_Objects[O_PICKUP_ITEM1].save_flags = 1;
 
-	g_Objects[O_PICKUP_ITEM2].draw_routine = DrawPickupItem;  // 142
+	g_Objects[O_PICKUP_ITEM2].draw_routine = DrawPickupItem;  //obj# 142
     g_Objects[O_PICKUP_ITEM2].collision = PickUpCollision;
     g_Objects[O_PICKUP_ITEM2].save_flags = 1;
 
-	//--------------
-	g_Objects[O_KEY_ITEM1].draw_routine = DrawPickupItem;  // 129
+	g_Objects[O_KEY_ITEM1].draw_routine = DrawPickupItem;  //obj# 129
     g_Objects[O_KEY_ITEM1].collision = PickUpCollision;
     g_Objects[O_KEY_ITEM1].save_flags = 1;
 
-	g_Objects[O_KEY_ITEM2].draw_routine = DrawPickupItem;  // 130
+	g_Objects[O_KEY_ITEM2].draw_routine = DrawPickupItem;  //obj# 130
     g_Objects[O_KEY_ITEM2].collision = PickUpCollision;
     g_Objects[O_KEY_ITEM2].save_flags = 1;
 
-	g_Objects[O_KEY_ITEM3].draw_routine = DrawPickupItem;  // 131
+	g_Objects[O_KEY_ITEM3].draw_routine = DrawPickupItem;  //obj# 131
     g_Objects[O_KEY_ITEM3].collision = PickUpCollision;
     g_Objects[O_KEY_ITEM3].save_flags = 1;
 
-	g_Objects[O_KEY_ITEM4].draw_routine = DrawPickupItem;  // 132
+	g_Objects[O_KEY_ITEM4].draw_routine = DrawPickupItem;  //obj# 132
     g_Objects[O_KEY_ITEM4].collision = PickUpCollision;
     g_Objects[O_KEY_ITEM4].save_flags = 1;
 
-
-	g_Objects[O_PUZZLE_ITEM1].draw_routine = DrawPickupItem;  // 110
+	g_Objects[O_PUZZLE_ITEM1].draw_routine = DrawPickupItem;  //obj# 110
     g_Objects[O_PUZZLE_ITEM1].collision = PickUpCollision;
     g_Objects[O_PUZZLE_ITEM1].save_flags = 1;
 
-
-	g_Objects[O_PUZZLE_ITEM2].draw_routine = DrawPickupItem;  // 111
+	g_Objects[O_PUZZLE_ITEM2].draw_routine = DrawPickupItem;  //obj# 111
     g_Objects[O_PUZZLE_ITEM2].collision = PickUpCollision;
     g_Objects[O_PUZZLE_ITEM2].save_flags = 1;
 
-
-	g_Objects[O_PUZZLE_ITEM3].draw_routine = DrawPickupItem;  // 112
+	g_Objects[O_PUZZLE_ITEM3].draw_routine = DrawPickupItem;  //obj# 112
     g_Objects[O_PUZZLE_ITEM3].collision = PickUpCollision;
     g_Objects[O_PUZZLE_ITEM3].save_flags = 1;
 
-
-	g_Objects[O_PUZZLE_ITEM4].draw_routine = DrawPickupItem;  // 113
+	g_Objects[O_PUZZLE_ITEM4].draw_routine = DrawPickupItem;  //obj# 113
     g_Objects[O_PUZZLE_ITEM4].collision = PickUpCollision;
     g_Objects[O_PUZZLE_ITEM4].save_flags = 1;
 
-	//---------------------
-
-	g_Objects[O_GUN_ITEM].draw_routine = DrawPickupItem;  // 84
+	g_Objects[O_GUN_ITEM].draw_routine = DrawPickupItem;  //obj# 84
     g_Objects[O_GUN_ITEM].collision = PickUpCollision;
     g_Objects[O_GUN_ITEM].save_flags = 1;
 
-	g_Objects[O_SHOTGUN_ITEM].draw_routine = DrawPickupItem;  // 85
+	g_Objects[O_SHOTGUN_ITEM].draw_routine = DrawPickupItem;  //obj# 85
     g_Objects[O_SHOTGUN_ITEM].collision = PickUpCollision;
     g_Objects[O_SHOTGUN_ITEM].save_flags = 1;
 
-	g_Objects[O_MAGNUM_ITEM].draw_routine = DrawPickupItem;  // 86
+	g_Objects[O_MAGNUM_ITEM].draw_routine = DrawPickupItem;  //obj# 86
     g_Objects[O_MAGNUM_ITEM].collision = PickUpCollision;
     g_Objects[O_MAGNUM_ITEM].save_flags = 1;
 
-	g_Objects[O_UZI_ITEM].draw_routine = DrawPickupItem;  // 87
+	g_Objects[O_UZI_ITEM].draw_routine = DrawPickupItem;  //obj# 87
     g_Objects[O_UZI_ITEM].collision = PickUpCollision;
     g_Objects[O_UZI_ITEM].save_flags = 1;
 
-	g_Objects[O_GUN_AMMO_ITEM].draw_routine = DrawPickupItem;  // 88
+	g_Objects[O_GUN_AMMO_ITEM].draw_routine = DrawPickupItem;  //obj# 88
     g_Objects[O_GUN_AMMO_ITEM].collision = PickUpCollision;
     g_Objects[O_GUN_AMMO_ITEM].save_flags = 1;
 
-	g_Objects[O_SG_AMMO_ITEM].draw_routine = DrawPickupItem;  // 89
+	g_Objects[O_SG_AMMO_ITEM].draw_routine = DrawPickupItem;  //obj# 89
     g_Objects[O_SG_AMMO_ITEM].collision = PickUpCollision;
     g_Objects[O_SG_AMMO_ITEM].save_flags = 1;
 
-	g_Objects[O_MAG_AMMO_ITEM].draw_routine = DrawPickupItem;  // 90
+	g_Objects[O_MAG_AMMO_ITEM].draw_routine = DrawPickupItem;  //obj# 90
     g_Objects[O_MAG_AMMO_ITEM].collision = PickUpCollision;
     g_Objects[O_MAG_AMMO_ITEM].save_flags = 1;
 
-	g_Objects[O_UZI_AMMO_ITEM].draw_routine = DrawPickupItem;  // 91
+	g_Objects[O_UZI_AMMO_ITEM].draw_routine = DrawPickupItem;  //obj# 91
     g_Objects[O_UZI_AMMO_ITEM].collision = PickUpCollision;
     g_Objects[O_UZI_AMMO_ITEM].save_flags = 1;
 
-	g_Objects[O_EXPLOSIVE_ITEM].draw_routine = DrawPickupItem;  // 92
+	g_Objects[O_EXPLOSIVE_ITEM].draw_routine = DrawPickupItem;  //obj# 92
     g_Objects[O_EXPLOSIVE_ITEM].collision = PickUpCollision;
     g_Objects[O_EXPLOSIVE_ITEM].save_flags = 1;
 
-	g_Objects[O_MEDI_ITEM].draw_routine = DrawPickupItem; // 93
+	g_Objects[O_MEDI_ITEM].draw_routine = DrawPickupItem; //obj# 93
     g_Objects[O_MEDI_ITEM].collision = PickUpCollision;
     g_Objects[O_MEDI_ITEM].save_flags = 1;
-	//--------------
-	g_Objects[O_BIGMEDI_ITEM].draw_routine = DrawPickupItem; // 94
+	
+	g_Objects[O_BIGMEDI_ITEM].draw_routine = DrawPickupItem; //obj# 94
     g_Objects[O_BIGMEDI_ITEM].collision = PickUpCollision;
     g_Objects[O_BIGMEDI_ITEM].save_flags = 1;
+    
+	SetupScion1(&g_Objects[O_SCION_ITEM]); //obj# 143
+    SetupScion2(&g_Objects[O_SCION_ITEM2]); //obj# 144
+    SetupScion3(&g_Objects[O_SCION_ITEM3]); //obj# 145
+    SetupScion4(&g_Objects[O_SCION_ITEM4]); //obj# 146
+    SetupScionHolder(&g_Objects[O_SCION_HOLDER]); //obj# 147
 
-	//------------
+	SetupLeadBar(&g_Objects[O_LEADBAR_ITEM]); //obj# 126
+	
+    //закоментировать строку ниже если нужно рисовать O_SAVEGAME_ITEM
+	g_Objects[O_SAVEGAME_ITEM].draw_routine = DrawDummyItem;  //obj# 83
 
-	SetupScion1(&g_Objects[O_SCION_ITEM]); // 143
-    SetupScion2(&g_Objects[O_SCION_ITEM2]); // 144
-    SetupScion3(&g_Objects[O_SCION_ITEM3]); // 145
-    SetupScion4(&g_Objects[O_SCION_ITEM4]); // 146
-    SetupScionHolder(&g_Objects[O_SCION_HOLDER]); // 147
-
-	SetupLeadBar(&g_Objects[O_LEADBAR_ITEM]); // 126
-
-	//--------------
-	g_Objects[O_SAVEGAME_ITEM].draw_routine = DrawDummyItem;  // 83 !!!!!!!убрать
-	//--------------
-	g_Objects[O_KEY_HOLE1].collision = KeyHoleCollision; // 137
+	g_Objects[O_KEY_HOLE1].collision = KeyHoleCollision; //obj# 137
     g_Objects[O_KEY_HOLE1].save_flags = 1;
 
-	g_Objects[O_KEY_HOLE2].collision = KeyHoleCollision; // 138
+	g_Objects[O_KEY_HOLE2].collision = KeyHoleCollision; //obj# 138
     g_Objects[O_KEY_HOLE2].save_flags = 1;
 
-	g_Objects[O_KEY_HOLE3].collision = KeyHoleCollision; // 139
+	g_Objects[O_KEY_HOLE3].collision = KeyHoleCollision; //obj# 139
     g_Objects[O_KEY_HOLE3].save_flags = 1;
 
-	g_Objects[O_KEY_HOLE4].collision = KeyHoleCollision; // 140
+	g_Objects[O_KEY_HOLE4].collision = KeyHoleCollision; //obj# 140
     g_Objects[O_KEY_HOLE4].save_flags = 1;
 
-	//--------------
-	g_Objects[O_PUZZLE_HOLE1].collision = PuzzleHoleCollision; // 118
+	g_Objects[O_PUZZLE_HOLE1].collision = PuzzleHoleCollision; //obj# 118
     g_Objects[O_PUZZLE_HOLE1].save_flags = 1;
 
-	g_Objects[O_PUZZLE_HOLE2].collision = PuzzleHoleCollision; // 119
+	g_Objects[O_PUZZLE_HOLE2].collision = PuzzleHoleCollision; //obj# 119
     g_Objects[O_PUZZLE_HOLE2].save_flags = 1;
 
-	g_Objects[O_PUZZLE_HOLE3].collision = PuzzleHoleCollision; // 120
+	g_Objects[O_PUZZLE_HOLE3].collision = PuzzleHoleCollision; //obj# 120
     g_Objects[O_PUZZLE_HOLE3].save_flags = 1;
 
-	g_Objects[O_PUZZLE_HOLE4].collision = PuzzleHoleCollision; // 121
+	g_Objects[O_PUZZLE_HOLE4].collision = PuzzleHoleCollision; //obj# 121
     g_Objects[O_PUZZLE_HOLE4].save_flags = 1;
 
-	g_Objects[O_PUZZLE_DONE1].save_flags = 1; // 122
+	g_Objects[O_PUZZLE_DONE1].save_flags = 1; //obj# 122
 
-	g_Objects[O_PUZZLE_DONE2].save_flags = 1; // 122
+	g_Objects[O_PUZZLE_DONE2].save_flags = 1; //obj# 122
 
-	g_Objects[O_PUZZLE_DONE3].save_flags = 1; // 122
+	g_Objects[O_PUZZLE_DONE3].save_flags = 1; //obj# 122
 
-	g_Objects[O_PUZZLE_DONE4].save_flags = 1; // 122
-	//--------------
+	g_Objects[O_PUZZLE_DONE4].save_flags = 1; //obj# 122
 
 	//O_PORTACABIN это комната на тросу Natla Mines уровень
-    SetupCabin(&g_Objects[O_PORTACABIN]); // 162
-    SetupBoat(&g_Objects[O_BOAT]); // 182
-    SetupEarthquake(&g_Objects[O_EARTHQUAKE]); // 183
-	//---------------
+    SetupCabin(&g_Objects[O_PORTACABIN]); //obj# 162
+    SetupBoat(&g_Objects[O_BOAT]); //obj# 182
+    SetupEarthquake(&g_Objects[O_EARTHQUAKE]); //obj# 183
 
 	/*
 	//player 1 - 77
@@ -953,37 +921,28 @@ void ObjectObjects()
     g_Objects[O_PLAYER_4].initialise = InitialiseGenPlayer;
     g_Objects[O_PLAYER_4].control = ControlCinematicPlayer4;
     g_Objects[O_PLAYER_4].hit_points = 1;
-
 	*/
 
-	//-------------
-	g_Objects[O_BLOOD1].control = ControlBlood1;	 // 158
+	g_Objects[O_BLOOD1].control = ControlBlood1; //obj# 158
 
-	//-------------
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    SetupBubble(&g_Objects[O_BUBBLES1]); // 155
+    SetupBubble(&g_Objects[O_BUBBLES1]); //obj# 155
 
 	//взрыв когда мумия разлетается на части O_BODY_PART
-    SetupExplosion(&g_Objects[O_EXPLOSION1]); // 151
+    SetupExplosion(&g_Objects[O_EXPLOSION1]); //obj# 151
 
-	//--------------
-	g_Objects[O_RICOCHET1].control = ControlRicochet1; // 164
+	g_Objects[O_RICOCHET1].control = ControlRicochet1; //obj# 164
 
-	//--------------
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	SetupTwinkle(&g_Objects[O_TWINKLE]); // 165
-    SetupSplash(&g_Objects[O_SPLASH1]); // 153
-    SetupWaterfall(&g_Objects[O_WATERFALL]); // 170
+	SetupTwinkle(&g_Objects[O_TWINKLE]); //obj# 165
+    SetupSplash(&g_Objects[O_SPLASH1]); //obj# 153
+    SetupWaterfall(&g_Objects[O_WATERFALL]); //obj# 170
     
 	//когда взрыв то мумия разлетается на части O_EXPLOSION1
-	SetupBodyPart(&g_Objects[O_BODY_PART]); // 168
+	SetupBodyPart(&g_Objects[O_BODY_PART]); //obj# 168
 
-    SetupNatlaGun(&g_Objects[O_MISSILE1]); // 171
-    SetupMissile(&g_Objects[O_MISSILE2]); // 172
-    SetupMissile(&g_Objects[O_MISSILE3]); // 173
-    SetupGunShot(&g_Objects[O_GUN_FLASH]); // 166
-
-
+    SetupNatlaGun(&g_Objects[O_MISSILE1]); //obj# 171
+    SetupMissile(&g_Objects[O_MISSILE2]); //obj# 172
+    SetupMissile(&g_Objects[O_MISSILE3]); //obj# 173
+    SetupGunShot(&g_Objects[O_GUN_FLASH]); //obj# 166
 }
 
 bool LoadSprites(FILE *fp)
@@ -992,7 +951,7 @@ bool LoadSprites(FILE *fp)
 
 	fread(&SpriteInfoCount, sizeof(int32_t), 1, fp);
 
-	fread(&phdsprinfo, sizeof(PHDSPRITESTRUCT), SpriteInfoCount, fp);
+	fread(&g_PhdSpriteInfo, sizeof(PHDSPRITESTRUCT), SpriteInfoCount, fp);
 
 	int32_t SpriteCount;
 
@@ -1020,9 +979,7 @@ bool LoadSprites(FILE *fp)
         }
     }
 
-
-
-	return true;
+    return true;
 }
 
 bool LoadCameras(FILE *fp)
@@ -1171,116 +1128,32 @@ bool LoadItems(FILE *fp)
 	return true;
 }
 
-/*
-void InitialiseItemArray(int32_t NumItems)
-{
-    g_NextItemActive = NO_ITEM;
-    g_NextItemFree = g_LevelItemCount;
-
-    for (int i = g_LevelItemCount; i < NumItems - 1; i++)
-	{
-        g_Items[i].next_item = i + 1;
-    }
-    g_Items[NumItems - 1].next_item = NO_ITEM;
-
-}
-*/
-/*
-void InitialiseItem(int16_t ItemNum)
-{
-	ITEM_INFO *item = &g_Items[ItemNum];
-    OBJECT_INFO *object = &g_Objects[item->object_number];
-
-	item->anim_number = object->anim_index;
-    item->frame_number = g_Anims[item->anim_number].frame_base;
-    item->current_anim_state = g_Anims[item->anim_number].current_anim_state;
-    item->goal_anim_state = item->current_anim_state;
-    item->required_anim_state = 0;
-    item->pos.x_rot = 0;
-    item->pos.z_rot = 0;
-    item->speed = 0;
-    item->fall_speed = 0;
-    item->status = IS_NOT_ACTIVE;
-    item->active = 0;
-    item->gravity_status = 0;
-    item->hit_status = 0;
-    item->looked_at = 0;
-    item->collidable = 1;
-    item->hit_points = object->hit_points;
-    item->timer = 0;
-    item->mesh_bits = -1;
-    item->touch_bits = 0;
-    item->data = NULL;
-
-	if (item->flags & IF_NOT_VISIBLE)
-	{
-        item->status = IS_INVISIBLE;
-        item->flags -= IF_NOT_VISIBLE;
-    }
-
-	if ((item->flags & IF_CODE_BITS) == IF_CODE_BITS)
-	{
-        item->flags -= IF_CODE_BITS;
-        item->flags |= IF_REVERSE;
-
-        AddActiveItem(ItemNum);
-
-        item->status = IS_ACTIVE;
-    }
-
-	ROOM_INFO *r = &g_RoomInfo[item->room_number];
-    
-	item->next_item = r->item_number;
-    r->item_number = ItemNum;
-
-    int32_t x_floor = (item->pos.z - r->z) >> WALL_SHIFT;
-    int32_t y_floor = (item->pos.x - r->x) >> WALL_SHIFT;
-    
-	FLOOR_INFO *floor = &r->floor[x_floor + y_floor * r->x_size];
-    item->floor = floor->floor << 8;
-
-	
-	//if (g_SaveGame.bonus_flag & GBF_NGPLUS)
-	//{
-      //  item->hit_points *= 2;
-    //}
-	
-
-    if (object->initialise)
-	{
-        object->initialise(ItemNum);
-    }
-}
-*/
-
 bool LoadDepthQ(FILE *fp)
 {
 	//пропуск загрузки 32 * 256 = depthQ size
     //fseek(fp, sizeof(uint8_t) * 32 * 256, SEEK_CUR);
 
-
-
-	fread(depthq_table, 32*256, 1, fp);
+    fread(depthq_table, 32*256, 1, fp);
 
 	// Force colour 0 to black 
 	for (int i=0; i<32; i++)
+    {
 		depthq_table[i][0] = 0;
-
+    }
 
 	for (int i=0; i<32; i++)
 	{
 		for (int j=0; j<256; j++)
+        {
 			gouraud_table[j][i] = depthq_table[i][j];
+        }
 	}
-
-
 
 	return true;
 }
 
 bool LoadPalette(FILE *fp)
 {
-    
     RGB888 palette[256];
     
 	fread(palette, sizeof(RGB888), 256, fp);
@@ -1289,7 +1162,6 @@ bool LoadPalette(FILE *fp)
     palette[0].g = 0;
     palette[0].b = 0;
     
-	
 	for ( int i = 0; i < 256; i++ )
 	{
 		GamePalette[i].r = palette[i].r * 4;
@@ -1318,11 +1190,9 @@ bool LoadCinematic(FILE *fp)
 
 bool LoadDemo(FILE *fp)
 {
-   
 	uint16_t size = 0;
     
 	fread(&size, sizeof(int16_t), 1, fp);
-    
 	
     if (!size)
 	{
@@ -1339,65 +1209,59 @@ bool LoadDemo(FILE *fp)
 bool LoadSoundSamples(FILE *fp)
 {
 	fread(&g_SampleLUT[0],sizeof(int16_t)*256,1,fp);
-	//fread(&sample_lut[0],sizeof(int16_t)*MAX_SOUND_SAMPLES,1,fp);
+	//fread(&g_SampleLUT[0],sizeof(int16_t)*MAX_SOUND_SAMPLES,1,fp);
 
-	fread(&num_sample_infos,sizeof(int32_t),1, fp);
+	fread(&NumSampleInfos,sizeof(int32_t),1, fp);
 
-	if (num_sample_infos == 0)
+	if (NumSampleInfos == 0)
 	{
-		//Log(LT_Error,"No sample infos");
 		MessageBox(NULL, "No sample infos", "Tomb Radier", MB_OK);
 		return false;
 	}
 
-	g_SampleInfos = (SOUND_SAMPLE_INFO *) Game_Alloc(sizeof(SOUND_SAMPLE_INFO) * num_sample_infos, GBUF_SAMPLE_INFOS);
+	g_SampleInfos = (SOUND_SAMPLE_INFO *) Game_Alloc(sizeof(SOUND_SAMPLE_INFO) * NumSampleInfos, GBUF_SAMPLE_INFOS);
     
-	fread(g_SampleInfos, sizeof(SOUND_SAMPLE_INFO), num_sample_infos, fp);
+	fread(g_SampleInfos, sizeof(SOUND_SAMPLE_INFO), NumSampleInfos, fp);
 
-
-    int32_t sample_data_size;
-    fread(&sample_data_size, sizeof(int32_t), 1, fp);
+    int32_t SampleDataSize;
+    fread(&SampleDataSize, sizeof(int32_t), 1, fp);
     
-    if (!sample_data_size)
+    if (!SampleDataSize)
 	{
-        //Shell_ExitSystem("No Sample Data");
 		MessageBox(NULL, "No Sample Data", "Tomb Raider", MB_OK);
         return false;
     }
 
-	char *sample_data = (char *) Game_Alloc(sample_data_size, GBUF_SAMPLES);
-    fread(sample_data, sizeof(char), sample_data_size, fp);
+	char *sample_data = (char *) Game_Alloc(SampleDataSize, GBUF_SAMPLES);
+    fread(sample_data, sizeof(char), SampleDataSize, fp);
 
-
-	int32_t num_samples;
+	int32_t NumSamples;
     
-	fread(&num_samples, sizeof(int32_t), 1, fp);
-
+	fread(&NumSamples, sizeof(int32_t), 1, fp);
     
-    if (!num_samples)
+    if (!NumSamples)
 	{
-        //Shell_ExitSystem("No Samples");
 		MessageBox(NULL, "No Samples", "Tomb Raider", MB_OK);
         return false;
     }
 
-	int32_t *sample_offsets = (int32_t *) malloc(sizeof(int32_t) * num_samples);
-    size_t *sample_sizes = (size_t *) malloc(sizeof(size_t) * num_samples);
+	int32_t *SampleOffsets = (int32_t *) malloc(sizeof(int32_t) * NumSamples);
+    size_t *SampleSizes = (size_t *) malloc(sizeof(size_t) * NumSamples);
     
-	fread(sample_offsets, sizeof(int32_t), num_samples, fp);
+	fread(SampleOffsets, sizeof(int32_t), NumSamples, fp);
 
-	const char **sample_pointers = (const char **)malloc(sizeof(char *) * num_samples);
+	const char **SamplePointers = (const char **)malloc(sizeof(char *) * NumSamples);
     
-	for (int i = 0; i < num_samples; i++)
+	for (int i = 0; i < NumSamples; i++)
 	{
-        sample_pointers[i] = sample_data + sample_offsets[i];
+        SamplePointers[i] = sample_data + SampleOffsets[i];
     }
 
-	for (int i = 0; i < num_samples; i++)
+	for (int i = 0; i < NumSamples; i++)
 	{
-        int current_offset = sample_offsets[i];
-        int next_offset = i + 1 >= num_samples ? (int)File_Size(fp) : sample_offsets[i + 1];
-        sample_sizes[i] = next_offset - current_offset;
+        int current_offset = SampleOffsets[i];
+        int next_offset = i + 1 >= NumSamples ? (int)File_Size(fp) : SampleOffsets[i + 1];
+        SampleSizes[i] = next_offset - current_offset;
     }
 
 	DirectSound_Init();
@@ -1405,9 +1269,9 @@ bool LoadSoundSamples(FILE *fp)
 	DWORD dwHeader[11], dwWaveLength;
 	WAVEFORMATEX* pWF = reinterpret_cast<WAVEFORMATEX*>(&dwHeader[5]);
 
-	for ( int i = 0; i < num_samples; i++ )
+	for ( int i = 0; i < NumSamples; i++ )
 	{
-		memcpy(dwHeader, sample_pointers[i], sizeof(DWORD) * 11);
+		memcpy(dwHeader, SamplePointers[i], sizeof(DWORD) * 11);
 
 		if (dwHeader[0]!=MAKEFOURCC('R','I','F','F') || 
 			dwHeader[2]!=MAKEFOURCC('W','A','V','E') ||
@@ -1418,31 +1282,30 @@ bool LoadSoundSamples(FILE *fp)
 		}
 
 		//pWF->cbSize = sizeof(WAVEFORMATEX);
-
 		pWF->cbSize = 0;
 
 		dwWaveLength = dwHeader[10];
 
-		//SAVE SOUND TO FILE
+		/*
+        //SAVE SOUND TO FILE
 		//id 72 = sound 108 rotate ring sound
 		//id 73 = sound 109 open item sound
-		/*
+		
 		if(i == 73)
 		{
 			FILE *fp;
 
 			fp = fopen("sound.wav", "wb");
 
-			fwrite(sample_pointers[i], sample_sizes[i], 1, fp);
+			fwrite(SamplePointers[i], SampleSizes[i], 1, fp);
 
 			fclose(fp);
 		}
 		*/
-
 		
 		if (FAILED(DS_MakeSample(i, pWF,
 			//пропускаем заголовок WAV файла sizeof(DWORD) * 11
-			(unsigned char*)sample_pointers[i] + sizeof(DWORD) * 11,
+			(unsigned char*)SamplePointers[i] + sizeof(DWORD) * 11,
 			dwWaveLength)))
 		{
 			MessageBox(NULL, "DS_MakeSample Error!", "Tomb Raider", MB_OK);
@@ -1450,9 +1313,9 @@ bool LoadSoundSamples(FILE *fp)
 		
 	}
 	
-	free(sample_offsets);
-    free(sample_pointers);
-    free(sample_sizes);
+	free(SampleOffsets);
+    free(SamplePointers);
+    free(SampleSizes);
 
 	return true;
 }

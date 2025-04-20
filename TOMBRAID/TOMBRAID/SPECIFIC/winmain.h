@@ -13,25 +13,19 @@ extern int lara_dist;
 extern int SCREEN_WIDTH;
 extern int SCREEN_HEIGHT;
 
-extern "C" int phd_winwidth;
-
 enum { VER_TR1, VER_TR_GOLD };
 
-extern int select_game;
+extern int GameType;
 
-extern int widescreen;
+extern int Widescreen;
 
 extern int g_bWindowClosed;
 
 extern HINSTANCE g_hInst;
 extern HWND g_hWnd;
 
-extern int16_t		phd_winxmin;
-extern int16_t		phd_winymin;
-extern int16_t		phd_winxmax;        	/* Maximum Window X coord*/
-extern int16_t		phd_winymax;        	/* Maximum Window Y coord*/
-extern "C" int32_t		phd_scrwidth;
-
+int Settings_Write();
+int Settings_Read();
 void S_SeedRandom();
 void Random_SeedDraw(int32_t seed);
 int32_t Random_GetDraw();

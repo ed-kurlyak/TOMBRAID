@@ -1351,6 +1351,7 @@ typedef struct PHD_TEXTURE {
     PHD_UV uv[4];
 } PHD_TEXTURE;
 
+/*
 typedef struct PHD_SPRITE {
     uint16_t tpage;
     uint16_t offset;
@@ -1361,6 +1362,7 @@ typedef struct PHD_SPRITE {
     int16_t x2;
     int16_t y2;
 } PHD_SPRITE;
+*/
 
 typedef struct DOOR_INFO {
     int16_t room_num;
@@ -2040,16 +2042,7 @@ typedef enum INPUT_KEY {
     INPUT_KEY_LOOK = 10,
     INPUT_KEY_ROLL = 11,
     INPUT_KEY_OPTION = 12,
-    INPUT_KEY_FLY_CHEAT = 13,
-    INPUT_KEY_ITEM_CHEAT = 14,
-    INPUT_KEY_LEVEL_SKIP_CHEAT = 15,
-    INPUT_KEY_PAUSE = 16,
-    INPUT_KEY_CAMERA_UP = 17,
-    INPUT_KEY_CAMERA_DOWN = 18,
-    INPUT_KEY_CAMERA_LEFT = 19,
-    INPUT_KEY_CAMERA_RIGHT = 20,
-    INPUT_KEY_CAMERA_RESET = 21,
-    INPUT_KEY_NUMBER_OF = 22,
+    INPUT_KEY_NUMBER_OF = 13,
 } INPUT_KEY;
 
 typedef enum INPUT_LAYOUT {
@@ -2124,6 +2117,9 @@ struct CONFIG {
     SCREENSHOT_FORMAT screenshot_format;
 	*/
 
+    bool enable_enemy_healthbar;
+    int8_t enemy_healthbar_location;
+    int8_t enemy_healthbar_color;
     int8_t healthbar_showing_mode;
     int8_t healthbar_location;
     int8_t healthbar_color;

@@ -96,7 +96,7 @@ void	draw_poly_gtmap( short int *iptr )
 
 	if ( xgen_xguv(iptr+1) )
 	{
-		texture = texture_page_ptrs[*(iptr)];
+		texture = TexturePagePtrs[*(iptr)];
 		__asm
 		{
 			mov eax,xgen_ymin
@@ -116,7 +116,7 @@ void	draw_poly_wgtmap( short int *iptr )
 
 	if ( xgen_xguv(iptr+1) )
 	{
-		texture = texture_page_ptrs[*(iptr)];
+		texture = TexturePagePtrs[*(iptr)];
 		__asm
 		{
 			mov eax,xgen_ymin
@@ -519,8 +519,8 @@ void	gtmap_persp32_fp( int ymin, int ymax, unsigned char *tptr )
 	int				x;
 
 	dataptr = ((XBUF_PERSP_FP *)xbuffer)+ymin;
-	lineptr = (unsigned char*)phd_winptr + ( ymin*phd_scrwidth );
-	for (ymax-=ymin; ymax>0; ymax--, dataptr++, lineptr+=phd_scrwidth)
+	lineptr = (unsigned char*)phd_winptr + ( ymin*g_PhdScrwidth );
+	for (ymax-=ymin; ymax>0; ymax--, dataptr++, lineptr+=g_PhdScrwidth)
 	{
 		start_x = dataptr->Xleft >> 16;
 		end_x = dataptr->Xright >> 16;
@@ -877,8 +877,8 @@ void	wgtmap_persp16_fp( int ymin, int ymax, char *tptr )
 	int				x;
 
 	dataptr = ((XBUF_PERSP_FP *)xbuffer)+ymin;
-	lineptr = (unsigned char*)phd_winptr + ( ymin*phd_scrwidth );
-	for (ymax-=ymin; ymax>0; ymax--, dataptr++, lineptr+=phd_scrwidth)
+	lineptr = (unsigned char*)phd_winptr + ( ymin*g_PhdScrwidth );
+	for (ymax-=ymin; ymax>0; ymax--, dataptr++, lineptr+=g_PhdScrwidth)
 	{
 		start_x = dataptr->Xleft >> 16;
 		end_x = dataptr->Xright >> 16;
@@ -1305,13 +1305,13 @@ void	wgtmap_persp16_fp( int ymin, int ymax, char *tptr )
 void	draw_poly_gtmap_persp( short int *iptr )
 {
 	if ( xgen_xguvpersp_fp(iptr+1) )
-		gtmap_persp32_fp( xgen_ymin, xgen_ymax, (unsigned char*)texture_page_ptrs[*(iptr)] );
+		gtmap_persp32_fp( xgen_ymin, xgen_ymax, (unsigned char*)TexturePagePtrs[*(iptr)] );
 }
 
 void	draw_poly_wgtmap_persp( short int *iptr )
 {
 	if ( xgen_xguvpersp_fp(iptr+1) )
-		wgtmap_persp16_fp( xgen_ymin, xgen_ymax, texture_page_ptrs[*(iptr)] );
+		wgtmap_persp16_fp( xgen_ymin, xgen_ymax, TexturePagePtrs[*(iptr)] );
 }
 
 

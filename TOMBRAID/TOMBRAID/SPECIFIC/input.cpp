@@ -1,4 +1,5 @@
 #include "input.h"
+#include "windows.h"
 
 //#include "config.h"
 //#include "inv.h"
@@ -17,70 +18,48 @@
 */
 
 //#define KEY_DOWN(a) ((m_DIKeys[(a)] & 0x80) != 0)
-#define KEY_DOWN(a) (a)
+#define KEY_DOWN(a) (GetAsyncKeyState(a) & 0xFF00)
 
-//bool m_KeyConflict[INPUT_KEY_NUMBER_OF] = { false };
-bool m_KeyConflict[INPUT_KEY_NUMBER_OF];
+bool m_KeyConflict[INPUT_KEY_NUMBER_OF] = { false };
+//bool m_KeyConflict[INPUT_KEY_NUMBER_OF];
 
-//S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF] = { 0 };
-S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF];
-
-/*
-    // clang-format off
+S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF] =
+{
     // built-in controls
     {
-        DIK_UP,          // INPUT_KEY_UP
-        DIK_DOWN,        // INPUT_KEY_DOWN
-        DIK_LEFT,        // INPUT_KEY_LEFT
-        DIK_RIGHT,       // INPUT_KEY_RIGHT
-        DIK_DELETE,      // INPUT_KEY_STEP_L
-        DIK_NEXT,        // INPUT_KEY_STEP_R
-        DIK_RSHIFT,      // INPUT_KEY_SLOW
-        DIK_RMENU,       // INPUT_KEY_JUMP
-        DIK_RCONTROL,    // INPUT_KEY_ACTION
-        DIK_SPACE,       // INPUT_KEY_DRAW
-        DIK_NUMPAD0,     // INPUT_KEY_LOOK
-        DIK_END,         // INPUT_KEY_ROLL
-        DIK_ESCAPE,      // INPUT_KEY_OPTION
-        DIK_O,           // INPUT_KEY_FLY_CHEAT,
-        DIK_I,           // INPUT_KEY_ITEM_CHEAT,
-        DIK_L,           // INPUT_KEY_LEVEL_SKIP_CHEAT,
-        DIK_P,           // INPUT_KEY_PAUSE,
-        DIK_W,           // INPUT_KEY_CAMERA_UP
-        DIK_S,           // INPUT_KEY_CAMERA_DOWN
-        DIK_A,           // INPUT_KEY_CAMERA_LEFT
-        DIK_D,           // INPUT_KEY_CAMERA_RIGHT
-        DIK_SLASH,       // INPUT_KEY_CAMERA_RESET
+        VK_UP,          // INPUT_KEY_UP
+        VK_DOWN,        // INPUT_KEY_DOWN
+        VK_LEFT,        // INPUT_KEY_LEFT
+        VK_RIGHT,       // INPUT_KEY_RIGHT
+        VK_DELETE,      // INPUT_KEY_STEP_L
+        VK_NEXT,        // INPUT_KEY_STEP_R
+        VK_SHIFT,      // INPUT_KEY_SLOW
+        VK_MENU,       // INPUT_KEY_JUMP
+        VK_CONTROL,    // INPUT_KEY_ACTION
+        VK_SPACE,       // INPUT_KEY_DRAW
+        VK_INSERT,     // INPUT_KEY_LOOK
+        VK_END,         // INPUT_KEY_ROLL
+        VK_ESCAPE      // INPUT_KEY_OPTION
     },
-
     // default user controls
     {
-        DIK_NUMPAD8,     // INPUT_KEY_UP
-        DIK_NUMPAD2,     // INPUT_KEY_DOWN
-        DIK_NUMPAD4,     // INPUT_KEY_LEFT
-        DIK_NUMPAD6,     // INPUT_KEY_RIGHT
-        DIK_NUMPAD7,     // INPUT_KEY_STEP_L
-        DIK_NUMPAD9,     // INPUT_KEY_STEP_R
-        DIK_NUMPAD1,     // INPUT_KEY_SLOW
-        DIK_ADD,         // INPUT_KEY_JUMP
-        DIK_NUMPADENTER, // INPUT_KEY_ACTION
-        DIK_NUMPAD3,     // INPUT_KEY_DRAW
-        DIK_NUMPAD0,     // INPUT_KEY_LOOK
-        DIK_NUMPAD5,     // INPUT_KEY_ROLL
-        DIK_DECIMAL,     // INPUT_KEY_OPTION
-        DIK_O,           // INPUT_KEY_FLY_CHEAT,
-        DIK_I,           // INPUT_KEY_ITEM_CHEAT,
-        DIK_L,           // INPUT_KEY_LEVEL_SKIP_CHEAT,
-        DIK_P,           // INPUT_KEY_PAUSE,
-        DIK_W,           // INPUT_KEY_CAMERA_UP
-        DIK_S,           // INPUT_KEY_CAMERA_DOWN
-        DIK_A,           // INPUT_KEY_CAMERA_LEFT
-        DIK_D,           // INPUT_KEY_CAMERA_RIGHT
-        DIK_SLASH,       // INPUT_KEY_CAMERA_RESET
+        VK_UP,     // INPUT_KEY_UP
+        VK_DOWN,     // INPUT_KEY_DOWN
+        VK_LEFT,     // INPUT_KEY_LEFT
+        VK_RIGHT,     // INPUT_KEY_RIGHT
+        VK_HOME,     // INPUT_KEY_STEP_L
+        VK_PRIOR,     // INPUT_KEY_STEP_R
+        VK_SHIFT,     // INPUT_KEY_SLOW
+        VK_MENU,         // INPUT_KEY_JUMP
+        VK_CONTROL, // INPUT_KEY_ACTION
+        VK_SPACE,     // INPUT_KEY_DRAW
+        VK_INSERT,     // INPUT_KEY_LOOK
+        VK_CLEAR,     // INPUT_KEY_ROLL
+        VK_ESCAPE     // INPUT_KEY_OPTION
     }
     // clang-format on
 };
-*/
+
 
 //static LPDIRECTINPUT8 m_DInput = NULL;
 //static LPDIRECTINPUTDEVICE8 m_IDID_SysKeyboard = NULL;
@@ -212,13 +191,15 @@ static bool S_Input_DInput_KeyboardRead()
 
     return true;
 }
-
+*/
 static bool S_Input_KbdKey(INPUT_KEY key, INPUT_LAYOUT layout)
 {
     S_INPUT_KEYCODE key_code = m_Layout[layout][key];
+    
     if (KEY_DOWN(key_code)) {
         return true;
     }
+    /*
     if (key_code == DIK_LCONTROL) {
         return KEY_DOWN(DIK_RCONTROL);
     }
@@ -237,19 +218,20 @@ static bool S_Input_KbdKey(INPUT_KEY key, INPUT_LAYOUT layout)
     if (key_code == DIK_RMENU) {
         return KEY_DOWN(DIK_LMENU);
     }
+    */
     return false;
 }
 
-static bool S_Input_Key(INPUT_KEY key)
+bool S_Input_Key(INPUT_KEY key)
 {
-    return S_Input_KbdKey(key, INPUT_LAYOUT_USER)
-        || (!S_Input_IsKeyConflicted(key)
+    return S_Input_KbdKey(key, INPUT_LAYOUT_USER) || (!S_Input_IsKeyConflicted(key)
             && S_Input_KbdKey(key, INPUT_LAYOUT_DEFAULT));
 }
-*/
+
 S_INPUT_KEYCODE S_Input_ReadKeyCode()
 {
-    for (S_INPUT_KEYCODE key = 0; key < 256; key++) {
+    for (S_INPUT_KEYCODE key = 0; key < 256; key++)
+    {
         if (KEY_DOWN(key)) {
             return key;
         }
@@ -611,117 +593,124 @@ INPUT_STATE S_Input_GetCurrentState()
 
 const char *S_Input_GetKeyCodeName(S_INPUT_KEYCODE key)
 {
-  /*  
+  
     // clang-format off
     switch (key) {
-        case DIK_ESCAPE:       return "ESC";
-        case DIK_1:            return "1";
-        case DIK_2:            return "2";
-        case DIK_3:            return "3";
-        case DIK_4:            return "4";
-        case DIK_5:            return "5";
-        case DIK_6:            return "6";
-        case DIK_7:            return "7";
-        case DIK_8:            return "8";
-        case DIK_9:            return "9";
-        case DIK_0:            return "0";
-        case DIK_MINUS:        return "-";
-        case DIK_EQUALS:       return "+";
-        case DIK_BACK:         return "BKSP";
-        case DIK_TAB:          return "TAB";
-        case DIK_Q:            return "Q";
-        case DIK_W:            return "W";
-        case DIK_E:            return "E";
-        case DIK_R:            return "R";
-        case DIK_T:            return "T";
-        case DIK_Y:            return "Y";
-        case DIK_U:            return "U";
-        case DIK_I:            return "I";
-        case DIK_O:            return "O";
-        case DIK_P:            return "P";
-        case DIK_LBRACKET:     return "<";
-        case DIK_RBRACKET:     return ">";
-        case DIK_RETURN:       return "RET";
-        case DIK_LCONTROL:     return "CTRL";
-        case DIK_A:            return "A";
-        case DIK_S:            return "S";
-        case DIK_D:            return "D";
-        case DIK_F:            return "F";
-        case DIK_G:            return "G";
-        case DIK_H:            return "H";
-        case DIK_J:            return "J";
-        case DIK_K:            return "K";
-        case DIK_L:            return "L";
-        case DIK_SEMICOLON:    return ";";
-        case DIK_APOSTROPHE:   return "\'";
-        case DIK_GRAVE:        return "`";
-        case DIK_LSHIFT:       return "SHIFT";
-        case DIK_BACKSLASH:    return "\\";
-        case DIK_Z:            return "Z";
-        case DIK_X:            return "X";
-        case DIK_C:            return "C";
-        case DIK_V:            return "V";
-        case DIK_B:            return "B";
-        case DIK_N:            return "N";
-        case DIK_M:            return "M";
-        case DIK_COMMA:        return ",";
-        case DIK_PERIOD:       return ".";
-        case DIK_SLASH:        return "/";
-        case DIK_RSHIFT:       return "SHIFT";
-        case DIK_MULTIPLY:     return "PADx";
-        case DIK_LMENU:        return "ALT";
-        case DIK_SPACE:        return "SPACE";
-        case DIK_CAPITAL:      return "CAPS";
-        case DIK_F1:           return "F1";
-        case DIK_F2:           return "F2";
-        case DIK_F3:           return "F3";
-        case DIK_F4:           return "F4";
-        case DIK_F5:           return "F5";
-        case DIK_F6:           return "F6";
-        case DIK_F7:           return "F7";
-        case DIK_F8:           return "F8";
-        case DIK_F9:           return "F9";
-        case DIK_F10:          return "F10";
-        case DIK_NUMLOCK:      return "NMLK";
-        case DIK_SCROLL:       return "SCLK";
-        case DIK_NUMPAD7:      return "PAD7";
-        case DIK_NUMPAD8:      return "PAD8";
-        case DIK_NUMPAD9:      return "PAD9";
-        case DIK_SUBTRACT:     return "PAD-";
-        case DIK_NUMPAD4:      return "PAD4";
-        case DIK_NUMPAD5:      return "PAD5";
-        case DIK_NUMPAD6:      return "PAD6";
-        case DIK_ADD:          return "PAD+";
-        case DIK_NUMPAD1:      return "PAD1";
-        case DIK_NUMPAD2:      return "PAD2";
-        case DIK_NUMPAD3:      return "PAD3";
-        case DIK_NUMPAD0:      return "PAD0";
-        case DIK_DECIMAL:      return "PAD.";
-        case DIK_F11:          return "F11";
-        case DIK_F12:          return "F12";
-        case DIK_F13:          return "F13";
-        case DIK_F14:          return "F14";
-        case DIK_F15:          return "F15";
-        case DIK_NUMPADEQUALS: return "PAD=";
-        case DIK_AT:           return "@";
-        case DIK_COLON:        return ":";
-        case DIK_UNDERLINE:    return "_";
-        case DIK_NUMPADENTER:  return "ENTER";
-        case DIK_RCONTROL:     return "CTRL";
-        case DIK_DIVIDE:       return "PAD/";
-        case DIK_RMENU:        return "ALT";
-        case DIK_HOME:         return "HOME";
-        case DIK_UP:           return "UP";
-        case DIK_PRIOR:        return "PGUP";
-        case DIK_LEFT:         return "LEFT";
-        case DIK_RIGHT:        return "RIGHT";
-        case DIK_END:          return "END";
-        case DIK_DOWN:         return "DOWN";
-        case DIK_NEXT:         return "PGDN";
-        case DIK_INSERT:       return "INS";
-        case DIK_DELETE:       return "DEL";
+        case VK_ESCAPE:       return "ESC";
+        case VK_1:            return "1";
+        case VK_2:            return "2";
+        case VK_3:            return "3";
+        case VK_4:            return "4";
+        case VK_5:            return "5";
+        case VK_6:            return "6";
+        case VK_7:            return "7";
+        case VK_8:            return "8";
+        case VK_9:            return "9";
+        case VK_0:            return "0";
+        //case VK_OEM_MINUS:        return "-";
+        case VK_OEM_PLUS:       return "+";
+        case VK_BACK:         return "BKSP";
+        case VK_TAB:          return "TAB";
+        case 'Q':            return "Q";
+        case 'W':            return "W";
+        case 'E':            return "E";
+        case 'R':            return "R";
+        case 'T':            return "T";
+        case 'Y':            return "Y";
+        case 'U':            return "U";
+        case 'I':            return "I";
+        case 'O':            return "O";
+        case 'P':            return "P";
+        case '<':            return "<";
+        case '>':            return ">";
+        case VK_RETURN:       return "RET";
+        case VK_CONTROL:     return "CTRL";
+        case 'A':            return "A";
+        case 'S':            return "S";
+        case 'D':            return "D";
+        case 'F':            return "F";
+        case 'G':            return "G";
+        case 'H':            return "H";
+        case 'J':            return "J";
+        case 'K':            return "K";
+        case 'L':            return "L";
+        case ';':            return ";";
+        case VK_OEM_7:   return "\'";
+        //case VK_OEM_3:        return "`";
+        case VK_SHIFT:       return "SHIFT";
+        case VK_OEM_5:    return "\\";
+        case 'Z':            return "Z";
+        case 'X':            return "X";
+        case 'C':            return "C";
+        case 'V':            return "V";
+        case 'B':            return "B";
+        case 'N':            return "N";
+        case 'M':            return "M";
+        case VK_OEM_COMMA:        return ",";
+        case VK_OEM_PERIOD:       return ".";
+        
+        //case VK_OEM_2:        return "/";
+        case VK_OEM_2:          return (GetKeyState(VK_SHIFT) & 0x8000) ? "?" : "/";
+        
+        //case VK_SHIFT:       return "SHIFT";
+        case VK_MULTIPLY:     return "PADx";
+        case VK_MENU:        return "ALT";
+        case VK_SPACE:        return "SPACE";
+        case VK_CAPITAL:      return "CAPS";
+        case VK_F1:           return "F1";
+        case VK_F2:           return "F2";
+        case VK_F3:           return "F3";
+        case VK_F4:           return "F4";
+        case VK_F5:           return "F5";
+        case VK_F6:           return "F6";
+        case VK_F7:           return "F7";
+        case VK_F8:           return "F8";
+        case VK_F9:           return "F9";
+        case VK_F10:          return "F10";
+        case VK_NUMLOCK:      return "NMLK";
+        case VK_SCROLL:       return "SCLK";
+        case VK_NUMPAD7:      return "PAD7";
+        case VK_NUMPAD8:      return "PAD8";
+        case VK_NUMPAD9:      return "PAD9";
+        case VK_SUBTRACT:     return "PAD-";
+        case VK_NUMPAD4:      return "PAD4";
+        case VK_NUMPAD5:      return "PAD5";
+        case VK_NUMPAD6:      return "PAD6";
+        case VK_ADD:          return "PAD+";
+        case VK_NUMPAD1:      return "PAD1";
+        case VK_NUMPAD2:      return "PAD2";
+        case VK_NUMPAD3:      return "PAD3";
+        case VK_NUMPAD0:      return "PAD0";
+        case VK_DECIMAL:      return "PAD.";
+        case VK_F11:          return "F11";
+        case VK_F12:          return "F12";
+        case VK_F13:          return "F13";
+        case VK_F14:          return "F14";
+        case VK_F15:          return "F15";
+        //case VK_NUMPADEQUALS: return "PAD=";
+        case VK_OEM_3:           return (GetKeyState(VK_SHIFT) & 0x8000) ? "@" : "\"";
+        case VK_OEM_1:        return ":";
+        
+        //case DIK_UNDERLINE:    return "_";
+        case VK_OEM_MINUS:      return (GetKeyState(VK_SHIFT) & 0x8000) ? "_" : "-";
+        
+        //case DIK_NUMPADENTER:  return "ENTER";
+        //case DIK_RCONTROL:     return "CTRL";
+        case VK_DIVIDE:       return "PAD/";
+        //case DIK_RMENU:        return "ALT";
+        case VK_HOME:         return "HOME";
+        case VK_UP:           return "UP";
+        case VK_PRIOR:        return "PGUP";
+        case VK_LEFT:         return "LEFT";
+        case VK_RIGHT:        return "RIGHT";
+        case VK_END:          return "END";
+        case VK_DOWN:         return "DOWN";
+        case VK_NEXT:         return "PGDN";
+        case VK_INSERT:       return "INS";
+        case VK_DELETE:       return "DEL";
+        case VK_CLEAR:          return "NUM5";
     }
-    */
+    
     // clang-format on
     return "????";
     

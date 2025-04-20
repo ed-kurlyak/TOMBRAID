@@ -1,5 +1,6 @@
 #include <windows.h>
 
+#include "input.h"
 #include "game.h"
 #include "text.h"
 #include "draw.h"
@@ -23,6 +24,8 @@
 
 #include "option.h"
 #include "screen.h"
+
+#include "savegame.h"
 
 static int32_t m_MedipackCoolDown = 0;
 
@@ -115,22 +118,15 @@ int LevelStats(int32_t level_num)
         //exit to inventory
         //return GF_EXIT_TO_TITLE;
     }
+    else
+    {
+        CreateStartInfo(level_num + 1);
+    }
 
     return 0;
     
 
 }
-
-#define VK_1 0x31
-#define VK_2 0x32
-#define VK_3 0x33
-#define VK_4 0x34
-//#define VK_5 0x35
-//#define VK_6 0x36
-//#define VK_7 0x37
-#define VK_8 0x38
-#define VK_9 0x39
-
 
 int Game_Loop(int demo_mode)
 {
@@ -494,10 +490,11 @@ int Control_Phase(int32_t nframes, int32_t demo_mode)
 	Sound_UpdateEffects();
 	g_SaveGame.timer++;
     g_HealthBarTimer--;
-	SpinMessageLoop();
+	//SpinMessageLoop();
 
 	return g_bWindowClosed;
 }
+
 
 int Get_Key_State(int key)
 {
@@ -512,23 +509,29 @@ int Get_Key_State(int key)
 	}
 }
 
+
 void Input_Update()
 {
 
-		g_Input.forward = Get_Key_State(VK_UP);
-		g_Input.back = Get_Key_State(VK_DOWN);
-		g_Input.left = Get_Key_State(VK_LEFT);
-		g_Input.right = Get_Key_State(VK_RIGHT);
-		g_Input.action = Get_Key_State(VK_CONTROL);
-		g_Input.jump = Get_Key_State(VK_MENU);
-		g_Input.slow = Get_Key_State(VK_SHIFT);
-		g_Input.look = Get_Key_State(VK_INSERT);
-		g_Input.roll = Get_Key_State(VK_CLEAR); //num pad 5
-	    g_Input.step_left = Get_Key_State(VK_HOME); //num pad 7
-	    g_Input.step_right = Get_Key_State(VK_PRIOR); //num pad 9
-		g_Input.draw = Get_Key_State(VK_SPACE);
+		g_Input.forward = S_Input_Key(INPUT_KEY_UP);
+		g_Input.back = S_Input_Key(INPUT_KEY_DOWN);
+		g_Input.left = S_Input_Key(INPUT_KEY_LEFT);
+		g_Input.right = S_Input_Key(INPUT_KEY_RIGHT);
+        g_Input.step_left = S_Input_Key(INPUT_KEY_STEP_L); //num pad 7
+        g_Input.step_right = S_Input_Key(INPUT_KEY_STEP_R); //num pad 9
+        g_Input.slow = S_Input_Key(INPUT_KEY_SLOW);
+        g_Input.jump = S_Input_Key(INPUT_KEY_JUMP);
+        g_Input.action = S_Input_Key(INPUT_KEY_ACTION);
+        g_Input.draw = S_Input_Key(INPUT_KEY_DRAW);
+		g_Input.look = S_Input_Key(INPUT_KEY_LOOK);
+		g_Input.roll = S_Input_Key(INPUT_KEY_ROLL); //num pad 5
+        
         g_Input.select = Get_Key_State(VK_CONTROL) || Get_Key_State(VK_RETURN);
-        g_Input.deselect = Get_Key_State(VK_ESCAPE);
+        
+        g_Input.deselect = S_Input_Key(INPUT_KEY_OPTION);
+        g_Input.option = S_Input_Key(INPUT_KEY_OPTION) && g_Camera.type != CAM_CINEMATIC;
+        //g_Input.option = Get_Key_State(VK_ESCAPE) && g_Camera.type != CAM_CINEMATIC;
+
 
         if (m_MedipackCoolDown)
         {
@@ -547,10 +550,7 @@ void Input_Update()
                 m_MedipackCoolDown = FRAMES_PER_SECOND / 2;
             }
         }
-
-		//g_Input.option = S_Input_Key(INPUT_KEY_OPTION) && g_Camera.type != CAM_CINEMATIC;
-		g_Input.option = Get_Key_State(VK_ESCAPE) && g_Camera.type != CAM_CINEMATIC;
-
+	
 		if (Get_Key_State(VK_1) && Inv_RequestItem(O_GUN_ITEM))
 		{
             g_Lara.request_gun_type = LGT_PISTOLS;
@@ -574,7 +574,7 @@ void Input_Update()
 		    g_Input.load = Get_Key_State(VK_F6);
 		}
 
-		g_InputDB = Input_GetDebounced(g_Input);
+		//g_InputDB = Input_GetDebounced(g_Input);
 
 		//SpinMessageLoop();
 }
@@ -910,16 +910,19 @@ void DrawRooms(int16_t current_room)
 
 	Clear_BackBuffer();
 
-	static int prev_cam = 0;
+	//static int prev_cam = 0;
 
-	if(g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
-	{
-		prev_cam = g_CameraUnderwater;
+	//if(g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
+    if (g_CameraUnderwater)
+    {
+		//prev_cam = g_CameraUnderwater;
 		Create_Water_Palette();
 	}
-	if(!g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
+	
+    //if(!g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
+    if (!g_CameraUnderwater)
 	{
-		prev_cam = g_CameraUnderwater;
+		//prev_cam = g_CameraUnderwater;
 		Create_Normal_Palette();
 	}
 	
@@ -966,6 +969,9 @@ int32_t S_DumpScreen()
 
 	//ScreenPartialDump()
 	Present_BackBuffer();
+
+	//SpinMessageLoop();
+	g_FPSCounter++;
 
 	return nframes;
 }
@@ -2159,6 +2165,7 @@ int32_t S_FrontEndCheck()
     req->items = 0;
     g_SaveCounter = 0;
     g_SavedGamesCount = 0;
+
     for (int i = 0; i < MAX_SAVE_SLOTS; i++)
     {
         char filename[80];
@@ -2183,9 +2190,6 @@ int32_t S_FrontEndCheck()
             }
 
             g_SavedGamesCount++;
-
-
-
         }
         else
         {

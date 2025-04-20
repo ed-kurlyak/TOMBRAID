@@ -6,7 +6,8 @@
 
 void Option_DoInventory(INVENTORY_ITEM *inv_item)
 {
-    switch (inv_item->object_number) {
+    switch (inv_item->object_number)
+    {
     case O_PASSPORT_OPTION:
         Option_Passport(inv_item);
         break;
@@ -59,7 +60,8 @@ void Option_DoInventory(INVENTORY_ITEM *inv_item)
         break;
 
     default:
-        if (g_InputDB.deselect || g_InputDB.select) {
+        if (g_InputDB.deselect || g_InputDB.select)
+        {
             inv_item->goal_frame = 0;
             inv_item->anim_direction = -1;
         }

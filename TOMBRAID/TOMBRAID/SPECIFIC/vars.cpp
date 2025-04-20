@@ -6,7 +6,7 @@
 #include "lara.h"
 #include "screen.h"
 
-int g_level_num_TR1;
+int g_LevelNumTR;
 
 
 //#include "inv.h"
@@ -55,8 +55,8 @@ int16_t g_InvMainQtys[24] = {
 
 GAMEFLOW g_GameFlow;
 
-int color_tor_lighting = 0;
-int color_tor_lighting2 = 0;
+int ColorLighting1 = 0;
+int ColorLighting2 = 0;
 
 //-------------------------
 void (*g_EffectRoutines[])(ITEM_INFO *item) = {
@@ -124,6 +124,13 @@ float g_SurfaceMinY;
 float g_SurfaceMaxX;
 float g_SurfaceMaxY;
 
+int16_t	g_PhdWinxmin;
+int16_t	g_PhdWinymin;
+int16_t	g_PhdWinxmax;
+int16_t	g_PhdWinymax;
+int32_t	g_PhdScrwidth;
+int32_t g_PhdWinwidth;
+
 //int32_t ViewPort_GetCenterX() = SCREEN_WIDTH  / 2;
 //int32_t ViewPort_GetCenterY() = SCREEN_HEIGHT / 2;
 
@@ -140,16 +147,16 @@ PHD_VBUF m_VBuf[1500] = { 0 };
 
 char * phd_winptr = NULL;
 
-//int phd_winwidth = Screen_GetResWidth();
+//int g_PhdWinwidth = Screen_GetResWidth();
 
 char		depthq_table[32][256] = {0};			 	// depth cueing tables..
 char		gouraud_table[256][32] = {0};          	// Gouraud shade table..
 
 RGB888 GamePalette[256];
 
-PHDSPRITESTRUCT phdsprinfo[MAX_SPRITES];
+//PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
 
-int8_t *texture_page_ptrs[MAX_TEXTPAGES];
+int8_t *TexturePagePtrs[MAX_TEXTPAGES];
 
 char * LevelNamesGold[] = {
 "data\\gym.phd",
@@ -190,7 +197,7 @@ char *GameMemoryPointer = NULL;
 int32_t g_FPSCounter = 0;
 
 //int16_t sample_lut[MAX_SOUND_SAMPLES];
-int32_t num_sample_infos;
+int32_t NumSampleInfos;
 SOUND_SAMPLE_INFO* g_SampleInfos;
 
 
@@ -208,7 +215,7 @@ int32_t g_PhdLeft = 0;
 int32_t g_PhdBottom = 0;
 int32_t g_PhdRight = 0;
 int32_t g_PhdTop = 0;
-PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES] = { 0 };
+PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES] = { 0 };
 PHD_TEXTURE g_PhdTextureInfo[MAX_TEXTURES] = { 0 };
 PHD_MATRIX *g_PhdMatrixPtr = NULL;
 PHD_MATRIX g_W2VMatrix = { 0 };

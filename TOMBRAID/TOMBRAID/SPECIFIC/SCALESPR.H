@@ -13,7 +13,7 @@ typedef struct phdspritestruct {
 
 //#define MAX_SPRITES 512
 
-//PHDSPRITESTRUCT  phdsprinfo[MAX_SPRITES];		// pointers to Scaley Sprites
+//PHDSPRITESTRUCT  g_PhdSpriteInfo[MAX_SPRITES];		// pointers to Scaley Sprites
 
 void insert_sprite(int nZDepth,int nX1,int nY1,int nX2,int nY2,int nSprite,int nShade);
 void S_DrawSprite(unsigned int dwFlags,int nX,int nY,int nZ,short int nSprite,short int nShade,short int nScale);

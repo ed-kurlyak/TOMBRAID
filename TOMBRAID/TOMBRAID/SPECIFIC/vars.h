@@ -20,7 +20,7 @@
 #include "const.h"
 #include "types.h"
 
-extern int g_level_num_TR1;
+extern int g_LevelNumTR;
 
 extern GAMEFLOW g_GameFlow;
 
@@ -29,8 +29,8 @@ extern GAMEFLOW g_GameFlow;
 //extern int SCREEN_WIDTH;
 //extern int SCREEN_HEIGHT;
 
-extern int color_tor_lighting;
-extern int color_tor_lighting2;
+extern int ColorLighting1;
+extern int ColorLighting2;
 
 extern void (*g_EffectRoutines[])(ITEM_INFO *item);
 //extern void (*g_LaraControlRoutines[])(ITEM_INFO *item, COLL_INFO *coll);
@@ -56,6 +56,13 @@ extern float g_SurfaceMinY;
 extern float g_SurfaceMaxX;
 extern float g_SurfaceMaxY;
 
+extern int16_t g_PhdWinxmin;
+extern int16_t g_PhdWinymin;
+extern int16_t g_PhdWinxmax;
+extern int16_t g_PhdWinymax;
+extern "C" int32_t g_PhdScrwidth;
+extern "C" int32_t g_PhdWinwidth;
+
 //extern int32_t ViewPort_GetCenterX();
 //extern int32_t ViewPort_GetCenterY();
 
@@ -73,16 +80,16 @@ extern int16_t		info3d_buffer[MAX_POLYGONS*30];		// buffer for print info
 extern PHD_VBUF m_VBuf[1500];
 
 extern "C" char * phd_winptr;
-//extern "C" int phd_winwidth;
+//extern "C" int g_PhdWinwidth;
 
 extern "C" char depthq_table[32][256];
 extern "C" char	gouraud_table[256][32];
 
 extern RGB888 GamePalette[256];
 
-extern PHDSPRITESTRUCT phdsprinfo[MAX_SPRITES];
+//extern PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
 
-extern int8_t *texture_page_ptrs[MAX_TEXTPAGES];
+extern int8_t *TexturePagePtrs[MAX_TEXTPAGES];
 
 extern char * LevelNamesTR1[];
 extern char * LevelNamesGold[];
@@ -96,7 +103,7 @@ extern int32_t g_PhdLeft;
 extern int32_t g_PhdBottom;
 extern int32_t g_PhdRight;
 extern int32_t g_PhdTop;
-extern PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES];
+extern PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
 extern PHD_TEXTURE g_PhdTextureInfo[MAX_TEXTURES];
 extern PHD_MATRIX *g_PhdMatrixPtr;
 extern PHD_MATRIX g_W2VMatrix;
@@ -117,7 +124,7 @@ extern int32_t g_IDCount;
 extern int32_t g_OptionSelected;
 
 //extern int16_t sample_lut[MAX_SOUND_SAMPLES];
-extern int32_t num_sample_infos;
+extern int32_t NumSampleInfos;
 extern SOUND_SAMPLE_INFO* g_SampleInfos;
 extern int16_t g_SampleLUT[MAX_SAMPLES];
 //extern SAMPLE_INFO *g_SampleInfos;
