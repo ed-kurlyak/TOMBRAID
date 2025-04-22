@@ -10,7 +10,7 @@
 
 LPDIRECTSOUNDBUFFER g_pPrimaryBuffer = NULL;
 
-my_sound activeBuffers[256];
+MySound activeBuffers[256];
 
 int m_DecibelLUT[DECIBEL_LUT_SIZE] = { 0 };
 
@@ -21,150 +21,48 @@ double log2(double x)
 }
 
 
-int FindSlot()
-{
 
-	for (int i = 0; i < 256; i++)
-	{
-		if (activeBuffers[i].Buffers == NULL)
-			return i;
-	}
-
-	return -1;
-}
-
-void CleanupBuffers()
-{
-	for (int i = 0; i < 256; i++)
-	{
-		if (activeBuffers[i].Buffers == NULL)
-			continue;
-
-		DWORD status;
-		activeBuffers[i].Buffers->GetStatus(&status);
-		
-		if (!(status & DSBSTATUS_PLAYING))
-		{
-			activeBuffers[i].Buffers->Release();
-			activeBuffers[i].Buffers = NULL;
-			//int sample = activeBuffers[i].SFX_num;
-			//bPlaying[sample] = 0;
-			activeBuffers[i].SFX_num = -1;
-		}
-	}
-}
-
-void SetCurrVolume(int nSample, int Volume)
+void SetCurrVolume(SOUND_SLOT* slot, int Volume)
 {	
-	for (int i = 0; i < 256; i++)
+	if(slot->Buffers)
 	{
-		if (activeBuffers[i].Buffers == NULL)
-			continue;
-
-
-		if(activeBuffers[i].SFX_num == nSample)
-		{
-			activeBuffers[i].Buffers->SetVolume(Volume);
-		}
+		slot->Buffers->SetVolume(Volume);
 	}
 }
 
-void DS_StopSample(int nSample)
+
+int IsPlaying(SOUND_SLOT* slot)
 {
-	for (int i = 0; i < 256; i++)
+	if (slot->Buffers)
 	{
-		if (activeBuffers[i].Buffers == NULL)
-			continue;
-
-
-		if(activeBuffers[i].SFX_num == nSample)
-		{
-
-			activeBuffers[i].Buffers->Stop();
-			activeBuffers[i].Buffers->Release();
-			activeBuffers[i].Buffers = NULL;
-			//int sample = activeBuffers[i].SFX_num;
-			//bPlaying[sample] = 0;
-			activeBuffers[i].SFX_num = -1;
-
-			/*
 		DWORD status;
-		activeBuffers[i].Buffers->GetStatus(&status);
-		
+		slot->Buffers->GetStatus(&status);
+
 		if ((status & DSBSTATUS_PLAYING))
 		{
-			activeBuffers[i].Buffers->Stop();
-			activeBuffers[i].Buffers->Release();
-			activeBuffers[i].Buffers = NULL;
-			//int sample = activeBuffers[i].SFX_num;
-			//bPlaying[sample] = 0;
-			activeBuffers[i].SFX_num = -1;
+			return 1;
 		}
-		*/
-		}
-	}
-
-}
-
-int IsPlaying(int nSample, int distance)
-{
-	for (int i = 0; i < 256; i++)
-	{
-		if (activeBuffers[i].Buffers == NULL)
-			continue;
-
-		DWORD status;
-		activeBuffers[i].Buffers->GetStatus(&status);
-		
-		if ((status & DSBSTATUS_PLAYING))
+		else
 		{
-			if(activeBuffers[i].SFX_num == nSample)
-			{
-					return 1;
-			}
+			//slot->Buffers->Stop();
+			//slot->Buffers->Release();
+			//slot->Buffers = NULL;
+
+			//slot->flags = SOUND_FLAG_USED;
+
+			return 0;
 		}
 	}
-
+	
 	return 0;
 }
 
-
-int IsDistance(int nSample, int distance)
-{
-	for (int i = 0; i < 256; i++)
-	{
-		if (activeBuffers[i].Buffers == NULL)
-			continue;
-
-		DWORD status;
-		activeBuffers[i].Buffers->GetStatus(&status);
-		
-		if ((status & DSBSTATUS_PLAYING))
-		{
-			if(activeBuffers[i].SFX_num == nSample)
-			{
-				if(activeBuffers[i].distance < distance)
-				{
-					return 0;
-				}
-				else
-				{
-					activeBuffers[i].distance = distance;
-					return 1;
-				}
-			}
-		}
-	}
-
-	return 0;
-}
 
 
 
 LPDIRECTSOUND8 g_DirectSound;
 IDirectSoundBuffer* g_DSBuffer[256];
 int LanSampleFrequency[256];
-
 
 /*
 
@@ -183,119 +81,24 @@ void Sound_UpdateEffects()
 	{
         OBJECT_VECTOR *sound = &g_SoundEffectsTable[i];
         
+		//Sound_Effect(sound->data, (PHD_3DPOS*)sound, SPM_NORMAL);
+		
 		if (g_FlipStatus && (sound->flags & SOUND_FLIPFLAG))
 		{
-            Sound_Effect(sound->data, (PHD_3DPOS *)sound, SPM_NORMAL);
+			Sound_Effect(sound->data, (PHD_3DPOS*)sound, SPM_NORMAL);
         }
 		else if (!g_FlipStatus && (sound->flags & SOUND_UNFLIPFLAG))
 		{
-            Sound_Effect(sound->data, (PHD_3DPOS *)sound, SPM_NORMAL);
+			Sound_Effect(sound->data, (PHD_3DPOS*)sound, SPM_NORMAL);
         }
+		
     }
-
 	if (g_FlipEffect != -1)
 	{
         g_EffectRoutines[g_FlipEffect](NULL);
     }
 }
 
-
-HRESULT DirectSound_Init()
-{
-
-	for (int i = 0; i < 256; i++)
-	{
-		activeBuffers[256].Buffers = NULL;
-		activeBuffers[256].SFX_num = -1;
-
-	}
-
-	
-    m_DecibelLUT[0] = -10000;
-    for (int i = 1; i < DECIBEL_LUT_SIZE; i++)
-	{
-        m_DecibelLUT[i] = (int) ( (log2(1.0 / DECIBEL_LUT_SIZE) - log2(1.0 / i)) * 1000);
-    }
-	
-	HRESULT hr;
-
-    if( FAILED( hr = DirectSoundCreate8( NULL, &g_DirectSound, NULL ) ) )
-        return S_OK; 
-
-    // Set DirectSound coop level 
-    if( FAILED( hr = g_DirectSound->SetCooperativeLevel( g_hWnd, DSSCL_EXCLUSIVE ) ) )
-        return S_OK; 
-
-	
-	//create primary sound buffer
-
-	// Создание primary buffer
-    DSBUFFERDESC dsbd = {};
-    dsbd.dwSize = sizeof(DSBUFFERDESC);
-    dsbd.dwFlags = DSBCAPS_PRIMARYBUFFER;
-    dsbd.dwBufferBytes = 0; // Не задается для primary buffer
-    dsbd.lpwfxFormat = NULL; // Формат будет задаваться отдельно
-
-    if (FAILED(g_DirectSound->CreateSoundBuffer(&dsbd, &g_pPrimaryBuffer, NULL)))
-	{
-        //std::cerr << "Failed to create primary buffer!" << std::endl;
-        return false;
-    }
-
-	// Установка формата primary buffer
-    WAVEFORMATEX wfex = {};
-    wfex.wFormatTag = WAVE_FORMAT_PCM;
-    wfex.nChannels = 2; // Стерео
-    wfex.nSamplesPerSec = 44100; // Частота дискретизации
-    wfex.wBitsPerSample = 16; // 16 бит
-    wfex.nBlockAlign = (wfex.nChannels * wfex.wBitsPerSample) / 8;
-    wfex.nAvgBytesPerSec = wfex.nSamplesPerSec * wfex.nBlockAlign;
-
-    if (FAILED(g_pPrimaryBuffer->SetFormat(&wfex)))
-	{
-        //std::cerr << "Failed to set format for primary buffer!" << std::endl;
-        return false;
-    }
-
-
-
-	/*
-	    DSBUFFERDESC dsbd;
-    //InitDXStruct(dsbd);
-	ZeroMemory(&dsbd, sizeof(DSBUFFERDESC));
-    dsbd.dwFlags=DSBCAPS_PRIMARYBUFFER;
-	
-
-	if (DX_TRY(g_DirectSound->CreateSoundBuffer(&dsbd,&pPrimary,NULL)))
-		{
-			//Log(LT_Error,"Can't get primary sound buffer");
-			return S_OK;
-		}
-
-	WAVEFORMATEX wf;
-	ZeroMemory(&wf, sizeof(WAVEFORMATEX));
-	wf.wFormatTag=WAVE_FORMAT_PCM;
-	wf.nChannels=2;
-	wf.nSamplesPerSec=11025;
-	wf.nAvgBytesPerSec=11025*2*2;
-	wf.nBlockAlign=4;
-	wf.wBitsPerSample=16;
-
-	if (DX_TRY(pPrimary->SetFormat(&wf)))
-		{
-		//Log(LT_Error,"Can't set sound output format to 11025;16;2");
-		return S_OK;
-		}
-	//RELEASE(pPrimary);
-
-	pPrimary->Release();
-
-*/
-
-
-	return S_OK;
-
-}
 
 bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 {
@@ -305,7 +108,6 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 		return false;
 	}
 
-
 	if (g_SampleLUT[sfx_num] < 0)
 	{
         return false;
@@ -313,19 +115,22 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 
 	SOUND_SAMPLE_INFO *pSI = &g_SampleInfos[g_SampleLUT[sfx_num]];
 
+	//например рычаг под водой Cistern уровень
+	//имеет pSI->number = -1
+	if (pSI->number < 0)
+		return false;
 
 	if (pSI->randomness && Random_GetDraw() > (int32_t)pSI->randomness)
 	{
         return false;
     }
-
-    //flags = 0;
-    //int32_t pan = 0x7FFF;
+	
     int32_t mode = pSI->flags & 3;
     uint32_t distance;
 
 	if (pos)
 	{
+
         int32_t x = pos->x - g_Camera.target.x;
         int32_t y = pos->y - g_Camera.target.y;
         int32_t z = pos->z - g_Camera.target.z;
@@ -336,60 +141,18 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
         }
         
 		distance = SQUARE(x) + SQUARE(y) + SQUARE(z);
-        
-		/*
-		if (!distance)
-		{
-            pan = 0;
-        }
-		*/
     }
 	else
 	{
         distance = 0;
-        //pan = 0;
     }
     
 	distance = phd_sqrt(distance);
 
+	int32_t volume = pSI->volume - distance * SOUND_RANGE_MULT_CONSTANT;
 
-	
-	int d = distance * SOUND_RANGE_MULT_CONSTANT;
-	//volume может быть отрицательным
-	//тогда будут искажения
-	//поэтому ограничиваем d
-	if(d > pSI->volume)
-		d = pSI->volume;
-	int32_t volume = pSI->volume - d;
-	
-	
-	//int32_t volume = pSI->volume - distance * SOUND_RANGE_MULT_CONSTANT;
-	//if(volume < 0)
-	//	volume = 0;
-
-	/*
-	if(nSample == 74)
-	{
-					char buff[256];
-					sprintf(buff, "Volume#: %d\ - %d\n", nSample, wVol); 
-					LPSTR buffToScreen = buff;
-					OutputDebugString(buffToScreen);
-	}
-	*/
-
-
-	
-	//57 шум водопада Natla Mines
-	/*
-	if(pSI->number == 74)
-	{
-		char buff[256];
-		sprintf(buff, "Sound#: %d - %d - %d - %d\n", pSI->volume, volume, distance, pSI->number); 
-		LPSTR buffToScreen = buff;
-		OutputDebugString(buffToScreen);
-	}
-	*/
-	
+	if (volume < 0)
+		volume = 0;
 
 	if (pSI->flags & SAMPLE_FLAG_VOLUME_WIBBLE)
 	{
@@ -406,28 +169,16 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
         volume = SOUND_MAX_VOLUME;
     }
 
-	int32_t m_MasterVolume = 51;
-
+	//max = 63, min = 32, оптимально 51
+	//g_Config.sound_volume
+	//int32_t m_MasterVolume = 51;
 	volume = (m_MasterVolume * volume) >> 6;
 
 	//int wVol = -10000;	// -> no sound
 	//int wVol = 0;			// -> max volume
 	int wVol = m_DecibelLUT[(volume & 0x7FFF) >> 6];
 
-	/*
-	char buff[256];
-	sprintf(buff, "Volume#: %d\n", pSI->number); 
-	LPSTR buffToScreen = buff;
-	OutputDebugString(buffToScreen);
-	*/
-	
-
-	int nSample=pSI->number;
-
-	//например рычаг под водой Cistern уровень
-	//имеет nSample = -1
-	if(nSample < 0)
-		return false;
+	int nSample= pSI->number;
 
 	//распределяет звук между левым правым динамиком 0 - средина
 	int wPan = 0;
@@ -436,6 +187,56 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 	int nPitch = 0; // тоже работает с нулем
 	//int nPitch = pSI->pitch;
 
+	if (wVol > 0)
+	{
+		wVol = 0;
+	}
+
+	if(wVol < -10000)
+	{
+		wVol = -10000;
+	}
+
+	/*
+	//рядом с 73 водопадом шум воды Lost Valley
+	if (nSample == 74)
+	{
+		char buff[256];
+		sprintf(buff, "Sound#: %d - %d - %d\n", pSI->number, distance, wVol);
+		LPSTR buffToScreen = buff;
+		OutputDebugString(buffToScreen);
+
+	}
+
+	if (nSample == 73)
+	{
+		char buff[256];
+		sprintf(buff, "Sound#: %d - %d - %d\n", pSI->number, distance, wVol);
+		LPSTR buffToScreen = buff;
+		OutputDebugString(buffToScreen);
+
+	}
+
+	//57 шум водопада Natla Mines
+	if (nSample == 57)
+	{
+		char buff[256];
+		sprintf(buff, "Sound#: %d - %d - %d - %d\n", pSI->number, pSI->volume, volume, distance);
+		LPSTR buffToScreen = buff;
+		OutputDebugString(buffToScreen);
+	}
+	*/
+
+	//шаги
+	/*
+	if (nSample == 0)
+	{
+		char buff[256];
+		sprintf(buff, "Sound#: %d - %d - %d - %d\n", pSI->number, pSI->volume, distance, wVol);
+		LPSTR buffToScreen = buff;
+		OutputDebugString(buffToScreen);
+	}
+	*/
 
 	
 
@@ -443,197 +244,298 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 	{
 		case SOUND_MODE_WAIT:
 		{
-			//например Лара наталкивается на стену- звук
-			//открывается дверь например в конце Lost Valley
-			//под водопадом
-			CleanupBuffers();
-			if(!IsPlaying(nSample, distance))
-				DS_StartSample(nSample, wVol ,nPitch,wPan, 0, distance);
+			SOUND_SLOT* slot = Sound_GetSlot(nSample, NULL);
+
+			if (!IsPlaying(slot))
+			{
+				DS_StartSample(slot, wVol, nPitch, wPan, 0);
+			}
 
 			break;
 		}
 
 		case SOUND_MODE_RESTART:
 		{
-			//шум катиться камень в горки Tomb Of Qualopec
-			//шум мотора механизма moving_bar Natla Mines
-			//звук шагов лары номер 0
-			DS_StopSample(nSample);
-			DS_StartSample(nSample, wVol ,nPitch,wPan, 0, distance);
+			SOUND_SLOT* slot = Sound_GetSlot(nSample, pos);
+			DS_StopSample(slot);
+			DS_StartSample(slot, wVol, nPitch, wPan, 0);
 
 			break;
 		}
 
 		case SOUND_MODE_AMBIENT:
 		{
-			//если убрать эту функцию то звук водопада
-			//будет меняться резко, шагами а не плавно
-			//например начался звук водопада, Лара на одном
-			//расстоянии - потом Лара отбежала от водопада,
-			//и водопад должен быть тише, но взук меняется резко
-			//каждый раз при начале воспроизведения звука водопада
-			//а эта функция плавно меняет звук водопада в зависимости
-			//от расстояния Лары от водопада
-			//но надо добработать в уровне Lost Valley глюки со звуком
-			if(IsDistance(nSample, distance))
-				SetCurrVolume(nSample, wVol);
+			SOUND_SLOT* slot = Sound_GetSlot(nSample, pos);
 
-			if(!IsPlaying(nSample, distance))
-				DS_StartSample(nSample, wVol ,nPitch,wPan, 0, distance);
+			SetCurrVolume(slot, wVol);
 
-			//шум водопада 57 начало Natla Mines
-			CleanupBuffers();
+			if (!IsPlaying(slot))
+			{
+				//DS_StartSample(slot, wVol, nPitch, wPan, 1);
+				DS_StartSample(slot, wVol, nPitch, wPan, 0);
+			}
 
 			break;
 		}
+
 	}
 
-
-	/*
-	//проверяем закончилось ли воспроизведение
-	CleanupBuffers();
-
-	//if(!bPlaying[nSample])
-	if(!IsPlaying(nSample))
-	{
-		DS_StartSample(nSample, wVol ,nPitch,wPan, 0);
-		//DS_StartSample(nSample, wVol ,nPitch,wPan,DSBPLAY_LOOPING);
-		//DS_StartSample(7, wVol ,nPitch,wPan,DSBPLAY_LOOPING);
-		//bPlaying[nSample] = 1;
-	}
-	*/
-
-	/*
-	if(!SoundBufferIsPlaying(nSample))
-	{
-		bPlaying[nSample] = 0;
-	}*/
- 
 	return true;
 }
 
-/*
-bool SoundBufferIsPlaying(int nSample)
+
+int DS_StartSample(SOUND_SLOT* slot, int nVolume,int nPitch,int nPan,DWORD dwFlags)
 {
 
-	if(nSample == -1)
-		return false;
+	slot->Buffers->SetVolume(nVolume);
+	slot->Buffers->SetFrequency(DSBFREQUENCY_ORIGINAL);
+	slot->Buffers->SetPan(0);
+	slot->Buffers->SetCurrentPosition(0);
+	HRESULT hr = slot->Buffers->Play(0, 0, dwFlags);
 
-	DWORD dwStatus;
-	g_DSBuffer[nSample]->GetStatus(&dwStatus);
+	if (FAILED(hr))
+	{
+		// Обработка ошибки
+		MessageBox(nullptr, "Не удалось воспроизвести звук", "Ошибка", MB_OK);
+	}
 
-	if (dwStatus&DSBSTATUS_PLAYING)
-		return true;
-
-	return false;
+	return 1;
 }
-*/
 
-HRESULT DS_MakeSample(int nSample, WAVEFORMATEX* pWF, unsigned char *pWaveData, int dwWaveLength)
+
+HRESULT DS_MakeSample(int nSample, WAVEFORMATEX* pWF, unsigned char* pWaveData, int dwWaveLength)
 {
-	
+
 	DSBUFFERDESC desc;
 	ZeroMemory(&desc, sizeof(DSBUFFERDESC));
-	desc.dwSize=sizeof desc;
-	desc.dwFlags=DSBCAPS_CTRLPAN|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLFREQUENCY|DSBCAPS_LOCSOFTWARE | DSBCAPS_STATIC;	//DSBCAPS_STATIC;
-	desc.dwBufferBytes=dwWaveLength;
-	desc.lpwfxFormat=pWF;
-	desc.dwReserved=0;
+	desc.dwSize = sizeof desc;
+	//desc.dwFlags = DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_LOCSOFTWARE | DSBCAPS_STATIC;
+	desc.dwFlags =  DSBCAPS_CTRLVOLUME | DSBCAPS_STATIC;
+	desc.dwBufferBytes = dwWaveLength;
+	desc.lpwfxFormat = pWF;
+	desc.dwReserved = 0;
 
 
-	if (FAILED(g_DirectSound->CreateSoundBuffer(&desc,g_DSBuffer+nSample,NULL)))
+	if (FAILED(g_DirectSound->CreateSoundBuffer(&desc, g_DSBuffer + nSample, NULL)))
 		return S_FALSE;
 
 
 	void* pBlock;
 	DWORD dwBlockLength;
 
-	if (FAILED(g_DSBuffer[nSample]->Lock(0,dwWaveLength,&pBlock,&dwBlockLength,NULL,NULL,0)))
-		return S_FALSE;
-	
-	memcpy(pBlock,(void*)pWaveData,dwBlockLength);
-	
-	if (FAILED(g_DSBuffer[nSample]->Unlock(pBlock,dwBlockLength,NULL,0)))
+	if (FAILED(g_DSBuffer[nSample]->Lock(0, dwWaveLength, &pBlock, &dwBlockLength, NULL, NULL, 0)))
 		return S_FALSE;
 
-	LanSampleFrequency[nSample]=pWF->nSamplesPerSec;
+	memcpy(pBlock, (void*)pWaveData, dwBlockLength);
+
+	if (FAILED(g_DSBuffer[nSample]->Unlock(pBlock, dwBlockLength, NULL, 0)))
+		return S_FALSE;
+
+	LanSampleFrequency[nSample] = pWF->nSamplesPerSec;
 
 	return S_OK;
 }
 
 
-int DS_StartSample(int nSample,int nVolume,int nPitch,int nPan,DWORD dwFlags, int distance)
+void Sound_ResetEffects()
+{
+}
+
+
+HRESULT DirectSound_Init()
 {
 
-	
-	//этот вариант напрямую проигрывать тоже работает
-	//без копирования буфера в буфер
+	for (int i = 0; i < MAX_PLAYING_FX; i++)
+	{
+		SOUND_SLOT* result = &m_SFXPlaying[i];
+		memset(result, 0, sizeof(SOUND_SLOT));
+		result->flags = SOUND_FLAG_UNUSED;
+	}
+
+	m_DecibelLUT[0] = -10000;
+	for (int i = 1; i < DECIBEL_LUT_SIZE; i++)
+	{
+		m_DecibelLUT[i] = (int)((log2(1.0 / DECIBEL_LUT_SIZE) - log2(1.0 / i)) * 1000);
+	}
+
+	HRESULT hr;
+
+	if (FAILED(hr = DirectSoundCreate8(NULL, &g_DirectSound, NULL)))
+		return S_OK;
+
+	// Set DirectSound coop level 
+	if (FAILED(hr = g_DirectSound->SetCooperativeLevel(g_hWnd, DSSCL_EXCLUSIVE)))
+		return S_OK;
+
+
+	//create primary sound buffer
+
+	// Создание primary buffer
+	DSBUFFERDESC dsbd = {};
+	dsbd.dwSize = sizeof(DSBUFFERDESC);
+	dsbd.dwFlags = DSBCAPS_PRIMARYBUFFER;
+	dsbd.dwBufferBytes = 0; // Не задается для primary buffer
+	dsbd.lpwfxFormat = NULL; // Формат будет задаваться отдельно
+
+	if (FAILED(g_DirectSound->CreateSoundBuffer(&dsbd, &g_pPrimaryBuffer, NULL)))
+	{
+		//std::cerr << "Failed to create primary buffer!" << std::endl;
+		return false;
+	}
+
+
+	// Установка формата primary buffer
+	WAVEFORMATEX wfex = {};
+	wfex.wFormatTag = WAVE_FORMAT_PCM;
+	wfex.nChannels = 2; // Стерео
+	wfex.nSamplesPerSec = 44100; // Частота дискретизации
+	wfex.wBitsPerSample = 16; // 16 бит
+	wfex.nBlockAlign = (wfex.nChannels * wfex.wBitsPerSample) / 8;
+	wfex.nAvgBytesPerSec = wfex.nSamplesPerSec * wfex.nBlockAlign;
+
+	if (FAILED(g_pPrimaryBuffer->SetFormat(&wfex)))
+	{
+		//std::cerr << "Failed to set format for primary buffer!" << std::endl;
+		return false;
+	}
+
+
+
 	/*
-	g_DSBuffer[nSample]->SetVolume(0);
-	g_DSBuffer[nSample]->SetFrequency(DSBFREQUENCY_ORIGINAL);
-	g_DSBuffer[nSample]->SetPan(0);
-	g_DSBuffer[nSample]->SetCurrentPosition(0);
-	g_DSBuffer[nSample]->Play(0,0,dwFlags);
-	
-	
-	return 1;
+		DSBUFFERDESC dsbd;
+	//InitDXStruct(dsbd);
+	ZeroMemory(&dsbd, sizeof(DSBUFFERDESC));
+	dsbd.dwFlags=DSBCAPS_PRIMARYBUFFER;
+
+
+	if (DX_TRY(g_DirectSound->CreateSoundBuffer(&dsbd,&pPrimary,NULL)))
+		{
+			//Log(LT_Error,"Can't get primary sound buffer");
+			return S_OK;
+		}
+
+
+	WAVEFORMATEX wf;
+	ZeroMemory(&wf, sizeof(WAVEFORMATEX));
+	wf.wFormatTag=WAVE_FORMAT_PCM;
+	wf.nChannels=2;
+	wf.nSamplesPerSec=11025;
+	wf.nAvgBytesPerSec=11025*2*2;
+	wf.nBlockAlign=4;
+	wf.wBitsPerSample=16;
+
+	if (DX_TRY(g_pPrimaryBuffer->SetFormat(&wf)))
+		{
+		//Log(LT_Error,"Can't set sound output format to 11025;16;2");
+		return S_OK;
+		}
+	//RELEASE(pPrimary);
+
 	*/
-	
+	/*
 
-	LPDIRECTSOUNDBUFFER pDuplicateBuffer = NULL;
-if (FAILED(g_DirectSound->DuplicateSoundBuffer(g_DSBuffer[nSample], &pDuplicateBuffer)))
+	if (FAILED(g_pPrimaryBuffer->SetFormat(&wf)))
+	{
+		//std::cerr << "Failed to set format for primary buffer!" << std::endl;
+		return false;
+	}
+	*/
+	//pPrimary->Release();
+
+
+
+
+	return S_OK;
+
+}
+
+SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS *pos)
 {
-    return 0; // Ошибка дублирования
+	int i = 0;
+	for (i = 0; i < MAX_PLAYING_FX; i++)
+	{
+		SOUND_SLOT* result = &m_SFXPlaying[i];
+
+		if(pos != NULL)
+		{
+
+			if (result->sound_id == sfx_num &&
+				result->pos == pos &&
+				result->flags != SOUND_FLAG_UNUSED)
+			{
+				//находим нужный слот по позиции и номеру звука
+				return result;
+			}
+		}
+		else
+		{
+			if (result->sound_id == sfx_num &&  
+				result->flags != SOUND_FLAG_UNUSED)
+			{
+				//находим нужный слот без позиции и номеру звука
+				return result;
+			}
+		}
+	}
+
+	int j = 0;
+	for (j = 0; j < MAX_PLAYING_FX; j++)
+	{
+		SOUND_SLOT* result = &m_SFXPlaying[j];
+
+		if(pos != NULL)
+		{
+			//создаем нужный слот по позиции и номеру звука
+			if (result->flags == SOUND_FLAG_UNUSED)
+			{
+				result->sound_id = sfx_num;
+				result->pos = pos;
+				result->flags = SOUND_FLAG_USED;
+
+				if (FAILED(g_DirectSound->DuplicateSoundBuffer(g_DSBuffer[result->sound_id], &result->Buffers)))
+				{
+					//return 0; // Ошибка дублирования
+				}
+
+				return result;
+			}
+		}
+		else
+		{
+			//создаем нужный слот без позиции и номеру звука
+			if (result->flags == SOUND_FLAG_UNUSED)
+			{
+				result->sound_id = sfx_num;
+				result->flags = SOUND_FLAG_USED;
+
+				if (FAILED(g_DirectSound->DuplicateSoundBuffer(g_DSBuffer[result->sound_id], &result->Buffers)))
+				{
+					//return 0; // Ошибка дублирования
+				}
+
+				return result;
+			}
+		}
+	}
+
+
+	return NULL;
 }
 
-// Настраиваем параметры дублированного буфера
-//pDuplicateBuffer->SetVolume(0);
-pDuplicateBuffer->SetVolume(nVolume);
-pDuplicateBuffer->SetFrequency(DSBFREQUENCY_ORIGINAL);
-pDuplicateBuffer->SetPan(0);
-pDuplicateBuffer->SetCurrentPosition(0);
-pDuplicateBuffer->Play(0, 0, dwFlags);
-
-int slot = FindSlot();
-activeBuffers[slot].Buffers = pDuplicateBuffer;
-activeBuffers[slot].SFX_num = nSample;
-activeBuffers[slot].distance = distance;
-
-
-//pDuplicateBuffer->Release();
-
-
-return 1;
-/*
-
-	IDirectSoundBuffer* pOrigBuffer=g_DSBuffer[nSample], *pBuffer;
-	
-	
-	//if (DX_TRY(g_DirectSound->DuplicateSoundBuffer(pOrigBuffer,&pBuffer)))
-	//	return 0;
-
-	//pBuffer = CreateCopy(pOrigBuffer);
-
-	//unsigned int nFrequency=((unsigned)nPitch*LanSampleFrequency[nSample])>>16;
-	//unsigned int nFrequency= DSBFREQUENCY_ORIGINAL;
-	unsigned int nFrequency= LanSampleFrequency[nSample];
-	//int nFrequency=(nPitch*LanSampleFrequency[nSample])>>16;
-	
-	if (DX_TRY(pBuffer->SetVolume(nVolume)))
-		return 0;
-	if (DX_TRY(pBuffer->SetFrequency(nFrequency)))
-		return 0;
-
-	if (DX_TRY(pBuffer->SetPan(nPan)))
-		return 0;
-
-	if (DX_TRY(pBuffer->SetCurrentPosition(0)))
-		return 0;
-
-	if (DX_TRY(pBuffer->Play(0,0,dwFlags)))
-		return 0;
-
-	return 1;
-*/	
+void DS_StopSample(SOUND_SLOT* slot)
+{
+	if(slot->Buffers)
+	{
+		slot->Buffers->Stop();
+		//slot->Buffers->Release();
+		//slot->Buffers = NULL;
+		//slot->flags = SOUND_FLAG_UNUSED;
+	}
 }
 
+void Sound_SetMasterVolume(int8_t volume)
+{
+	int8_t raw_volume = volume ? 6 * volume + 3 : 0;
+	//m_MasterVolumeDefault = raw_volume & 0x3F;
+	m_MasterVolume = raw_volume & 0x3F;
+}

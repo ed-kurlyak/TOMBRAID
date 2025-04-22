@@ -130,6 +130,27 @@ int LevelStats(int32_t level_num)
 
 int Game_Loop(int demo_mode)
 {
+    //------------------------
+    //мой код все оружие
+    //g_Lara.pistols.ammo = 65535;
+    g_Lara.shotgun.ammo = 65535;
+    g_Lara.magnums.ammo = 65535;
+    g_Lara.uzis.ammo = 65535;
+    Inv_AddItem(O_UZI_ITEM);
+    Inv_AddItem(O_SHOTGUN_ITEM);
+    Inv_AddItem(O_MAGNUM_ITEM);
+     
+    for ( int i = 0; i < 255; i++ )
+    {
+        Inv_AddItem(O_BIGMEDI_ITEM);
+        Inv_AddItem(O_MEDI_ITEM);
+    }
+    //Inv_AddItem(O_UZI_AMMO_ITEM);
+    
+    //g_Lara.request_gun_type = LGT_UNARMED;
+    //g_Lara.request_gun_type = LGT_PISTOLS;
+    //------------------------
+
 	int32_t nframes=1, game_over = false;
 	g_OverlayFlag = 1;
 
@@ -148,6 +169,10 @@ int Game_Loop(int demo_mode)
 		nframes = Draw_Phase_Game();
 		//control fase
 		game_over = Control_Phase(nframes, demo_mode);
+
+        //добавил я с учетом Win программирования (не MS-DOS)
+        if (g_bWindowClosed)
+            return GF_EXIT_GAME;
         
         if (game_over == 1)
             break;
@@ -402,11 +427,6 @@ int Control_Phase(int32_t nframes, int32_t demo_mode)
 {
 	int32_t return_val = 0;
 
-    if (g_LevelComplete)
-    {
-        return 1;
-    }
-
 	Input_Update();
 
     if (g_Lara.death_count > DEATH_WAIT || (g_Lara.death_count > DEATH_WAIT_MIN && g_Input.any && !g_Input.fly_cheat) || g_OverlayFlag == 2)
@@ -467,23 +487,29 @@ int Control_Phase(int32_t nframes, int32_t demo_mode)
 	{
 		ITEM_INFO *item = &g_Items[item_num];
         OBJECT_INFO *obj = &g_Objects[item->object_number];
+
         if (obj->control)
 		{
 	        obj->control(item_num);
         }
-            item_num = item->next_active;
+
+        item_num = item->next_active;
 	}
 
 	item_num = g_NextFxActive;
-        while (item_num != NO_ITEM) {
-            FX_INFO *fx = &g_Effects[item_num];
-            OBJECT_INFO *obj = &g_Objects[fx->object_number];
-            if (obj->control) {
-                obj->control(item_num);
-            }
-            item_num = fx->next_active;
+
+    while (item_num != NO_ITEM)
+    {
+        FX_INFO *fx = &g_Effects[item_num];
+        OBJECT_INFO *obj = &g_Objects[fx->object_number];
+            
+        if (obj->control)
+        {
+            obj->control(item_num);
         }
 
+        item_num = fx->next_active;
+    }
 
 	LaraControl(0);
 	CalculateCamera();
@@ -492,7 +518,13 @@ int Control_Phase(int32_t nframes, int32_t demo_mode)
     g_HealthBarTimer--;
 	//SpinMessageLoop();
 
-	return g_bWindowClosed;
+    if (g_LevelComplete)
+    {
+        return 1;
+    }
+
+	//return g_bWindowClosed;
+    return 0;
 }
 
 
@@ -915,16 +947,16 @@ void DrawRooms(int16_t current_room)
 	//if(g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
     if (g_CameraUnderwater)
     {
-		//prev_cam = g_CameraUnderwater;
-		Create_Water_Palette();
-	}
-	
+        //prev_cam = g_CameraUnderwater;
+        Create_Water_Palette();
+    }
+
     //if(!g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
     if (!g_CameraUnderwater)
-	{
-		//prev_cam = g_CameraUnderwater;
-		Create_Normal_Palette();
-	}
+    {
+        //prev_cam = g_CameraUnderwater;
+        Create_Normal_Palette();
+    }
 	
 	if (g_Objects[O_LARA].loaded)
 	{
@@ -970,7 +1002,7 @@ int32_t S_DumpScreen()
 	//ScreenPartialDump()
 	Present_BackBuffer();
 
-	//SpinMessageLoop();
+	SpinMessageLoop();
 	g_FPSCounter++;
 
 	return nframes;
@@ -1575,7 +1607,8 @@ void PrintRooms(int16_t room_number)
 {
     ROOM_INFO *r = &g_RoomInfo[room_number];
     
-	if (r->flags & RF_UNDERWATER) {
+	if (r->flags & RF_UNDERWATER)
+    {
         SetupBelowWater(g_CameraUnderwater);
     }
 	else
@@ -1588,10 +1621,12 @@ void PrintRooms(int16_t room_number)
     phd_PushMatrix();
     phd_TranslateAbs(r->x, r->y, r->z);
 
+    /*
     g_PhdLeft = r->left;
     g_PhdRight = r->right;
     g_PhdTop = r->top;
     g_PhdBottom = r->bottom;
+    */
 
     DrawRoom(r->data);
 
@@ -1635,10 +1670,12 @@ void PrintRooms(int16_t room_number)
 
     phd_PopMatrix();
 
+    /*
     r->left = Screen_GetResWidth() - 1;
     r->bottom = 0;
     r->right = 0;
     r->top = Screen_GetResHeight() - 1;
+    */
 
 }
 /*

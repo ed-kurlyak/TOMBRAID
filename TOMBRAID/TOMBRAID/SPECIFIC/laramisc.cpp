@@ -165,11 +165,12 @@ void LaraControl(int16_t item_num)
     }
 
 	//включил god mode
-	//item->hit_points = LARA_HITPOINTS;
+	item->hit_points = LARA_HITPOINTS;
 
 	if (item->hit_points <= 0)
 	{
         item->hit_points = -1;
+
         if (!g_Lara.death_count)
 		{
             //Music_Stop();
@@ -323,7 +324,8 @@ void AnimateLara(ITEM_INFO *item)
                 break;
 
             case AC_SOUND_FX:
-                if (item->frame_number == command[0]) {
+                if (item->frame_number == command[0])
+                {
                     Sound_Effect(command[1], &item->pos, SPM_ALWAYS);
                 }
                 command += 2;
@@ -507,32 +509,6 @@ void InitialiseLara()
     g_Lara.LOT.fly = STEP_L;
 
     InitialiseLaraInventory(g_CurrentLevel);
-
-    //g_Lara.pistols.ammo = 65535;
-//g_Lara.shotgun.ammo = 65535;
-//g_Lara.magnums.ammo = 65535;
-    /*
-    g_Lara.uzis.ammo = 65535;
-    Inv_AddItem(O_UZI_ITEM);
-
-    for ( int i = 0; i < 255; i++ )
-    {
-        Inv_AddItem(O_BIGMEDI_ITEM);
-        Inv_AddItem(O_MEDI_ITEM);
-    }
-    //Inv_AddItem(O_UZI_AMMO_ITEM);
-    */
-    //------------------------
-    g_Lara.request_gun_type = LGT_UNARMED;
-    //g_Lara.request_gun_type = LGT_PISTOLS;
-
-    /* заменить на этот код ниже
-    g_Lara.gun_status = start->gun_status;
-    g_Lara.gun_type = start->gun_type;
-    g_Lara.request_gun_type = start->gun_type;
-    */
-
-
 }
 
 void InitialiseLaraInventory(int32_t level_num)
@@ -679,15 +655,15 @@ void LaraInitialiseMeshes(int32_t level_num)
     }
 	*/
 }
-
+/*
 void LaraCheatGetStuff()
 {
-	/*
+	
     if (g_CurrentLevel == g_GameFlow.gym_level_num)
 	{
         return;
     }
-	*/
+	
     // play pistols drawing sound
     Sound_Effect(SFX_LARA_DRAW, &g_LaraItem->pos, SPM_NORMAL);
 
@@ -764,6 +740,7 @@ void LaraCheatGetStuff()
         Inv_AddItem(O_PICKUP_ITEM2);
     }
 }
+*/
 
 void (*g_LaraControlRoutines[])(ITEM_INFO *item, COLL_INFO *coll) = {
     LaraAsWalk,      LaraAsRun,       LaraAsStop,      LaraAsForwardJump,

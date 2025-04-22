@@ -88,14 +88,14 @@ void Option_Sound(INVENTORY_ITEM *inv_item)
             g_IDCount = 10;
             sprintf(buf, "| %2d", g_Config.music_volume);
             Text_ChangeText(m_Text[TEXT_MUSIC_VOLUME], buf);
-            //Settings_Write();
+            Settings_Write();
         } else if (g_Input.right && g_Config.music_volume < 10) {
             g_Config.music_volume++;
             g_IDelay = true;
             g_IDCount = 10;
             sprintf(buf, "| %2d", g_Config.music_volume);
             Text_ChangeText(m_Text[TEXT_MUSIC_VOLUME], buf);
-            //Settings_Write();
+            Settings_Write();
         }
 
         if (g_Input.left || g_Input.right) {
@@ -111,18 +111,18 @@ void Option_Sound(INVENTORY_ITEM *inv_item)
             g_IDCount = 10;
             sprintf(buf, "} %2d", g_Config.sound_volume);
             Text_ChangeText(m_Text[TEXT_SOUND_VOLUME], buf);
-            //Settings_Write();
+            Settings_Write();
         } else if (g_Input.right && g_Config.sound_volume < 10) {
             g_Config.sound_volume++;
             g_IDelay = true;
             g_IDCount = 10;
             sprintf(buf, "} %2d", g_Config.sound_volume);
             Text_ChangeText(m_Text[TEXT_SOUND_VOLUME], buf);
-            //Settings_Write();
+            Settings_Write();
         }
 
         if (g_Input.left || g_Input.right) {
-            //Sound_SetMasterVolume(g_Config.sound_volume);
+            Sound_SetMasterVolume(g_Config.sound_volume);
             Sound_Effect(SFX_MENU_PASSPORT, NULL, SPM_ALWAYS);
         }
         break;

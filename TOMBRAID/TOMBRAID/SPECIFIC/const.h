@@ -65,7 +65,8 @@
 #define MAX_MATRICES 40
 #define MAX_NESTED_MATRICES 32
 #define MAX_REQLINES 16
-#define MAX_PLAYING_FX 24
+//#define MAX_PLAYING_FX 24
+#define MAX_PLAYING_FX 255 //сделал я для sound.cpp
 #define MAX_AMBIENT_FX 8
 #define MAX_SAMPLES 256
 #define MAX_SAVE_SLOTS 16

@@ -512,8 +512,6 @@ void Overlay_DrawFPSInfo()
 
 void Overlay_DrawGameInfo()
 {
-    //Create_Normal_Palette();
-
     if (g_OverlayFlag > 0)
      {
      
@@ -527,7 +525,6 @@ void Overlay_DrawGameInfo()
     Overlay_DrawFPSInfo();
 
     Text_Draw();
-    
 }
 
 void Overlay_AddPickup(int16_t object_num)

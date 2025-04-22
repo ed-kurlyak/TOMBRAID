@@ -3150,7 +3150,8 @@ void ItemNewRoom(int16_t item_num, int16_t room_num)
 */
 void TestTriggers(int16_t *data, int32_t heavy)
 {
-    if (!data) {
+    if (!data)
+    {
         return;
     }
 
@@ -3260,6 +3261,7 @@ void TestTriggers(int16_t *data, int32_t heavy)
             }
 
             item->timer = timer;
+
             if (timer != 1)
 			{
                 item->timer *= FRAMES_PER_SECOND;
@@ -3302,7 +3304,8 @@ void TestTriggers(int16_t *data, int32_t heavy)
 					else if (item->status == IS_INVISIBLE)
 					{
                         item->touch_bits = 0;
-                        if (EnableBaddieAI(value, 0)) {
+                        if (EnableBaddieAI(value, 0))
+                        {
                             item->status = IS_ACTIVE;
                         }
 						else
@@ -3440,6 +3443,7 @@ void TestTriggers(int16_t *data, int32_t heavy)
             }
             g_SaveGame.secrets |= 1 << value;
             //Music_Play(13);
+            Sound_Effect(SFX_SECRET, NULL, SPM_ALWAYS);
             break;
         }
     } while (!(trigger & END_BIT));
@@ -3453,6 +3457,7 @@ void TestTriggers(int16_t *data, int32_t heavy)
     if (flip)
 	{
         FlipMap();
+
         if (new_effect != -1)
 		{
             g_FlipEffect = new_effect;
@@ -3991,9 +3996,12 @@ void FlipMap()
 {
     //Sound_StopAmbientSounds();
 
-    for (int i = 0; i < g_RoomCount; i++) {
+    for (int i = 0; i < g_RoomCount; i++)
+    {
         ROOM_INFO *r = &g_RoomInfo[i];
-        if (r->flipped_room < 0) {
+
+        if (r->flipped_room < 0)
+        {
             continue;
         }
 
@@ -5925,21 +5933,25 @@ int32_t TriggerActive(ITEM_INFO *item)
 {
     int32_t ok = (item->flags & IF_REVERSE) ? 0 : 1;
 
-    if ((item->flags & IF_CODE_BITS) != IF_CODE_BITS) {
+    if ((item->flags & IF_CODE_BITS) != IF_CODE_BITS)
+    {
         return !ok;
     }
 
-    if (!item->timer) {
+    if (!item->timer)
+    {
         return ok;
     }
 
-    if (item->timer == -1) {
+    if (item->timer == -1)
+    {
         return !ok;
     }
 
     item->timer--;
 
-    if (!item->timer) {
+    if (!item->timer)
+    {
         item->timer = -1;
     }
 
@@ -6475,16 +6487,21 @@ void Output_CalcWibbleTable()
 void DrawEffect(int16_t fxnum)
 {
     FX_INFO *fx = &g_Effects[fxnum];
+
     OBJECT_INFO *object = &g_Objects[fx->object_number];
-    if (!object->loaded) {
+    
+    if (!object->loaded)
+    {
         return;
     }
 
-    if (object->nmeshes < 0) {
-        Output_DrawSprite(
-            fx->pos.x, fx->pos.y, fx->pos.z,
+    if (object->nmeshes < 0)
+    {
+        Output_DrawSprite(fx->pos.x, fx->pos.y, fx->pos.z,
             object->mesh_index - fx->frame_number, 4096);
-    } else {
+    }
+    else
+    {
         phd_PushMatrix();
         phd_TranslateAbs(fx->pos.x, fx->pos.y, fx->pos.z);
         //if (g_PhdMatrixPtr->_23 > Output_GetNearZ()

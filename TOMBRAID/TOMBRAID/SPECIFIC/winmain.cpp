@@ -1,8 +1,8 @@
 #include "winmain.h"
+#include "vars.h"
 #include "timer.h"
 #include "backbuffer.h"
 #include "draw.h"
-#include "vars.h"
 #include "gameflow.h"
 #include "init.h"
 #include "inv.h"
@@ -12,6 +12,7 @@
 #include "game.h"
 #include "screen.h"
 #include "input.h"
+#include "sound.h"
 
 //---------------------------
 //SETUP START
@@ -89,6 +90,9 @@ int lara_dist = false;
 
 	*/
 
+//для удаления курсора в полноэкранном режиме
+int СursorCounter = 0;
+
 //cтруктура для хранения предыдущего режима
 static DEVMODE PreviousMode;
 static bool IsPreviousModeStored = false;
@@ -163,6 +167,8 @@ bool RestorePreviousDisplayMode()
 int Settings_Write()
 {
 	char KeyBuff[13] = { 0 };
+	char MusicVolume = g_Config.music_volume;
+	char SoundVolume = g_Config.sound_volume;
 
 	for (int i = 0; i < INPUT_KEY_NUMBER_OF; i++)
 	{
@@ -177,6 +183,9 @@ int Settings_Write()
 
 	fwrite(KeyBuff, sizeof(char) * 13, 1, Fp);
 
+	fwrite(&MusicVolume, sizeof(char), 1, Fp);
+	fwrite(&SoundVolume, sizeof(char), 1, Fp);
+
 	fclose(Fp);
 
 	return 1;
@@ -189,6 +198,8 @@ int Settings_Read()
 	Fp = fopen("settings.dat", "rb");
 
 	char KeyBuff;
+	char MusicVolume;
+	char SoundVolume;
 
 	for (int i = 0; i < INPUT_KEY_NUMBER_OF; i++)
 	{
@@ -196,6 +207,13 @@ int Settings_Read()
 		
 		S_Input_AssignKeyCode(INPUT_LAYOUT_USER, (INPUT_KEY)i, KeyBuff);
 	}
+
+	fread(&MusicVolume, sizeof(char), 1, Fp);
+	g_Config.music_volume = MusicVolume;
+
+	fread(&SoundVolume, sizeof(char), 1, Fp);
+	g_Config.sound_volume = SoundVolume;
+	Sound_SetMasterVolume(g_Config.sound_volume);
 
 	fclose(Fp);
 
@@ -261,6 +279,8 @@ void phd_InitWindow( int  x, 	int y,
 	*/
 }
 
+int LtWM_QUIT;
+
 int SpinMessageLoop()
 {
 	MSG msg;
@@ -285,7 +305,7 @@ int SpinMessageLoop()
 		}
 	}
 
-	g_bWindowClosed=true;
+	g_bWindowClosed = true;
 
 	return false;
 }
@@ -297,23 +317,27 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 {
 	switch(uMsg)
 	{
+		case WM_SYSCOMMAND:
+		if (wParam == SC_CLOSE) // Alt+F4 или крестик окна
+		{
+			PostQuitMessage(0);
+			//DestroyWindow(hWnd);
+			return 0;
+		}
+		break;
+		
 		case WM_SYSKEYDOWN: // Обрабатываем нажатие системной клавиши
-        if (wParam == VK_MENU) // VK_MENU соответствует клавише Alt
-        {
-            // Игнорируем клавишу Alt
-            return 0;
-        }
-        break;
+		if (wParam == VK_MENU)
+			return 0; // Блокируем только одиночный Alt
+		break;
 
     case WM_SYSKEYUP: // Обрабатываем отпускание системной клавиши
         if (wParam == VK_MENU) // VK_MENU соответствует клавише Alt
-        {
             // Игнорируем клавишу Alt
             return 0;
-        }
         break;
 
-		case WM_ACTIVATE:
+	case WM_ACTIVATE:
 			switch(LOWORD(wParam))
 			{
 				case WA_ACTIVE:
@@ -336,11 +360,12 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 			PostQuitMessage(0);
 			break;
 		
-		default:
-			return DefWindowProc(hWnd, uMsg, wParam, lParam);
+		//default:
+			//return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 
-	return 0;
+	//return 0;
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
 int PASCAL WinMain(HINSTANCE hInstance,
@@ -357,6 +382,7 @@ int PASCAL WinMain(HINSTANCE hInstance,
 	wcl.lpfnWndProc = WndProc;
 	wcl.hInstance = hInstance;
 	wcl.lpszClassName = "Sample";
+	wcl.hCursor = LoadCursor(NULL, IDC_ARROW);
 
 	if (!RegisterClass(&wcl))
 		return 0;
@@ -418,14 +444,22 @@ int PASCAL WinMain(HINSTANCE hInstance,
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
 
-	ShowCursor(FALSE);
-
 	if (Fullscreen)
 	{
 		if (SetDisplayMode())
 		{
 			//видеорежим установлен успешно
 		}
+		
+		//удаляем курсор (проблема в полноэкранных приложениях Windows)
+		while (СursorCounter >= 0)
+		{
+			СursorCounter = ShowCursor(FALSE);
+		}
+	}
+	else
+	{
+		ShowCursor(TRUE);
 	}
 
 
@@ -491,6 +525,7 @@ int PASCAL WinMain(HINSTANCE hInstance,
 	//Text_Init();
 	Text_RemoveAll();
 	S_FrontEndCheck();
+	//Settings_Write();
 	Settings_Read();
 	Create_BackBuffer();
 
@@ -522,6 +557,10 @@ int PASCAL WinMain(HINSTANCE hInstance,
 
 		case GF_START_DEMO:
 			//gf_option = StartDemo();
+			//я добавил пока нету демо что бы вместо демо выходило обратно в титлы
+			g_NoInputCount = 0;
+			g_ResetFlag = 0;
+			gf_option = GF_EXIT_TO_TITLE;
 			break;
 
 		case GF_LEVEL_COMPLETE:

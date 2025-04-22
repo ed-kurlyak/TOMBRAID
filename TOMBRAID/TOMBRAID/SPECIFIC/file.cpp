@@ -1008,6 +1008,9 @@ bool LoadSoundEffects(FILE *fp)
     }
 
     g_SoundEffectsTable = (OBJECT_VECTOR *)Game_Alloc(sizeof(OBJECT_VECTOR) * g_NumberSoundEffects, GBUF_SOUND_FX);
+
+    //g_SoundEffectsTable = (OBJECT_VECTOR*)malloc(sizeof(OBJECT_VECTOR) * g_NumberSoundEffects);
+
     
 	if (!g_SoundEffectsTable)
 	{
@@ -1281,17 +1284,17 @@ bool LoadSoundSamples(FILE *fp)
 			MessageBox(NULL, "Not WAVE format!", "Tomb Raider", MB_OK);
 		}
 
-		//pWF->cbSize = sizeof(WAVEFORMATEX);
-		pWF->cbSize = 0;
+		pWF->cbSize = sizeof(WAVEFORMATEX);
+		//pWF->cbSize = 0;
 
 		dwWaveLength = dwHeader[10];
 
-		/*
+		
         //SAVE SOUND TO FILE
 		//id 72 = sound 108 rotate ring sound
 		//id 73 = sound 109 open item sound
-		
-		if(i == 73)
+	/*
+		if(i == 57)
 		{
 			FILE *fp;
 
@@ -1301,6 +1304,7 @@ bool LoadSoundSamples(FILE *fp)
 
 			fclose(fp);
 		}
+        
 		*/
 		
 		if (FAILED(DS_MakeSample(i, pWF,

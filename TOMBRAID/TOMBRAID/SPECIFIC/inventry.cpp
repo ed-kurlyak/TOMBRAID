@@ -128,6 +128,11 @@ int32_t Display_Inventory(int inv_mode)
     m_InvNFrames = 2;
 
     do {
+
+        //добавил я с учетом Win программирования (не MS-DOS)
+        if (g_bWindowClosed)
+            return GF_EXIT_GAME;
+
         Inv_RingCalcAdders(&ring, ROTATE_DURATION);
         Input_Update();
 
@@ -163,8 +168,8 @@ int32_t Display_Inventory(int inv_mode)
 		}
 		else
 		{
-			g_NoInputCount = 0;
-			g_ResetFlag = 0;
+            g_NoInputCount = 0;
+            g_ResetFlag = 0;
 		}
 
         for (int i = 0; i < m_InvNFrames; i++)

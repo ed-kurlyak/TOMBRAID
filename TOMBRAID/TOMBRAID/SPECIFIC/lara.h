@@ -203,4 +203,4 @@ void LookLeftRight();
 void LookUpDown();
 void ResetLook();
 
-void LaraCheatGetStuff();
+//void LaraCheatGetStuff();

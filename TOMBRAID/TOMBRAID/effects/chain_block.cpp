@@ -18,7 +18,8 @@ void ChainBlock(ITEM_INFO *item)
 	*/
 
 
-    if (g_FlipTimer == 0) {
+    if (g_FlipTimer == 0)
+    {
         Sound_Effect(SFX_SECRET, NULL, SPM_NORMAL);
     }
 

@@ -11,6 +11,7 @@
 #include "text.h"
 #include "savegame.h"
 #include "control_util.h"
+#include "sound.h"
 
 int Initialise_Level_Flags()
 {

@@ -65,10 +65,13 @@ void KillItem(int16_t item_num)
 int16_t CreateItem()
 {
     int16_t item_num = g_NextItemFree;
-    if (item_num != NO_ITEM) {
+    
+    if (item_num != NO_ITEM)
+    {
         g_Items[item_num].flags = 0;
         g_NextItemFree = g_Items[item_num].next_item;
     }
+    
     return item_num;
 }
 
@@ -170,12 +173,14 @@ void AddActiveItem(int16_t item_num)
 {
     ITEM_INFO *item = &g_Items[item_num];
 
-    if (!g_Objects[item->object_number].control) {
+    if (!g_Objects[item->object_number].control)
+    {
         item->status = IS_NOT_ACTIVE;
         return;
     }
 
-    if (item->active) {
+    if (item->active)
+    {
         //Shell_ExitSystemFmt("Item(%d)(Obj%d) already Active\n", item_num, item->object_number);
     }
 
@@ -242,7 +247,9 @@ void InitialiseFXArray()
 {
     g_NextFxActive = NO_ITEM;
     g_NextFxFree = 0;
-    for (int i = 0; i < NUM_EFFECTS - 1; i++) {
+    
+    for (int i = 0; i < NUM_EFFECTS - 1; i++)
+    {
         g_Effects[i].next_fx = i + 1;
     }
     g_Effects[NUM_EFFECTS - 1].next_fx = NO_ITEM;
@@ -251,7 +258,9 @@ void InitialiseFXArray()
 int16_t CreateEffect(int16_t room_num)
 {
     int16_t fx_num = g_NextFxFree;
-    if (fx_num == NO_ITEM) {
+    
+    if (fx_num == NO_ITEM)
+    {
         return fx_num;
     }
 
@@ -274,11 +283,16 @@ void KillEffect(int16_t fx_num)
     FX_INFO *fx = &g_Effects[fx_num];
 
     int16_t linknum = g_NextFxActive;
-    if (linknum == fx_num) {
+    if (linknum == fx_num)
+    {
         g_NextFxActive = fx->next_active;
-    } else {
-        for (; linknum != NO_ITEM; linknum = g_Effects[linknum].next_active) {
-            if (g_Effects[linknum].next_active == fx_num) {
+    }
+    else
+    {
+        for (; linknum != NO_ITEM; linknum = g_Effects[linknum].next_active)
+        {
+            if (g_Effects[linknum].next_active == fx_num)
+            {
                 g_Effects[linknum].next_active = fx->next_active;
                 break;
             }
@@ -287,11 +301,17 @@ void KillEffect(int16_t fx_num)
 
     ROOM_INFO *r = &g_RoomInfo[fx->room_number];
     linknum = r->fx_number;
-    if (linknum == fx_num) {
+    
+    if (linknum == fx_num)
+    {
         r->fx_number = fx->next_fx;
-    } else {
-        for (; linknum != NO_ITEM; linknum = g_Effects[linknum].next_fx) {
-            if (g_Effects[linknum].next_fx == fx_num) {
+    }
+    else
+    {
+        for (; linknum != NO_ITEM; linknum = g_Effects[linknum].next_fx)
+        {
+            if (g_Effects[linknum].next_fx == fx_num)
+            {
                 g_Effects[linknum].next_fx = fx->next_fx;
                 break;
             }
