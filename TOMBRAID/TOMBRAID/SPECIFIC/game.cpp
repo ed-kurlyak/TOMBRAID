@@ -147,7 +147,9 @@ int Game_Loop(int demo_mode)
     }
     //Inv_AddItem(O_UZI_AMMO_ITEM);
     
-    //g_Lara.request_gun_type = LGT_UNARMED;
+	//g_Lara.gun_type = LGT_UNARMED; //это не работает Лара в начале достает пистолеты
+    g_Lara.request_gun_type = LGT_UNARMED;
+	//g_Lara.gun_status == LGS_ARMLESS; //это не работает Лара в начале достает пистолеты
     //g_Lara.request_gun_type = LGT_PISTOLS;
     //------------------------
 
@@ -2132,6 +2134,7 @@ int32_t S_LoadGame(SAVEGAME_INFO *save, int32_t slot)
         //Shell_ExitSystem("null save->start");
         return 0;
     }
+
     fread(&save->start[0], sizeof(START_INFO), g_GameFlow.level_count, fp);
     fread(&save->timer, sizeof(uint32_t), 1, fp);
     fread(&save->kills, sizeof(uint32_t), 1, fp);
@@ -2151,7 +2154,7 @@ int32_t S_LoadGame(SAVEGAME_INFO *save, int32_t slot)
     fread(&save->num_key4, sizeof(uint8_t), 1, fp);
     fread(&save->num_leadbar, sizeof(uint8_t), 1, fp);
     fread(&save->challenge_failed, sizeof(uint8_t), 1, fp);
-    int val = fread(&save->buffer[0], sizeof(char), MAX_SAVEGAME_BUFFER, fp);
+    fread(&save->buffer[0], sizeof(char), MAX_SAVEGAME_BUFFER, fp);
     fclose(fp);
 
     

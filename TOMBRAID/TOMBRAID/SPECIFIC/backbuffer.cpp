@@ -4,13 +4,15 @@
 //#include "header.h"
 #include "screen.h"
 
+int Screen_Width;
+int Screen_Height;
 
 MGLDC* windc = NULL;
 MGLDC* dibdc = NULL;
 
 void Create_Water_Palette()
 {
-	    // water color (R, G, B). 1.0 means pass-through, 0.0 means no value at all.
+	// water color (R, G, B). 1.0 means pass-through, 0.0 means no value at all.
     // [0.6, 0.7, 1.0] is original DOS version filter,
     // [0.45, 1.0, 1.0] is default TombATI filter.
 
@@ -33,9 +35,21 @@ void Create_Water_Palette()
 
 	for (int i = 0; i < 256; i++)
 	{
-		pal[i].red = (unsigned char) (GamePalette[i].r * 0.6f);
-		pal[i].green = (unsigned char) (GamePalette[i].g * 0.7f);
-		pal[i].blue =  (unsigned char) (GamePalette[i].b * 1.0f);
+		/*
+		pal[i].red = (unsigned char) (GameNormalPalette[i].r * 0.6f);
+		pal[i].green = (unsigned char) (GameNormalPalette[i].g * 0.7f);
+		pal[i].blue =  (unsigned char) (GameNormalPalette[i].b * 1.0f);
+		*/
+
+		/*
+		pal[i].red = (unsigned char)(GameNormalPalette[i].r * 2 / 3);
+		pal[i].green = (unsigned char)(GameNormalPalette[i].g * 2 / 3);
+		pal[i].blue = (unsigned char)GameNormalPalette[i].b;
+		*/
+
+		pal[i].red = GameWaterPalette[i].r;
+		pal[i].green = GameWaterPalette[i].g;
+		pal[i].blue = GameWaterPalette[i].b;
 	}
 
 	MGL_setPalette(dibdc, pal, 256, 0);
@@ -50,9 +64,9 @@ void Create_Normal_Palette()
 
 	for (int i = 0; i < 256; i++)
 	{
-		pal[i].red = GamePalette[i].r;
-		pal[i].green = GamePalette[i].g;
-		pal[i].blue = GamePalette[i].b;
+		pal[i].red = GameNormalPalette[i].r;
+		pal[i].green = GameNormalPalette[i].g;
+		pal[i].blue = GameNormalPalette[i].b;
 	}
 
 	MGL_setPalette(dibdc, pal, 256, 0);
@@ -62,6 +76,10 @@ void Create_Normal_Palette()
 
 void Create_BackBuffer()
 {
+
+	Screen_Width = Screen_GetResWidth();
+	Screen_Height = Screen_GetResHeight();
+
 		pixel_format_t	pf;
 
 	MGL_setAppInstance(g_hInst);
@@ -79,13 +97,14 @@ void Create_BackBuffer()
 
 	MGL_getPixelFormat(windc, &pf);
 
-	if ((dibdc = MGL_createMemoryDC(Screen_GetResWidth(), Screen_GetResHeight(), 8, &pf)) == NULL)
+	if ((dibdc = MGL_createMemoryDC(Screen_Width, Screen_Height, 8, &pf)) == NULL)
 		MGL_fatalError("Unable to create Memory DC!");
 
 	//Create_Normal_Palette();
 
 }
 
+/*
 
 void Clear_BackBuffer()
 {
@@ -117,6 +136,44 @@ void Present_BackBuffer()
 	MGL_setWinDC(windc, hdcScreen);
 
 	MGL_bitBltCoord(windc, dibdc, 0, 0, Screen_GetResWidth(), Screen_GetResHeight(), 0, 0, MGL_REPLACE_MODE);
+
+	ReleaseDC(g_hWnd, hdcScreen);
+
+}
+
+*/
+
+
+void Clear_BackBuffer()
+{
+	MGL_beginDirectAccess();
+
+	char* phd_winptr_my = NULL;
+
+	phd_winptr_my = (char*)dibdc->surface;
+
+	//очищаем m_BackBuffer (экран)
+	for (int x = 0; x < Screen_Width; x++)
+	{
+		for (int y = 0; y < Screen_Height; y++)
+		{
+			int Index = y * Screen_Width + x;
+
+			phd_winptr_my[Index + 0] = 0;
+		}
+	}
+
+}
+
+void Present_BackBuffer()
+{
+	MGL_endDirectAccess();
+
+	//MGL present back buffer
+	HDC hdcScreen = GetDC(g_hWnd);
+	MGL_setWinDC(windc, hdcScreen);
+
+	MGL_bitBltCoord(windc, dibdc, 0, 0, Screen_Width, Screen_Height, 0, 0, MGL_REPLACE_MODE);
 
 	ReleaseDC(g_hWnd, hdcScreen);
 

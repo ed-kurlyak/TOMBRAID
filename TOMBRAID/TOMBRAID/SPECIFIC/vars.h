@@ -85,7 +85,8 @@ extern "C" char * phd_winptr;
 extern "C" char depthq_table[32][256];
 extern "C" char	gouraud_table[256][32];
 
-extern RGB888 GamePalette[256];
+extern RGB888 GameNormalPalette[256];
+extern RGB888 GameWaterPalette[256];
 
 //extern PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
 

@@ -1165,12 +1165,22 @@ bool LoadPalette(FILE *fp)
     palette[0].g = 0;
     palette[0].b = 0;
     
-	for ( int i = 0; i < 256; i++ )
-	{
-		GamePalette[i].r = palette[i].r * 4;
-		GamePalette[i].g = palette[i].g * 4;
-		GamePalette[i].b = palette[i].b * 4;
-	}
+    for (int i = 0; i < 256; i++)
+    {
+        GameNormalPalette[i].r = palette[i].r * 4;
+        GameNormalPalette[i].g = palette[i].g * 4;
+        GameNormalPalette[i].b = palette[i].b * 4;
+    }
+
+
+    for (int i = 0; i < 256; i++)
+    {
+        GameWaterPalette[i].r = (palette[i].r * 4) * 2 / 3;
+        GameWaterPalette[i].g = (palette[i].g * 4) * 2 / 3;
+        GameWaterPalette[i].b = palette[i].b * 4;
+    }
+
+
     
 	return true;
 }

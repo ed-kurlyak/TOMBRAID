@@ -152,7 +152,8 @@ char * phd_winptr = NULL;
 char		depthq_table[32][256] = {0};			 	// depth cueing tables..
 char		gouraud_table[256][32] = {0};          	// Gouraud shade table..
 
-RGB888 GamePalette[256];
+RGB888 GameNormalPalette[256];
+RGB888 GameWaterPalette[256];
 
 //PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
 

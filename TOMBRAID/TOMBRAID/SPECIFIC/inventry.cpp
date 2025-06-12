@@ -47,6 +47,7 @@ int32_t Display_Inventory(int inv_mode)
     IMOTION_INFO imo;
 
     //добавил я в ТР1 нету но должна быть
+    //g_CameraUnderwater = 0;
     Create_Normal_Palette();
 
     memset(&imo, 0, sizeof(IMOTION_INFO));

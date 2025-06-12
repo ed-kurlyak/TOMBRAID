@@ -131,20 +131,25 @@ void InitialiseItem(int16_t item_num)
 
 void RemoveActiveItem(int16_t item_num)
 {
-    if (!g_Items[item_num].active) {
+    if (!g_Items[item_num].active)
+    {
         //Shell_ExitSystem("Item already deactive");
     }
 
     g_Items[item_num].active = 0;
 
     int16_t linknum = g_NextItemActive;
-    if (linknum == item_num) {
+    
+    if (linknum == item_num)
+    {
         g_NextItemActive = g_Items[item_num].next_active;
         return;
     }
 
-    for (; linknum != NO_ITEM; linknum = g_Items[linknum].next_active) {
-        if (g_Items[linknum].next_active == item_num) {
+    for (; linknum != NO_ITEM; linknum = g_Items[linknum].next_active)
+    {
+        if (g_Items[linknum].next_active == item_num)
+        {
             g_Items[linknum].next_active = g_Items[item_num].next_active;
             break;
         }

@@ -34,9 +34,9 @@ int Compose_Colour(int inputR, int inputG, int inputB)
     for (int i = 0; i < 256; ++i)
     {
         //разница между входными цветами и цветами из палитры
-        float redDiff = (float) (inputR - GamePalette[i].r);
-        float greenDiff = (float)(inputG - GamePalette[i].g);
-        float blueDiff = (float) (inputB - GamePalette[i].b);
+        float redDiff = (float) (inputR - GameNormalPalette[i].r);
+        float greenDiff = (float)(inputG - GameNormalPalette[i].g);
+        float blueDiff = (float) (inputB - GameNormalPalette[i].b);
 
         //вычисление квадратичного расстояния
         int distance = (int)(pow(redDiff, 2) + pow(greenDiff, 2) + pow(blueDiff, 2));
