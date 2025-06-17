@@ -62,7 +62,8 @@ void ModifyStartInfo(int32_t level_num)
     start->gun_type = LGT_PISTOLS;
     start->pistol_ammo = 1000;
 
-    if (level_num == g_GameFlow.gym_level_num) {
+    if (level_num == g_GameFlow.gym_level_num)
+	{
         start->available = 1;
         start->costume = 1;
         start->num_medis = 0;
@@ -79,8 +80,8 @@ void ModifyStartInfo(int32_t level_num)
         start->gun_type = LGT_UNARMED;
         start->gun_status = LGS_ARMLESS;
     }
-
-    if (level_num == g_GameFlow.first_level_num) {
+	else if (level_num == g_GameFlow.first_level_num)
+	{
         start->available = 1;
         start->costume = 0;
         start->num_medis = 0;
@@ -92,11 +93,29 @@ void ModifyStartInfo(int32_t level_num)
         start->got_shotgun = 0;
         start->got_magnums = 0;
         start->got_uzis = 0;
-        start->gun_status = LGS_ARMLESS;
+		start->gun_status = LGS_ARMLESS;
     }
+	else if (level_num == 13) //Natla Mines уровень
+	{
+		start->num_scions = 0;
+		start->gun_type = 0;
+		start->gun_status = 0;
 
-    if ((g_SaveGame.bonus_flag & GBF_NGPLUS)
-        && level_num != g_GameFlow.gym_level_num) {
+		start->available = 1;
+		start->got_pistols = 0;
+		start->got_shotgun = 0;
+		start->got_magnums = 0;
+		start->got_uzis = 0;
+		start->costume = 0;
+	}
+    
+	//разобраться с Game_Finished
+	//например игра закончена добавлено оружия 1234 в новой игре
+	//потом уровень 13 Natla Mines все пропадает? или так же?
+	//и после уровень 13 Natla Mines все так же 1234?
+
+	if (Game_Finished && level_num != g_GameFlow.gym_level_num)
+	{
         start->got_pistols = 1;
         start->got_shotgun = 1;
         start->got_magnums = 1;

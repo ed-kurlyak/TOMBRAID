@@ -3,7 +3,6 @@
 
 #include "gameflow.h"
 #include "init.h"
-#include "backbuffer.h"
 #include "setup.h"
 #include "game.h"
 #include "vars.h"
@@ -648,12 +647,11 @@ int Start_New_Game(int LevelNum)
 	g_CurrentLevel = LevelNum;
 	g_LevelLoaded = 0;
 
-	//если загру 0x15 type
-	if (g_LevelNumTR != 0x15)
+	//если не загруженый уровень 0x15 type 21d
+	if (g_LevelNumTR != 21)
 	{
 		Initialise_Level_Flags();
 	}
-
 	
 	if(!Initialise_Level(LevelNum))
 	{
@@ -661,12 +659,6 @@ int Start_New_Game(int LevelNum)
 
 		return 256;
 	}
-
-	//new for tr1
-	//создаем палитру после загрузки уровня
-	//т.е. данных о палитре из файла уровня
-	//Create_BackBuffer();
-	Create_Normal_Palette();
 
 	result = Game_Loop(0);
 

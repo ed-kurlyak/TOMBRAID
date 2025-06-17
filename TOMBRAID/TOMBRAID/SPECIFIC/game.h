@@ -2,6 +2,7 @@
 
 #include "types.h"
 
+int LevelStats(int32_t level_num);
 int Game_Loop(int demo_mode);
 void Initialise_Camera();
 //void CalculateCamera();

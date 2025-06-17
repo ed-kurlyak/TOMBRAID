@@ -165,7 +165,7 @@ void LaraControl(int16_t item_num)
     }
 
 	//включил god mode
-	item->hit_points = LARA_HITPOINTS;
+	//item->hit_points = LARA_HITPOINTS;
 
 	if (item->hit_points <= 0)
 	{
@@ -486,14 +486,17 @@ void InitialiseLara()
     g_Lara.right_arm.lock = 0;
     g_Lara.left_arm.lock = 0;
 
-    if (g_RoomInfo[g_LaraItem->room_number].flags & 1) {
+    if (g_RoomInfo[g_LaraItem->room_number].flags & RF_UNDERWATER)
+	{
         g_Lara.water_status = LWS_UNDERWATER;
         g_LaraItem->fall_speed = 0;
         g_LaraItem->goal_anim_state = AS_TREAD;
         g_LaraItem->current_anim_state = AS_TREAD;
         g_LaraItem->anim_number = AA_TREAD;
         g_LaraItem->frame_number = AF_TREAD;
-    } else {
+    }
+	else
+	{
         g_Lara.water_status = LWS_ABOVEWATER;
         g_LaraItem->goal_anim_state = AS_STOP;
         g_LaraItem->current_anim_state = AS_STOP;
@@ -513,64 +516,82 @@ void InitialiseLara()
 
 void InitialiseLaraInventory(int32_t level_num)
 {
-	//------------------------
-
-
 	
     Inv_RemoveAllItems();
 
     START_INFO *start = &g_SaveGame.start[level_num];
 	
     g_Lara.pistols.ammo = 1000;
-    if (start->got_pistols) {
+    if (start->got_pistols)
+	{
         Inv_AddItem(O_GUN_ITEM);
     }
 
-    if (start->got_magnums) {
+    if (start->got_magnums)
+	{
         Inv_AddItem(O_MAGNUM_ITEM);
         g_Lara.magnums.ammo = start->magnum_ammo;
         GlobalItemReplace(O_MAGNUM_ITEM, O_MAG_AMMO_ITEM);
-    } else {
+    } else
+	{
         int32_t ammo = start->magnum_ammo / MAGNUM_AMMO_QTY;
-        for (int i = 0; i < ammo; i++) {
+        
+		for (int i = 0; i < ammo; i++)
+		{
             Inv_AddItem(O_MAG_AMMO_ITEM);
         }
-        g_Lara.magnums.ammo = 0;
+        
+		g_Lara.magnums.ammo = 0;
     }
 
-    if (start->got_uzis) {
+    if (start->got_uzis)
+	{
         Inv_AddItem(O_UZI_ITEM);
         g_Lara.uzis.ammo = start->uzi_ammo;
         GlobalItemReplace(O_UZI_ITEM, O_UZI_AMMO_ITEM);
-    } else {
+    }
+	else
+	{
         int32_t ammo = start->uzi_ammo / UZI_AMMO_QTY;
-        for (int i = 0; i < ammo; i++) {
+        
+		for (int i = 0; i < ammo; i++)
+		{
             Inv_AddItem(O_UZI_AMMO_ITEM);
         }
+
         g_Lara.uzis.ammo = 0;
     }
 
-    if (start->got_shotgun) {
+    if (start->got_shotgun)
+	{
         Inv_AddItem(O_SHOTGUN_ITEM);
         g_Lara.shotgun.ammo = start->shotgun_ammo;
         GlobalItemReplace(O_SHOTGUN_ITEM, O_SG_AMMO_ITEM);
-    } else {
+    }
+	else
+	{
         int32_t ammo = start->shotgun_ammo / SHOTGUN_AMMO_QTY;
-        for (int i = 0; i < ammo; i++) {
+    
+		for (int i = 0; i < ammo; i++)
+		{
             Inv_AddItem(O_SG_AMMO_ITEM);
         }
-        g_Lara.shotgun.ammo = 0;
+        
+		g_Lara.shotgun.ammo = 0;
     }
 
-    for (int i = 0; i < start->num_scions; i++) {
+    for (int i = 0; i < start->num_scions; i++)
+	{
         Inv_AddItem(O_SCION_ITEM);
     }
 
-    for (int i = 0; i < start->num_medis; i++) {
+    for (int i = 0; i < start->num_medis; i++)
+	{
         Inv_AddItem(O_MEDI_ITEM);
     }
 
-    for (int i = 0; i < start->num_big_medis; i++) {
+    for (int i = 0; i < start->num_big_medis; i++)
+	{
         Inv_AddItem(O_BIGMEDI_ITEM);
     }
 
@@ -580,27 +601,13 @@ void InitialiseLaraInventory(int32_t level_num)
 
     LaraInitialiseMeshes(level_num);
     InitialiseNewWeapon();
-
-
-    
-	
 }
 
 void LaraInitialiseMeshes(int32_t level_num)
 {
-		for (int i = 0; i < LM_NUMBER_OF; i++) {
-        g_Lara.mesh_ptrs[i] = g_Meshes[g_Objects[O_LARA].mesh_index + i];
-    }
-
-	g_Lara.mesh_ptrs[LM_THIGH_L] =
-            g_Meshes[g_Objects[O_PISTOLS].mesh_index + LM_THIGH_L];
-        g_Lara.mesh_ptrs[LM_THIGH_R] =
-            g_Meshes[g_Objects[O_PISTOLS].mesh_index + LM_THIGH_R];
-
-
-	/*
     START_INFO *start = &g_SaveGame.start[level_num];
 
+	//костюм Лара Дома
     if (start->costume) {
         for (int i = 0; i < LM_NUMBER_OF; i++) {
             int32_t use_orig_mesh = i == LM_HEAD;
@@ -653,7 +660,7 @@ void LaraInitialiseMeshes(int32_t level_num)
         g_Lara.mesh_ptrs[LM_TORSO] =
             g_Meshes[g_Objects[back_object_num].mesh_index + LM_TORSO];
     }
-	*/
+	
 }
 /*
 void LaraCheatGetStuff()

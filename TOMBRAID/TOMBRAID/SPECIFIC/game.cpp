@@ -1,7 +1,6 @@
 #include <windows.h>
 
 #include "input.h"
-#include "game.h"
 #include "text.h"
 #include "draw.h"
 #include "control_util.h"
@@ -26,6 +25,9 @@
 #include "screen.h"
 
 #include "savegame.h"
+#include "game.h"
+
+
 
 static int32_t m_MedipackCoolDown = 0;
 
@@ -114,25 +116,31 @@ int LevelStats(int32_t level_num)
 
     if (level_num == g_GameFlow.last_level_num)
     {
-        return 1;
+		Game_Finished = 1;
         //exit to inventory
-        //return GF_EXIT_TO_TITLE;
+
+		for ( int i = 0; i < 15; i++)
+			ModifyStartInfo(i);
+
+		return GF_EXIT_TO_TITLE;
     }
     else
     {
         CreateStartInfo(level_num + 1);
+		ModifyStartInfo(level_num + 1);
+
+		return (GF_START_GAME | (g_CurrentLevel + 1 & ((1 << 6) - 1)));
     }
 
     return 0;
-    
-
 }
 
 int Game_Loop(int demo_mode)
 {
     //------------------------
-    //мой код все оружие
+	//мой код все оружие - начало
     //g_Lara.pistols.ammo = 65535;
+	/*
     g_Lara.shotgun.ammo = 65535;
     g_Lara.magnums.ammo = 65535;
     g_Lara.uzis.ammo = 65535;
@@ -146,11 +154,15 @@ int Game_Loop(int demo_mode)
         Inv_AddItem(O_MEDI_ITEM);
     }
     //Inv_AddItem(O_UZI_AMMO_ITEM);
+
+	*/
     
 	//g_Lara.gun_type = LGT_UNARMED; //это не работает Лара в начале достает пистолеты
     g_Lara.request_gun_type = LGT_UNARMED;
 	//g_Lara.gun_status == LGS_ARMLESS; //это не работает Лара в начале достает пистолеты
     //g_Lara.request_gun_type = LGT_PISTOLS;
+
+	//мой код все оружие - конец
     //------------------------
 
 	int32_t nframes=1, game_over = false;
@@ -176,18 +188,10 @@ int Game_Loop(int demo_mode)
         if (g_bWindowClosed)
             return GF_EXIT_GAME;
         
+		//level complete
         if (game_over == 1)
-            break;
+			return GF_LEVEL_COMPLETE;
 	}
-
-
-    if (game_over == 1)
-    {
-        if (LevelStats(g_CurrentLevel))
-            return GF_EXIT_TO_TITLE;
-
-        return GF_START_GAME | (g_CurrentLevel + 1 & ((1 << 6) - 1));
-    }
 
 	return game_over;
 

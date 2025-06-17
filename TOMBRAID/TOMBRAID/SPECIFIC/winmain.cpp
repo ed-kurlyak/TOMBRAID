@@ -13,6 +13,7 @@
 #include "screen.h"
 #include "input.h"
 #include "sound.h"
+#include "savegame.h"
 
 //---------------------------
 //SETUP START
@@ -368,6 +369,17 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
+int LoadTitle()
+{
+	Text_RemoveAll();
+	//Output_DisplayPicture(g_GameFlow.main_menu_background_path);
+	g_LevelNumTR = g_GameFlow.title_level_num;
+	Initialise_Level(g_GameFlow.title_level_num); //title.phd level #20
+	//палитру создаем только после загрузки уровня
+	Create_Normal_Palette();
+	return Display_Inventory(INV_TITLE_MODE);
+}
+
 int PASCAL WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
@@ -522,17 +534,17 @@ int PASCAL WinMain(HINSTANCE hInstance,
 	}
 
 	Init_Game_Malloc();
-	//Text_Init();
 	Text_RemoveAll();
 	S_FrontEndCheck();
-	//Settings_Write();
 	Settings_Read();
 	Create_BackBuffer();
+	InitialiseStartInfo();
 
-	int32_t gf_option = GF_EXIT_TO_TITLE;
 	bool intro_played = false;
 	bool loop_continue = true;
-	
+
+	int32_t gf_option = LoadTitle();
+
 	while (loop_continue)
 	{
 		int32_t gf_direction = gf_option & ~((1 << 6) - 1);
@@ -540,6 +552,11 @@ int PASCAL WinMain(HINSTANCE hInstance,
 
 		switch (gf_direction)
 		{
+
+		case GF_EXIT_TO_TITLE:
+			gf_option = LoadTitle();
+			break;
+
 		case GF_START_GAME:
 			g_LevelNumTR = gf_param;
 			gf_option = Start_New_Game(gf_param);
@@ -547,7 +564,7 @@ int PASCAL WinMain(HINSTANCE hInstance,
 
 		case GF_START_SAVED_GAME:
 			S_LoadGame(&g_SaveGame, gf_param);
-			g_LevelNumTR = 21;
+			g_LevelNumTR = 21; //21 значит saved level
 			gf_option = Start_New_Game(g_SaveGame.current_level );
 			break;
 
@@ -564,17 +581,7 @@ int PASCAL WinMain(HINSTANCE hInstance,
 			break;
 
 		case GF_LEVEL_COMPLETE:
-			//gf_option = LevelCompleteSequence(gf_param);
-			break;
-
-		case GF_EXIT_TO_TITLE:
-			Text_RemoveAll();
-			//Output_DisplayPicture(g_GameFlow.main_menu_background_path);
-			g_LevelNumTR = g_GameFlow.title_level_num;
-			Initialise_Level(g_GameFlow.title_level_num); //title.phd level #20
-			//палитру создаем только после загрузки уровня
-			Create_Normal_Palette();
-			gf_option = Display_Inventory(INV_TITLE_MODE);
+			gf_option = LevelStats(g_CurrentLevel);
 			break;
 
 		case GF_EXIT_GAME:

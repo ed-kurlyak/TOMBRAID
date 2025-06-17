@@ -8,6 +8,7 @@
 
 int g_LevelNumTR;
 
+int Game_Finished = 0;
 
 //#include "inv.h"
 

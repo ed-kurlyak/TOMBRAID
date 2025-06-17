@@ -22,6 +22,8 @@
 
 extern int g_LevelNumTR;
 
+extern int Game_Finished;
+
 extern GAMEFLOW g_GameFlow;
 
 //раскоментировать закоментировать учет аспекта в

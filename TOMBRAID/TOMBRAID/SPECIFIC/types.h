@@ -1053,7 +1053,7 @@ typedef enum GAMEFLOW_OPTION {
     GF_EXIT_TO_TITLE = 4 << 6,
     GF_LEVEL_COMPLETE = 5 << 6,
     GF_EXIT_GAME = 6 << 6,
-    GF_START_SAVED_GAME = 7 << 6,
+	GF_START_SAVED_GAME = 7 << 6,
 } GAMEFLOW_OPTION;
 
 typedef enum GAMEFLOW_SEQUENCE_TYPE {
@@ -1564,15 +1564,16 @@ typedef struct LARA_INFO {
 
 
 typedef struct START_INFO {
-    uint16_t pistol_ammo;
-    uint16_t magnum_ammo;
-    uint16_t uzi_ammo;
-    uint16_t shotgun_ammo;
-    uint8_t num_medis;
-    uint8_t num_big_medis;
-    uint8_t num_scions;
-    int8_t gun_status;
-    int8_t gun_type;
+    uint16_t pistol_ammo;	//+0
+    uint16_t magnum_ammo;	//+02
+    uint16_t uzi_ammo;		//+04
+    uint16_t shotgun_ammo;	//+06
+    uint8_t num_medis;		//+08
+    uint8_t num_big_medis;	//+09
+    uint8_t num_scions;		//+0A
+    int8_t gun_status;		//+0B
+    int8_t gun_type;		//+0C
+	//следующий байт = +0D (1 байт зарезервирован под packed-биты)
     uint16_t available : 1;
     uint16_t got_pistols : 1;
     uint16_t got_magnums : 1;

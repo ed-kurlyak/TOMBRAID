@@ -12,6 +12,9 @@
 #include "savegame.h"
 #include "control_util.h"
 #include "sound.h"
+#include "backbuffer.h"
+#include "..\objects\pierre.h"
+
 
 int Initialise_Level_Flags()
 {
@@ -60,13 +63,11 @@ void Init_Colours()
 	//белая линия на молнии Тора в комнате Тора уровень Монастырь Св.Франциска
     //белая линия на молнии уровень The Great Pyramid
 	ColorLighting2 = Compose_Colour(255, 255, 255);
-
-	int debug = 0;
 }
 
 int Initialise_Level(int LevelNum)
 {
-    //21d = 0x15 marks saved level    
+    //21d = 0x15 обозначает saved level
     if (g_LevelNumTR == 21)
 	{
 		LevelNum = g_SaveGame.current_level;
@@ -83,6 +84,11 @@ int Initialise_Level(int LevelNum)
 	{
         return 0;
     }
+
+	//new for tr1
+	//создаем палитру после загрузки уровня
+	//т.е. данных о палитре из файла уровня
+	Create_Normal_Palette();
 
 	if (g_Lara.item_number != NO_ITEM)
 	{
@@ -141,10 +147,10 @@ void Initialise_Game_Flags()
 	g_FlipStatus = 0;
     g_LevelComplete = false;
     g_FlipEffect = -1;
-    //g_PierreItemNum = NO_ITEM;
+    g_PierreItemNum = NO_ITEM;
 }
 
-bool Load_Level(int32_t LevelNum)
+int Load_Level(int32_t LevelNum)
 {
 	char *szLevelName;
 
