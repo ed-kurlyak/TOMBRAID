@@ -265,17 +265,26 @@ void AnimateLara(ITEM_INFO *item)
     ANIM_STRUCT *anim;
 
     item->frame_number++;
+
     anim = &g_Anims[item->anim_number];
-    if (anim->number_changes > 0 && GetChange(item, anim)) {
+    
+	if (anim->number_changes > 0 && GetChange(item, anim))
+	{
         anim = &g_Anims[item->anim_number];
         item->current_anim_state = anim->current_anim_state;
     }
 
-    if (item->frame_number > anim->frame_end) {
-        if (anim->number_commands > 0) {
+	//если закончилась анимация
+    if (item->frame_number > anim->frame_end)
+	{
+        if (anim->number_commands > 0)
+		{
             command = &g_AnimCommands[anim->command_index];
-            for (int i = 0; i < anim->number_commands; i++) {
-                switch (*command++) {
+        
+			for (int i = 0; i < anim->number_commands; i++)
+			{
+                switch (*command++)
+				{
                 case AC_MOVE_ORIGIN:
                     TranslateItem(item, command[0], command[1], command[2]);
                     command += 3;
@@ -311,9 +320,13 @@ void AnimateLara(ITEM_INFO *item)
         item->current_anim_state = anim->current_anim_state;
     }
 
-    if (anim->number_commands > 0) {
+	//обработка текущего кадра анимации
+    if (anim->number_commands > 0)
+	{
         command = &g_AnimCommands[anim->command_index];
-        for (int i = 0; i < anim->number_commands; i++) {
+
+        for (int i = 0; i < anim->number_commands; i++)
+		{
             switch (*command++) {
             case AC_MOVE_ORIGIN:
                 command += 3;
@@ -342,22 +355,26 @@ void AnimateLara(ITEM_INFO *item)
         }
     }
 
-    if (item->gravity_status) {
-        int32_t speed = anim->velocity
-            + anim->acceleration * (item->frame_number - anim->frame_base - 1);
+    if (item->gravity_status)
+	{
+        int32_t speed = anim->velocity + anim->acceleration * (item->frame_number - anim->frame_base - 1);
         item->speed -= (int16_t)(speed >> 16);
         speed += anim->acceleration;
         item->speed += (int16_t)(speed >> 16);
 
         item->fall_speed += (item->fall_speed < FASTFALL_SPEED) ? GRAVITY : 1;
         item->pos.y += item->fall_speed;
-    } else {
+    }
+	else
+	{
         int32_t speed = anim->velocity;
-        if (anim->acceleration) {
-            speed +=
-                anim->acceleration * (item->frame_number - anim->frame_base);
+
+        if (anim->acceleration)
+		{
+            speed += anim->acceleration * (item->frame_number - anim->frame_base);
         }
-        item->speed = (int16_t)(speed >> 16);
+        
+		item->speed = (int16_t)(speed >> 16);
     }
 
     item->pos.x += (phd_sin(g_Lara.move_angle) * item->speed) >> W2V_SHIFT;
@@ -367,7 +384,9 @@ void AnimateLara(ITEM_INFO *item)
 void AnimateLaraUntil(ITEM_INFO *lara_item, int32_t goal)
 {
     lara_item->goal_anim_state = goal;
-    do {
+
+    do
+	{
         AnimateLara(lara_item);
     } while (lara_item->current_anim_state != goal);
 }
@@ -457,13 +476,7 @@ void InitialiseLara()
     g_LaraItem->collidable = 0;
     g_LaraItem->data = &g_Lara;
     g_LaraItem->hit_points = LARA_HITPOINTS;
-    /*
-	if (g_Config.disable_healing_between_levels)
-	{
-        g_LaraItem->hit_points = g_StoredLaraHealth;
-    }
-	*/
-
+	
     g_Lara.air = LARA_AIR;
     g_Lara.torso_y_rot = 0;
     g_Lara.torso_x_rot = 0;
@@ -516,12 +529,12 @@ void InitialiseLara()
 
 void InitialiseLaraInventory(int32_t level_num)
 {
-	
-    Inv_RemoveAllItems();
+	Inv_RemoveAllItems();
 
     START_INFO *start = &g_SaveGame.start[level_num];
 	
     g_Lara.pistols.ammo = 1000;
+
     if (start->got_pistols)
 	{
         Inv_AddItem(O_GUN_ITEM);
@@ -532,7 +545,8 @@ void InitialiseLaraInventory(int32_t level_num)
         Inv_AddItem(O_MAGNUM_ITEM);
         g_Lara.magnums.ammo = start->magnum_ammo;
         GlobalItemReplace(O_MAGNUM_ITEM, O_MAG_AMMO_ITEM);
-    } else
+    }
+	else
 	{
         int32_t ammo = start->magnum_ammo / MAGNUM_AMMO_QTY;
         
@@ -595,7 +609,7 @@ void InitialiseLaraInventory(int32_t level_num)
         Inv_AddItem(O_BIGMEDI_ITEM);
     }
 
-    g_Lara.gun_status = start->gun_status;
+	g_Lara.gun_status = start->gun_status;
     g_Lara.gun_type = start->gun_type;
     g_Lara.request_gun_type = start->gun_type;
 
@@ -608,31 +622,39 @@ void LaraInitialiseMeshes(int32_t level_num)
     START_INFO *start = &g_SaveGame.start[level_num];
 
 	//костюм Лара Дома
-    if (start->costume) {
-        for (int i = 0; i < LM_NUMBER_OF; i++) {
+    if (start->costume)
+	{
+        for (int i = 0; i < LM_NUMBER_OF; i++)
+		{
             int32_t use_orig_mesh = i == LM_HEAD;
-            g_Lara.mesh_ptrs[i] = g_Meshes
-                [g_Objects[use_orig_mesh ? O_LARA : O_LARA_EXTRA].mesh_index
-                 + i];
+            g_Lara.mesh_ptrs[i] = g_Meshes[g_Objects[use_orig_mesh ? O_LARA : O_LARA_EXTRA].mesh_index + i];
         }
         return;
     }
 
-    for (int i = 0; i < LM_NUMBER_OF; i++) {
+    for (int i = 0; i < LM_NUMBER_OF; i++)
+	{
         g_Lara.mesh_ptrs[i] = g_Meshes[g_Objects[O_LARA].mesh_index + i];
     }
 
     int16_t gun_type = start->gun_type;
-    if (gun_type == LGT_SHOTGUN) {
-        if (start->got_uzis || start->got_magnums || start->got_pistols) {
+
+    if (gun_type == LGT_SHOTGUN)
+	{
+        if (start->got_uzis || start->got_magnums || start->got_pistols)
+		{
             gun_type = LGT_PISTOLS;
-        } else {
+        }
+		else
+		{
             gun_type = LGT_UNARMED;
         }
     }
 
     int16_t holster_object_num = -1;
-    switch (gun_type) {
+    
+	switch (gun_type)
+	{
     case LGT_PISTOLS:
         holster_object_num = O_PISTOLS;
         break;
@@ -645,109 +667,23 @@ void LaraInitialiseMeshes(int32_t level_num)
     }
 
     int16_t back_object_num = -1;
-    if (start->got_shotgun) {
+    if (start->got_shotgun)
+	{
         back_object_num = O_SHOTGUN;
     }
 
-    if (holster_object_num != -1) {
-        g_Lara.mesh_ptrs[LM_THIGH_L] =
-            g_Meshes[g_Objects[holster_object_num].mesh_index + LM_THIGH_L];
-        g_Lara.mesh_ptrs[LM_THIGH_R] =
-            g_Meshes[g_Objects[holster_object_num].mesh_index + LM_THIGH_R];
-    }
-
-    if (back_object_num != -1) {
-        g_Lara.mesh_ptrs[LM_TORSO] =
-            g_Meshes[g_Objects[back_object_num].mesh_index + LM_TORSO];
-    }
-	
-}
-/*
-void LaraCheatGetStuff()
-{
-	
-    if (g_CurrentLevel == g_GameFlow.gym_level_num)
+    if (holster_object_num != -1)
 	{
-        return;
+        g_Lara.mesh_ptrs[LM_THIGH_L] = g_Meshes[g_Objects[holster_object_num].mesh_index + LM_THIGH_L];
+        g_Lara.mesh_ptrs[LM_THIGH_R] = g_Meshes[g_Objects[holster_object_num].mesh_index + LM_THIGH_R];
+    }
+
+    if (back_object_num != -1)
+	{
+        g_Lara.mesh_ptrs[LM_TORSO] = g_Meshes[g_Objects[back_object_num].mesh_index + LM_TORSO];
     }
 	
-    // play pistols drawing sound
-    Sound_Effect(SFX_LARA_DRAW, &g_LaraItem->pos, SPM_NORMAL);
-
-    if (g_Objects[O_GUN_OPTION].loaded && !Inv_RequestItem(O_GUN_ITEM)) {
-        Inv_AddItem(O_GUN_ITEM);
-    }
-
-    if (g_Objects[O_SHOTGUN_OPTION].loaded) {
-        if (!Inv_RequestItem(O_SHOTGUN_ITEM)) {
-            Inv_AddItem(O_SHOTGUN_ITEM);
-        }
-        g_Lara.shotgun.ammo = g_SaveGame.bonus_flag & GBF_NGPLUS ? 10001 : 300;
-    }
-
-    if (g_Objects[O_MAGNUM_OPTION].loaded) {
-        if (!Inv_RequestItem(O_MAGNUM_ITEM)) {
-            Inv_AddItem(O_MAGNUM_ITEM);
-        }
-        g_Lara.magnums.ammo = g_SaveGame.bonus_flag & GBF_NGPLUS ? 10001 : 1000;
-    }
-
-    if (g_Objects[O_UZI_OPTION].loaded) {
-        if (!Inv_RequestItem(O_UZI_ITEM)) {
-            Inv_AddItem(O_UZI_ITEM);
-        }
-        g_Lara.uzis.ammo = g_SaveGame.bonus_flag & GBF_NGPLUS ? 10001 : 2000;
-    }
-
-    for (int i = 0; i < 10; i++) {
-        if (g_Objects[O_MEDI_OPTION].loaded
-            && Inv_RequestItem(O_MEDI_ITEM) < 240) {
-            Inv_AddItem(O_MEDI_ITEM);
-        }
-        if (g_Objects[O_BIGMEDI_OPTION].loaded
-            && Inv_RequestItem(O_BIGMEDI_ITEM) < 240) {
-            Inv_AddItem(O_BIGMEDI_ITEM);
-        }
-    }
-
-    if (g_Objects[O_KEY_OPTION1].loaded && !Inv_RequestItem(O_KEY_ITEM1)) {
-        Inv_AddItem(O_KEY_ITEM1);
-    }
-    if (g_Objects[O_KEY_OPTION2].loaded && !Inv_RequestItem(O_KEY_ITEM2)) {
-        Inv_AddItem(O_KEY_ITEM2);
-    }
-    if (g_Objects[O_KEY_OPTION3].loaded && !Inv_RequestItem(O_KEY_ITEM3)) {
-        Inv_AddItem(O_KEY_ITEM3);
-    }
-    if (g_Objects[O_KEY_OPTION4].loaded && !Inv_RequestItem(O_KEY_ITEM4)) {
-        Inv_AddItem(O_KEY_ITEM4);
-    }
-    if (g_Objects[O_PUZZLE_OPTION1].loaded
-        && !Inv_RequestItem(O_PUZZLE_ITEM1)) {
-        Inv_AddItem(O_PUZZLE_ITEM1);
-    }
-    if (g_Objects[O_PUZZLE_OPTION2].loaded
-        && !Inv_RequestItem(O_PUZZLE_ITEM2)) {
-        Inv_AddItem(O_PUZZLE_ITEM2);
-    }
-    if (g_Objects[O_PUZZLE_OPTION3].loaded
-        && !Inv_RequestItem(O_PUZZLE_ITEM3)) {
-        Inv_AddItem(O_PUZZLE_ITEM3);
-    }
-    if (g_Objects[O_PUZZLE_OPTION4].loaded
-        && !Inv_RequestItem(O_PUZZLE_ITEM4)) {
-        Inv_AddItem(O_PUZZLE_ITEM4);
-    }
-    if (g_Objects[O_PICKUP_OPTION1].loaded
-        && !Inv_RequestItem(O_PICKUP_ITEM1)) {
-        Inv_AddItem(O_PICKUP_ITEM1);
-    }
-    if (g_Objects[O_PICKUP_OPTION2].loaded
-        && !Inv_RequestItem(O_PICKUP_ITEM2)) {
-        Inv_AddItem(O_PICKUP_ITEM2);
-    }
 }
-*/
 
 void (*g_LaraControlRoutines[])(ITEM_INFO *item, COLL_INFO *coll) = {
     LaraAsWalk,      LaraAsRun,       LaraAsStop,      LaraAsForwardJump,

@@ -164,9 +164,13 @@ void PuzzleHoleCollision(
 int32_t PickupTrigger(int16_t item_num)
 {
     ITEM_INFO *item = &g_Items[item_num];
-    if (item->status != IS_INVISIBLE) {
+
+    if (item->status != IS_INVISIBLE)
+	{
         return 0;
     }
+
     item->status = IS_DEACTIVATED;
+
     return 1;
 }

@@ -20,7 +20,7 @@
 
 //static TEXTSTRING *m_AmmoText = NULL;
 TEXTSTRING* m_AmmoText = NULL;
-static TEXTSTRING *m_FPSText = NULL;
+TEXTSTRING* m_FPSText = NULL;
 static int16_t m_BarOffsetY[6] = { 0 };
 static DISPLAYPU m_Pickups[MAX_PICKUPS] = { 0 };
 
@@ -238,7 +238,7 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
 }
 
 
-
+/*
 static void Overlay_OnAmmoTextRemoval(const TEXTSTRING *textstring)
 {
     m_AmmoText = NULL;
@@ -249,10 +249,11 @@ static void Overlay_OnFPSTextRemoval(const TEXTSTRING *textstring)
 {
     m_FPSText = NULL;
 }
-
+*/
 void Overlay_Init()
 {
-    for (int i = 0; i < MAX_PICKUPS; i++) {
+    for (int i = 0; i < MAX_PICKUPS; i++)
+	{
         m_Pickups[i].duration = 0;
     }
 }
@@ -405,13 +406,16 @@ void Overlay_DrawAmmoInfo()
 
     Overlay_MakeAmmoString(ammostring);
 
-    if (m_AmmoText) {
+    if (m_AmmoText)
+	{
         Text_ChangeText(m_AmmoText, ammostring);
-    } else {
+    }
+	else
+	{
         m_AmmoText = Text_Create(
             -screen_margin_h - text_offset_x, text_height + screen_margin_v,
             ammostring);
-        m_AmmoText->on_remove = Overlay_OnAmmoTextRemoval;
+        //m_AmmoText->on_remove = Overlay_OnAmmoTextRemoval;
         Text_SetScale(m_AmmoText, (int)(PHD_ONE * scale), (int)(PHD_ONE * scale));
         Text_AlignRight(m_AmmoText, 1);
     }
@@ -495,7 +499,7 @@ void Overlay_DrawFPSInfo()
                 sprintf(fps_buf, "0 FPS");
                 //m_FPSText = Text_Create(10, 30, fps_buf);
                 m_FPSText = Text_Create(10, 45, fps_buf);
-                m_FPSText->on_remove = Overlay_OnFPSTextRemoval;
+                //m_FPSText->on_remove = Overlay_OnFPSTextRemoval;
             }
             g_FPSCounter = 0;
             elapsed = GetTickCount();
@@ -504,7 +508,7 @@ void Overlay_DrawFPSInfo()
     else if (m_FPSText)
     {
         Text_Remove(m_FPSText);
-        m_FPSText = NULL;
+		m_FPSText = NULL;
         g_FPSCounter = 0;
     }
 }
@@ -529,8 +533,10 @@ void Overlay_DrawGameInfo()
 
 void Overlay_AddPickup(int16_t object_num)
 {
-    for (int i = 0; i < MAX_PICKUPS; i++) {
-        if (m_Pickups[i].duration <= 0) {
+    for (int i = 0; i < MAX_PICKUPS; i++)
+	{
+        if (m_Pickups[i].duration <= 0)
+		{
             m_Pickups[i].duration = 75;
             m_Pickups[i].sprnum = g_Objects[object_num].mesh_index;
             return;

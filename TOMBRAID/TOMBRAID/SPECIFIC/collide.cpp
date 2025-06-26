@@ -539,7 +539,9 @@ void LaraBaddieCollision(ITEM_INFO *lara_item, COLL_INFO *coll)
 {
     lara_item->hit_status = 0;
     g_Lara.hit_direction = -1;
-    if (lara_item->hit_points <= 0) {
+
+    if (lara_item->hit_points <= 0)
+	{
         return;
     }
 
@@ -549,41 +551,55 @@ void LaraBaddieCollision(ITEM_INFO *lara_item, COLL_INFO *coll)
     roomies[numroom++] = lara_item->room_number;
 
     DOOR_INFOS *door = g_RoomInfo[lara_item->room_number].doors;
-    if (door) {
-        for (int i = 0; i < door->count; i++) {
-            if (numroom >= MAX_BADDIE_COLLISION) {
+    
+	if (door)
+	{
+        for (int i = 0; i < door->count; i++)
+		{
+            if (numroom >= MAX_BADDIE_COLLISION)
+			{
                 break;
             }
             roomies[numroom++] = door->door[i].room_num;
         }
     }
 
-    for (int i = 0; i < numroom; i++) {
+    for (int i = 0; i < numroom; i++)
+	{
         int16_t item_num = g_RoomInfo[roomies[i]].item_number;
-        while (item_num != NO_ITEM) {
+    
+		while (item_num != NO_ITEM)
+		{
             ITEM_INFO *item = &g_Items[item_num];
-            if (item->collidable && item->status != IS_INVISIBLE) {
+            
+			if (item->collidable && item->status != IS_INVISIBLE)
+			{
                 OBJECT_INFO *object = &g_Objects[item->object_number];
-                if (object->collision) {
+                
+				if (object->collision)
+				{
                     int32_t x = lara_item->pos.x - item->pos.x;
                     int32_t y = lara_item->pos.y - item->pos.y;
                     int32_t z = lara_item->pos.z - item->pos.z;
-                    if (x > -TARGET_DIST && x < TARGET_DIST && y > -TARGET_DIST
-                        && y < TARGET_DIST && z > -TARGET_DIST
-                        && z < TARGET_DIST) {
+
+                    if (x > -TARGET_DIST && x < TARGET_DIST && y > -TARGET_DIST && y < TARGET_DIST && z > -TARGET_DIST && z < TARGET_DIST)
+					{
                         object->collision(item_num, lara_item, coll);
                     }
                 }
             }
+
             item_num = item->next_item;
         }
     }
 
-    if (g_Lara.spaz_effect_count) {
+    if (g_Lara.spaz_effect_count)
+	{
         EffectSpaz(lara_item, coll);
     }
 
-    if (g_Lara.hit_direction == -1) {
+    if (g_Lara.hit_direction == -1)
+	{
         g_Lara.hit_frame = 0;
     }
 
@@ -799,33 +815,48 @@ int32_t TestLaraPosition(int16_t *bounds, ITEM_INFO *item, ITEM_INFO *lara_item)
     PHD_ANGLE xrotrel = lara_item->pos.x_rot - item->pos.x_rot;
     PHD_ANGLE yrotrel = lara_item->pos.y_rot - item->pos.y_rot;
     PHD_ANGLE zrotrel = lara_item->pos.z_rot - item->pos.z_rot;
-    if (xrotrel < bounds[6] || xrotrel > bounds[7]) {
+
+    if (xrotrel < bounds[6] || xrotrel > bounds[7])
+	{
         return 0;
     }
-    if (yrotrel < bounds[8] || yrotrel > bounds[9]) {
+    
+	if (yrotrel < bounds[8] || yrotrel > bounds[9])
+	{
         return 0;
     }
-    if (zrotrel < bounds[10] || zrotrel > bounds[11]) {
+    
+	if (zrotrel < bounds[10] || zrotrel > bounds[11])
+	{
         return 0;
     }
 
     int32_t x = lara_item->pos.x - item->pos.x;
     int32_t y = lara_item->pos.y - item->pos.y;
     int32_t z = lara_item->pos.z - item->pos.z;
+
     phd_PushUnitMatrix();
     phd_RotYXZ(item->pos.y_rot, item->pos.x_rot, item->pos.z_rot);
-    PHD_MATRIX *mptr = g_PhdMatrixPtr;
+    
+	PHD_MATRIX *mptr = g_PhdMatrixPtr;
     int32_t rx = (mptr->_00 * x + mptr->_10 * y + mptr->_20 * z) >> W2V_SHIFT;
     int32_t ry = (mptr->_01 * x + mptr->_11 * y + mptr->_21 * z) >> W2V_SHIFT;
     int32_t rz = (mptr->_02 * x + mptr->_12 * y + mptr->_22 * z) >> W2V_SHIFT;
-    phd_PopMatrix();
-    if (rx < bounds[0] || rx > bounds[1]) {
+    
+	phd_PopMatrix();
+    
+	if (rx < bounds[0] || rx > bounds[1])
+	{
         return 0;
     }
-    if (ry < bounds[2] || ry > bounds[3]) {
+    
+	if (ry < bounds[2] || ry > bounds[3])
+	{
         return 0;
     }
-    if (rz < bounds[4] || rz > bounds[5]) {
+    
+	if (rz < bounds[4] || rz > bounds[5])
+	{
         return 0;
     }
 

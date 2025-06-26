@@ -118,10 +118,13 @@ void InitialiseItem(int16_t item_num)
     ROOM_INFO *r = &g_RoomInfo[item->room_number];
     item->next_item = r->item_number;
     r->item_number = item_num;
+
     int32_t x_floor = (item->pos.z - r->z) >> WALL_SHIFT;
     int32_t y_floor = (item->pos.x - r->x) >> WALL_SHIFT;
+
     FLOOR_INFO *floor = &r->floor[x_floor + y_floor * r->x_size];
-    item->floor = floor->floor << 8;
+    
+	item->floor = floor->floor << 8;
     
     if (object->initialise)
     {
@@ -235,11 +238,15 @@ int16_t SpawnItem(ITEM_INFO *item, int16_t object_num)
 int32_t GlobalItemReplace(int32_t src_object_num, int32_t dst_object_num)
 {
     int32_t changed = 0;
-    for (int i = 0; i < g_RoomCount; i++) {
+
+    for (int i = 0; i < g_RoomCount; i++)
+	{
         ROOM_INFO *r = &g_RoomInfo[i];
-        for (int16_t item_num = r->item_number; item_num != NO_ITEM;
-             item_num = g_Items[item_num].next_item) {
-            if (g_Items[item_num].object_number == src_object_num) {
+    
+		for (int16_t item_num = r->item_number; item_num != NO_ITEM; item_num = g_Items[item_num].next_item)
+		{
+            if (g_Items[item_num].object_number == src_object_num)
+			{
                 g_Items[item_num].object_number = dst_object_num;
                 changed++;
             }

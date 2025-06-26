@@ -662,6 +662,54 @@ int Start_New_Game(int LevelNum)
 
 	result = Game_Loop(0);
 
+	//level complete
+	if (g_LevelComplete)
+	{
+		if (g_CurrentLevel == 0)
+		{
+			return GF_EXIT_TO_TITLE;
+		}
+		else
+		{
+			return GF_LEVEL_COMPLETE;
+		}
+	}
+
+	//if (result == 1)
+	{
+		switch (g_InvChosen)
+		{
+		case O_PASSPORT_OPTION:
+
+			if (g_InvExtraData[0] == 0)
+			{
+				// page 1: load game
+				//InitialiseStartInfo();
+				S_LoadGame(&g_SaveGame, g_InvExtraData[1]);
+				g_LevelNumTR = 21; //21 значит saved level
+				return GF_START_GAME | g_InvExtraData[1];
+			}
+			else if (g_InvExtraData[0] == 1)
+			{
+				// page 1: save game, or new game in gym
+				//if (g_CurrentLevel == g_GameFlow.gym_level_num)
+				{
+					//InitialiseStartInfo();
+					return GF_START_GAME | g_GameFlow.first_level_num;
+					//return 1;
+				}
+			}
+			else
+			{
+				// page 3: exit to title
+				return GF_EXIT_TO_TITLE;
+			}
+
+		}
+	}
+
+
+
 	if(result == 256)
 		return result;
 

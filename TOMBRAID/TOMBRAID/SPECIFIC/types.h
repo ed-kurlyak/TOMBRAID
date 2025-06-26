@@ -1655,7 +1655,7 @@ typedef struct TEXTSTRING {
     } scale;
     char *string;
 
-    void (*on_remove)(const struct TEXTSTRING *);
+    //void (*on_remove)(const struct TEXTSTRING *);
 } TEXTSTRING;
 
 typedef struct DISPLAYPU {
@@ -1878,27 +1878,27 @@ typedef struct BOX_INFO {
 } BOX_INFO;
 
 typedef struct REQUEST_INFO {
-    uint16_t items;
-    uint16_t requested;
-    uint16_t vis_lines;
-    uint16_t line_offset;
-    uint16_t line_old_offset;
-    uint16_t pix_width;
-    uint16_t line_height;
-    int16_t x;
+    uint16_t items;				// Количество элементов (сейвов)
+    uint16_t requested;			// Индекс выбранного элемента
+    uint16_t vis_lines;			// Количество отображаемых строк (высота окна)
+    uint16_t line_offset;		// Прокрутка списка (на сколько строк сдвинут вид)
+    uint16_t line_old_offset;	// Предыдущее значение offset — может быть для сравнения
+    uint16_t pix_width;			// Ширина окна в пикселях
+    uint16_t line_height;		// Высота строки в пикселях
+    int16_t x;					// Позиция окна (z не используется)
     int16_t y;
     int16_t z; // unused
-    uint16_t flags;
-    const char *heading_text;
-    char *item_texts;
+    uint16_t flags;				// Флаги (может быть, режим отображения)
+    const char *heading_text;	// Заголовок окна (простой текст)
+    char *item_texts;			// Указатель на массив текстов (для отрисовки строк меню)
     //char *item_texts[16][48]; //тут надо массив m_LoadSaveGameStrings
-    int16_t item_text_len;
-    TEXTSTRING *heading;
+    int16_t item_text_len;		// Длина одной строки текста в массиве `item_texts`
+    TEXTSTRING *heading;		// Графические объекты (тексты, фон, стрелки и т.д.)
     TEXTSTRING *background;
     TEXTSTRING *moreup;
     TEXTSTRING *moredown;
-    TEXTSTRING *texts[MAX_REQLINES];
-    uint16_t item_flags[MAX_REQLINES];
+    TEXTSTRING *texts[MAX_REQLINES];	// указатели на отрисованные строки
+    uint16_t item_flags[MAX_REQLINES];	// флаги для строк (например, блокировка выбора)
 } REQUEST_INFO;
 
 typedef struct IMOTION_INFO {

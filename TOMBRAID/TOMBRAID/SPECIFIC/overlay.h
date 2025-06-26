@@ -5,6 +5,7 @@
 #include "types.h"
 
 extern TEXTSTRING* m_AmmoText;
+extern TEXTSTRING* m_FPSText;
 
 void Overlay_Init();
 

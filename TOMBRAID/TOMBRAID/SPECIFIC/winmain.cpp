@@ -371,13 +371,52 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 
 int LoadTitle()
 {
-	Text_RemoveAll();
+	Text_Init();
 	//Output_DisplayPicture(g_GameFlow.main_menu_background_path);
 	g_LevelNumTR = g_GameFlow.title_level_num;
 	Initialise_Level(g_GameFlow.title_level_num); //title.phd level #20
 	//палитру создаем только после загрузки уровня
 	Create_Normal_Palette();
-	return Display_Inventory(INV_TITLE_MODE);
+	
+	Display_Inventory(INV_TITLE_MODE);
+
+	switch (g_InvChosen)
+	{
+	case O_PHOTO_OPTION:
+		//g_InvExtraData[1] = 0;
+		return GF_START_GAME | g_GameFlow.gym_level_num;
+
+	case O_PASSPORT_OPTION:
+
+		//g_InvExtraData[0] - это номер страницы паспорта
+		//g_InvExtraData[1] - это номер уровня который будет загружаться
+
+		// страница 0: load game
+		if (g_InvExtraData[0] == 0)
+		{
+			S_LoadGame(&g_SaveGame, g_InvExtraData[1]);
+			g_LevelNumTR = 21; //21 значит saved level
+			return GF_START_GAME | g_InvExtraData[1];
+		}
+		else if (g_InvExtraData[0] == 1)
+		{
+			// страница 1: new game
+			InitialiseStartInfo();
+			g_LevelNumTR = g_GameFlow.first_level_num;
+			return GF_START_GAME | g_GameFlow.first_level_num;
+		}
+		else
+		{
+			// страница 3: exit game
+			return GF_EXIT_GAME;
+		}
+		break;
+
+	default:
+		break;
+	}
+	
+	return 0;
 }
 
 int PASCAL WinMain(HINSTANCE hInstance,
@@ -534,7 +573,6 @@ int PASCAL WinMain(HINSTANCE hInstance,
 	}
 
 	Init_Game_Malloc();
-	Text_RemoveAll();
 	S_FrontEndCheck();
 	Settings_Read();
 	Create_BackBuffer();
@@ -558,14 +596,7 @@ int PASCAL WinMain(HINSTANCE hInstance,
 			break;
 
 		case GF_START_GAME:
-			g_LevelNumTR = gf_param;
 			gf_option = Start_New_Game(gf_param);
-			break;
-
-		case GF_START_SAVED_GAME:
-			S_LoadGame(&g_SaveGame, gf_param);
-			g_LevelNumTR = 21; //21 значит saved level
-			gf_option = Start_New_Game(g_SaveGame.current_level );
 			break;
 
 		case GF_START_CINE:
@@ -582,6 +613,7 @@ int PASCAL WinMain(HINSTANCE hInstance,
 
 		case GF_LEVEL_COMPLETE:
 			gf_option = LevelStats(g_CurrentLevel);
+			g_LevelNumTR = gf_param;
 			break;
 
 		case GF_EXIT_GAME:

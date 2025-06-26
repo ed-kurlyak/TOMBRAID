@@ -238,7 +238,9 @@ void phd_RotYXZpack(int32_t rots)
     int32_t r0, r1;
 
     PHD_ANGLE ry = EXTRACT_ROT_Y(rots);
-    if (ry) {
+
+    if (ry)
+	{
         int32_t sy = phd_sin(ry);
         int32_t cy = phd_cos(ry);
 
@@ -259,7 +261,9 @@ void phd_RotYXZpack(int32_t rots)
     }
 
     PHD_ANGLE rx = EXTRACT_ROT_X(rots);
-    if (rx) {
+    
+	if (rx)
+	{
         int32_t sx = phd_sin(rx);
         int32_t cx = phd_cos(rx);
 
@@ -280,7 +284,9 @@ void phd_RotYXZpack(int32_t rots)
     }
 
     PHD_ANGLE rz = EXTRACT_ROT_Z(rots);
-    if (rz) {
+    
+	if (rz)
+	{
         int32_t sz = phd_sin(rz);
         int32_t cz = phd_cos(rz);
 

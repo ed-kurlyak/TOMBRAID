@@ -1,25 +1,26 @@
 #include <windows.h>
 #include "lara.h"
 
-//#include "game/input.h"
 #include "sound.h"
 #include "types.h"
 #include "vars.h"
-
-//#include <stddef.h>
-//#include <stdint.h>
 
 void DrawPistols(int32_t weapon_type)
 {
     int16_t ani = g_Lara.left_arm.frame_number;
     ani++;
 
-    if (ani < AF_G_DRAW1 || ani > AF_G_DRAW2_L) {
+    if (ani < AF_G_DRAW1 || ani > AF_G_DRAW2_L)
+	{
         ani = AF_G_DRAW1;
-    } else if (ani == AF_G_DRAW2) {
+    }
+	else if (ani == AF_G_DRAW2)
+	{
         DrawPistolMeshes(weapon_type);
         Sound_Effect(SFX_LARA_DRAW, &g_LaraItem->pos, SPM_NORMAL);
-    } else if (ani == AF_G_DRAW2_L) {
+    }
+	else if (ani == AF_G_DRAW2_L)
+	{
         ReadyPistols();
         ani = AF_G_AIM;
     }
@@ -107,21 +108,21 @@ void ReadyPistols()
 
 void DrawPistolMeshes(int32_t weapon_type)
 {
-    int16_t object_num = O_PISTOLS;
-    if (weapon_type == LGT_MAGNUMS) {
+	int16_t object_num = O_PISTOLS;
+
+    if (weapon_type == LGT_MAGNUMS)
+	{
         object_num = O_MAGNUM;
-    } else if (weapon_type == LGT_UZIS) {
+    }
+	else if (weapon_type == LGT_UZIS)
+	{
         object_num = O_UZI;
     }
 
-    g_Lara.mesh_ptrs[LM_HAND_L] =
-        g_Meshes[g_Objects[object_num].mesh_index + LM_HAND_L];
-    g_Lara.mesh_ptrs[LM_HAND_R] =
-        g_Meshes[g_Objects[object_num].mesh_index + LM_HAND_R];
-    g_Lara.mesh_ptrs[LM_THIGH_L] =
-        g_Meshes[g_Objects[O_LARA].mesh_index + LM_THIGH_L];
-    g_Lara.mesh_ptrs[LM_THIGH_R] =
-        g_Meshes[g_Objects[O_LARA].mesh_index + LM_THIGH_R];
+    g_Lara.mesh_ptrs[LM_HAND_L] = g_Meshes[g_Objects[object_num].mesh_index + LM_HAND_L];
+    g_Lara.mesh_ptrs[LM_HAND_R] = g_Meshes[g_Objects[object_num].mesh_index + LM_HAND_R];
+    g_Lara.mesh_ptrs[LM_THIGH_L] = g_Meshes[g_Objects[O_LARA].mesh_index + LM_THIGH_L];
+    g_Lara.mesh_ptrs[LM_THIGH_R] = g_Meshes[g_Objects[O_LARA].mesh_index + LM_THIGH_R];
 }
 
 void UndrawPistolMeshLeft(int32_t weapon_type)

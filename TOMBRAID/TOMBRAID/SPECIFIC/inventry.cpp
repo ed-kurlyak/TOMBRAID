@@ -754,11 +754,27 @@ int32_t Display_Inventory(int inv_mode)
         return GF_START_DEMO;
     }
 
-    switch (g_InvChosen)
+	g_InvChosen;
+
+	//if (g_InvChosen == -1)
+	//	return 0;
+
+	
+	switch (g_InvChosen)
 	{
-    case O_PASSPORT_OPTION:
+		
+	case O_PASSPORT_OPTION:
+
+		//load/save game
+		return 1;
+
+		/*
+	case O_PASSPORT_OPTION:
+		
         if (g_InvMode == INV_TITLE_MODE)
 		{
+			return g_InvChosen;
+			
             if (g_InvExtraData[0] == 0)
 			{
                 // page 1: load game
@@ -775,6 +791,7 @@ int32_t Display_Inventory(int inv_mode)
                 // page 3: exit game
                 return GF_EXIT_GAME;
             }
+			
         }
 		else
 		{
@@ -783,6 +800,7 @@ int32_t Display_Inventory(int inv_mode)
                 // page 1: load game
                 return GF_START_SAVED_GAME | g_InvExtraData[1];
             }
+			
 			else if (g_InvExtraData[0] == 1)
 			{
                 // page 1: save game, or new game in gym
@@ -795,20 +813,29 @@ int32_t Display_Inventory(int inv_mode)
 				{
                     CreateSaveGameInfo();
                     S_SaveGame(&g_SaveGame, g_InvExtraData[1]);
-                    //Settings_Write(); //save keyboard config
+                    Settings_Write(); //save keyboard config
                     return GF_NOP;
                 }
             }
+
+			
+			
 			else
 			{
                 // page 3: exit to title
                 return GF_EXIT_TO_TITLE;
             }
+			
+
+			break;
+			
         }
 
-    case O_PHOTO_OPTION:
-        g_InvExtraData[1] = 0;
-        return GF_START_GAME | g_GameFlow.gym_level_num;
+		
+	case O_PHOTO_OPTION:
+		g_InvExtraData[1] = 0;
+		return GF_START_GAME | g_GameFlow.gym_level_num;
+		*/
 
     case O_GUN_OPTION:
         UseItem(O_GUN_OPTION);
@@ -835,7 +862,8 @@ int32_t Display_Inventory(int inv_mode)
         break;
     }
 
-    return GF_NOP;
+    //return GF_NOP;
+	return 0;
 }
 
 void Construct_Inventory()

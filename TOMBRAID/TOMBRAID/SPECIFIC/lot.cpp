@@ -21,11 +21,14 @@ static CREATURE_INFO *m_BaddieSlots = NULL;
 void InitialiseLOTArray()
 {
     m_BaddieSlots = (CREATURE_INFO *)Game_Alloc(NUM_SLOTS * sizeof(CREATURE_INFO), GBUF_CREATURE_INFO);
-    for (int i = 0; i < NUM_SLOTS; i++) {
+
+    for (int i = 0; i < NUM_SLOTS; i++)
+	{
         CREATURE_INFO *creature = &m_BaddieSlots[i];
         creature->item_num = NO_ITEM;
         creature->LOT.node = (BOX_NODE *)Game_Alloc(sizeof(BOX_NODE) * g_NumberBoxes, GBUF_CREATURE_LOT);
     }
+
     m_SlotsUsed = 0;
 }
 
@@ -180,7 +183,6 @@ void CreateZone(ITEM_INFO *item)
 int32_t InitialiseLOT(LOT_INFO *LOT)
 {
 	LOT->node = (BOX_NODE *) Game_Alloc(sizeof(BOX_NODE) * g_NumberBoxes, GBUF_CREATURE_LOT);
-    //LOT->node =  GameBuf_Alloc(sizeof(BOX_NODE) * g_NumberBoxes, GBUF_CREATURE_LOT);
     ClearLOT(LOT);
     return 1;
 }
@@ -193,7 +195,8 @@ void ClearLOT(LOT_INFO *LOT)
     LOT->target_box = NO_BOX;
     LOT->required_box = NO_BOX;
 
-    for (int i = 0; i < g_NumberBoxes; i++) {
+    for (int i = 0; i < g_NumberBoxes; i++)
+	{
         BOX_NODE *node = &LOT->node[i];
         node->search_number = 0;
         node->exit_box = NO_BOX;

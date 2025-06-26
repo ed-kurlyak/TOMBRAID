@@ -854,18 +854,14 @@ int16_t g_InvMainQtys[24] = {
 INVENTORY_ITEM *g_InvMainList[23] = {
     &g_InvItemCompass,
     &g_InvItemPistols,
-
-
-    //------------------------
-
-    /*
     &g_InvItemBigMedi,
     &g_InvItemMedi,
     &g_InvItemShotgun,
     &g_InvItemMagnum,
     &g_InvItemUzi,
     &g_InvItemGrenade,
-    */
+    
+	/*
 
     NULL,
     NULL,
@@ -873,6 +869,7 @@ INVENTORY_ITEM *g_InvMainList[23] = {
     NULL,
     NULL,
     NULL,
+	*/
 
     //------------------------
 

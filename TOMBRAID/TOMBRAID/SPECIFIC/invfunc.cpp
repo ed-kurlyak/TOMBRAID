@@ -303,11 +303,14 @@ void RingActive()
 
 int32_t Inv_AddItem(int32_t item_num)
 {
+	//1)если предмет в инвентаре уже есть просто увеличиваем его количество
+
     int32_t item_num_option = Inv_GetItemOption(item_num);
 
     for (int i = 0; i < g_InvMainObjects; i++)
 	{
         INVENTORY_ITEM *inv_item = g_InvMainList[i];
+
         if (inv_item->object_number == item_num_option)
 		{
             g_InvMainQtys[i]++;
@@ -315,33 +318,21 @@ int32_t Inv_AddItem(int32_t item_num)
         }
     }
 
-    for (int i = 0; i < g_InvKeysObjects; i++) {
+    for (int i = 0; i < g_InvKeysObjects; i++)
+	{
         INVENTORY_ITEM *inv_item = g_InvKeysList[i];
-        if (inv_item->object_number == item_num_option) {
+
+        if (inv_item->object_number == item_num_option)
+		{
             g_InvKeysQtys[i]++;
             return 1;
         }
     }
 
+	//2)если предмета в инвентаре нету - добавляем/заменяем
 
-    switch (item_num) {
-    
-    case O_PUZZLE_ITEM1:
-    case O_PUZZLE_OPTION1:
-        Inv_InsertItem(&g_InvItemPuzzle1);
-        return 1;
-
-    case O_KEY_ITEM1:
-    case O_KEY_OPTION1:
-        Inv_InsertItem(&g_InvItemKey1);
-        return 1;
-
-
-    }
-
-
-
-    switch (item_num) {
+    switch (item_num)
+	{
     case O_GUN_ITEM:
     case O_GUN_OPTION:
         Inv_InsertItem(&g_InvItemPistols);
@@ -349,10 +340,12 @@ int32_t Inv_AddItem(int32_t item_num)
 
     case O_SHOTGUN_ITEM:
     case O_SHOTGUN_OPTION:
-        for (int i = Inv_RequestItem(O_SG_AMMO_ITEM); i > 0; i--) {
+        for (int i = Inv_RequestItem(O_SG_AMMO_ITEM); i > 0; i--)
+		{
             Inv_RemoveItem(O_SG_AMMO_ITEM);
             g_Lara.shotgun.ammo += SHOTGUN_AMMO_QTY;
         }
+
         g_Lara.shotgun.ammo += SHOTGUN_AMMO_QTY;
         Inv_InsertItem(&g_InvItemShotgun);
         GlobalItemReplace(O_SHOTGUN_ITEM, O_SG_AMMO_ITEM);
@@ -360,7 +353,8 @@ int32_t Inv_AddItem(int32_t item_num)
 
     case O_MAGNUM_ITEM:
     case O_MAGNUM_OPTION:
-        for (int i = Inv_RequestItem(O_MAG_AMMO_ITEM); i > 0; i--) {
+        for (int i = Inv_RequestItem(O_MAG_AMMO_ITEM); i > 0; i--)
+		{
             Inv_RemoveItem(O_MAG_AMMO_ITEM);
             g_Lara.magnums.ammo += MAGNUM_AMMO_QTY;
         }
@@ -371,7 +365,8 @@ int32_t Inv_AddItem(int32_t item_num)
 
     case O_UZI_ITEM:
     case O_UZI_OPTION:
-        for (int i = Inv_RequestItem(O_UZI_AMMO_ITEM); i > 0; i--) {
+        for (int i = Inv_RequestItem(O_UZI_AMMO_ITEM); i > 0; i--)
+		{
             Inv_RemoveItem(O_UZI_AMMO_ITEM);
             g_Lara.uzis.ammo += UZI_AMMO_QTY;
         }
@@ -382,27 +377,36 @@ int32_t Inv_AddItem(int32_t item_num)
 
     case O_SG_AMMO_ITEM:
     case O_SG_AMMO_OPTION:
-        if (Inv_RequestItem(O_SHOTGUN_ITEM)) {
+        if (Inv_RequestItem(O_SHOTGUN_ITEM))
+		{
             g_Lara.shotgun.ammo += SHOTGUN_AMMO_QTY;
-        } else {
+        }
+		else
+		{
             Inv_InsertItem(&g_InvItemShotgunAmmo);
         }
         return 0;
 
     case O_MAG_AMMO_ITEM:
     case O_MAG_AMMO_OPTION:
-        if (Inv_RequestItem(O_MAGNUM_ITEM)) {
+        if (Inv_RequestItem(O_MAGNUM_ITEM))
+		{
             g_Lara.magnums.ammo += MAGNUM_AMMO_QTY;
-        } else {
+        }
+		else
+		{
             Inv_InsertItem(&g_InvItemMagnumAmmo);
         }
         return 0;
 
     case O_UZI_AMMO_ITEM:
     case O_UZI_AMMO_OPTION:
-        if (Inv_RequestItem(O_UZI_ITEM)) {
+        if (Inv_RequestItem(O_UZI_ITEM))
+		{
             g_Lara.uzis.ammo += UZI_AMMO_QTY;
-        } else {
+        }
+		else
+		{
             Inv_InsertItem(&g_InvItemUziAmmo);
         }
         return 0;
@@ -478,10 +482,8 @@ int32_t Inv_AddItem(int32_t item_num)
         Inv_InsertItem(&g_InvItemScion);
         return 1;
     }
-
-    
-
-    return 0;
+	
+	return 0;
 }
 
 
@@ -554,20 +556,23 @@ int32_t Inv_RequestItem(int item_num)
 {
     int32_t item_num_option = Inv_GetItemOption(item_num);
 
-    for (int i = 0; i < g_InvMainObjects; i++) {
-        if (g_InvMainList[i]->object_number == item_num_option) {
+    for (int i = 0; i < g_InvMainObjects; i++)
+	{
+        if (g_InvMainList[i]->object_number == item_num_option)
+		{
             return g_InvMainQtys[i];
         }
     }
 
 	
-    for (int i = 0; i < g_InvKeysObjects; i++) {
-        if (g_InvKeysList[i]->object_number == item_num_option) {
+    for (int i = 0; i < g_InvKeysObjects; i++)
+	{
+        if (g_InvKeysList[i]->object_number == item_num_option)
+		{
             return g_InvKeysQtys[i];
         }
     }
 	
-
     return 0;
 }
 
@@ -586,28 +591,42 @@ int32_t Inv_RemoveItem(int32_t item_num)
 {
     int32_t item_num_option = Inv_GetItemOption(item_num);
 
-    for (int i = 0; i < g_InvMainObjects; i++) {
-        if (g_InvMainList[i]->object_number == item_num_option) {
+    for (int i = 0; i < g_InvMainObjects; i++)
+	{
+        if (g_InvMainList[i]->object_number == item_num_option)
+		{
             g_InvMainQtys[i]--;
-            if (g_InvMainQtys[i] > 0) {
+        
+			if (g_InvMainQtys[i] > 0)
+			{
                 return 1;
             }
-            g_InvMainObjects--;
-            for (int j = i; j < g_InvMainObjects; j++) {
+            
+			g_InvMainObjects--;
+            
+			for (int j = i; j < g_InvMainObjects; j++)
+			{
                 g_InvMainList[j] = g_InvMainList[j + 1];
                 g_InvMainQtys[j] = g_InvMainQtys[j + 1];
             }
         }
     }
 
-    for (int i = 0; i < g_InvKeysObjects; i++) {
-        if (g_InvKeysList[i]->object_number == item_num_option) {
+    for (int i = 0; i < g_InvKeysObjects; i++)
+	{
+        if (g_InvKeysList[i]->object_number == item_num_option)
+		{
             g_InvKeysQtys[i]--;
-            if (g_InvKeysQtys[i] > 0) {
+        
+			if (g_InvKeysQtys[i] > 0)
+			{
                 return 1;
             }
-            g_InvKeysObjects--;
-            for (int j = i; j < g_InvKeysObjects; j++) {
+            
+			g_InvKeysObjects--;
+            
+			for (int j = i; j < g_InvKeysObjects; j++)
+			{
                 g_InvKeysList[j] = g_InvKeysList[j + 1];
                 g_InvKeysQtys[j] = g_InvKeysQtys[j + 1];
             }
@@ -616,16 +635,19 @@ int32_t Inv_RemoveItem(int32_t item_num)
     }
 
 	
-    for (int i = 0; i < g_InvOptionObjects; i++) {
-        if (g_InvOptionList[i]->object_number == item_num_option) {
+    for (int i = 0; i < g_InvOptionObjects; i++)
+	{
+        if (g_InvOptionList[i]->object_number == item_num_option)
+		{
             g_InvOptionObjects--;
-            for (int j = i; j < g_InvOptionObjects; j++) {
+        
+			for (int j = i; j < g_InvOptionObjects; j++)
+			{
                 g_InvOptionList[j] = g_InvOptionList[j + 1];
             }
             return 1;
         }
     }
-	
 
     return 0;
 }

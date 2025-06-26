@@ -76,24 +76,38 @@ static void InitLoadSaveGameRequester()
 {
     REQUEST_INFO *req = &g_LoadSaveGameRequester;
     InitRequester(req);
-    GetSavedGamesList(req);
+    //GetSavedGamesList(req);
     SetRequesterHeading(req, g_GameFlow.strings[GS_PASSPORT_SELECT_LEVEL]);
 
-    if (Screen_GetResHeightDownscaled() <= 240) {
+    if (Screen_GetResHeightDownscaled() <= 240)
+	{
         req->y = -30;
         req->vis_lines = 5;
-    } else if (Screen_GetResHeightDownscaled() <= 384) {
+    }
+	else if (Screen_GetResHeightDownscaled() <= 384)
+	{
         req->y = -30;
         req->vis_lines = 8;
-    } else if (Screen_GetResHeightDownscaled() <= 480) {
+    }
+	else if (Screen_GetResHeightDownscaled() <= 480)
+	{
         req->y = -80;
         req->vis_lines = 10;
-    } else {
+    }
+	else
+	{
         req->y = -120;
         req->vis_lines = 12;
     }
 
-    S_FrontEndCheck();
+	S_FrontEndCheck();
+
+	//перенес из функции GetSavedGamesList(req);
+	//в ней не совпадает req->vis_lines с этим расчетом выше
+	if (req->requested >= req->vis_lines)
+	{
+		req->line_offset = req->requested - req->vis_lines + 1;
+	}
 }
 
 void Option_Passport(INVENTORY_ITEM *inv_item)
@@ -118,6 +132,7 @@ void Option_Passport(INVENTORY_ITEM *inv_item)
     {
     //load game если находимся в титлах и игре
     case 0:
+		//находимся в титлах и игре
         if (m_PassportMode == 1)
         {
             int32_t select = DisplayRequester(&g_LoadSaveGameRequester);
@@ -127,7 +142,9 @@ void Option_Passport(INVENTORY_ITEM *inv_item)
                 
                 if (select > 0)
                 {
-                    g_InvExtraData[1] = select - 1;
+					//если выбран уровень загрузки записываем его минус 1
+					//g_InvExtraData[1] хранит номер уровня загрузки
+					g_InvExtraData[1] = select - 1;
                 }
                 else if (g_InvMode != INV_SAVE_MODE
                     && g_InvMode != INV_LOAD_MODE)

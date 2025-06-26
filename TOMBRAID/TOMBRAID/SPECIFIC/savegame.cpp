@@ -46,7 +46,8 @@ static char *m_SGPoint = NULL;
 
 void InitialiseStartInfo()
 {
-    for (int i = 0; i < g_GameFlow.level_count; i++) {
+    for (int i = 0; i < g_GameFlow.level_count; i++)
+	{
         ModifyStartInfo(i);
         g_SaveGame.start[i].available = 0;
     }
@@ -57,10 +58,10 @@ void InitialiseStartInfo()
 void ModifyStartInfo(int32_t level_num)
 {
     START_INFO *start = &g_SaveGame.start[level_num];
-
-    start->got_pistols = 1;
+    
     start->gun_type = LGT_PISTOLS;
     start->pistol_ammo = 1000;
+	start->got_pistols = 1;
 
     if (level_num == g_GameFlow.gym_level_num)
 	{

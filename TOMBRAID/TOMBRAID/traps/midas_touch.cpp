@@ -35,7 +35,8 @@ void MidasCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
         && lara_item->pos.x > item->pos.x - 512
         && lara_item->pos.x < item->pos.x + 512
         && lara_item->pos.z > item->pos.z - 512
-        && lara_item->pos.z < item->pos.z + 512) {
+        && lara_item->pos.z < item->pos.z + 512)
+	{
         lara_item->current_anim_state = AS_DIEMIDAS;
         lara_item->goal_anim_state = AS_DIEMIDAS;
         lara_item->anim_number = g_Objects[O_LARA_EXTRA].anim_index + 1;
@@ -52,13 +53,17 @@ void MidasCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
     }
 
     if ((g_InvChosen == -1 && !g_Input.action)
-        || g_Lara.gun_status != LGS_ARMLESS || lara_item->gravity_status
-        || lara_item->current_anim_state != AS_STOP) {
+		|| g_Lara.gun_status != LGS_ARMLESS
+		|| lara_item->gravity_status
+		|| lara_item->current_anim_state != AS_STOP)
+	{
         return;
     }
 
     uint16_t quadrant = (uint16_t)(lara_item->pos.y_rot + PHD_45) / PHD_90;
-    switch (quadrant) {
+
+    switch (quadrant)
+	{
     case DIR_NORTH:
         item->pos.y_rot = 0;
         break;
@@ -73,11 +78,13 @@ void MidasCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
         break;
     }
 
-    if (!TestLaraPosition(g_MidasBounds, item, lara_item)) {
+    if (!TestLaraPosition(g_MidasBounds, item, lara_item))
+	{
         return;
     }
 
-    if (g_InvChosen == -1) {
+    if (g_InvChosen == -1)
+	{
         Display_Inventory(INV_KEYS_MODE);
     }
 

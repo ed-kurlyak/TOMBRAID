@@ -107,6 +107,7 @@ void phd_AlterFOV(PHD_ANGLE fov)
 
     int16_t c = phd_cos(fov / 2);
     int16_t s = phd_sin(fov / 2);
+
 	if(!lara_dist)
 		g_PhdPersp = ((Screen_GetResWidth() / 2) * c) / s;
 	else

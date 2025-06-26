@@ -9,17 +9,23 @@
 
 int32_t GetChange(ITEM_INFO *item, ANIM_STRUCT *anim)
 {
-    if (item->current_anim_state == item->goal_anim_state) {
+    if (item->current_anim_state == item->goal_anim_state)
+	{
         return 0;
     }
 
     ANIM_CHANGE_STRUCT *change = &g_AnimChanges[anim->change_index];
-    for (int i = 0; i < anim->number_changes; i++, change++) {
-        if (change->goal_anim_state == item->goal_anim_state) {
+    
+	for (int i = 0; i < anim->number_changes; i++, change++)
+	{
+        if (change->goal_anim_state == item->goal_anim_state)
+		{
             ANIM_RANGE_STRUCT *range = &g_AnimRanges[change->range_index];
-            for (int j = 0; j < change->number_ranges; j++, range++) {
-                if (item->frame_number >= range->start_frame
-                    && item->frame_number <= range->end_frame) {
+        
+			for (int j = 0; j < change->number_ranges; j++, range++)
+			{
+                if (item->frame_number >= range->start_frame && item->frame_number <= range->end_frame)
+				{
                     item->anim_number = range->link_anim_num;
                     item->frame_number = range->link_frame_num;
                     return 1;
@@ -629,11 +635,15 @@ int GetSecretCount()
     int count = 0;
     uint32_t secrets = 0;
 
-    for (int i = 0; i < g_RoomCount; i++) {
+    for (int i = 0; i < g_RoomCount; i++)
+	{
         ROOM_INFO *r = &g_RoomInfo[i];
         FLOOR_INFO *floor = &r->floor[0];
-        for (int j = 0; j < r->y_size * r->x_size; j++, floor++) {
+    
+		for (int j = 0; j < r->y_size * r->x_size; j++, floor++)
+		{
             int k = floor->index;
+
             if (!k) {
                 continue;
             }
@@ -662,11 +672,17 @@ int GetSecretCount()
 
                     while (1) {
                         int16_t command = g_FloorData[k++];
-                        if (TRIG_BITS(command) == TO_CAMERA) {
+
+                        if (TRIG_BITS(command) == TO_CAMERA)
+						{
                             k++;
-                        } else if (TRIG_BITS(command) == TO_SECRET) {
+                        }
+						else if (TRIG_BITS(command) == TO_SECRET)
+						{
                             int16_t number = command & VALUE_BITS;
-                            if (!(secrets & (1 << number))) {
+                            
+							if (!(secrets & (1 << number)))
+							{
                                 secrets |= (1 << number);
                                 count++;
                             }
@@ -689,78 +705,3 @@ int GetSecretCount()
 
     return count;
 }
-
-/*
-void FlipMap()
-{
-    //Sound_StopAmbientSounds();
-
-    for (int i = 0; i < g_RoomCount; i++) {
-        ROOM_INFO *r = &g_RoomInfo[i];
-        if (r->flipped_room < 0) {
-            continue;
-        }
-
-        RemoveRoomFlipItems(r);
-
-        ROOM_INFO *flipped = &g_RoomInfo[r->flipped_room];
-        ROOM_INFO temp = *r;
-        *r = *flipped;
-        *flipped = temp;
-
-        r->flipped_room = flipped->flipped_room;
-        flipped->flipped_room = -1;
-
-        // XXX: is this really necessary given the assignments above?
-        r->item_number = flipped->item_number;
-        r->fx_number = flipped->fx_number;
-
-        AddRoomFlipItems(r);
-    }
-
-    g_FlipStatus = !g_FlipStatus;
-}
-
-void RemoveRoomFlipItems(ROOM_INFO *r)
-{
-    for (int16_t item_num = r->item_number; item_num != NO_ITEM;
-         item_num = g_Items[item_num].next_item) {
-        ITEM_INFO *item = &g_Items[item_num];
-
-        switch (item->object_number) {
-        case O_MOVABLE_BLOCK:
-        case O_MOVABLE_BLOCK2:
-        case O_MOVABLE_BLOCK3:
-        case O_MOVABLE_BLOCK4:
-            AlterFloorHeight(item, WALL_L);
-            break;
-
-        case O_ROLLING_BLOCK:
-            AlterFloorHeight(item, WALL_L * 2);
-            break;
-        }
-    }
-}
-
-void AddRoomFlipItems(ROOM_INFO *r)
-{
-    for (int16_t item_num = r->item_number; item_num != NO_ITEM;
-         item_num = g_Items[item_num].next_item) {
-        ITEM_INFO *item = &g_Items[item_num];
-
-        switch (item->object_number) {
-        case O_MOVABLE_BLOCK:
-        case O_MOVABLE_BLOCK2:
-        case O_MOVABLE_BLOCK3:
-        case O_MOVABLE_BLOCK4:
-            AlterFloorHeight(item, -WALL_L);
-            break;
-
-        case O_ROLLING_BLOCK:
-            AlterFloorHeight(item, -WALL_L * 2);
-            break;
-        }
-    }
-}
-
-*/
