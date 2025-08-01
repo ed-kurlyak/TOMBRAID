@@ -15,15 +15,14 @@
 #include "backbuffer.h"
 #include "..\objects\pierre.h"
 
-
 int Initialise_Level_Flags()
 {
 	int result = 0;
 
 	g_SaveGame.secrets = 0;
-    g_SaveGame.pickups = 0;
+	g_SaveGame.pickups = 0;
 	g_SaveGame.timer = 0;
-    g_SaveGame.kills = 0;
+	g_SaveGame.kills = 0;
 
 	return result;
 }
@@ -31,60 +30,62 @@ int Initialise_Level_Flags()
 //функция для вычисления индекса ближайшего цвета в палитре
 int Compose_Colour(int inputR, int inputG, int inputB)
 {
-    int closestIndex = 0; //изначально считаем ближайшим первый элемент
-    int minDistance = INT_MAX; //минимальная дистанция (изначально бесконечность)
+	int closestIndex = 0; //изначально считаем ближайшим первый элемент
+	int minDistance =
+		INT_MAX; //минимальная дистанция (изначально бесконечность)
 
-    for (int i = 0; i < 256; ++i)
-    {
-        //разница между входными цветами и цветами из палитры
-        float redDiff = (float) (inputR - GameNormalPalette[i].r);
-        float greenDiff = (float)(inputG - GameNormalPalette[i].g);
-        float blueDiff = (float) (inputB - GameNormalPalette[i].b);
+	for (int i = 0; i < 256; ++i)
+	{
+		//разница между входными цветами и цветами из палитры
+		float redDiff = (float)(inputR - GameNormalPalette[i].r);
+		float greenDiff = (float)(inputG - GameNormalPalette[i].g);
+		float blueDiff = (float)(inputB - GameNormalPalette[i].b);
 
-        //вычисление квадратичного расстояния
-        int distance = (int)(pow(redDiff, 2) + pow(greenDiff, 2) + pow(blueDiff, 2));
+		//вычисление квадратичного расстояния
+		int distance =
+			(int)(pow(redDiff, 2) + pow(greenDiff, 2) + pow(blueDiff, 2));
 
-        //проверка на минимальное расстояние
-        if (distance < minDistance)
-        {
-            minDistance = distance;
-            closestIndex = i;
-        }
-    }
+		//проверка на минимальное расстояние
+		if (distance < minDistance)
+		{
+			minDistance = distance;
+			closestIndex = i;
+		}
+	}
 
-    return closestIndex; //возвращаем индекс ближайшего цвета в палитре
+	return closestIndex; //возвращаем индекс ближайшего цвета в палитре
 }
 
 void Init_Colours()
 {
 	//синяя молния Тора в комнате Тора уровень Монастырь Св.Франциска
-    //синяя молния уровень The Great Pyramid
+	//синяя молния уровень The Great Pyramid
 	ColorLighting1 = Compose_Colour(0, 0, 255);
 	//белая линия на молнии Тора в комнате Тора уровень Монастырь Св.Франциска
-    //белая линия на молнии уровень The Great Pyramid
+	//белая линия на молнии уровень The Great Pyramid
 	ColorLighting2 = Compose_Colour(255, 255, 255);
 }
 
 int Initialise_Level(int LevelNum)
 {
-    //21d = 0x15 обозначает saved level
-    if (g_LevelNumTR == 21)
+	// 21d = 0x15 обозначает saved level
+	if (g_LevelNumTR == 21)
 	{
 		LevelNum = g_SaveGame.current_level;
 	}
 
 	g_CurrentLevel = LevelNum;
-	
+
 	Initialise_Game_Flags();
 
 	g_Lara.item_number = NO_ITEM;
-	
+
 	if (!Load_Level(g_CurrentLevel))
 	{
-        return 0;
-    }
+		return 0;
+	}
 
-	//new for tr1
+	// new for tr1
 	//создаем палитру после загрузки уровня
 	//т.е. данных о палитре из файла уровня
 	Create_Normal_Palette();
@@ -92,33 +93,35 @@ int Initialise_Level(int LevelNum)
 	if (g_Lara.item_number != NO_ITEM)
 	{
 		InitialiseLara();
-    }
+	}
 
-	g_Effects = (FX_INFO *)Game_Alloc(NUM_EFFECTS * sizeof(FX_INFO), GBUF_EFFECTS);
+	g_Effects =
+		(FX_INFO *)Game_Alloc(NUM_EFFECTS * sizeof(FX_INFO), GBUF_EFFECTS);
 
-    InitialiseFXArray();
-    InitialiseLOTArray();
+	InitialiseFXArray();
+	InitialiseLOTArray();
 	Init_Colours();
 	Text_Init();
 	Overlay_Init();
 
-    g_HealthBarTimer = 100;
-    
+	g_HealthBarTimer = 100;
+
 	/*
 	Sound_ResetEffects();
-    */
+	*/
 
-    if (g_LevelNumTR == 21)
-    {
+	if (g_LevelNumTR == 21)
+	{
 		ExtractSaveGameInfo();
-    }
-	
+	}
+
 	/*
 	if (g_GameFlow.levels[g_CurrentLevel].music)
 	{
-        Music_PlayLooped(g_GameFlow.levels[g_CurrentLevel].music);
-    }
+		Music_PlayLooped(g_GameFlow.levels[g_CurrentLevel].music);
+	}
 	*/
+	g_Lara.request_gun_type = LGT_UNARMED;
 
 	g_Camera.underwater = 0;
 
@@ -128,35 +131,35 @@ int Initialise_Level(int LevelNum)
 void Initialise_Game_Flags()
 {
 	for (int i = 0; i < MAX_FLIP_MAPS; i++)
-    {
-        g_FlipMapTable[i] = 0;
-    }
+	{
+		g_FlipMapTable[i] = 0;
+	}
 
-    for (int i = 0; i < MAX_CD_TRACKS; i++)
-    {
-        g_MusicTrackFlags[i] = 0;
-    }
+	for (int i = 0; i < MAX_CD_TRACKS; i++)
+	{
+		g_MusicTrackFlags[i] = 0;
+	}
 
-    for (int i = 0; i < O_NUMBER_OF; i++)
-    {
-        g_Objects[i].loaded = 0;
-    }
+	for (int i = 0; i < O_NUMBER_OF; i++)
+	{
+		g_Objects[i].loaded = 0;
+	}
 
 	g_FlipStatus = 0;
-    g_LevelComplete = false;
-    g_FlipEffect = -1;
-    g_PierreItemNum = NO_ITEM;
+	g_LevelComplete = false;
+	g_FlipEffect = -1;
+	g_PierreItemNum = NO_ITEM;
 }
 
 int Load_Level(int32_t LevelNum)
 {
 	char *szLevelName;
 
-	if(GameType == VER_TR1)
+	if (GameType == VER_TR1)
 	{
 		szLevelName = LevelNamesTR1[LevelNum];
 	}
-	else if(GameType == VER_TR_GOLD)
+	else if (GameType == VER_TR1_GOLD)
 	{
 		szLevelName = LevelNamesGold[LevelNum];
 	}
@@ -165,7 +168,7 @@ int Load_Level(int32_t LevelNum)
 
 	bool result = S_LoadLevel(szLevelName);
 
-    g_GameFlow.levels[LevelNum].secrets = GetSecretCount();
+	g_GameFlow.levels[LevelNum].secrets = GetSecretCount();
 
 	return result;
 }

@@ -22,7 +22,6 @@ extern INVENTORY_ITEM g_InvItemCompass;
 extern INVENTORY_ITEM g_InvItemMedi;
 extern INVENTORY_ITEM g_InvItemBigMedi;
 
-
 extern INVENTORY_ITEM g_InvItemLeadBar;
 extern INVENTORY_ITEM g_InvItemPickup1;
 extern INVENTORY_ITEM g_InvItemPickup2;
@@ -85,19 +84,18 @@ void Inv_RemoveAllItems();
 int32_t Inv_RemoveItem(int32_t item_num);
 int32_t Inv_GetItemOption(int32_t item_num);
 void RemoveInventoryText();
-void Inv_RingInit(
-    RING_INFO *ring, int16_t type, INVENTORY_ITEM **list, int16_t qty,
-    int16_t current, IMOTION_INFO *imo);
+void Inv_RingInit(RING_INFO *ring, int16_t type, INVENTORY_ITEM **list,
+				  int16_t qty, int16_t current, IMOTION_INFO *imo);
 void Inv_RingGetView(RING_INFO *a1, PHD_3DPOS *viewer);
 void Inv_RingLight(RING_INFO *ring);
 void Inv_RingCalcAdders(RING_INFO *ring, int16_t rotation_duration);
 void Inv_RingDoMotions(RING_INFO *ring);
 void Inv_RingRotateLeft(RING_INFO *ring);
 void Inv_RingRotateRight(RING_INFO *ring);
-void Inv_RingMotionInit(
-    RING_INFO *ring, int16_t frames, int16_t status, int16_t status_target);
-void Inv_RingMotionSetup(
-    RING_INFO *ring, int16_t status, int16_t status_target, int16_t frames);
+void Inv_RingMotionInit(RING_INFO *ring, int16_t frames, int16_t status,
+						int16_t status_target);
+void Inv_RingMotionSetup(RING_INFO *ring, int16_t status, int16_t status_target,
+						 int16_t frames);
 void Inv_RingMotionRadius(RING_INFO *ring, int16_t target);
 void Inv_RingMotionRotation(RING_INFO *ring, int16_t rotation, int16_t target);
 void Inv_RingMotionCameraPos(RING_INFO *ring, int16_t target);

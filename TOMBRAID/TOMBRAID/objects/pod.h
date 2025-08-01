@@ -6,9 +6,10 @@
 
 #define POD_EXPLODE_DIST (WALL_L * 4) // = 4096
 
-typedef enum {
-    POD_SET = 0,
-    POD_EXPLODE = 1,
+typedef enum
+{
+	POD_SET = 0,
+	POD_EXPLODE = 1,
 } POD_ANIM;
 
 void SetupPod(OBJECT_INFO *obj);

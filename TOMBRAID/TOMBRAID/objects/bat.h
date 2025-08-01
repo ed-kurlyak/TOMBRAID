@@ -10,17 +10,18 @@
 #define BAT_RADIUS (WALL_L / 10) // = 102
 #define BAT_SMARTNESS 0x400
 
-typedef enum {
-    BAT_EMPTY = 0,
-    BAT_STOP = 1,
-    BAT_FLY = 2,
-    BAT_ATTACK = 3,
-    BAT_FALL = 4,
-    BAT_DEATH = 5,
+typedef enum
+{
+	BAT_EMPTY = 0,
+	BAT_STOP = 1,
+	BAT_FLY = 2,
+	BAT_ATTACK = 3,
+	BAT_FALL = 4,
+	BAT_DEATH = 5,
 } BAT_ANIM;
 
 extern BITE_INFO g_BatBite;
 
-//void SetupBat(OBJECT_INFO *obj);
+// void SetupBat(OBJECT_INFO *obj);
 void BatControl(int16_t item_num);
 void InitialiseBat(int16_t item_num);

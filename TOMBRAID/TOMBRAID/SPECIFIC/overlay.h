@@ -4,8 +4,8 @@
 
 #include "types.h"
 
-extern TEXTSTRING* m_AmmoText;
-extern TEXTSTRING* m_FPSText;
+extern TEXTSTRING *m_AmmoText;
+extern TEXTSTRING *m_FPSText;
 
 void Overlay_Init();
 
@@ -13,8 +13,8 @@ int32_t Screen_GetRenderScaleGLRage(int32_t unit);
 
 void Overlay_DrawHealthBar();
 void Overlay_DrawAirBar();
-//void Overlay_DrawEnemyBar();
-//void Overlay_DrawAmmoInfo();
+// void Overlay_DrawEnemyBar();
+// void Overlay_DrawAmmoInfo();
 void Overlay_DrawPickups();
 void Overlay_DrawFPSInfo();
 void Overlay_DrawGameInfo();

@@ -15,14 +15,15 @@
 #define CENTAUR_RADIUS (WALL_L / 3) // = 341
 #define CENTAUR_SMARTNESS 0x7FFF
 
-typedef enum {
-    CENTAUR_EMPTY = 0,
-    CENTAUR_STOP = 1,
-    CENTAUR_SHOOT = 2,
-    CENTAUR_RUN = 3,
-    CENTAUR_AIM = 4,
-    CENTAUR_DEATH = 5,
-    CENTAUR_WARNING = 6,
+typedef enum
+{
+	CENTAUR_EMPTY = 0,
+	CENTAUR_STOP = 1,
+	CENTAUR_SHOOT = 2,
+	CENTAUR_RUN = 3,
+	CENTAUR_AIM = 4,
+	CENTAUR_DEATH = 5,
+	CENTAUR_WARNING = 6,
 } CENTAUR_ANIM;
 
 extern BITE_INFO g_CentaurRocket;

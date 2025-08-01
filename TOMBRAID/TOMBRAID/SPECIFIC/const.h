@@ -23,32 +23,31 @@
 #define MIN(x, y) ((x) <= (y) ? (x) : (y))
 #define MAX(x, y) ((x) >= (y) ? (x) : (y))
 
-
 #define Z_NEAR (20 << W2V_SHIFT)
 //#define Z_NEAR (127 << W2V_SHIFT)
 
-//20 * 1024 = 0x5000
+// 20 * 1024 = 0x5000
 //#define DRAW_DISTANCE_MAX ((20 * 1024) << W2V_SHIFT)
 #define DRAW_DISTANCE_MAX 0x5000 << W2V_SHIFT
-#define DRAW_DISTANCE_MIN 20 <<  W2V_SHIFT
+#define DRAW_DISTANCE_MIN 20 << W2V_SHIFT
 
 //#define MAX_SOUND_SAMPLES 370
 
 #define SQUARE(A) ((A) * (A))
 
 //#define Center_X (SCREEN_WIDTH / 2)
-//#define Center_Y (SCREEN_HEIGHT / 2)  
+//#define Center_Y (SCREEN_HEIGHT / 2)
 
 //#define WIEVPORT_CENTER_X (SCREEN_WIDTH / 2)
 //#define WIEVPORT_CENTER_Y (SCREEN_HEIGHT / 2)
 
 #define PHD_ONE 0x10000
 #define PHD_DEGREE (PHD_ONE / 360) // = 182
-#define PHD_360 (PHD_ONE) // = 65536 = 0x10000
-#define PHD_180 (PHD_ONE / 2) // = 32768 = 0x8000
-#define PHD_90 (PHD_ONE / 4) // = 16384 = 0x4000
-#define PHD_45 (PHD_ONE / 8) // = 8192 = 0x2000
-#define PHD_135 (PHD_45 * 3) // = 24576 = 0x6000
+#define PHD_360 (PHD_ONE)		   // = 65536 = 0x10000
+#define PHD_180 (PHD_ONE / 2)	  // = 32768 = 0x8000
+#define PHD_90 (PHD_ONE / 4)	   // = 16384 = 0x4000
+#define PHD_45 (PHD_ONE / 8)	   // = 8192 = 0x2000
+#define PHD_135 (PHD_45 * 3)	   // = 24576 = 0x6000
 
 #define MIN_UI_SCALE 0.5f
 #define MAX_UI_SCALE 2.0f
@@ -87,11 +86,11 @@
 #define FASTFALL_SPEED 128
 #define LARA_HITPOINTS 1000
 #define LARA_AIR 1800
-#define LARA_TURN_UNDO (2 * PHD_DEGREE) // = 364
+#define LARA_TURN_UNDO (2 * PHD_DEGREE)					   // = 364
 #define LARA_TURN_RATE ((PHD_DEGREE / 4) + LARA_TURN_UNDO) // = 409
 #define LARA_SLOW_TURN ((PHD_DEGREE * 2) + LARA_TURN_UNDO) // = 728
 #define LARA_JUMP_TURN ((PHD_DEGREE * 1) + LARA_TURN_UNDO) // = 546
-#define LARA_MED_TURN ((PHD_DEGREE * 4) + LARA_TURN_UNDO) // = 1092
+#define LARA_MED_TURN ((PHD_DEGREE * 4) + LARA_TURN_UNDO)  // = 1092
 #define LARA_FAST_TURN ((PHD_DEGREE * 6) + LARA_TURN_UNDO) // = 1456
 #define LARA_LEAN_UNDO PHD_DEGREE
 #define LARA_DEF_ADD_EDGE (5 * PHD_DEGREE) // = 910
@@ -99,7 +98,7 @@
 #define LARA_LEAN_MAX ((10 * PHD_DEGREE) + LARA_LEAN_UNDO) // = 2002
 #define LARA_LEAN_MAX_UW (LARA_LEAN_MAX * 2)
 #define LARA_FASTFALL_SPEED (FASTFALL_SPEED + 3) // = 131
-#define LARA_RAD 100 // global radius of g_Lara
+#define LARA_RAD 100							 // global radius of g_Lara
 #define LARA_HITE 762 // global height of g_Lara - less than 3/4 block
 #define UW_MAXSPEED 200
 #define UW_RADIUS 300
@@ -126,16 +125,16 @@
 #define NUM_EFFECTS 100
 #define DEATH_WAIT (10 * FRAMES_PER_SECOND)
 #define DEATH_WAIT_MIN (2 * FRAMES_PER_SECOND)
-#define MAX_HEAD_ROTATION (50 * PHD_DEGREE) // = 9100
-#define MAX_HEAD_TILT_LOOK (22 * PHD_DEGREE) // = 4004
-#define MIN_HEAD_TILT_LOOK (-42 * PHD_DEGREE) // = -7644
-#define MAX_HEAD_TILT_CAM (85 * PHD_DEGREE) // = 15470
-#define MIN_HEAD_TILT_CAM (-85 * PHD_DEGREE) // = 15470
-#define HEAD_TURN (4 * PHD_DEGREE) // = 728
-#define HEAD_TURN_SURF (3 * PHD_DEGREE) // = 546
+#define MAX_HEAD_ROTATION (50 * PHD_DEGREE)		 // = 9100
+#define MAX_HEAD_TILT_LOOK (22 * PHD_DEGREE)	 // = 4004
+#define MIN_HEAD_TILT_LOOK (-42 * PHD_DEGREE)	// = -7644
+#define MAX_HEAD_TILT_CAM (85 * PHD_DEGREE)		 // = 15470
+#define MIN_HEAD_TILT_CAM (-85 * PHD_DEGREE)	 // = 15470
+#define HEAD_TURN (4 * PHD_DEGREE)				 // = 728
+#define HEAD_TURN_SURF (3 * PHD_DEGREE)			 // = 546
 #define MAX_HEAD_ROTATION_SURF (50 * PHD_DEGREE) // = 9100
-#define MAX_HEAD_TILT_SURF (40 * PHD_DEGREE) // = 7280
-#define MIN_HEAD_TILT_SURF (-40 * PHD_DEGREE) // = -7280
+#define MAX_HEAD_TILT_SURF (40 * PHD_DEGREE)	 // = 7280
+#define MIN_HEAD_TILT_SURF (-40 * PHD_DEGREE)	// = -7280
 #define DIVE_COUNT 10
 #define WALL_L 1024
 #define WALL_SHIFT 10
@@ -144,7 +143,7 @@
 #define STEPUP_HEIGHT ((STEP_L * 3) / 2) // = 384
 #define FRONT_ARC PHD_90
 #define MAX_HEAD_CHANGE (PHD_DEGREE * 5) // = 910
-#define MAX_TILT (PHD_DEGREE * 3) // = 546
+#define MAX_TILT (PHD_DEGREE * 3)		 // = 546
 #define CAM_A_HANG 0
 #define CAM_E_HANG (-60 * PHD_DEGREE) // = -10920
 #define W2V_SHIFT 14
@@ -156,9 +155,9 @@
 #define COMBAT_SPEED 8
 #define CHASE_SPEED 12
 #define MOVE_SPEED 16
-#define MOVE_ANG (2 * PHD_DEGREE) // = 364
+#define MOVE_ANG (2 * PHD_DEGREE)		 // = 364
 #define COMBAT_DISTANCE (WALL_L * 5 / 2) // = 2560
-#define MAX_ELEVATION (85 * PHD_DEGREE) // = 15470
+#define MAX_ELEVATION (85 * PHD_DEGREE)  // = 15470
 #define DEFAULT_RADIUS 10
 #define DONT_TARGET (-16384)
 #define UNIT_SHADOW 256
@@ -187,9 +186,9 @@
 #define CLIP_BOTTOM 8
 #define ALL_CLIP (CLIP_LEFT | CLIP_RIGHT | CLIP_TOP | CLIP_BOTTOM)
 #define SECONDARY_CLIP 16
-#define STALK_DIST (WALL_L * 3) // = 3072
-#define TARGET_DIST (WALL_L * 4) // = 4096
-#define ESCAPE_DIST (WALL_L * 5) // = 5120
+#define STALK_DIST (WALL_L * 3)			// = 3072
+#define TARGET_DIST (WALL_L * 4)		// = 4096
+#define ESCAPE_DIST (WALL_L * 5)		// = 5120
 #define ATTACK_RANGE SQUARE(WALL_L * 3) // = 9437184
 #define ESCAPE_CHANCE 2048
 #define RECOVER_CHANCE 256
@@ -232,7 +231,7 @@
 #define RINGSWITCH_FRAMES (96 / 2)
 #define SELECTING_FRAMES (32 / 2)
 #define ROTATE_DURATION (48 / 2)
-#define OPEN_ROTATION (-0x8000) // = -32768
+#define OPEN_ROTATION (-0x8000)  // = -32768
 #define CLOSE_ROTATION (-0x8000) // = -32768
 #define OPTION_RING_OBJECTS 4
 #define TITLE_RING_OBJECTS 5
@@ -242,7 +241,7 @@
 #define CAMERA_YOFFSET (-96)
 #define CAMERA_HEIGHT (-0x100) // = -256
 #define CAMERA_2_RING 598
-#define LOW_LIGHT 0x1400 // = 5120
+#define LOW_LIGHT 0x1400  // = 5120
 #define HIGH_LIGHT 0x1000 // = 4096
 
 #define NO_ACTION 0
@@ -256,6 +255,6 @@
 #define RESOLUTIONS_SIZE 12
 
 #if _MSC_VER > 0x500
-    #define _strdup _strdup // fixes error about POSIX function
-    #define _USE_MATH_DEFINES // makes maths.h also define M_PI
+#define _strdup _strdup   // fixes error about POSIX function
+#define _USE_MATH_DEFINES // makes maths.h also define M_PI
 #endif

@@ -26,14 +26,15 @@
 //#include <stdint.h>
 //#include <string.h>
 
-typedef enum {
-    PSPINE = 1,
-    PFRONT = 2,
-    PINFRONT = 4,
-    PPAGE2 = 8,
-    PBACK = 16,
-    PINBACK = 32,
-    PPAGE1 = 64
+typedef enum
+{
+	PSPINE = 1,
+	PFRONT = 2,
+	PINFRONT = 4,
+	PPAGE2 = 8,
+	PBACK = 16,
+	PINBACK = 32,
+	PPAGE1 = 64
 } PASS_PAGE;
 
 static TEXTSTRING *m_VersionText = NULL;
@@ -43,21 +44,21 @@ static int16_t m_CompassSpeed = 0;
 
 int32_t Display_Inventory(int inv_mode)
 {
-    RING_INFO ring;
-    IMOTION_INFO imo;
+	RING_INFO ring;
+	IMOTION_INFO imo;
 
-    //добавил я в ТР1 нету но должна быть
-    //g_CameraUnderwater = 0;
-    Create_Normal_Palette();
+	//добавил я в ТР1 нету но должна быть
+	// g_CameraUnderwater = 0;
+	Create_Normal_Palette();
 
-    memset(&imo, 0, sizeof(IMOTION_INFO));
-    memset(&ring, 0, sizeof(RING_INFO));
+	memset(&imo, 0, sizeof(IMOTION_INFO));
+	memset(&ring, 0, sizeof(RING_INFO));
 
-    if (inv_mode == RT_KEYS && !g_InvKeysObjects)
+	if (inv_mode == RT_KEYS && !g_InvKeysObjects)
 	{
-        g_InvChosen = -1;
-        return GF_NOP;
-    }
+		g_InvChosen = -1;
+		return GF_NOP;
+	}
 
 	if (m_AmmoText)
 	{
@@ -65,77 +66,78 @@ int32_t Display_Inventory(int inv_mode)
 		m_AmmoText = NULL;
 	}
 
-    int32_t pass_mode_open = 0;
+	int32_t pass_mode_open = 0;
 	phd_AlterFOV(80 * PHD_DEGREE);
-    g_InvMode = inv_mode;
-    m_InvNFrames = 2;
-    Construct_Inventory();
-	
-    if (g_InvMode != INV_TITLE_MODE)
+	g_InvMode = inv_mode;
+	m_InvNFrames = 2;
+	Construct_Inventory();
+
+	if (g_InvMode != INV_TITLE_MODE)
 	{
 		//если в процессе игры вызываются титлы
 		//делаем картинку с экрана игры
-        S_FadeInInventory(1);
-    }
+		S_FadeInInventory(1);
+	}
 	else
 	{
-        S_FadeInInventory(0);
-    }
+		S_FadeInInventory(0);
+	}
 
-    Sound_StopAmbientSounds();
-    Sound_StopAllSamples();
-	
+	Sound_StopAmbientSounds();
+	Sound_StopAllSamples();
+
 	if (g_InvMode != INV_TITLE_MODE)
 	{
 		int Level = 0;
 		S_SoundVolume(Level);
 	}
 
-    switch (g_InvMode)
+	switch (g_InvMode)
 	{
-    case INV_DEATH_MODE:
+	case INV_DEATH_MODE:
 	case INV_LOAD_MODE:
 	case INV_SAVE_MODE:
-    case INV_TITLE_MODE:
-        Inv_RingInit(&ring, RT_OPTION, g_InvOptionList, g_InvOptionObjects,
-            g_InvOptionCurrent, &imo);
-        break;
+	case INV_TITLE_MODE:
+		Inv_RingInit(&ring, RT_OPTION, g_InvOptionList, g_InvOptionObjects,
+					 g_InvOptionCurrent, &imo);
+		break;
 
-    case INV_KEYS_MODE:
-        Inv_RingInit(&ring, RT_KEYS, g_InvKeysList, g_InvKeysObjects, g_InvMainCurrent,
-            &imo);
-        break;
+	case INV_KEYS_MODE:
+		Inv_RingInit(&ring, RT_KEYS, g_InvKeysList, g_InvKeysObjects,
+					 g_InvMainCurrent, &imo);
+		break;
 
-	//g_InvMode == INV_GAME_MODE
-    default:
-        if (g_InvMainObjects)
+	// g_InvMode == INV_GAME_MODE
+	default:
+		if (g_InvMainObjects)
 		{
 			//в игре когда польз.наж. ESC выход в инвентарь
-            Inv_RingInit(&ring, RT_MAIN, g_InvMainList, g_InvMainObjects,
-                g_InvMainCurrent, &imo);
-        }
+			Inv_RingInit(&ring, RT_MAIN, g_InvMainList, g_InvMainObjects,
+						 g_InvMainCurrent, &imo);
+		}
 		else
 		{
 			//эта ветка на всякий случай если g_InvMainObjects == 0
 			//нету пистолетов, компаса, аптечек и т.п.
-            Inv_RingInit(&ring, RT_OPTION, g_InvOptionList, g_InvOptionObjects,
-                g_InvOptionCurrent, &imo);
-        }
-        break;
-    }
+			Inv_RingInit(&ring, RT_OPTION, g_InvOptionList, g_InvOptionObjects,
+						 g_InvOptionCurrent, &imo);
+		}
+		break;
+	}
 
-    Sound_Effect(SFX_MENU_SPININ, NULL, SPM_ALWAYS);
+	Sound_Effect(SFX_MENU_SPININ, NULL, SPM_ALWAYS);
 
-    m_InvNFrames = 2;
+	m_InvNFrames = 2;
 
-    do {
+	do
+	{
 
-        //добавил я с учетом Win программирования (не MS-DOS)
-        if (g_bWindowClosed)
-            return GF_EXIT_GAME;
+		//добавил я с учетом Win программирования (не MS-DOS)
+		if (g_bWindowClosed)
+			return GF_EXIT_GAME;
 
-        Inv_RingCalcAdders(&ring, ROTATE_DURATION);
-        Input_Update();
+		Inv_RingCalcAdders(&ring, ROTATE_DURATION);
+		Input_Update();
 
 		int input = g_Input.any;
 
@@ -165,37 +167,36 @@ int32_t Display_Inventory(int inv_mode)
 			{
 				g_ResetFlag = 1; // таймаут -> переход на демо или сброс
 			}
-
 		}
 		else
 		{
-            g_NoInputCount = 0;
-            g_ResetFlag = 0;
+			g_NoInputCount = 0;
+			g_ResetFlag = 0;
 		}
 
-        for (int i = 0; i < m_InvNFrames; i++)
+		for (int i = 0; i < m_InvNFrames; i++)
 		{
-            if (g_IDelay)
+			if (g_IDelay)
 			{
-                if (g_IDCount)
+				if (g_IDCount)
 				{
-                    g_IDCount--;
-                }
+					g_IDCount--;
+				}
 				else
 				{
-                    g_IDelay = false;
-                }
-            }
-            Inv_RingDoMotions(&ring);
-        }
+					g_IDelay = false;
+				}
+			}
+			Inv_RingDoMotions(&ring);
+		}
 
-        ring.camera.z = ring.radius + CAMERA_2_RING;
+		ring.camera.z = ring.radius + CAMERA_2_RING;
 
-        PHD_3DPOS viewer;
-        Inv_RingGetView(&ring, &viewer);
-        phd_GenerateW2V(&viewer);
+		PHD_3DPOS viewer;
+		Inv_RingGetView(&ring, &viewer);
+		phd_GenerateW2V(&viewer);
 
-        Inv_RingLight(&ring);
+		Inv_RingLight(&ring);
 
 		S_InitialisePolyList();
 		//копируем картинку на экран
@@ -203,377 +204,395 @@ int32_t Display_Inventory(int inv_mode)
 		//новая функция в коде нету здесь в этом месте
 		Clear_BackBuffer();
 
-        phd_PushMatrix();
-        phd_TranslateAbs(ring.ringpos.x, ring.ringpos.y, ring.ringpos.z);
-        phd_RotYXZ(ring.ringpos.y_rot, ring.ringpos.x_rot, ring.ringpos.z_rot);
+		phd_PushMatrix();
+		phd_TranslateAbs(ring.ringpos.x, ring.ringpos.y, ring.ringpos.z);
+		phd_RotYXZ(ring.ringpos.y_rot, ring.ringpos.x_rot, ring.ringpos.z_rot);
 
-        PHD_ANGLE angle = 0;
-        for (int i = 0; i < ring.number_of_objects; i++)
+		PHD_ANGLE angle = 0;
+		for (int i = 0; i < ring.number_of_objects; i++)
 		{
-            INVENTORY_ITEM *inv_item = ring.list[i];
+			INVENTORY_ITEM *inv_item = ring.list[i];
 
-            if (i == ring.current_object)
+			if (i == ring.current_object)
 			{
-                for (int j = 0; j < m_InvNFrames; j++)
+				for (int j = 0; j < m_InvNFrames; j++)
 				{
-                    if (ring.rotating)
+					if (ring.rotating)
 					{
-                        g_LsAdder = LOW_LIGHT;
-                        if (inv_item->y_rot)
+						g_LsAdder = LOW_LIGHT;
+						if (inv_item->y_rot)
 						{
-                            if (inv_item->y_rot < 0)
+							if (inv_item->y_rot < 0)
 							{
-                                inv_item->y_rot += 512;
-                            }
+								inv_item->y_rot += 512;
+							}
 							else
 							{
-                                inv_item->y_rot -= 512;
-                            }
-                        }
-                    }
-					else if (
-                        imo.status == RNG_SELECTED
-                        || imo.status == RNG_DESELECTING
-                        || imo.status == RNG_SELECTING
-                        || imo.status == RNG_DESELECT
-                        || imo.status == RNG_CLOSING_ITEM)
+								inv_item->y_rot -= 512;
+							}
+						}
+					}
+					else if (imo.status == RNG_SELECTED ||
+							 imo.status == RNG_DESELECTING ||
+							 imo.status == RNG_SELECTING ||
+							 imo.status == RNG_DESELECT ||
+							 imo.status == RNG_CLOSING_ITEM)
 					{
-                        g_LsAdder = HIGH_LIGHT;
-                        if (inv_item->y_rot != inv_item->y_rot_sel)
+						g_LsAdder = HIGH_LIGHT;
+						if (inv_item->y_rot != inv_item->y_rot_sel)
 						{
-                            if (inv_item->y_rot_sel - inv_item->y_rot > 0
-                                && inv_item->y_rot_sel - inv_item->y_rot
-                                    < 0x8000) {
-                                inv_item->y_rot += 1024;
-                            }
+							if (inv_item->y_rot_sel - inv_item->y_rot > 0 &&
+								inv_item->y_rot_sel - inv_item->y_rot < 0x8000)
+							{
+								inv_item->y_rot += 1024;
+							}
 							else
 							{
-                                inv_item->y_rot -= 1024;
-                            }
-                            inv_item->y_rot &= 0xFC00u;
-                        }
-                    }
-					else if (ring.number_of_objects == 1 || (!g_Input.left && !g_Input.right) || !g_Input.left)
+								inv_item->y_rot -= 1024;
+							}
+							inv_item->y_rot &= 0xFC00u;
+						}
+					}
+					else if (ring.number_of_objects == 1 ||
+							 (!g_Input.left && !g_Input.right) || !g_Input.left)
 					{
-                        g_LsAdder = HIGH_LIGHT;
-                        inv_item->y_rot += 256;
-                    }
-                }
+						g_LsAdder = HIGH_LIGHT;
+						inv_item->y_rot += 256;
+					}
+				}
 
-                if ((imo.status == RNG_OPEN || imo.status == RNG_SELECTING
-                     || imo.status == RNG_SELECTED
-                     || imo.status == RNG_DESELECTING
-                     || imo.status == RNG_DESELECT
-                     || imo.status == RNG_CLOSING_ITEM)
-                    && !ring.rotating && !g_Input.left && !g_Input.right)
+				if ((imo.status == RNG_OPEN || imo.status == RNG_SELECTING ||
+					 imo.status == RNG_SELECTED ||
+					 imo.status == RNG_DESELECTING ||
+					 imo.status == RNG_DESELECT ||
+					 imo.status == RNG_CLOSING_ITEM) &&
+					!ring.rotating && !g_Input.left && !g_Input.right)
 				{
-                    RingNotActive(inv_item);
-                }
-            }
+					RingNotActive(inv_item);
+				}
+			}
 			else
 			{
-                g_LsAdder = LOW_LIGHT;
-                for (int j = 0; j < m_InvNFrames; j++)
+				g_LsAdder = LOW_LIGHT;
+				for (int j = 0; j < m_InvNFrames; j++)
 				{
-                    if (inv_item->y_rot) {
-                        if (inv_item->y_rot < 0)
+					if (inv_item->y_rot)
+					{
+						if (inv_item->y_rot < 0)
 						{
-                            inv_item->y_rot += 256;
-                        }
+							inv_item->y_rot += 256;
+						}
 						else
 						{
-                            inv_item->y_rot -= 256;
-                        }
-                    }
-                }
-            }
+							inv_item->y_rot -= 256;
+						}
+					}
+				}
+			}
 
-            if (imo.status == RNG_OPEN || imo.status == RNG_SELECTING
-                || imo.status == RNG_SELECTED || imo.status == RNG_DESELECTING
-                || imo.status == RNG_DESELECT
-                || imo.status == RNG_CLOSING_ITEM)
+			if (imo.status == RNG_OPEN || imo.status == RNG_SELECTING ||
+				imo.status == RNG_SELECTED || imo.status == RNG_DESELECTING ||
+				imo.status == RNG_DESELECT || imo.status == RNG_CLOSING_ITEM)
 			{
-                RingIsOpen(&ring);
-            }
+				RingIsOpen(&ring);
+			}
 			else
 			{
-                RingIsNotOpen(&ring);
-            }
+				RingIsNotOpen(&ring);
+			}
 
-            if (!imo.status || imo.status == RNG_CLOSING
-                || imo.status == RNG_MAIN2OPTION
-                || imo.status == RNG_OPTION2MAIN
-                || imo.status == RNG_EXITING_INVENTORY || imo.status == RNG_DONE
-                || ring.rotating)
+			if (!imo.status || imo.status == RNG_CLOSING ||
+				imo.status == RNG_MAIN2OPTION ||
+				imo.status == RNG_OPTION2MAIN ||
+				imo.status == RNG_EXITING_INVENTORY || imo.status == RNG_DONE ||
+				ring.rotating)
 			{
-                RingActive();
-            }
+				RingActive();
+			}
 
-            phd_PushMatrix();
-            phd_RotYXZ(angle, 0, 0);
-            phd_TranslateRel(ring.radius, 0, 0);
-            phd_RotYXZ(PHD_90, inv_item->pt_xrot, 0);
-            DrawInventoryItem(inv_item);
-            angle += ring.angle_adder;
-            phd_PopMatrix();
-        }
+			phd_PushMatrix();
+			phd_RotYXZ(angle, 0, 0);
+			phd_TranslateRel(ring.radius, 0, 0);
+			phd_RotYXZ(PHD_90, inv_item->pt_xrot, 0);
+			DrawInventoryItem(inv_item);
+			angle += ring.angle_adder;
+			phd_PopMatrix();
+		}
 
-        phd_PopMatrix();
+		phd_PopMatrix();
 
-        Sound_UpdateEffects();
-        Overlay_DrawFPSInfo();
-        Text_Draw();
+		Sound_UpdateEffects();
+		Overlay_DrawFPSInfo();
+		Text_Draw();
 		S_OutputPolyList();
 		m_InvNFrames = S_DumpScreen();
-        g_Camera.number_frames = m_InvNFrames;
+		g_Camera.number_frames = m_InvNFrames;
 
-        if (ring.rotating)
+		if (ring.rotating)
 		{
-            continue;
-        }
+			continue;
+		}
 
-        if ((g_InvMode == INV_SAVE_MODE || g_InvMode == INV_LOAD_MODE || g_InvMode == INV_DEATH_MODE) && !pass_mode_open)
+		if ((g_InvMode == INV_SAVE_MODE || g_InvMode == INV_LOAD_MODE ||
+			 g_InvMode == INV_DEATH_MODE) &&
+			!pass_mode_open)
 		{
-            g_InputDB.any = 0;
+			g_InputDB.any = 0;
 			g_InputDB.select = 1;
-        }
+		}
 
-        switch (imo.status)
+		switch (imo.status)
 		{
-        case RNG_OPEN:
+		//кольцо открыто - можно вращать влево-вправо
+		case RNG_OPEN:
 
-            //1)вращение кольца влево / вправо
-            if (g_Input.right && ring.number_of_objects > 1)
+			// 1)вращение кольца влево / вправо
+			if (g_Input.right && ring.number_of_objects > 1)
 			{
-                Inv_RingRotateLeft(&ring);
-                Sound_Effect(SFX_MENU_ROTATE, NULL, SPM_ALWAYS);
-                break;
-            }
+				Inv_RingRotateLeft(&ring);
+				Sound_Effect(SFX_MENU_ROTATE, NULL, SPM_ALWAYS);
+				break;
+			}
 
-            if (g_Input.left && ring.number_of_objects > 1)
+			if (g_Input.left && ring.number_of_objects > 1)
 			{
-                Inv_RingRotateRight(&ring);
-                Sound_Effect(SFX_MENU_ROTATE, NULL, SPM_ALWAYS);
-                break;
-            }
-            //2)закрытие инвентаря
-            if ((g_ResetFlag || g_InputDB.option) && (g_ResetFlag || g_InvMode != INV_TITLE_MODE))
+				Inv_RingRotateRight(&ring);
+				Sound_Effect(SFX_MENU_ROTATE, NULL, SPM_ALWAYS);
+				break;
+			}
+			// 2)закрытие инвентаря
+			if ((g_ResetFlag || g_InputDB.option) &&
+				(g_ResetFlag || g_InvMode != INV_TITLE_MODE))
 			{
-                Sound_Effect(SFX_MENU_SPINOUT, NULL, SPM_ALWAYS);
-                g_InvChosen = -1;
+				Sound_Effect(SFX_MENU_SPINOUT, NULL, SPM_ALWAYS);
+				g_InvChosen = -1;
 
-                //cохраняет текущую позицию в соответствующем списке
-                if (ring.type == RT_MAIN)
+				// cохраняет текущую позицию в соответствующем списке
+				if (ring.type == RT_MAIN)
 				{
-                    g_InvMainCurrent = ring.current_object;
-                }
+					g_InvMainCurrent = ring.current_object;
+				}
 				else
 				{
-                    g_InvOptionCurrent = ring.current_object;
-                }
+					g_InvOptionCurrent = ring.current_object;
+				}
 
-                if (g_InvMode == INV_TITLE_MODE)
+				if (g_InvMode == INV_TITLE_MODE)
 				{
-                    S_FadeOutInventory(0);
-                }
+					S_FadeOutInventory(0);
+				}
 				else
 				{
-                    S_FadeOutInventory(1);
-                }
+					S_FadeOutInventory(1);
+				}
 
-                Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_DONE, CLOSE_FRAMES);
-                Inv_RingMotionRadius(&ring, 0);
-                Inv_RingMotionCameraPos(&ring, CAMERA_STARTHEIGHT);
-                Inv_RingMotionRotation(&ring, CLOSE_ROTATION, ring.ringpos.y_rot - CLOSE_ROTATION);
+				Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_DONE, CLOSE_FRAMES);
+				Inv_RingMotionRadius(&ring, 0);
+				Inv_RingMotionCameraPos(&ring, CAMERA_STARTHEIGHT);
+				Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
+									   ring.ringpos.y_rot - CLOSE_ROTATION);
 
-                g_Input.any = 0;
-                g_InputDB.any = 0;
-            }
+				g_Input.any = 0;
+				g_InputDB.any = 0;
+			}
 
-            //3)выбор предмета(Select)
-            if (g_InputDB.select)
+			// 3)выбор предмета(Select)
+			if (g_InputDB.select)
 			{
-                if ((g_InvMode == INV_SAVE_MODE
-                     || g_InvMode == INV_LOAD_MODE
-                     || g_InvMode == INV_DEATH_MODE)
-                    && !pass_mode_open)
+				if ((g_InvMode == INV_SAVE_MODE || g_InvMode == INV_LOAD_MODE ||
+					 g_InvMode == INV_DEATH_MODE) &&
+					!pass_mode_open)
 				{
-                    pass_mode_open = 1;
-                }
+					pass_mode_open = 1;
+				}
 
-                g_OptionSelected = 0;
+				g_OptionSelected = 0;
 
-                INVENTORY_ITEM *inv_item;
-                if (ring.type == RT_MAIN)
+				INVENTORY_ITEM *inv_item;
+				if (ring.type == RT_MAIN)
 				{
-                    g_InvMainCurrent = ring.current_object;
-                    inv_item = g_InvMainList[ring.current_object];
-                }
+					g_InvMainCurrent = ring.current_object;
+					inv_item = g_InvMainList[ring.current_object];
+				}
 				else if (ring.type == RT_OPTION)
 				{
-                    g_InvOptionCurrent = ring.current_object;
-                    inv_item = g_InvOptionList[ring.current_object];
-                }
+					g_InvOptionCurrent = ring.current_object;
+					inv_item = g_InvOptionList[ring.current_object];
+				}
 				else
 				{
-                    g_InvKeysCurrent = ring.current_object;
-                    inv_item = g_InvKeysList[ring.current_object];
-                }
+					g_InvKeysCurrent = ring.current_object;
+					inv_item = g_InvKeysList[ring.current_object];
+				}
 
-                inv_item->goal_frame = inv_item->open_frame;
-                inv_item->anim_direction = 1;
+				inv_item->goal_frame = inv_item->open_frame;
+				inv_item->anim_direction = 1;
 
-                Inv_RingMotionSetup(&ring, RNG_SELECTING, RNG_SELECTED, SELECTING_FRAMES);
-                Inv_RingMotionRotation(&ring, 0, -PHD_90 - ring.angle_adder * ring.current_object);
-                Inv_RingMotionItemSelect(&ring, inv_item);
+				Inv_RingMotionSetup(&ring, RNG_SELECTING, RNG_SELECTED,
+									SELECTING_FRAMES);
+				Inv_RingMotionRotation(
+					&ring, 0, -PHD_90 - ring.angle_adder * ring.current_object);
+				Inv_RingMotionItemSelect(&ring, inv_item);
 
-                g_Input.any = 0;
-                g_InputDB.any = 0;
+				g_Input.any = 0;
+				g_InputDB.any = 0;
 
-                switch (inv_item->object_number)
+				switch (inv_item->object_number)
 				{
-                case O_MAP_OPTION:
-                    Sound_Effect(SFX_MENU_COMPASS, NULL, SPM_ALWAYS);
-                    break;
+				case O_MAP_OPTION:
+					Sound_Effect(SFX_MENU_COMPASS, NULL, SPM_ALWAYS);
+					break;
 
-                case O_PHOTO_OPTION:
-                    Sound_Effect(SFX_MENU_CHOOSE, NULL, SPM_ALWAYS);
-                    break;
+				case O_PHOTO_OPTION:
+					Sound_Effect(SFX_MENU_CHOOSE, NULL, SPM_ALWAYS);
+					break;
 
-                case O_CONTROL_OPTION:
-                    Sound_Effect(SFX_MENU_GAMEBOY, NULL, SPM_ALWAYS);
-                    break;
+				case O_CONTROL_OPTION:
+					Sound_Effect(SFX_MENU_GAMEBOY, NULL, SPM_ALWAYS);
+					break;
 
-                case O_GUN_OPTION:
-                case O_SHOTGUN_OPTION:
-                case O_MAGNUM_OPTION:
-                case O_UZI_OPTION:
-                    Sound_Effect(SFX_MENU_GUNS, NULL, SPM_ALWAYS);
-                    break;
+				case O_GUN_OPTION:
+				case O_SHOTGUN_OPTION:
+				case O_MAGNUM_OPTION:
+				case O_UZI_OPTION:
+					Sound_Effect(SFX_MENU_GUNS, NULL, SPM_ALWAYS);
+					break;
 
-                default:
-                    Sound_Effect(SFX_MENU_SPININ, NULL, SPM_ALWAYS);
-                    break;
-                }
-            }
+				default:
+					Sound_Effect(SFX_MENU_SPININ, NULL, SPM_ALWAYS);
+					break;
+				}
+			}
 
-            //4)переключение между типами колец
-            //forward (кнопка вверх/вперед)
-            if (g_InputDB.forward && g_InvMode != INV_TITLE_MODE && g_InvMode != INV_KEYS_MODE)
+			// 4)переключение между типами колец
+			// forward (кнопка вверх/вперед)
+			if (g_InputDB.forward && g_InvMode != INV_TITLE_MODE &&
+				g_InvMode != INV_KEYS_MODE)
 			{
-                //из главного кольца(RT_MAIN) переходит к ключам(RNG_MAIN2KEYS)
-                if (ring.type == RT_MAIN)
+				//из главного кольца(RT_MAIN) переходит к ключам(RNG_MAIN2KEYS)
+				if (ring.type == RT_MAIN)
 				{
-                    if (g_InvKeysObjects)
+					if (g_InvKeysObjects)
 					{
-                        Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_MAIN2KEYS,
-                            RINGSWITCH_FRAMES / 2);
-                        Inv_RingMotionRadius(&ring, 0);
-                        Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
-                            ring.ringpos.y_rot - CLOSE_ROTATION);
-                        Inv_RingMotionCameraPitch(&ring, 0x2000);
-                        imo.misc = 0x2000;
-                    }
+						Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_MAIN2KEYS,
+											RINGSWITCH_FRAMES / 2);
+						Inv_RingMotionRadius(&ring, 0);
+						Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
+											   ring.ringpos.y_rot -
+												   CLOSE_ROTATION);
+						Inv_RingMotionCameraPitch(&ring, 0x2000);
+						imo.misc = 0x2000;
+					}
 
-                    g_Input.any = 0;
-                    g_InputDB.any = 0;
-                }
-                //из кольца опций(RT_OPTION) возвращается к главному(RNG_OPTION2MAIN)
+					g_Input.any = 0;
+					g_InputDB.any = 0;
+				}
+				//из кольца опций(RT_OPTION) возвращается к
+				//главному(RNG_OPTION2MAIN)
 				else if (ring.type == RT_OPTION)
 				{
-                    if (g_InvMainObjects)
+					if (g_InvMainObjects)
 					{
-                        Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_OPTION2MAIN,
-                            RINGSWITCH_FRAMES / 2);
-                        Inv_RingMotionRadius(&ring, 0);
-                        Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
-                            ring.ringpos.y_rot - CLOSE_ROTATION);
-                        Inv_RingMotionCameraPitch(&ring, 0x2000);
-                        imo.misc = 0x2000;
-                    }
+						Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_OPTION2MAIN,
+											RINGSWITCH_FRAMES / 2);
+						Inv_RingMotionRadius(&ring, 0);
+						Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
+											   ring.ringpos.y_rot -
+												   CLOSE_ROTATION);
+						Inv_RingMotionCameraPitch(&ring, 0x2000);
+						imo.misc = 0x2000;
+					}
 
-                    g_InputDB.any = 0;
-                }
-            }
-            //back(кнопка вниз / назад)
-			else if (g_InputDB.back && g_InvMode != INV_TITLE_MODE
-							&& g_InvMode != INV_KEYS_MODE)
+					g_InputDB.any = 0;
+				}
+			}
+			// back(кнопка вниз / назад)
+			else if (g_InputDB.back && g_InvMode != INV_TITLE_MODE &&
+					 g_InvMode != INV_KEYS_MODE)
 			{
-                if (ring.type == RT_KEYS)
+				if (ring.type == RT_KEYS)
 				{
-                    if (g_InvMainObjects)
+					if (g_InvMainObjects)
 					{
-                        Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_KEYS2MAIN,
-                            RINGSWITCH_FRAMES / 2);
-                        Inv_RingMotionRadius(&ring, 0);
-                        Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
-                            ring.ringpos.y_rot - CLOSE_ROTATION);
-                        Inv_RingMotionCameraPitch(&ring, -0x2000);
-                        imo.misc = -0x2000;
-                    }
+						Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_KEYS2MAIN,
+											RINGSWITCH_FRAMES / 2);
+						Inv_RingMotionRadius(&ring, 0);
+						Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
+											   ring.ringpos.y_rot -
+												   CLOSE_ROTATION);
+						Inv_RingMotionCameraPitch(&ring, -0x2000);
+						imo.misc = -0x2000;
+					}
 
-                    g_Input.any = 0;
-                    g_InputDB.any = 0;
-                }
+					g_Input.any = 0;
+					g_InputDB.any = 0;
+				}
 				else if (ring.type == RT_MAIN)
 				{
-                    if (g_InvOptionObjects)
+					if (g_InvOptionObjects)
 					{
-                        Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_MAIN2OPTION,
-                            RINGSWITCH_FRAMES / 2);
-                        Inv_RingMotionRadius(&ring, 0);
-                        Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
-                            ring.ringpos.y_rot - CLOSE_ROTATION);
-                        Inv_RingMotionCameraPitch(&ring, -0x2000);
-                        imo.misc = -0x2000;
-                    }
+						Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_MAIN2OPTION,
+											RINGSWITCH_FRAMES / 2);
+						Inv_RingMotionRadius(&ring, 0);
+						Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
+											   ring.ringpos.y_rot -
+												   CLOSE_ROTATION);
+						Inv_RingMotionCameraPitch(&ring, -0x2000);
+						imo.misc = -0x2000;
+					}
 
-                    g_InputDB.any = 0;
-                }
-            }
-            break;
+					g_InputDB.any = 0;
+				}
+			}
+			break;
 
-        case RNG_MAIN2OPTION:
-            Inv_RingMotionSetup(&ring, RNG_OPENING, RNG_OPEN, RINGSWITCH_FRAMES / 2);
-            Inv_RingMotionRadius(&ring, RING_RADIUS);
-            
-			ring.camera_pitch = -imo.misc;
-            imo.camera_pitch_rate = imo.misc / (RINGSWITCH_FRAMES / 2);
-            imo.camera_pitch_target = 0;
-            g_InvMainCurrent = ring.current_object;
-            ring.list = g_InvOptionList;
-            ring.type = RT_OPTION;
-            ring.number_of_objects = g_InvOptionObjects;
-            ring.current_object = g_InvOptionCurrent;
-            
-			Inv_RingCalcAdders(&ring, ROTATE_DURATION);
-            Inv_RingMotionRotation(&ring, OPEN_ROTATION,
-					-PHD_90 - ring.angle_adder * ring.current_object);
-            
-			ring.ringpos.y_rot = imo.rotate_target + OPEN_ROTATION;
-            break;
-
-        case RNG_KEYS2MAIN:
-			Inv_RingMotionSetup(&ring, RNG_OPENING, RNG_OPEN, RINGSWITCH_FRAMES / 2);
-            Inv_RingMotionRadius(&ring, RING_RADIUS);
+		case RNG_MAIN2OPTION:
+			Inv_RingMotionSetup(&ring, RNG_OPENING, RNG_OPEN,
+								RINGSWITCH_FRAMES / 2);
+			Inv_RingMotionRadius(&ring, RING_RADIUS);
 
 			ring.camera_pitch = -imo.misc;
-            imo.camera_pitch_rate = imo.misc / (RINGSWITCH_FRAMES / 2);
-            imo.camera_pitch_target = 0;
-            g_InvKeysCurrent = ring.current_object;
-            ring.list = g_InvMainList;
-            ring.type = RT_MAIN;
-            ring.number_of_objects = g_InvMainObjects;
-            ring.current_object = g_InvMainCurrent;
+			imo.camera_pitch_rate = imo.misc / (RINGSWITCH_FRAMES / 2);
+			imo.camera_pitch_target = 0;
+			g_InvMainCurrent = ring.current_object;
+			ring.list = g_InvOptionList;
+			ring.type = RT_OPTION;
+			ring.number_of_objects = g_InvOptionObjects;
+			ring.current_object = g_InvOptionCurrent;
 
 			Inv_RingCalcAdders(&ring, ROTATE_DURATION);
-            Inv_RingMotionRotation(&ring, OPEN_ROTATION, -PHD_90 - ring.angle_adder * ring.current_object);
+			Inv_RingMotionRotation(&ring, OPEN_ROTATION,
+								   -PHD_90 -
+									   ring.angle_adder * ring.current_object);
 
 			ring.ringpos.y_rot = imo.rotate_target + OPEN_ROTATION;
-            break;
+			break;
+
+		case RNG_KEYS2MAIN:
+			Inv_RingMotionSetup(&ring, RNG_OPENING, RNG_OPEN,
+								RINGSWITCH_FRAMES / 2);
+			Inv_RingMotionRadius(&ring, RING_RADIUS);
+
+			ring.camera_pitch = -imo.misc;
+			imo.camera_pitch_rate = imo.misc / (RINGSWITCH_FRAMES / 2);
+			imo.camera_pitch_target = 0;
+			g_InvKeysCurrent = ring.current_object;
+			ring.list = g_InvMainList;
+			ring.type = RT_MAIN;
+			ring.number_of_objects = g_InvMainObjects;
+			ring.current_object = g_InvMainCurrent;
+
+			Inv_RingCalcAdders(&ring, ROTATE_DURATION);
+			Inv_RingMotionRotation(&ring, OPEN_ROTATION,
+								   -PHD_90 -
+									   ring.angle_adder * ring.current_object);
+
+			ring.ringpos.y_rot = imo.rotate_target + OPEN_ROTATION;
+			break;
 
 		case RNG_MAIN2KEYS:
-			Inv_RingMotionSetup(&ring, RNG_OPENING, RNG_OPEN, RINGSWITCH_FRAMES / 2);
+			Inv_RingMotionSetup(&ring, RNG_OPENING, RNG_OPEN,
+								RINGSWITCH_FRAMES / 2);
 			Inv_RingMotionRadius(&ring, RING_RADIUS);
 
 			ring.camera_pitch = -imo.misc;
@@ -588,66 +607,74 @@ int32_t Display_Inventory(int inv_mode)
 
 			Inv_RingCalcAdders(&ring, ROTATE_DURATION);
 			Inv_RingMotionRotation(&ring, OPEN_ROTATION,
-				-PHD_90 - ring.angle_adder * ring.current_object);
+								   -PHD_90 -
+									   ring.angle_adder * ring.current_object);
 
 			ring.ringpos.y_rot = imo.rotate_target + OPEN_ROTATION;
 			break;
 
-        case RNG_OPTION2MAIN:
-            Inv_RingMotionSetup(&ring, RNG_OPENING, RNG_OPEN, RINGSWITCH_FRAMES / 2);
-            Inv_RingMotionRadius(&ring, RING_RADIUS);
+		case RNG_OPTION2MAIN:
+			Inv_RingMotionSetup(&ring, RNG_OPENING, RNG_OPEN,
+								RINGSWITCH_FRAMES / 2);
+			Inv_RingMotionRadius(&ring, RING_RADIUS);
 
 			ring.camera_pitch = -imo.misc;
-            imo.camera_pitch_rate = imo.misc / (RINGSWITCH_FRAMES / 2);
-            imo.camera_pitch_target = 0;
-            g_InvOptionObjects = ring.number_of_objects;
-            g_InvOptionCurrent = ring.current_object;
-            ring.list = g_InvMainList;
-            ring.type = RT_MAIN;
-            ring.number_of_objects = g_InvMainObjects;
-            ring.current_object = g_InvMainCurrent;
+			imo.camera_pitch_rate = imo.misc / (RINGSWITCH_FRAMES / 2);
+			imo.camera_pitch_target = 0;
+			g_InvOptionObjects = ring.number_of_objects;
+			g_InvOptionCurrent = ring.current_object;
+			ring.list = g_InvMainList;
+			ring.type = RT_MAIN;
+			ring.number_of_objects = g_InvMainObjects;
+			ring.current_object = g_InvMainCurrent;
 
 			Inv_RingCalcAdders(&ring, ROTATE_DURATION);
-            Inv_RingMotionRotation(&ring, OPEN_ROTATION,
-							-PHD_90 - ring.angle_adder * ring.current_object);
+			Inv_RingMotionRotation(&ring, OPEN_ROTATION,
+								   -PHD_90 -
+									   ring.angle_adder * ring.current_object);
 
 			ring.ringpos.y_rot = imo.rotate_target + OPEN_ROTATION;
-            break;
-
-        case RNG_CLOSING_ITEM:
-		{
-            INVENTORY_ITEM *inv_item = ring.list[ring.current_object];
-            for (int j = 0; j < m_InvNFrames; j++)
-			{
-                if (!AnimateInventoryItem(inv_item))
-				{
-                    if (inv_item->object_number == O_PASSPORT_OPTION)
-					{
-                        inv_item->object_number = O_PASSPORT_CLOSED;
-                        inv_item->current_frame = 0;
-                    }
-                    imo.count = SELECTING_FRAMES;
-                    imo.status = imo.status_target;
-
-                    Inv_RingMotionItemDeselect(&ring, inv_item);
-                    break;
-                }
-            }
-            break;
-        }
-
-		case RNG_DESELECT:
-			Sound_Effect(SFX_MENU_SPINOUT, NULL, SPM_ALWAYS);
-			Inv_RingMotionSetup(&ring, RNG_DESELECTING, RNG_OPEN, SELECTING_FRAMES);
-			Inv_RingMotionRotation(&ring, 0, -PHD_90 - ring.angle_adder * ring.current_object);
-
-            g_Input.any = 0;
-            g_InputDB.any = 0;
 			break;
 
+		//например открыт паспорт на какой то странице мы его закрываем
+		case RNG_CLOSING_ITEM:
+		{
+			INVENTORY_ITEM *inv_item = ring.list[ring.current_object];
+			for (int j = 0; j < m_InvNFrames; j++)
+			{
+				if (!AnimateInventoryItem(inv_item))
+				{
+					if (inv_item->object_number == O_PASSPORT_OPTION)
+					{
+						inv_item->object_number = O_PASSPORT_CLOSED;
+						inv_item->current_frame = 0;
+					}
+					imo.count = SELECTING_FRAMES;
+					imo.status = imo.status_target;
+
+					Inv_RingMotionItemDeselect(&ring, inv_item);
+					break;
+				}
+			}
+			break;
+		}
+
+		//возвращаемся к кольцу где не открыт предмет например не открыт паспорт
+		case RNG_DESELECT:
+			Sound_Effect(SFX_MENU_SPINOUT, NULL, SPM_ALWAYS);
+			Inv_RingMotionSetup(&ring, RNG_DESELECTING, RNG_OPEN,
+								SELECTING_FRAMES);
+			Inv_RingMotionRotation(
+				&ring, 0, -PHD_90 - ring.angle_adder * ring.current_object);
+
+			g_Input.any = 0;
+			g_InputDB.any = 0;
+			break;
+
+		//например на паспорте нажимаем Enter - открываем
 		case RNG_SELECTED:
 		{
-			INVENTORY_ITEM* inv_item = ring.list[ring.current_object];
+			INVENTORY_ITEM *inv_item = ring.list[ring.current_object];
 
 			if (inv_item->object_number == O_PASSPORT_CLOSED)
 			{
@@ -671,18 +698,21 @@ int32_t Display_Inventory(int inv_mode)
 				if (g_InputDB.deselect)
 				{
 					inv_item->sprlist = NULL;
-					Inv_RingMotionSetup(&ring, RNG_CLOSING_ITEM, RNG_DESELECT, 0);
+					Inv_RingMotionSetup(&ring, RNG_CLOSING_ITEM, RNG_DESELECT,
+										0);
 
-                    g_Input.any = 0;
-                    g_InputDB.any = 0;
+					g_Input.any = 0;
+					g_InputDB.any = 0;
 
-					if (g_InvMode == INV_LOAD_MODE || g_InvMode == INV_SAVE_MODE)
+					if (g_InvMode == INV_LOAD_MODE ||
+						g_InvMode == INV_SAVE_MODE)
 					{
-						Inv_RingMotionSetup(&ring, RNG_CLOSING_ITEM, RNG_EXITING_INVENTORY, 0);
+						Inv_RingMotionSetup(&ring, RNG_CLOSING_ITEM,
+											RNG_EXITING_INVENTORY, 0);
 
-                        g_Input.any = 0;
-                        g_InputDB.any = 0;
-                    }
+						g_Input.any = 0;
+						g_InputDB.any = 0;
+					}
 				}
 
 				if (g_InputDB.select)
@@ -698,443 +728,483 @@ int32_t Display_Inventory(int inv_mode)
 						g_InvOptionCurrent = ring.current_object;
 					}
 
-					if (g_InvMode == INV_TITLE_MODE
-						&& ((inv_item->object_number == O_DETAIL_OPTION)
-							|| inv_item->object_number == O_SOUND_OPTION
-							|| inv_item->object_number == O_CONTROL_OPTION
-							|| inv_item->object_number == O_GAMMA_OPTION))
+					if (g_InvMode == INV_TITLE_MODE &&
+						((inv_item->object_number == O_DETAIL_OPTION) ||
+						 inv_item->object_number == O_SOUND_OPTION ||
+						 inv_item->object_number == O_CONTROL_OPTION ||
+						 inv_item->object_number == O_GAMMA_OPTION))
 					{
-						Inv_RingMotionSetup(&ring, RNG_CLOSING_ITEM, RNG_DESELECT, 0);
+						Inv_RingMotionSetup(&ring, RNG_CLOSING_ITEM,
+											RNG_DESELECT, 0);
 					}
 					else
 					{
-						Inv_RingMotionSetup(&ring, RNG_CLOSING_ITEM, RNG_EXITING_INVENTORY, 0);
+						Inv_RingMotionSetup(&ring, RNG_CLOSING_ITEM,
+											RNG_EXITING_INVENTORY, 0);
 					}
 
-                    g_Input.any = 0;
-                    g_InputDB.any = 0;
-                }
+					g_Input.any = 0;
+					g_InputDB.any = 0;
+				}
 			}
 			break;
 		}
-
-        case RNG_EXITING_INVENTORY:
-            if (!imo.count)
+		//выход из инвентаря
+		case RNG_EXITING_INVENTORY:
+			if (!imo.count)
 			{
-                if (g_InvMode != INV_TITLE_MODE)
+				if (g_InvMode != INV_TITLE_MODE)
 				{
-                    S_FadeOutInventory(1);
-                }
+					S_FadeOutInventory(1);
+				}
 				else
 				{
-                    S_FadeOutInventory(0);
-                }
+					S_FadeOutInventory(0);
+				}
 
-                Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_DONE, CLOSE_FRAMES);
-                Inv_RingMotionRadius(&ring, 0);
-                Inv_RingMotionCameraPos(&ring, CAMERA_STARTHEIGHT);
-                Inv_RingMotionRotation(&ring, CLOSE_ROTATION, ring.ringpos.y_rot - CLOSE_ROTATION);
-            }
-            break;
-        }
-    } while (imo.status != RNG_DONE);
+				Inv_RingMotionSetup(&ring, RNG_CLOSING, RNG_DONE, CLOSE_FRAMES);
+				Inv_RingMotionRadius(&ring, 0);
+				Inv_RingMotionCameraPos(&ring, CAMERA_STARTHEIGHT);
+				Inv_RingMotionRotation(&ring, CLOSE_ROTATION,
+									   ring.ringpos.y_rot - CLOSE_ROTATION);
+			}
+			break;
+		}
+	} while (imo.status != RNG_DONE);
 
-    RemoveInventoryText();
+	RemoveInventoryText();
 	S_FinishInventory();
 	g_ModeLock = false;
 
-    if (m_VersionText)
+	if (m_VersionText)
 	{
-        Text_Remove(m_VersionText);
-        m_VersionText = NULL;
-    }
+		Text_Remove(m_VersionText);
+		m_VersionText = NULL;
+	}
 
-    if (g_ResetFlag)
+	if (g_ResetFlag)
 	{
-        return GF_START_DEMO;
-    }
+		return GF_START_DEMO;
+	}
 
 	g_InvChosen;
 
-	//if (g_InvChosen == -1)
+	// if (g_InvChosen == -1)
 	//	return 0;
 
-	
 	switch (g_InvChosen)
 	{
-		
+
 	case O_PASSPORT_OPTION:
 
-		//load/save game
+		// load/save game
 		return 1;
 
 		/*
 	case O_PASSPORT_OPTION:
 		
-        if (g_InvMode == INV_TITLE_MODE)
+
+
+		if (g_InvMode == INV_TITLE_MODE)
 		{
 			return g_InvChosen;
 			
-            if (g_InvExtraData[0] == 0)
+
+
+			if (g_InvExtraData[0] == 0)
 			{
-                // page 1: load game
-                return GF_START_SAVED_GAME | g_InvExtraData[1];
-            }
+				// page 1: load game
+				return GF_START_SAVED_GAME | g_InvExtraData[1];
+			}
 			else if (g_InvExtraData[0] == 1)
 			{
-                // page 2: new game
-                InitialiseStartInfo();
-                return GF_START_GAME | g_GameFlow.first_level_num;
-            }
+				// page 2: new game
+				InitialiseStartInfo();
+				return GF_START_GAME | g_GameFlow.first_level_num;
+			}
 			else
 			{
-                // page 3: exit game
-                return GF_EXIT_GAME;
-            }
+				// page 3: exit game
+				return GF_EXIT_GAME;
+			}
 			
-        }
+
+
+		}
 		else
 		{
-            if (g_InvExtraData[0] == 0)
+			if (g_InvExtraData[0] == 0)
 			{
-                // page 1: load game
-                return GF_START_SAVED_GAME | g_InvExtraData[1];
-            }
+				// page 1: load game
+				return GF_START_SAVED_GAME | g_InvExtraData[1];
+			}
 			
+
+
 			else if (g_InvExtraData[0] == 1)
 			{
-                // page 1: save game, or new game in gym
-                if (g_CurrentLevel == g_GameFlow.gym_level_num)
+				// page 1: save game, or new game in gym
+				if (g_CurrentLevel == g_GameFlow.gym_level_num)
 				{
-                    InitialiseStartInfo();
-                    return GF_START_GAME | g_GameFlow.first_level_num;
-                }
+					InitialiseStartInfo();
+					return GF_START_GAME | g_GameFlow.first_level_num;
+				}
 				else
 				{
-                    CreateSaveGameInfo();
-                    S_SaveGame(&g_SaveGame, g_InvExtraData[1]);
-                    Settings_Write(); //save keyboard config
-                    return GF_NOP;
-                }
-            }
+					CreateSaveGameInfo();
+					S_SaveGame(&g_SaveGame, g_InvExtraData[1]);
+					Settings_Write(); //save keyboard config
+					return GF_NOP;
+				}
+			}
 
 			
+
+
 			
+
+
 			else
 			{
-                // page 3: exit to title
-                return GF_EXIT_TO_TITLE;
-            }
+				// page 3: exit to title
+				return GF_EXIT_TO_TITLE;
+			}
 			
+
+
 
 			break;
 			
-        }
+
+
+		}
 
 		
+
+
 	case O_PHOTO_OPTION:
 		g_InvExtraData[1] = 0;
 		return GF_START_GAME | g_GameFlow.gym_level_num;
 		*/
 
-    case O_GUN_OPTION:
-        UseItem(O_GUN_OPTION);
-        break;
+	case O_GUN_OPTION:
+		UseItem(O_GUN_OPTION);
+		break;
 
-    case O_SHOTGUN_OPTION:
-        UseItem(O_SHOTGUN_OPTION);
-        break;
+	case O_SHOTGUN_OPTION:
+		UseItem(O_SHOTGUN_OPTION);
+		break;
 
-    case O_MAGNUM_OPTION:
-        UseItem(O_MAGNUM_OPTION);
-        break;
+	case O_MAGNUM_OPTION:
+		UseItem(O_MAGNUM_OPTION);
+		break;
 
-    case O_UZI_OPTION:
-        UseItem(O_UZI_OPTION);
-        break;
+	case O_UZI_OPTION:
+		UseItem(O_UZI_OPTION);
+		break;
 
-    case O_MEDI_OPTION:
-        UseItem(O_MEDI_OPTION);
-        break;
+	case O_MEDI_OPTION:
+		UseItem(O_MEDI_OPTION);
+		break;
 
-    case O_BIGMEDI_OPTION:
-        UseItem(O_BIGMEDI_OPTION);
-        break;
-    }
+	case O_BIGMEDI_OPTION:
+		UseItem(O_BIGMEDI_OPTION);
+		break;
+	}
 
-    //return GF_NOP;
+	// return GF_NOP;
 	return 0;
 }
 
 void Construct_Inventory()
 {
-    //Output_SetupAboveWater(false);
+	// Output_SetupAboveWater(false);
 	SetupAboveWater(false);
-/*
-	if (g_InvMode != INV_TITLE_MODE) {
-        Screen_ApplyResolution();
-    }
-*/
 	/*
-    g_PhdLeft = ViewPort_GetMinX();
-    g_PhdTop = ViewPort_GetMinY();
-    g_PhdBottom = ViewPort_GetMaxY();
-    g_PhdRight = ViewPort_GetMaxX();
+		if (g_InvMode != INV_TITLE_MODE) {
+			Screen_ApplyResolution();
+		}
+	*/
+	/*
+	g_PhdLeft = ViewPort_GetMinX();
+	g_PhdTop = ViewPort_GetMinY();
+	g_PhdBottom = ViewPort_GetMaxY();
+	g_PhdRight = ViewPort_GetMaxX();
 	*/
 
 	g_PhdLeft = 0;
 	g_PhdTop = 0;
-    g_PhdRight = Screen_GetResWidth() - 1;
-    g_PhdBottom = Screen_GetResHeight() - 1;
+	g_PhdRight = Screen_GetResWidth() - 1;
+	g_PhdBottom = Screen_GetResHeight() - 1;
 
-    for (int i = 0; i < 8; i++) {
-        g_InvExtraData[i] = 0;
-    }
+	for (int i = 0; i < 8; i++)
+	{
+		g_InvExtraData[i] = 0;
+	}
 
-    g_InvChosen = 0;
-    if (g_InvMode == INV_TITLE_MODE) {
-        g_InvOptionObjects = TITLE_RING_OBJECTS;
+	g_InvChosen = 0;
+
+	if (g_InvMode == INV_TITLE_MODE)
+	{
+		g_InvOptionObjects = TITLE_RING_OBJECTS;
 		const char *g_T1MVersion = "Ed Kurlyak Version";
-        m_VersionText = Text_Create(-20, -18, g_T1MVersion);
-        Text_AlignRight(m_VersionText, 1);
-        Text_AlignBottom(m_VersionText, 1);
-        Text_SetScale(m_VersionText, (int)(PHD_ONE * 0.5), (int)(PHD_ONE * 0.5));
-    }
+		m_VersionText = Text_Create(-20, -18, g_T1MVersion);
+		Text_AlignRight(m_VersionText, 1);
+		Text_AlignBottom(m_VersionText, 1);
+		Text_SetScale(m_VersionText, (int)(PHD_ONE * 0.5),
+					  (int)(PHD_ONE * 0.5));
+	}
 	else
 	{
-        g_InvOptionObjects = OPTION_RING_OBJECTS;
-        Text_Remove(m_VersionText);
-        m_VersionText = NULL;
-    }
+		g_InvOptionObjects = OPTION_RING_OBJECTS;
+		Text_Remove(m_VersionText);
+		m_VersionText = NULL;
+	}
 
-    for (int i = 0; i < g_InvMainObjects; i++) {
-        INVENTORY_ITEM *inv_item = g_InvMainList[i];
-        inv_item->drawn_meshes = inv_item->which_meshes;
-        inv_item->current_frame = 0;
-        inv_item->goal_frame = inv_item->current_frame;
-        inv_item->anim_count = 0;
-        inv_item->y_rot = 0;
-    }
+	for (int i = 0; i < g_InvMainObjects; i++)
+	{
+		INVENTORY_ITEM *inv_item = g_InvMainList[i];
+		inv_item->drawn_meshes = inv_item->which_meshes;
+		inv_item->current_frame = 0;
+		inv_item->goal_frame = inv_item->current_frame;
+		inv_item->anim_count = 0;
+		inv_item->y_rot = 0;
+	}
 
-    for (int i = 0; i < g_InvOptionObjects; i++) {
-        INVENTORY_ITEM *inv_item = g_InvOptionList[i];
-        inv_item->current_frame = 0;
-        inv_item->goal_frame = 0;
-        inv_item->anim_count = 0;
-        inv_item->y_rot = 0;
-    }
+	for (int i = 0; i < g_InvOptionObjects; i++)
+	{
+		INVENTORY_ITEM *inv_item = g_InvOptionList[i];
+		inv_item->current_frame = 0;
+		inv_item->goal_frame = 0;
+		inv_item->anim_count = 0;
+		inv_item->y_rot = 0;
+	}
 
-    g_InvMainCurrent = 0;
-    g_InvOptionCurrent = 0;
-    g_OptionSelected = 0;
+	g_InvMainCurrent = 0;
+	g_InvOptionCurrent = 0;
+	g_OptionSelected = 0;
 
-    if (g_GameFlow.gym_level_num == -1) {
-        Inv_RemoveItem(O_PHOTO_OPTION);
-    }
+	if (g_GameFlow.gym_level_num == -1)
+	{
+		Inv_RemoveItem(O_PHOTO_OPTION);
+	}
 }
 
 int32_t AnimateInventoryItem(INVENTORY_ITEM *inv_item)
 {
-    if (inv_item->current_frame == inv_item->goal_frame)
-    {
-        SelectMeshes(inv_item);
-        return 0;
-    }
+	if (inv_item->current_frame == inv_item->goal_frame)
+	{
+		SelectMeshes(inv_item);
+		return 0;
+	}
 
-    if (inv_item->anim_count)
-    {
-        inv_item->anim_count--;
-    }
-    else
-    {
-        inv_item->anim_count = inv_item->anim_speed;
-        inv_item->current_frame += inv_item->anim_direction;
-        
-        if (inv_item->current_frame >= inv_item->frames_total)
-        {
-            inv_item->current_frame = 0;
-        }
-        else if (inv_item->current_frame < 0)
-        {
-            inv_item->current_frame = inv_item->frames_total - 1;
-        }
-    }
+	if (inv_item->anim_count)
+	{
+		inv_item->anim_count--;
+	}
+	else
+	{
+		inv_item->anim_count = inv_item->anim_speed;
+		inv_item->current_frame += inv_item->anim_direction;
 
-    SelectMeshes(inv_item);
-    
-    return 1;
+		if (inv_item->current_frame >= inv_item->frames_total)
+		{
+			inv_item->current_frame = 0;
+		}
+		else if (inv_item->current_frame < 0)
+		{
+			inv_item->current_frame = inv_item->frames_total - 1;
+		}
+	}
+
+	SelectMeshes(inv_item);
+
+	return 1;
 }
 
 void SelectMeshes(INVENTORY_ITEM *inv_item)
 {
-    if (inv_item->object_number == O_PASSPORT_OPTION)
-    {
-        if (inv_item->current_frame <= 14)
-        {
-            inv_item->drawn_meshes = PASS_MESH | PINFRONT | PPAGE1;
-        }
-        else if (inv_item->current_frame < 19)
-        {
-            inv_item->drawn_meshes = PASS_MESH | PINFRONT | PPAGE1 | PPAGE2;
-        }
-        else if (inv_item->current_frame == 19)
-        {
-            inv_item->drawn_meshes = PASS_MESH | PPAGE1 | PPAGE2;
-        }
-        else if (inv_item->current_frame < 24)
-        {
-            inv_item->drawn_meshes = PASS_MESH | PPAGE1 | PPAGE2 | PINBACK;
-        }
-        else if (inv_item->current_frame < 29)
-        {
-            inv_item->drawn_meshes = PASS_MESH | PPAGE2 | PINBACK;
-        }
-        else if (inv_item->current_frame == 29)
-        {
-            inv_item->drawn_meshes = PASS_MESH;
-        }
-    }
-    else if (inv_item->object_number == O_MAP_OPTION)
-    {
-        if (inv_item->current_frame && inv_item->current_frame < 18)
-        {
-            inv_item->drawn_meshes = -1;
-        }
-        else
-        {
-            inv_item->drawn_meshes = inv_item->which_meshes;
-        }
-    }
-    else
-    {
-        inv_item->drawn_meshes = -1;
-    }
+	if (inv_item->object_number == O_PASSPORT_OPTION)
+	{
+		if (inv_item->current_frame <= 14)
+		{
+			inv_item->drawn_meshes = PASS_MESH | PINFRONT | PPAGE1;
+		}
+		else if (inv_item->current_frame < 19)
+		{
+			inv_item->drawn_meshes = PASS_MESH | PINFRONT | PPAGE1 | PPAGE2;
+		}
+		else if (inv_item->current_frame == 19)
+		{
+			inv_item->drawn_meshes = PASS_MESH | PPAGE1 | PPAGE2;
+		}
+		else if (inv_item->current_frame < 24)
+		{
+			inv_item->drawn_meshes = PASS_MESH | PPAGE1 | PPAGE2 | PINBACK;
+		}
+		else if (inv_item->current_frame < 29)
+		{
+			inv_item->drawn_meshes = PASS_MESH | PPAGE2 | PINBACK;
+		}
+		else if (inv_item->current_frame == 29)
+		{
+			inv_item->drawn_meshes = PASS_MESH;
+		}
+	}
+	else if (inv_item->object_number == O_MAP_OPTION)
+	{
+		if (inv_item->current_frame && inv_item->current_frame < 18)
+		{
+			inv_item->drawn_meshes = -1;
+		}
+		else
+		{
+			inv_item->drawn_meshes = inv_item->which_meshes;
+		}
+	}
+	else
+	{
+		inv_item->drawn_meshes = -1;
+	}
 }
 
 void DrawInventoryItem(INVENTORY_ITEM *inv_item)
 {
-    phd_TranslateRel(0, inv_item->ytrans, inv_item->ztrans);
-    phd_RotYXZ(inv_item->y_rot, inv_item->x_rot, 0);
+	phd_TranslateRel(0, inv_item->ytrans, inv_item->ztrans);
+	phd_RotYXZ(inv_item->y_rot, inv_item->x_rot, 0);
 
-    OBJECT_INFO *obj = &g_Objects[inv_item->object_number];
-    if (obj->nmeshes < 0)
+	OBJECT_INFO *obj = &g_Objects[inv_item->object_number];
+
+	if (obj->nmeshes < 0)
 	{
-        Output_DrawSpriteRel(0, 0, 0, obj->mesh_index, 4096);
-        return;
-    }
+		Output_DrawSpriteRel(0, 0, 0, obj->mesh_index, 4096);
+		return;
+	}
 
-    if (inv_item->sprlist) {
-        int32_t zv = g_PhdMatrixPtr->_23;
-        int32_t zp = zv / g_PhdPersp;
-        /*
-		int32_t sx = ViewPort_GetCenterX() + g_PhdMatrixPtr->_03 / zp;
-        int32_t sy = ViewPort_GetCenterY() + g_PhdMatrixPtr->_13 / zp;
-		*/
-		int32_t sx = ViewPort_GetCenterX() + g_PhdMatrixPtr->_03 / zp;
-        int32_t sy = ViewPort_GetCenterY() + g_PhdMatrixPtr->_13 / zp;
+	if (inv_item->sprlist)
+	{
+		int32_t zv = g_PhdMatrixPtr->_23;
+		int32_t zp = zv / g_PhdPersp;
 
-        INVENTORY_SPRITE **sprlist = inv_item->sprlist;
-        INVENTORY_SPRITE *spr;
-        while ((spr = *sprlist++)) {
-            //if (zv < Output_GetNearZ() || zv > Output_GetFarZ())
+		int32_t sx = ViewPort_GetCenterX() + g_PhdMatrixPtr->_03 / zp;
+		int32_t sy = ViewPort_GetCenterY() + g_PhdMatrixPtr->_13 / zp;
+
+		INVENTORY_SPRITE **sprlist = inv_item->sprlist;
+		INVENTORY_SPRITE *spr;
+		while ((spr = *sprlist++))
+		{
+			// if (zv < Output_GetNearZ() || zv > Output_GetFarZ())
 			if (zv < Z_NEAR || zv > DRAW_DIST_MAX)
 			{
-                break;
-            }
+				break;
+			}
 
-            while (spr->shape) {
-                switch (spr->shape) {
-                case SHAPE_SPRITE:
-                    Output_DrawScreenSprite(
-                        sx + spr->x, sy + spr->y, spr->z, spr->param1,
-                        spr->param2,
-                        g_Objects[O_ALPHABET].mesh_index + spr->sprnum, 4096,
-                        0);
-                    break;
-                case SHAPE_LINE:
-                    Output_DrawScreenLine(sx + spr->x, sy + spr->y, spr->param1, spr->param2,
-                        //Output_GetPaletteColor((uint8_t)spr->sprnum));
+			while (spr->shape)
+			{
+				switch (spr->shape)
+				{
+				case SHAPE_SPRITE:
+					Output_DrawScreenSprite(sx + spr->x, sy + spr->y, spr->z,
+											spr->param1, spr->param2,
+											g_Objects[O_ALPHABET].mesh_index +
+												spr->sprnum,
+											4096, 0);
+					break;
+				case SHAPE_LINE:
+					Output_DrawScreenLine(
+						sx + spr->x, sy + spr->y, spr->param1, spr->param2,
+						// Output_GetPaletteColor((uint8_t)spr->sprnum));
 						(uint8_t)spr->sprnum);
-                    break;
-                case SHAPE_BOX:
-                    Output_DrawScreenBox(
-                        sx + spr->x, sy + spr->y, spr->param1, spr->param2);
-                    break;
-                case SHAPE_FBOX:
-                    Output_DrawScreenFBox(
-                        sx + spr->x, sy + spr->y, spr->param1, spr->param2);
-                    break;
-                }
-                spr++;
-            }
-        }
-    }
+					break;
+				case SHAPE_BOX:
+					Output_DrawScreenBox(sx + spr->x, sy + spr->y, spr->param1,
+										 spr->param2);
+					break;
+				case SHAPE_FBOX:
+					Output_DrawScreenFBox(sx + spr->x, sy + spr->y, spr->param1,
+										  spr->param2);
+					break;
+				}
+				spr++;
+			}
+		}
+	}
 
-    int16_t *frame =
-        &obj->frame_base[inv_item->current_frame * (obj->nmeshes * 2 + 10)];
+	int16_t *frame =
+		&obj->frame_base[inv_item->current_frame * (obj->nmeshes * 2 + 10)];
 
-    phd_PushMatrix();
+	phd_PushMatrix();
 
-    int32_t clip = S_GetObjectBounds(frame);
-    if (clip) {
-        phd_TranslateRel(
-            frame[FRAME_POS_X], frame[FRAME_POS_Y], frame[FRAME_POS_Z]);
-        int32_t *packed_rotation = (int32_t *)(frame + FRAME_ROT);
-        phd_RotYXZpack(*packed_rotation++);
+	int32_t clip = S_GetObjectBounds(frame);
+	if (clip)
+	{
+		phd_TranslateRel(frame[FRAME_POS_X], frame[FRAME_POS_Y],
+						 frame[FRAME_POS_Z]);
+		int32_t *packed_rotation = (int32_t *)(frame + FRAME_ROT);
+		phd_RotYXZpack(*packed_rotation++);
 
-        int32_t mesh_num = 1;
+		int32_t mesh_num = 1;
 
-        int32_t *bone = &g_AnimBones[obj->bone_index];
-        if (inv_item->drawn_meshes & mesh_num) {
-            Output_DrawPolygons(g_Meshes[obj->mesh_index], clip);
-        }
+		int32_t *bone = &g_AnimBones[obj->bone_index];
 
-        for (int i = 1; i < obj->nmeshes; i++) {
-            mesh_num *= 2;
+		if (inv_item->drawn_meshes & mesh_num)
+		{
+			Output_DrawPolygons(g_Meshes[obj->mesh_index], clip);
+		}
 
-            int32_t bone_extra_flags = bone[0];
-            if (bone_extra_flags & BEB_POP) {
-                phd_PopMatrix();
-            }
-            if (bone_extra_flags & BEB_PUSH) {
-                phd_PushMatrix();
-            }
+		for (int i = 1; i < obj->nmeshes; i++)
+		{
+			mesh_num *= 2;
 
-            phd_TranslateRel(bone[1], bone[2], bone[3]);
-            phd_RotYXZpack(*packed_rotation++);
+			int32_t bone_extra_flags = bone[0];
+			if (bone_extra_flags & BEB_POP)
+			{
+				phd_PopMatrix();
+			}
 
-            if (inv_item->object_number == O_MAP_OPTION && i == 1) {
-                m_CompassSpeed = m_CompassSpeed * 19 / 20
-                    + (int16_t)(-inv_item->y_rot - g_LaraItem->pos.y_rot - m_CompassNeedle)
-                        / 50;
-                m_CompassNeedle += m_CompassSpeed;
-                phd_RotY(m_CompassNeedle);
-            }
+			if (bone_extra_flags & BEB_PUSH)
+			{
+				phd_PushMatrix();
+			}
 
-            if (inv_item->drawn_meshes & mesh_num) {
-                Output_DrawPolygons(g_Meshes[obj->mesh_index + i], clip);
-            }
+			phd_TranslateRel(bone[1], bone[2], bone[3]);
+			phd_RotYXZpack(*packed_rotation++);
 
-            bone += 4;
-        }
-    }
-    phd_PopMatrix();
+			if (inv_item->object_number == O_MAP_OPTION && i == 1)
+			{
+				m_CompassSpeed =
+					m_CompassSpeed * 19 / 20 +
+					(int16_t)(-inv_item->y_rot - g_LaraItem->pos.y_rot -
+							  m_CompassNeedle) /
+						50;
+				m_CompassNeedle += m_CompassSpeed;
+				phd_RotY(m_CompassNeedle);
+			}
+
+			if (inv_item->drawn_meshes & mesh_num)
+			{
+				Output_DrawPolygons(g_Meshes[obj->mesh_index + i], clip);
+			}
+
+			bone += 4;
+		}
+	}
+	phd_PopMatrix();
 }
 
 void S_FadeInInventory(int32_t fade)
 {
-	
+
 	if (g_CurrentLevel != g_GameFlow.title_level_num)
 	{
 		//если в режиме игры (не титульный уровень)
 		//копируем экран игры в буфер и
 		//потом этот буфер выводим на экран при помощи DoInventoryPicture()
-		
+
 		//копируем картину в игре в буфер и выводим на экран
 		//надо затемнить картинку как ТР1
-		//S_Output_CopyFromPicture();
+		// S_Output_CopyFromPicture();
 	}
-	
 }
 
 void S_FadeOutInventory(int32_t fade)
@@ -1142,38 +1212,29 @@ void S_FadeOutInventory(int32_t fade)
 	// not implemented in TombATI
 }
 
+void Sound_StopAmbientSounds() {}
 
-void Sound_StopAmbientSounds()
-{
-}
+void Sound_StopAllSamples() {}
 
-void Sound_StopAllSamples()
-{
-}
-
-void S_SoundVolume(int Volume)
-{
-}
+void S_SoundVolume(int Volume) {}
 
 void DoInventoryPicture()
 {
 	//выводим картинку на экран
-	
+
 	//если это игра то перед этим
 	//вызывается S_FadeInInventory(int32_t fade)
 	//что бы сделать снимок экрана игры
 
 	//если это титульный уровень выводим
-	//background картинку на экран
-
-	
+	// background картинку на экран
 }
 
 void S_FinishInventory()
 {
 	if (g_InvMode != INV_TITLE_MODE)
 	{
-		//Screen_ApplyResolution();
+		// Screen_ApplyResolution();
 	}
 	g_ModeLock = false;
 }

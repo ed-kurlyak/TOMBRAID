@@ -7,14 +7,14 @@
 int Screen_Width;
 int Screen_Height;
 
-MGLDC* windc = NULL;
-MGLDC* dibdc = NULL;
+MGLDC *windc = NULL;
+MGLDC *dibdc = NULL;
 
 void Create_Water_Palette()
 {
 	// water color (R, G, B). 1.0 means pass-through, 0.0 means no value at all.
-    // [0.6, 0.7, 1.0] is original DOS version filter,
-    // [0.45, 1.0, 1.0] is default TombATI filter.
+	// [0.6, 0.7, 1.0] is original DOS version filter,
+	// [0.45, 1.0, 1.0] is default TombATI filter.
 
 	/*
 	//tr1 water color
@@ -23,15 +23,14 @@ void Create_Water_Palette()
 	unsigned char b = 255 * 1.0f; // 255 - 0xFF
 	*/
 
-	//tr ati water color
+	// tr ati water color
 	/*
 	unsigned char r = 255 * 0.45f; //114 - 0x72
 	unsigned char g = 255 * 1.0f; // 255 - 0xFF
 	unsigned char b = 255 * 1.0f; // 255 - 0xFF
 	*/
-	
 
-	palette_t	pal[256];
+	palette_t pal[256];
 
 	for (int i = 0; i < 256; i++)
 	{
@@ -54,13 +53,11 @@ void Create_Water_Palette()
 
 	MGL_setPalette(dibdc, pal, 256, 0);
 	MGL_realizePalette(dibdc, 256, 0, false);
-
-
 }
 
 void Create_Normal_Palette()
 {
-	palette_t	pal[256];
+	palette_t pal[256];
 
 	for (int i = 0; i < 256; i++)
 	{
@@ -71,7 +68,6 @@ void Create_Normal_Palette()
 
 	MGL_setPalette(dibdc, pal, 256, 0);
 	MGL_realizePalette(dibdc, 256, 0, false);
-
 }
 
 void Create_BackBuffer()
@@ -80,7 +76,7 @@ void Create_BackBuffer()
 	Screen_Width = Screen_GetResWidth();
 	Screen_Height = Screen_GetResHeight();
 
-		pixel_format_t	pf;
+	pixel_format_t pf;
 
 	MGL_setAppInstance(g_hInst);
 
@@ -97,60 +93,60 @@ void Create_BackBuffer()
 
 	MGL_getPixelFormat(windc, &pf);
 
-	if ((dibdc = MGL_createMemoryDC(Screen_Width, Screen_Height, 8, &pf)) == NULL)
+	if ((dibdc = MGL_createMemoryDC(Screen_Width, Screen_Height, 8, &pf)) ==
+		NULL)
 		MGL_fatalError("Unable to create Memory DC!");
 
-	//Create_Normal_Palette();
-
+	// Create_Normal_Palette();
 }
 
 /*
 
 void Clear_BackBuffer()
 {
-	MGL_beginDirectAccess();
+		MGL_beginDirectAccess();
 
-	char * phd_winptr_my = NULL;
+		char * phd_winptr_my = NULL;
 
-	phd_winptr_my = (char*)dibdc->surface;
+		phd_winptr_my = (char*)dibdc->surface;
 
-	//очищаем m_BackBuffer (экран)
-	for (int x = 0; x < Screen_GetResWidth(); x++)
-	{
-		for (int y = 0; y < Screen_GetResHeight(); y++)
+		//очищаем m_BackBuffer (экран)
+		for (int x = 0; x < Screen_GetResWidth(); x++)
 		{
-			int Index = y * Screen_GetResWidth() + x;
+				for (int y = 0; y < Screen_GetResHeight(); y++)
+				{
+						int Index = y * Screen_GetResWidth() + x;
 
-			phd_winptr_my[Index + 0] = 0;
+						phd_winptr_my[Index + 0] = 0;
+				}
 		}
-	}
 
 }
 
 void Present_BackBuffer()
 {
-	MGL_endDirectAccess();
+		MGL_endDirectAccess();
 
-	//MGL present back buffer
-	HDC hdcScreen = GetDC(g_hWnd);
-	MGL_setWinDC(windc, hdcScreen);
+		//MGL present back buffer
+		HDC hdcScreen = GetDC(g_hWnd);
+		MGL_setWinDC(windc, hdcScreen);
 
-	MGL_bitBltCoord(windc, dibdc, 0, 0, Screen_GetResWidth(), Screen_GetResHeight(), 0, 0, MGL_REPLACE_MODE);
+		MGL_bitBltCoord(windc, dibdc, 0, 0, Screen_GetResWidth(),
+Screen_GetResHeight(), 0, 0, MGL_REPLACE_MODE);
 
-	ReleaseDC(g_hWnd, hdcScreen);
+		ReleaseDC(g_hWnd, hdcScreen);
 
 }
 
 */
 
-
 void Clear_BackBuffer()
 {
 	MGL_beginDirectAccess();
 
-	char* phd_winptr_my = NULL;
+	char *phd_winptr_my = NULL;
 
-	phd_winptr_my = (char*)dibdc->surface;
+	phd_winptr_my = (char *)dibdc->surface;
 
 	//очищаем m_BackBuffer (экран)
 	for (int x = 0; x < Screen_Width; x++)
@@ -162,21 +158,20 @@ void Clear_BackBuffer()
 			phd_winptr_my[Index + 0] = 0;
 		}
 	}
-
 }
 
 void Present_BackBuffer()
 {
 	MGL_endDirectAccess();
 
-	//MGL present back buffer
+	// MGL present back buffer
 	HDC hdcScreen = GetDC(g_hWnd);
 	MGL_setWinDC(windc, hdcScreen);
 
-	MGL_bitBltCoord(windc, dibdc, 0, 0, Screen_Width, Screen_Height, 0, 0, MGL_REPLACE_MODE);
+	MGL_bitBltCoord(windc, dibdc, 0, 0, Screen_Width, Screen_Height, 0, 0,
+					MGL_REPLACE_MODE);
 
 	ReleaseDC(g_hWnd, hdcScreen);
-
 }
 
 void Delete_BackBuffer()
@@ -188,4 +183,3 @@ void Delete_BackBuffer()
 
 	windc = dibdc = NULL;
 }
-

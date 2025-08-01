@@ -4,9 +4,10 @@
 
 #define TEETH_TRAP_DAMAGE 400
 
-typedef enum {
-    TT_NICE = 0,
-    TT_NASTY = 1,
+typedef enum
+{
+	TT_NICE = 0,
+	TT_NASTY = 1,
 } TEETH_TRAP_STATE;
 
 extern BITE_INFO g_Teeth1A;

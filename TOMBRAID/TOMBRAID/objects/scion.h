@@ -16,7 +16,7 @@ void SetupScion4(OBJECT_INFO *obj);
 void SetupScionHolder(OBJECT_INFO *obj);
 void ScionControl(int16_t item_num);
 void Scion3Control(int16_t item_num);
-void PickUpScionCollision(
-    int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll);
-void PickUpScion4Collision(
-    int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll);
+void PickUpScionCollision(int16_t item_num, ITEM_INFO *lara_item,
+						  COLL_INFO *coll);
+void PickUpScion4Collision(int16_t item_num, ITEM_INFO *lara_item,
+						   COLL_INFO *coll);

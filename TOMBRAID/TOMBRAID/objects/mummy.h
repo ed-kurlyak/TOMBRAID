@@ -6,10 +6,11 @@
 
 #define MUMMY_HITPOINTS 18
 
-typedef enum {
-    MUMMY_EMPTY = 0,
-    MUMMY_STOP = 1,
-    MUMMY_DEATH = 2,
+typedef enum
+{
+	MUMMY_EMPTY = 0,
+	MUMMY_STOP = 1,
+	MUMMY_DEATH = 2,
 } MUMMY_ANIM;
 
 void SetupMummy(OBJECT_INFO *obj);

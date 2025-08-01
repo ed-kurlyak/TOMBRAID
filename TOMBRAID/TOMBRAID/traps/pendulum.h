@@ -6,5 +6,5 @@
 
 #define PENDULUM_DAMAGE 100
 
-//void SetupPendulum(OBJECT_INFO *obj);
+// void SetupPendulum(OBJECT_INFO *obj);
 void PendulumControl(int16_t item_num);
