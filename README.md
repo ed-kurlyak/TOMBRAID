@@ -13,3 +13,5 @@ Features:
 1) for rendering triangles used original Core Desing functions
 2) used 8- bit backbuffer SCITECH Mega Graph Library from Quake 1
 3) for sound used Direct Sound 8
+
+<img src="https://github.com/ed-kurlyak/TOMBRAID/blob/main/pics/tomb1.png">
