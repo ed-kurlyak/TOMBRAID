@@ -2,7 +2,7 @@
 
 Tomb Radier 1 reverse engineering test version, no DirectX/OpenGL, software rendering project.
 
-Thank you very much to LostArtefacts & Marcin Kurczewski for previous job, this reverse enginireeng was done partially and source code is maximum close to original Core Design EXE code.
+Thank you very much to LostArtefacts & Marcin Kurczewski for previous job, this reverse engineering was done partially and source code is maximum close to original Core Design EXE code.
 
 Tested under Win 10. Compiled on Visual Studio 2019.
 
