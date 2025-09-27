@@ -10,7 +10,7 @@ Code is in an unfinished state, but playing is possible. Put levels files to DAT
 
 Features:
 
-1) for rendering triangles used original Core Desing functions
+1) for rendering triangles used original Core Desing functions (software triangle rasterization)
 2) used 8- bit backbuffer SCITECH Mega Graph Library from Quake 1
 3) for sound used Direct Sound 8
 
