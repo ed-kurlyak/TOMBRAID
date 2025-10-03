@@ -1,5 +1,3 @@
-# TOMBRAID
-
 # Tomb Raider 1 Reverse Engineering Test Version
 
 **Software rendering project (no DirectX/OpenGL).**
