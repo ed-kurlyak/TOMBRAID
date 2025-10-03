@@ -21,7 +21,7 @@
 
 // SETUP PART #1
 //настройки моя игра
-int MY_GAME = 0;
+int MY_GAME = 1;
 
 // SETUP PART #2 FULLSCREEN/NO
 int Fullscreen = 0;
