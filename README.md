@@ -1,17 +1,26 @@
 # TOMBRAID
 
-Tomb Radier 1 reverse engineering test version, no DirectX/OpenGL, software rendering project.
+# Tomb Raider 1 Reverse Engineering Test Version
 
-Thank you very much to LostArtefacts & Marcin Kurczewski for previous job, this reverse engineering was done partially and source code is maximum close to original Core Design EXE code.
+**Software rendering project (no DirectX/OpenGL).**
 
-Tested under Win 10. Compiled on Visual Studio 2019.
+Special thanks to LostArtefacts & Marcin Kurczewski for their previous work — this reverse engineering is partial, and the source code is as close as possible to the original Core Design EXE.
 
-Code is in an unfinished state, but playing is possible. Put levels files to DATA directory. See winmain.cpp for config.
+## Overview
 
-Features:
+- Fully software rendering (no DirectX/OpenGL).  
+- Original Core Design functions used for triangle rasterization (software triangle rasterization).  
+- 8-bit backbuffer using SCITECH Mega Graphics Library from Quake 1.  
+- Sound handled via DirectSound 8.  
+- Tested on Windows 10. Compiled with Visual Studio 2019.  
+- Code is unfinished, but the game is playable.
 
-1) for rendering triangles used original Core Desing functions (software triangle rasterization)
-2) used 8- bit backbuffer SCITECH Mega Graph Library from Quake 1
-3) for sound used Direct Sound 8
+## Instructions
 
-<img src="https://github.com/ed-kurlyak/TOMBRAID/blob/main/pics/tomb1.png">
+1. Place level files in the `DATA` directory.  
+2. Configuration and entry point can be found in `winmain.cpp`.
+
+## Notes
+
+- The project is primarily for testing and reverse engineering purposes.  
+- Expect incomplete features and unfinished implementations.  
