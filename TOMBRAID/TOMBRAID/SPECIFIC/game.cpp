@@ -108,7 +108,6 @@ int LevelStats(int32_t level_num)
 		S_InitialisePolyList();
 		Clear_BackBuffer();
 		// Output_CopyBufferToScreen(); draw picture
-		Input_Update();
 		Text_Draw();
 
 		S_OutputPolyList();
