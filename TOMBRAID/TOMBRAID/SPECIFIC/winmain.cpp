@@ -21,7 +21,7 @@
 
 // SETUP PART #1
 //настройки моя игра
-int MY_GAME = 1;
+int MY_GAME = 0;
 
 // SETUP PART #2 FULLSCREEN/NO
 int Fullscreen = 0;
@@ -29,7 +29,7 @@ int Fullscreen = 0;
 //---------------------------
 // SETUP PART #3 WIDESCREEN/NO
 // учет аспекта в matrix.cpp phd_GenerateW2V()
-int Widescreen = 1;
+int Widescreen = 0;
 
 //---------------------------
 // SETUP PART #4 GAME TYPE - TR1/GOLD

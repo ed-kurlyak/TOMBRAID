@@ -510,12 +510,12 @@ void Output_DrawPolygons(int16_t *obj_ptr, int clip)
 		obj_ptr = Output_CalcVerticeLight(obj_ptr);
 		// obj_ptr = Output_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
 		// obj_ptr = Output_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
-		obj_ptr = DrawObjectGT4(obj_ptr + 1, *obj_ptr);
-		obj_ptr = DrawObjectGT3(obj_ptr + 1, *obj_ptr);
+		obj_ptr = S_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
+		obj_ptr = S_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
 		// obj_ptr = Output_DrawObjectG4(obj_ptr + 1, *obj_ptr);
 		// obj_ptr = Output_DrawObjectG3(obj_ptr + 1, *obj_ptr);
-		obj_ptr = DrawObjectG4(obj_ptr + 1, *obj_ptr);
-		obj_ptr = DrawObjectG3(obj_ptr + 1, *obj_ptr);
+		obj_ptr = S_DrawObjectG4(obj_ptr + 1, *obj_ptr);
+		obj_ptr = S_DrawObjectG3(obj_ptr + 1, *obj_ptr);
 	}
 }
 
@@ -680,7 +680,7 @@ int16_t *Output_CalcVerticeLight(int16_t *obj_ptr)
 	return obj_ptr;
 }
 
-int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number)
+int16_t *S_DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 {
 	PHD_VBUF *vns[4];
 	VBUF vertices[8];
@@ -691,7 +691,7 @@ int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 
 	int num_TexturedQuad = number;
 
-	//перед вызовом DrawObjectGT4
+	//перед вызовом S_DrawObjectGT4
 	// obj_ptr + 0 количество GT4 = index 1 - 2 байта
 	// obj_ptr + 1 vert #1 = index 2 - 2 байта
 	// obj_ptr + 2 vert #2 = index 3 - 2 байта
@@ -699,7 +699,7 @@ int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 	// obj_ptr + 4 vert #4 = index 5 - 2 байта
 	// obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
 
-	//внутри DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
+	//внутри S_DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
 	// obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
 	// obj_ptr + 1 vert #2 in 2 bytes + 2 bytes
 	// obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
@@ -1058,7 +1058,7 @@ int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 	return obj_ptr;
 }
 
-int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
+int16_t *S_DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 {
 	PHD_VBUF *vns[3];
 	VBUF vertices[8];
@@ -1069,7 +1069,7 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 
 	int num_TexturedTri = number;
 
-	//перед вызовом DrawObjectGT4
+	//перед вызовом S_DrawObjectGT4
 	// obj_ptr + 0 количество GT4 = index 1 - 2 байта
 	// obj_ptr + 1 vert #1 = index 2 - 2 байта
 	// obj_ptr + 2 vert #2 = index 3 - 2 байта
@@ -1077,7 +1077,7 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 	// obj_ptr + 4 vert #4 = index 5 - 2 байта
 	// obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
 
-	//внутри DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
+	//внутри S_DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
 	// obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
 	// obj_ptr + 1 vert #2 in 2 bytes + 2 bytes
 	// obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
@@ -1429,7 +1429,7 @@ int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number)
 	return obj_ptr;
 }
 
-int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number)
+int16_t *S_DrawObjectG4(int16_t *obj_ptr, int32_t number)
 {
 	PHD_VBUF *vns[4];
 	VBUF2 vertices[8];
@@ -1441,7 +1441,7 @@ int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number)
 
 	int num_TexturedQuad = number;
 
-	//перед вызовом DrawObjectGT4
+	//перед вызовом S_DrawObjectGT4
 	// obj_ptr + 0 количество GT4 = index 1 - 2 байта
 	// obj_ptr + 1 vert #1 = index 2 - 2 байта
 	// obj_ptr + 2 vert #2 = index 3 - 2 байта
@@ -1449,7 +1449,7 @@ int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number)
 	// obj_ptr + 4 vert #4 = index 5 - 2 байта
 	// obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
 
-	//внутри DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
+	//внутри S_DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
 	// obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
 	// obj_ptr + 1 vert #2 in 2 bytes + 2 bytes
 	// obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
@@ -1851,7 +1851,7 @@ int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number)
 
 //-------------------------------------------
 
-int16_t *DrawObjectG3(int16_t *obj_ptr, int32_t number)
+int16_t *S_DrawObjectG3(int16_t *obj_ptr, int32_t number)
 {
 	PHD_VBUF *vns[4];
 	VBUF2 vertices[8];
@@ -1863,7 +1863,7 @@ int16_t *DrawObjectG3(int16_t *obj_ptr, int32_t number)
 
 	int num_TexturedQuad = number;
 
-	//перед вызовом DrawObjectGT4
+	//перед вызовом S_DrawObjectGT4
 	// obj_ptr + 0 количество GT4 = index 1 - 2 байта
 	// obj_ptr + 1 vert #1 = index 2 - 2 байта
 	// obj_ptr + 2 vert #2 = index 3 - 2 байта
@@ -1871,7 +1871,7 @@ int16_t *DrawObjectG3(int16_t *obj_ptr, int32_t number)
 	// obj_ptr + 4 vert #4 = index 5 - 2 байта
 	// obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
 
-	//внутри DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
+	//внутри S_DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
 	// obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
 	// obj_ptr + 1 vert #2 in 2 bytes + 2 bytes
 	// obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
@@ -4585,7 +4585,7 @@ void Output_DrawScreenBox(int32_t sx, int32_t sy, int32_t w, int32_t h)
 	Output_DrawScreenLine(sx, h + sy + 1, 0, -1 - h, rgb_border_dark);
 }
 
-void Output_DrawScreenFBox(int32_t sx, int32_t sy, int32_t w, int32_t h)
+void S_Output_DrawScreenFBox(int32_t sx, int32_t sy, int32_t w, int32_t h)
 {
 	// S_Output_DrawTranslucentQuad(sx, sy, sx + w, sy + h);
 
@@ -4622,7 +4622,7 @@ void Output_DrawScreenFBox(int32_t sx, int32_t sy, int32_t w, int32_t h)
 	surfacenum++;
 }
 
-void Output_DrawScreenFlatQuad(int32_t sx, int32_t sy, int32_t w, int32_t h,
+void S_Output_DrawScreenFlatQuad(int32_t sx, int32_t sy, int32_t w, int32_t h,
 							   RGB888 color, int depth)
 {
 	// S_Output_Draw2DQuad(sx, sy, sx + w, sy + h, color, color, color, color);
@@ -4927,4 +4927,45 @@ void Output_DrawSpriteRel(int32_t x, int32_t y, int32_t z, int16_t sprnum,
 		CLAMPG(shade, 0x1FFF);
 		S_Output_DrawSprite(x1, y1, x2, y2, zv, sprnum, shade);
 	}
+}
+
+int16_t* DrawRoomSprites(int16_t* obj_ptr, int32_t number)
+{
+	for (int i = 0; i < number; i++)
+	{
+		int16_t vbuf_num = obj_ptr[0];
+		int16_t sprnum = obj_ptr[1];
+		obj_ptr += 2;
+
+
+		PHD_VBUF* vbuf = &m_VBuf[vbuf_num];
+
+		if (vbuf->clip < 0)
+		{
+			continue;
+		}
+
+
+
+		int32_t zv = vbuf->zv;
+
+		PHDSPRITESTRUCT* sprite = &g_PhdSpriteInfo[sprnum];
+
+		int32_t zp = (zv / g_PhdPersp);
+
+		int32_t x1 = ViewPort_GetCenterX() + (vbuf->xv + (sprite->x1 << W2V_SHIFT)) / zp;
+		int32_t y1 = ViewPort_GetCenterY() + (vbuf->yv + (sprite->y1 << W2V_SHIFT)) / zp;
+		int32_t x2 = ViewPort_GetCenterX() + (vbuf->xv + (sprite->x2 << W2V_SHIFT)) / zp;
+		int32_t y2 = ViewPort_GetCenterY() + (vbuf->yv + (sprite->y2 << W2V_SHIFT)) / zp;
+
+		if (x2 >= g_PhdLeft && y2 >= g_PhdTop && x1 < g_PhdRight
+			&& y1 < g_PhdBottom)
+		{
+			S_Output_DrawSprite(x1, y1, x2, y2, zv, sprnum, vbuf->g);
+		}
+
+	}
+
+	return obj_ptr;
+
 }

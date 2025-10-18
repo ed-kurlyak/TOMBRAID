@@ -1121,7 +1121,7 @@ void DrawInventoryItem(INVENTORY_ITEM *inv_item)
 										 spr->param2);
 					break;
 				case SHAPE_FBOX:
-					Output_DrawScreenFBox(sx + spr->x, sy + spr->y, spr->param1,
+					S_Output_DrawScreenFBox(sx + spr->x, sy + spr->y, spr->param1,
 										  spr->param2);
 					break;
 				}

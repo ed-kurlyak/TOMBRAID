@@ -497,7 +497,7 @@ static void Text_DrawText(TEXTSTRING *textstring)
 		sh = Screen_GetRenderScale(bwidth);
 		sv = Screen_GetRenderScale(bheight);
 
-		Output_DrawScreenFBox(sx, sy, sh, sv);
+		S_Output_DrawScreenFBox(sx, sy, sh, sv);
 	}
 
 	if (textstring->flags.outline)

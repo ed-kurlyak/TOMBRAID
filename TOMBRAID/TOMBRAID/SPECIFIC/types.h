@@ -1246,18 +1246,18 @@ typedef struct GAMEFLOW_LEVEL
 {
 	GAMEFLOW_LEVEL_TYPE level_type;
 	int16_t music;
-	const char *level_title;
-	const char *level_file;
-	const char *key1;
-	const char *key2;
-	const char *key3;
-	const char *key4;
-	const char *pickup1;
-	const char *pickup2;
-	const char *puzzle1;
-	const char *puzzle2;
-	const char *puzzle3;
-	const char *puzzle4;
+	char level_title[256];
+	char level_file[256];
+	char key1[256];
+	char key2[256];
+	char key3[256];
+	char key4[256];
+	char pickup1[256];
+	char pickup2[256];
+	char puzzle1[256];
+	char puzzle2[256];
+	char puzzle3[256];
+	char puzzle4[256];
 	int8_t demo;
 	int16_t secrets;
 } GAMEFLOW_LEVEL;
@@ -1270,14 +1270,14 @@ typedef struct GAMEFLOW
 	int32_t last_level_num;
 	int32_t title_level_num;
 	int32_t level_count;
-	const char *save_game_fmt;
+	char save_game_fmt[256];
 	int8_t has_demo;
 	int32_t demo_delay;
 	int8_t enable_game_modes;
 	int8_t enable_save_crystals;
 
 	GAMEFLOW_LEVEL levels[22];
-	const char *strings[GS_NUMBER_OF];
+	char strings[GS_NUMBER_OF][256];
 } GAMEFLOW;
 
 //------------------------------------

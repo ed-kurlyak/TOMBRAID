@@ -12,10 +12,10 @@ void Output_DrawPolygons(int16_t *obj_ptr, int clip);
 void Output_DrawPolygons_I(int16_t *obj_ptr, int32_t clip);
 int16_t *Output_CalcObjectVertices(int16_t *obj_ptr);
 int16_t *Output_CalcVerticeLight(int16_t *obj_ptr);
-int16_t *DrawObjectGT4(int16_t *obj_ptr, int32_t number);
-int16_t *DrawObjectGT3(int16_t *obj_ptr, int32_t number);
-int16_t *DrawObjectG4(int16_t *obj_ptr, int32_t number);
-int16_t *DrawObjectG3(int16_t *obj_ptr, int32_t number);
+int16_t *S_DrawObjectGT4(int16_t *obj_ptr, int32_t number);
+int16_t *S_DrawObjectGT3(int16_t *obj_ptr, int32_t number);
+int16_t *S_DrawObjectG4(int16_t *obj_ptr, int32_t number);
+int16_t *S_DrawObjectG3(int16_t *obj_ptr, int32_t number);
 int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices);
 int32_t ClipVertices(int32_t num, VBUF *source);
 int32_t ClipVertices2(int32_t num, VBUF2 *source);
@@ -58,8 +58,8 @@ void S_Output_DrawSprite(int16_t x1, int16_t y1, int16_t x2, int y2, int z,
 void Output_DrawUISprite(int32_t x, int32_t y, int32_t scale, int16_t sprnum,
 						 int16_t shade);
 void Output_DrawScreenBox(int32_t sx, int32_t sy, int32_t w, int32_t h);
-void Output_DrawScreenFBox(int32_t sx, int32_t sy, int32_t w, int32_t h);
-void Output_DrawScreenFlatQuad(int32_t sx, int32_t sy, int32_t w, int32_t h,
+void S_Output_DrawScreenFBox(int32_t sx, int32_t sy, int32_t w, int32_t h);
+void S_Output_DrawScreenFlatQuad(int32_t sx, int32_t sy, int32_t w, int32_t h,
 							   RGB888 color, int depth);
 void S_AnimateTextures(int32_t ticks);
 void Output_CalcWibbleTable();
@@ -74,3 +74,4 @@ void S_Output_DrawTriangle(VBUF2 *vertices, int vert_count, int depth);
 void S_Output_DrawLine(VBUF2 *vertices, int depth);
 void Output_DrawSpriteRel(int32_t x, int32_t y, int32_t z, int16_t sprnum,
 						  int16_t shade);
+int16_t* DrawRoomSprites(int16_t* obj_ptr, int32_t number);

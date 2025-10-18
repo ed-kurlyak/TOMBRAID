@@ -884,11 +884,11 @@ void DrawRoom(int16_t *obj_ptr)
 	// obj_ptr + 1 its data itself
 
 	obj_ptr = CalcRoomVertices(obj_ptr);
-	obj_ptr = DrawObjectGT4(obj_ptr + 1, *obj_ptr);
-	obj_ptr = DrawObjectGT3(obj_ptr + 1, *obj_ptr);
-	/*
+	obj_ptr = S_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
+	obj_ptr = S_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
+	
 	obj_ptr = DrawRoomSprites(obj_ptr + 1, *obj_ptr);
-	*/
+	
 
 	// draw objects
 

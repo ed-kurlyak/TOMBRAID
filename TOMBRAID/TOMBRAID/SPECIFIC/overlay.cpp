@@ -176,13 +176,13 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
 	// int32_t sh = 13;
 
 	// border
-	Output_DrawScreenFlatQuad(sx - border, sy - border, sw + border,
+	S_Output_DrawScreenFlatQuad(sx - border, sy - border, sw + border,
 							  sh + border, rgb_border_dark, 200);
-	Output_DrawScreenFlatQuad(sx, sy, sw + border, sh + border,
+	S_Output_DrawScreenFlatQuad(sx, sy, sw + border, sh + border,
 							  rgb_border_light, 200);
 
 	// background
-	Output_DrawScreenFlatQuad(sx, sy, sw, sh, rgb_bgnd, 190);
+	S_Output_DrawScreenFlatQuad(sx, sy, sw, sh, rgb_bgnd, 190);
 
 	const int32_t blink_interval = 20;
 	const int32_t blink_threshold = bar_type == BT_ENEMY_HEALTH ? 0 : 20;
@@ -215,7 +215,7 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
 				RGB888 color = m_ColorBarMap[bar_color][i];
 				int32_t lsy = sy + i * sh / COLOR_STEPS;
 				int32_t lsh = sy + (i + 1) * sh / COLOR_STEPS - lsy;
-				Output_DrawScreenFlatQuad(sx, lsy, sw, lsh, color);
+				S_Output_DrawScreenFlatQuad(sx, lsy, sw, lsh, color);
 			}
 		}
 		*/
@@ -223,7 +223,7 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
 		// red
 		// RGB888 color = { 160, 40, 28 };
 		RGB888 color = m_ColorBarMap[bar_color][0];
-		Output_DrawScreenFlatQuad(sx, sy, sw, sh, color, 180);
+		S_Output_DrawScreenFlatQuad(sx, sy, sw, sh, color, 180);
 	}
 }
 
