@@ -8,7 +8,7 @@ The project is based on the source code from <a href="https://github.com/LostArt
 ## Overview
 
 - Fully software rendering (no OpenGL).  
-- Optional DirectX 9 rendering mode.  
+- Optional DirectX 9 rendering mode (for compilation with DX9 support you need DirectX SDK June 2010).  
 - Original Core Design functions used for triangle rasterization (software triangle rasterization).  
 - 8-bit backbuffer using SCITECH Mega Graphics Library from Quake 1.  
 - Sound handled via DirectSound 8.  
