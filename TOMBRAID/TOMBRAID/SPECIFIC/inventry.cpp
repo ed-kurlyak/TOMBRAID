@@ -21,6 +21,7 @@
 #include "types.h"
 #include "vars.h"
 #include "backbuffer.h"
+#include "drawprimitive.h"
 //#include "specific/s_misc.h"
 
 //#include <stdint.h>
@@ -49,7 +50,8 @@ int32_t Display_Inventory(int inv_mode)
 
 	//добавил я в ТР1 нету но должна быть
 	// g_CameraUnderwater = 0;
-	Create_Normal_Palette();
+	if (!Hardware)
+		Create_Normal_Palette();
 
 	memset(&imo, 0, sizeof(IMOTION_INFO));
 	memset(&ring, 0, sizeof(RING_INFO));
@@ -202,7 +204,8 @@ int32_t Display_Inventory(int inv_mode)
 		//копируем картинку на экран
 		DoInventoryPicture();
 		//новая функция в коде нету здесь в этом месте
-		Clear_BackBuffer();
+		if (!Hardware)
+			Clear_BackBuffer();
 
 		phd_PushMatrix();
 		phd_TranslateAbs(ring.ringpos.x, ring.ringpos.y, ring.ringpos.z);
@@ -1117,7 +1120,7 @@ void DrawInventoryItem(INVENTORY_ITEM *inv_item)
 						(uint8_t)spr->sprnum);
 					break;
 				case SHAPE_BOX:
-					Output_DrawScreenBox(sx + spr->x, sy + spr->y, spr->param1,
+					S_Output_DrawScreenBox(sx + spr->x, sy + spr->y, spr->param1,
 										 spr->param2);
 					break;
 				case SHAPE_FBOX:

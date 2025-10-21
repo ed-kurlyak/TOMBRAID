@@ -11,6 +11,7 @@
 #include "draw.h"
 #include "types.h"
 #include "vars.h"
+#include "drawprimitive.h"
 
 #include <stdio.h>
 

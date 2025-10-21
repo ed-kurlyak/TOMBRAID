@@ -8,12 +8,12 @@ typedef struct phdspritestruct {
 				sint16	y1;
 				sint16	x2;
 				sint16	y2;
-} PHDSPRITESTRUCT;
+} PHD_SPRITE;
 */
 
 //#define MAX_SPRITES 512
 
-// PHDSPRITESTRUCT  g_PhdSpriteInfo[MAX_SPRITES];		// pointers to Scaley
+// PHD_SPRITE  g_PhdSpriteInfo[MAX_SPRITES];		// pointers to Scaley
 // Sprites
 
 void insert_sprite(int nZDepth, int nX1, int nY1, int nX2, int nY2, int nSprite,

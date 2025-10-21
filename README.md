@@ -1,12 +1,14 @@
 # Tomb Raider 1 Reverse Engineering Test Version
 
-**Software rendering project (no DirectX/OpenGL).**
+**Software rendering project (now with optional DirectX 9 support).**
 
-Special thanks to LostArtefacts & Marcin Kurczewski for their previous work — this reverse engineering is partial, and the source code is as close as possible to the original Core Design EXE. The project is based on the source code from <a href="https://github.com/LostArtefacts/TRX">https://github.com/LostArtefacts/TRX</a>
+Special thanks to LostArtefacts & Marcin Kurczewski for their previous work — this reverse engineering is partial, and the source code is as close as possible to the original Core Design EXE.  
+The project is based on the source code from <a href="https://github.com/LostArtefacts/TRX">https://github.com/LostArtefacts/TRX</a>
 
 ## Overview
 
-- Fully software rendering (no DirectX/OpenGL).  
+- Fully software rendering (no OpenGL).  
+- Optional DirectX 9 rendering mode.  
 - Original Core Design functions used for triangle rasterization (software triangle rasterization).  
 - 8-bit backbuffer using SCITECH Mega Graphics Library from Quake 1.  
 - Sound handled via DirectSound 8.  

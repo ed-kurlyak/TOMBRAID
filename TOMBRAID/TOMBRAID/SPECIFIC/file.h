@@ -33,4 +33,6 @@ bool LoadSoundSamples(FILE *fp);
 size_t File_Size(FILE *fp);
 // void DirectSound_Init();
 
+void Create_DX_Textures();
+
 #endif

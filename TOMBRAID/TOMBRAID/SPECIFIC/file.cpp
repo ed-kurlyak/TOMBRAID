@@ -4,6 +4,7 @@
 #include "lara.h"
 #include "screen.h"
 #include "vars.h"
+#include "cinema.h"
 
 #include "..\\objects\\abortion.h"
 #include "..\\objects\\alligator.h"
@@ -178,21 +179,142 @@ bool S_LoadLevel(char *szLevelName)
 
 	fclose(fp);
 
+	if(Hardware)
+		Create_DX_Textures();
+
 	return true;
+}
+
+//uint32_t TexturePageCount;
+#define ROOM_TRANSPARENCY  0xff
+
+
+//не забыть освободить
+void Create_DX_Textures()
+{
+	m_pLevelTile = new LPDIRECT3DTEXTURE9[TexturePageCount];
+
+	UINT s = 0;
+
+	for (UINT p = 0; p < TexturePageCount; p++)
+	{
+		BYTE alpha = 0;
+		UINT TexTile = p;
+		//UINT offset, c_index;
+		UINT c_index;
+		BYTE* TempTexTile = new BYTE[256 * 256 * 4];
+
+		uint8_t* input_ptr = (uint8_t*)TexturePagePtrs[TexTile];
+
+		for (UINT j = 0; j < 256; ++j)
+		{
+			for (UINT k = 0; k < 256; ++k)
+			{
+				//c_index = (j * 256) + k;
+				//offset = Level->Textile16[TexTile].Tile[c_index];
+
+				uint8_t pal_idx = *input_ptr++;
+
+				uint8_t alpha = pal_idx == 0 ? 0 : 0xFF;
+
+				UINT r = GameNormalPalette[pal_idx].r;
+				UINT g = GameNormalPalette[pal_idx].g;
+				UINT b = GameNormalPalette[pal_idx].b;
+				/*
+				UINT r = GameNormalPalette[TexturePagePtrs[TexTile][c_index]].r;
+				UINT g = GameNormalPalette[TexturePagePtrs[TexTile][c_index]].g;
+				UINT b = GameNormalPalette[TexturePagePtrs[TexTile][c_index]].b;
+				*/
+
+				//если пиксель черного цвета это прозначность альфа=0
+				/*
+				if (TexturePagePtrs[TexTile][c_index] != 0)
+					alpha = 255;
+				else
+					alpha = 0;
+				*/
+
+				c_index = (j * 1024) + (k * 4);
+
+				TempTexTile[c_index + 0] = r; //r
+				TempTexTile[c_index + 1] = g; //g
+				TempTexTile[c_index + 2] = b; //b
+				TempTexTile[c_index + 3] = alpha;
+
+				/*
+				TempTexTile[c_index + 0] = ((offset >> 10) & 0x1f) * 8; //r
+				TempTexTile[c_index + 1] = ((offset >> 5) & 0x1f) * 8; //g
+				TempTexTile[c_index + 2] = (offset & 0x1f) * 8; //b
+				TempTexTile[c_index + 3] = (offset & 0x8000) ? ROOM_TRANSPARENCY : 0;
+				*/
+
+			}
+		}
+
+		g_d3d_Device->CreateTexture(256, 256, 1,
+			D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_pLevelTile[s], NULL);
+
+		LPDIRECT3DSURFACE9 pSurface;
+		m_pLevelTile[s]->GetSurfaceLevel(0, &pSurface);
+
+		D3DLOCKED_RECT locked;
+		pSurface->LockRect(&locked, NULL, 0);
+		BYTE* imageData = (BYTE*)locked.pBits;
+
+		for (UINT y = 0; y < 256; ++y)
+		{
+			BYTE* dest = imageData + y * locked.Pitch;
+			BYTE* src = TempTexTile + y * 256 * 4;
+
+			for (UINT x = 0; x < 256; ++x)
+			{
+				UINT srcIndex = x * 4;
+				dest[srcIndex + 0] = src[srcIndex + 2]; //b
+				dest[srcIndex + 1] = src[srcIndex + 1]; //g
+				dest[srcIndex + 2] = src[srcIndex + 0]; //r
+				dest[srcIndex + 3] = src[srcIndex + 3]; //a
+			}
+		}
+		/*
+		int indx = 0;
+		for (int i = 0; i < 256 * 256; i++)
+		{
+
+			imageData[indx + 0] = TempTexTile[indx + 2];//b
+			imageData[indx + 1] = TempTexTile[indx + 1];//g
+			imageData[indx + 2] = TempTexTile[indx + 0];//r
+			imageData[indx + 3] = TempTexTile[indx + 3];//a
+
+			
+
+			indx += 4;
+		}
+	*/
+
+
+		pSurface->UnlockRect();
+		pSurface->Release();
+
+		s++;
+
+		delete[] TempTexTile;
+
+
+	}
+
 }
 
 bool Load_Texture_Pages(FILE *fp)
 {
-	int32_t TexturePageCount;
+	//int32_t TexturePageCount;
 
 	fread(&TexturePageCount, 4, 1, fp);
 
-	int8_t *Buff =
-		(int8_t *)Game_Alloc(TexturePageCount * 256 * 256, GBUF_TEXTURE_PAGES);
+	int8_t *Buff = (int8_t *)Game_Alloc(TexturePageCount * 256 * 256, GBUF_TEXTURE_PAGES);
 
 	fread(Buff, 256 * 256, TexturePageCount, fp);
 
-	for (int i = 0; i < TexturePageCount; i++)
+	for (UINT i = 0; i < TexturePageCount; i++)
 	{
 		TexturePagePtrs[i] = Buff;
 		Buff += 256 * 256;
@@ -925,24 +1047,24 @@ void ObjectObjects()
 	SetupBoat(&g_Objects[O_BOAT]);			   // obj# 182
 	SetupEarthquake(&g_Objects[O_EARTHQUAKE]); // obj# 183
 
-	/*
+	
 	//player 1 - 77
-g_Objects[O_PLAYER_1].initialise = InitialisePlayer1;
-g_Objects[O_PLAYER_1].control = ControlCinematicPlayer;
-g_Objects[O_PLAYER_1].hit_points = 1;
+	g_Objects[O_PLAYER_1].initialise = InitialisePlayer1;
+	g_Objects[O_PLAYER_1].control = ControlCinematicPlayer;
+	g_Objects[O_PLAYER_1].hit_points = 1;
 	//player 2 - 78
-g_Objects[O_PLAYER_2].initialise = InitialiseGenPlayer;
-g_Objects[O_PLAYER_2].control = ControlCinematicPlayer;
-g_Objects[O_PLAYER_2].hit_points = 1;
+	g_Objects[O_PLAYER_2].initialise = InitialiseGenPlayer;
+	g_Objects[O_PLAYER_2].control = ControlCinematicPlayer;
+	g_Objects[O_PLAYER_2].hit_points = 1;
 	//player 3 - 79
-g_Objects[O_PLAYER_3].initialise = InitialiseGenPlayer;
-g_Objects[O_PLAYER_3].control = ControlCinematicPlayer;
-g_Objects[O_PLAYER_3].hit_points = 1;
+	g_Objects[O_PLAYER_3].initialise = InitialiseGenPlayer;
+	g_Objects[O_PLAYER_3].control = ControlCinematicPlayer;
+	g_Objects[O_PLAYER_3].hit_points = 1;
 	//player 4 - 80
-g_Objects[O_PLAYER_4].initialise = InitialiseGenPlayer;
-g_Objects[O_PLAYER_4].control = ControlCinematicPlayer4;
-g_Objects[O_PLAYER_4].hit_points = 1;
-	*/
+	g_Objects[O_PLAYER_4].initialise = InitialiseGenPlayer;
+	g_Objects[O_PLAYER_4].control = ControlCinematicPlayer4;
+	g_Objects[O_PLAYER_4].hit_points = 1;
+	
 
 	g_Objects[O_BLOOD1].control = ControlBlood1; // obj# 158
 
@@ -972,7 +1094,7 @@ bool LoadSprites(FILE *fp)
 
 	fread(&SpriteInfoCount, sizeof(int32_t), 1, fp);
 
-	fread(&g_PhdSpriteInfo, sizeof(PHDSPRITESTRUCT), SpriteInfoCount, fp);
+	fread(&g_PhdSpriteInfo, sizeof(PHD_SPRITE), SpriteInfoCount, fp);
 
 	int32_t SpriteCount;
 
@@ -1209,6 +1331,10 @@ bool LoadPalette(FILE *fp)
 
 	for (int i = 0; i < 256; i++)
 	{
+		GamePalette[i].r = palette[i].r;
+		GamePalette[i].g = palette[i].g;
+		GamePalette[i].b = palette[i].b;
+
 		GameNormalPalette[i].r = palette[i].r * 4;
 		GameNormalPalette[i].g = palette[i].g * 4;
 		GameNormalPalette[i].b = palette[i].b * 4;

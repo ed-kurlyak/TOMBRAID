@@ -7,6 +7,8 @@
 #define MAX(x, y) ((x) >= (y) ? (x) : (y))
 #endif
 
+#define CLAMP255(x)(BYTE) (((x) < 0) ? 0 : ((x) > 255) ? 255 : (x))
+
 #define CLAMPL(a, b)                                                           \
 	do                                                                         \
 	{                                                                          \

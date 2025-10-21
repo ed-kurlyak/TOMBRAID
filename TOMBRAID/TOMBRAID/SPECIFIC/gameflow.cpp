@@ -605,41 +605,45 @@ void Init_GameFlow()
 	}
 }
 
-
 int Start_New_Game(int LevelNum)
 {
 
 	int32_t result = 0;
 
-	switch (LevelNum)
+	if (GameType == VER_TR1)
 	{
-	case 0:
-		Play_FMV_Init_Malloc(1, 1);
-		break;
 
-	case 1:
-		Play_FMV_Init_Malloc(2, 1);
-		break;
+		switch (LevelNum)
+		{
+		case 0:
+			Play_FMV_Init_Malloc(1, 1);
+			break;
 
-	case 5:
-		Play_FMV_Init_Malloc(3, 1);
-		break;
+		case 1:
+			Play_FMV_Init_Malloc(2, 1);
+			break;
 
-	case 10:
-		Play_FMV_Init_Malloc(4, 1);
-		break;
+		case 5:
+			Play_FMV_Init_Malloc(3, 1);
+			break;
 
-	case 13:
-		Play_FMV_Init_Malloc(5, 1);
-		break;
+		case 10:
+			Play_FMV_Init_Malloc(4, 1);
+			break;
 
-	case 14:
-		Play_FMV_Init_Malloc(6, 1);
-		break;
+		case 13:
+			Play_FMV_Init_Malloc(5, 1);
+			break;
 
-	default:
-		Play_FMV_Init_Malloc(0, 0);
-		break;
+		case 14:
+			Play_FMV_Init_Malloc(6, 1);
+			break;
+
+		default:
+			Play_FMV_Init_Malloc(0, 0);
+			break;
+		}
+
 	}
 
 	g_CurrentLevel = LevelNum;
@@ -663,13 +667,15 @@ int Start_New_Game(int LevelNum)
 	// level complete
 	if (g_LevelComplete)
 	{
+		/*
 		if (g_CurrentLevel == 0)
 		{
 			return GF_EXIT_TO_TITLE;
 		}
 		else
+		*/
 		{
-			return GF_LEVEL_COMPLETE;
+			return g_CurrentLevel | GF_LEVEL_COMPLETE;
 		}
 	}
 

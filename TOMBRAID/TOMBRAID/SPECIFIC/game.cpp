@@ -1,5 +1,6 @@
 #include <windows.h>
 
+#include "util.h"
 #include "input.h"
 #include "text.h"
 #include "draw.h"
@@ -26,9 +27,173 @@
 
 #include "savegame.h"
 #include "game.h"
+#include "gameflow.h"
 
+#include "drawprimitive.h"
 
 static int32_t m_MedipackCoolDown = 0;
+
+int Print_Final_Stats(int32_t level_num)
+{
+	if (GameType == VER_TR1)
+	{
+
+		if (level_num > 19)
+			return GF_EXIT_TO_TITLE;
+
+		switch (level_num)
+		{
+		case 0:
+			return GF_EXIT_TO_TITLE;
+
+			break;
+
+		case 1:
+			LevelStats(1);
+			return 2;
+
+			break;
+
+		case 2:
+
+			LevelStats(2);
+			return 3;
+
+			break;
+
+		case 3:
+
+			LevelStats(3);
+			return 4;
+
+			break;
+
+		case 4:
+
+			return 0x50;
+
+			break;
+
+		case 5:
+
+			LevelStats(5);
+			return 6;
+
+			break;
+
+		case 6:
+
+			LevelStats(6);
+			return 7;
+
+			break;
+
+		case 7:
+
+			LevelStats(7);
+			return 8;
+
+			break;
+
+		case 8:
+
+			LevelStats(8);
+			return 9;
+
+			break;
+
+		case 9:
+
+			return 0x51;
+
+			break;
+
+		case 10:
+
+			LevelStats(10);
+			return 11;
+
+			break;
+
+		case 11:
+
+			LevelStats(11);
+			return 12;
+
+			break;
+
+		case 12:
+
+			LevelStats(12);
+			return 13;
+
+			break;
+
+		case 13:
+
+			LevelStats(13);
+			return 0x52;
+
+			break;
+
+		case 14:
+
+			Play_FMV_Init_Malloc(7, 1);
+			return 0x53;
+
+			break;
+
+		case 15:
+
+			LevelStats(15);
+			//Final_Titiles_After_Last_Level();
+			return GF_EXIT_TO_TITLE;
+
+			break;
+
+		case 16:
+
+			LevelStats(4);
+			return 5;
+
+			break;
+
+		case 17:
+
+			LevelStats(9);
+			return 10;
+
+			break;
+
+		case 18:
+
+			return 0xE;
+
+			break;
+
+		case 19:
+
+			LevelStats(14);
+			return 15;
+
+			break;
+
+		default:
+
+			return GF_EXIT_TO_TITLE;
+
+			break;
+		}
+
+	}
+	else
+	{
+		return LevelStats(level_num);
+	}
+
+	return 0;
+
+}
 
 int LevelStats(int32_t level_num)
 {
@@ -106,8 +271,11 @@ int LevelStats(int32_t level_num)
 	{
 		Input_Update();
 		S_InitialisePolyList();
-		Clear_BackBuffer();
-		// Output_CopyBufferToScreen(); draw picture
+
+		if (!Hardware)
+			Clear_BackBuffer();
+		
+		// CopyBufferToScreen(); draw picture
 		Text_Draw();
 
 		S_OutputPolyList();
@@ -403,8 +571,6 @@ void Input_Update()
 	g_Input.deselect = S_Input_Key(INPUT_KEY_OPTION);
 	g_Input.option =
 		S_Input_Key(INPUT_KEY_OPTION) && g_Camera.type != CAM_CINEMATIC;
-	// g_Input.option = Get_Key_State(VK_ESCAPE) && g_Camera.type !=
-	// CAM_CINEMATIC;
 
 	if (m_MedipackCoolDown)
 	{
@@ -448,8 +614,6 @@ void Input_Update()
 	}
 
 	// g_InputDB = Input_GetDebounced(g_Input);
-
-	// SpinMessageLoop();
 }
 
 INPUT_STATE Input_GetDebounced(INPUT_STATE input)
@@ -459,6 +623,30 @@ INPUT_STATE Input_GetDebounced(INPUT_STATE input)
 	g_OldInputDB = input;
 	return result;
 }
+
+int32_t DrawPhaseCinematic()
+{
+	S_InitialisePolyList();
+	//Output_ClearScreen();
+	g_CameraUnderwater = false;
+	for (int i = 0; i < g_RoomsToDrawCount; i++)
+	{
+		int16_t room_num = g_RoomsToDraw[i];
+		ROOM_INFO* r = &g_RoomInfo[room_num];
+		r->top = 0;
+		r->left = 0;
+		r->right = (short)g_SurfaceMaxX;
+		r->bottom = (short)g_SurfaceMaxY;
+		PrintRooms(room_num);
+	}
+
+	S_OutputPolyList();
+
+	g_Camera.number_frames = S_DumpScreen();
+	S_AnimateTextures(g_Camera.number_frames);
+	return g_Camera.number_frames;
+}
+
 
 int Draw_Phase_Game()
 {
@@ -479,12 +667,22 @@ int Draw_Phase_Game()
 	return g_Camera.number_frames;
 }
 
-void S_InitialisePolyList()
+void S_InitialisePolyList_SW()
 {
-	sort3dptr = (int32_t *)sort3d_buffer;
-	info3dptr = (int16_t *)info3d_buffer;
+	sort3dptr = (int32_t*)sort3d_buffer;
+	info3dptr = (int16_t*)info3d_buffer;
 
 	surfacenum = 0;
+}
+
+void S_InitialisePolyList_HW()
+{
+	sort3dptr = (int32_t*)sort3d_buffer;
+	info3dptr = (int16_t*)info3d_buffer;
+
+	surfacenum = 0;
+
+	InitBuckets();
 }
 
 void DrawRooms(int16_t current_room)
@@ -515,22 +713,19 @@ void DrawRooms(int16_t current_room)
 
 	GetRoomBounds(current_room);
 
-	Clear_BackBuffer();
+	if (!Hardware)
+		Clear_BackBuffer();
 
-	// static int prev_cam = 0;
-
-	// if(g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
 	if (g_CameraUnderwater)
 	{
-		// prev_cam = g_CameraUnderwater;
-		Create_Water_Palette();
+		if (!Hardware)
+			Create_Water_Palette();
 	}
 
-	// if(!g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
 	if (!g_CameraUnderwater)
 	{
-		// prev_cam = g_CameraUnderwater;
-		Create_Normal_Palette();
+		if (!Hardware)
+			Create_Normal_Palette();
 	}
 
 	if (g_Objects[O_LARA].loaded)
@@ -552,15 +747,555 @@ void DrawRooms(int16_t current_room)
 	}
 }
 
-void S_OutputPolyList()
+void S_OutputPolyList_SW()
 {
 	phd_SortPolyList(surfacenum, sort3d_buffer);
 	phd_PrintPolyList(dibdc->surface);
 }
 
+void S_OutputPolyList_HW()
+{
+	//-------create vert buff tex poly
+
+	for (int n = 0; n < MAXBUCKETS; n++)
+	{
+		if (Bucket_Tex_Color_Opaque[n].count != 0)
+		{
+			g_d3d_Device->CreateVertexBuffer(Bucket_Tex_Color_Opaque[n].count * sizeof(VERTEX_COLOR_TEX), D3DUSAGE_WRITEONLY,
+				D3DFVF_XYZRHW | D3DFVF_TEX1 | D3DFVF_DIFFUSE, D3DPOOL_MANAGED, &Bucket_Tex_Color_Opaque[n].VertBuff, 0);
+
+			VERTEX_COLOR_TEX* v = 0;
+			Bucket_Tex_Color_Opaque[n].VertBuff->Lock(0, 0, (void**)& v, 0);
+
+			memcpy(&v[0], &Bucket_Tex_Color_Opaque[n].Vertex[0], sizeof(VERTEX_COLOR_TEX) * Bucket_Tex_Color_Opaque[n].count);
+
+			Bucket_Tex_Color_Opaque[n].VertBuff->Unlock();
+
+		}
+	}
+
+
+	///------------------- colored poly
+
+	if (Bucket_Colored.count > 0)
+	{
+		g_d3d_Device->CreateVertexBuffer(Bucket_Colored.count * sizeof(VERTEX_COLOR), D3DUSAGE_WRITEONLY,
+			D3DFVF_XYZRHW | D3DFVF_DIFFUSE, D3DPOOL_MANAGED, &Bucket_Colored.VertBuff, 0);
+
+		VERTEX_COLOR* v = 0;
+		Bucket_Colored.VertBuff->Lock(0, 0, (void**)& v, 0);
+
+		memcpy(&v[0], &Bucket_Colored.Vertex[0], sizeof(VERTEX_COLOR) * Bucket_Colored.count);
+
+		Bucket_Colored.VertBuff->Unlock();
+	}
+
+	//-------------------------------------------------
+	// lines buffer
+
+	if (Bucket_Lines.count > 0)
+	{
+		g_d3d_Device->CreateVertexBuffer(Bucket_Lines.count * sizeof(VERTEX_COLOR_LINE), D3DUSAGE_WRITEONLY,
+			D3DFVF_XYZRHW | D3DFVF_DIFFUSE, D3DPOOL_MANAGED, &Bucket_Lines.VertBuff, 0);
+
+		VERTEX_COLOR* v = 0;
+		Bucket_Lines.VertBuff->Lock(0, 0, (void**)& v, 0);
+
+		memcpy(&v[0], &Bucket_Lines.Vertex[0], sizeof(VERTEX_COLOR_LINE) * Bucket_Lines.count);
+
+		Bucket_Lines.VertBuff->Unlock();
+	}
+
+	//-------------------------------------------------
+	// trans quad buffer for under text titles
+
+	if (Bucket_TransQuad.count > 0)
+	{
+		g_d3d_Device->CreateVertexBuffer(Bucket_TransQuad.count * sizeof(VERTEX_TRANS_QUAD), D3DUSAGE_WRITEONLY,
+			D3DFVF_XYZRHW | D3DFVF_DIFFUSE, D3DPOOL_MANAGED, &Bucket_TransQuad.VertBuff, 0);
+
+		VERTEX_COLOR* v = 0;
+		Bucket_TransQuad.VertBuff->Lock(0, 0, (void**)& v, 0);
+
+		memcpy(&v[0], &Bucket_TransQuad.Vertex[0], sizeof(VERTEX_TRANS_QUAD) * Bucket_TransQuad.count);
+
+		Bucket_TransQuad.VertBuff->Unlock();
+	}
+
+	HRESULT hr;
+
+	//hr = g_d3d_Device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 60, 100, 150), 1.0f, 0);
+	hr = g_d3d_Device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
+	if (FAILED(hr)) return;
+
+	hr = g_d3d_Device->BeginScene();
+	if (FAILED(hr)) return;
+
+	pEffectTexColor->SetTechnique(g_hTechTexColor);
+
+	D3DXHANDLE hMyConstant1 = pEffectTexColor->GetParameterByName(NULL, "g_ScreenWidth");
+	if (hMyConstant1)
+	{
+		float ScreenWidth = (float)Screen_GetResWidth();
+		pEffectTexColor->SetFloat(hMyConstant1, ScreenWidth);
+	}
+
+	D3DXHANDLE hMyConstant2 = pEffectTexColor->GetParameterByName(NULL, "g_ScreenHeight");
+	if (hMyConstant2)
+	{
+		float ScreenHeight = (float)Screen_GetResHeight();
+		pEffectTexColor->SetFloat(hMyConstant2, ScreenHeight);
+	}
+	
+	D3DXHANDLE hMyConstant3 = pEffectTexColor->GetParameterByName(NULL, "ZNear");
+	if (hMyConstant3)
+	{
+		float ZNear = Z_NEAR;
+		pEffectTexColor->SetFloat(hMyConstant3, ZNear);
+	}
+
+	D3DXHANDLE hMyConstant4 = pEffectTexColor->GetParameterByName(NULL, "ZFar");
+	if (hMyConstant4)
+	{
+		float ZFar = 0x9000 << W2V_SHIFT;
+		pEffectTexColor->SetFloat(hMyConstant4, ZFar);
+	}
+
+	UINT uPass = 0;
+	hr = pEffectTexColor->Begin(&uPass, 0);
+	if (FAILED(hr)) return;
+
+	hr = pEffectTexColor->BeginPass(0);
+	if (FAILED(hr)) return;
+
+	hr = g_d3d_Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	if (FAILED(hr)) return;
+
+	hr = g_d3d_Device->SetRenderState(D3DRS_ZENABLE, TRUE);
+	if (FAILED(hr)) return;
+
+	hr = g_d3d_Device->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	if (FAILED(hr)) return;
+	
+	/*
+	g_d3d_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	g_d3d_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	g_d3d_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	
+	g_d3d_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	g_d3d_Device->SetRenderState(D3DRS_ALPHAREF, 0);
+	g_d3d_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	*/
+
+	for (int n = 0; n < MAXBUCKETS; n++)
+	{
+		if (Bucket_Tex_Color_Opaque[n].count != 0)
+		{
+			hr = g_d3d_Device->SetTexture(0, m_pLevelTile[Bucket_Tex_Color_Opaque[n].tpage]);
+			if (FAILED(hr)) return;
+			hr = g_d3d_Device->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1 | D3DFVF_DIFFUSE);
+			if (FAILED(hr)) return;
+			hr = g_d3d_Device->SetStreamSource(0, Bucket_Tex_Color_Opaque[n].VertBuff, 0, sizeof(VERTEX_COLOR_TEX));
+			if (FAILED(hr)) return;
+			hr = g_d3d_Device->SetVertexDeclaration(g_pVertDeclTexColor);
+			if (FAILED(hr)) return;
+
+			//нарисуем примитивы
+			hr = g_d3d_Device->DrawPrimitive(
+				D3DPT_TRIANGLELIST,             //тип примитива
+				0,                              //смещение первой вершины в буфере
+				Bucket_Tex_Color_Opaque[n].count / 3);                //кол-во треугольников (count вершин / 3)
+
+		}
+	}
+
+	//g_d3d_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+	hr = pEffectTexColor->EndPass();
+	if (FAILED(hr)) return;
+
+	//=== Pass 1 ===
+	hr = pEffectTexColor->BeginPass(1);
+	if (FAILED(hr)) return;
+
+	if(Bucket_Colored.count > 0)
+	{
+
+		hr = g_d3d_Device->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+		if (FAILED(hr)) return;
+
+		hr = g_d3d_Device->SetStreamSource(0, Bucket_Colored.VertBuff, 0, sizeof(VERTEX_COLOR));
+		if (FAILED(hr)) return;
+
+		hr = g_d3d_Device->SetVertexDeclaration(g_pVertDeclColor);
+		if (FAILED(hr)) return;
+
+		hr = g_d3d_Device->DrawPrimitive(D3DPT_TRIANGLELIST, 0, Bucket_Colored.count / 3);
+	}
+		
+	hr = pEffectTexColor->EndPass();
+	if (FAILED(hr)) return;
+
+	//draw trans quad under text titles
+
+	hr = pEffectTexColor->BeginPass(4);
+	if (FAILED(hr)) return;
+
+	hr = g_d3d_Device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	if (FAILED(hr)) return;
+
+	hr = g_d3d_Device->SetRenderState(D3DRS_ZENABLE, TRUE);
+	if (FAILED(hr)) return;
+
+	hr = g_d3d_Device->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	if (FAILED(hr)) return;
+
+
+	g_d3d_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	g_d3d_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	g_d3d_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	if (Bucket_TransQuad.count > 0)
+	{
+
+		hr = g_d3d_Device->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+		if (FAILED(hr)) return;
+
+		hr = g_d3d_Device->SetStreamSource(0, Bucket_TransQuad.VertBuff, 0, sizeof(VERTEX_TRANS_QUAD));
+		if (FAILED(hr)) return;
+
+		hr = g_d3d_Device->SetVertexDeclaration(g_pVertDeclColor);
+		if (FAILED(hr)) return;
+
+		hr = g_d3d_Device->DrawPrimitive(D3DPT_TRIANGLELIST, 0, Bucket_TransQuad.count / 3);
+	}
+
+
+	g_d3d_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+	hr = pEffectTexColor->EndPass();
+	if (FAILED(hr)) return;
+
+	//draw lines
+	hr = pEffectTexColor->BeginPass(3);
+	if (FAILED(hr)) return;
+
+	if (Bucket_Lines.count > 0)
+	{
+
+		hr = g_d3d_Device->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+		if (FAILED(hr)) return;
+
+		hr = g_d3d_Device->SetStreamSource(0, Bucket_Lines.VertBuff, 0, sizeof(VERTEX_COLOR_LINE));
+		if (FAILED(hr)) return;
+
+		hr = g_d3d_Device->SetVertexDeclaration(g_pVertDeclColor);
+		if (FAILED(hr)) return;
+
+		hr = g_d3d_Device->DrawPrimitive(D3DPT_LINELIST, 0, Bucket_Lines.count / 2);
+	}
+
+	hr = pEffectTexColor->EndPass();
+	if (FAILED(hr)) return;
+
+	hr = pEffectTexColor->BeginPass(2);
+	if (FAILED(hr)) return;
+
+	phd_SortPolyList(surfacenum, sort3d_buffer);
+
+	int* sptr = (int*)sort3d_buffer;
+
+	short int* iptr;
+
+	for (int i = 0; i < surfacenum; i++)
+	{
+		iptr = (short int*)(*sptr);
+		short int routine = *(iptr++);
+
+		int tex_page = *(iptr++); //tex page
+
+		int num_verts = *(iptr++); //num verts
+
+		VERTEX_COLOR_TEX Vertex[8];
+
+		float* fptr;
+
+		BYTE diffuse;
+		DWORD color;
+
+		int draw_verts_count = 0;
+
+		if(num_verts == 4)
+		{
+			fptr = (float*)iptr;
+
+			float x1 = fptr[0];
+			float y1 = fptr[1];
+			float g1 = fptr[2];
+			float z1 = fptr[3];
+			float w1 = fptr[4];
+			float tu1 = fptr[5];
+			float tv1 = fptr[6];
+
+			float x2 = fptr[7];
+			float y2 = fptr[8];
+			float g2 = fptr[9];
+			float z2 = fptr[10];
+			float w2 = fptr[11];
+			float tu2 = fptr[12];
+			float tv2 = fptr[13];
+
+			float x3 = fptr[14];
+			float y3 = fptr[15];
+			float g3 = fptr[16];
+			float z3 = fptr[17];
+			float w3 = fptr[18];
+			float tu3 = fptr[19];
+			float tv3 = fptr[20];
+
+			float x4 = fptr[21];
+			float y4 = fptr[22];
+			float g4 = fptr[23];
+			float z4 = fptr[24];
+			float w4 = fptr[25];
+			float tu4 = fptr[26];
+			float tv4 = fptr[27];
+
+			Vertex[0].x = x1;
+			Vertex[0].y = y1;
+			Vertex[0].w = w1;
+			Vertex[0].tu = tu1;
+			Vertex[0].tv = tv1;
+			Vertex[0].z = z1;
+			diffuse = (BYTE)CLAMP255(g1);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[0].diffuse = color;
+
+			Vertex[1].x = x2;
+			Vertex[1].y = y2;
+			Vertex[1].w = w2;
+			Vertex[1].tu = tu2;
+			Vertex[1].tv = tv2;
+			Vertex[1].z = z2;
+			diffuse = (BYTE)CLAMP255(g2);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[1].diffuse = color;
+
+			Vertex[2].x = x3;
+			Vertex[2].y = y3;
+			Vertex[2].w = w3;
+			Vertex[2].tu = tu3;
+			Vertex[2].tv = tv3;
+			Vertex[2].z = z3;
+			diffuse = (BYTE)CLAMP255(g3);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[2].diffuse = color;
+
+			//second tri
+
+			Vertex[3].x = x1;
+			Vertex[3].y = y1;
+			Vertex[3].w = w1;
+			Vertex[3].tu = tu1;
+			Vertex[3].tv = tv1;
+			Vertex[3].z = z1;
+			diffuse = (BYTE)CLAMP255(g1);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[3].diffuse = color;
+
+			Vertex[4].x = x3;
+			Vertex[4].y = y3;
+			Vertex[4].w = w3;
+			Vertex[4].tu = tu3;
+			Vertex[4].tv = tv3;
+			Vertex[4].z = z3;
+			diffuse = (BYTE)CLAMP255(g3);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[4].diffuse = color;
+
+			Vertex[5].x = x4;
+			Vertex[5].y = y4;
+			Vertex[5].w = w4;
+			Vertex[5].tu = tu4;
+			Vertex[5].tv = tv4;
+			Vertex[5].z = z4;
+			diffuse = (BYTE)CLAMP255(g4);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[5].diffuse = color;
+
+			draw_verts_count = 6;
+			
+		}
+		else if (num_verts == 3)
+		{
+			fptr = (float*)iptr;
+
+			float x1 = fptr[0];
+			float y1 = fptr[1];
+			float g1 = fptr[2];
+			float z1 = fptr[3];
+			float w1 = fptr[4];
+			float tu1 = fptr[5];
+			float tv1 = fptr[6];
+
+			float x2 = fptr[7];
+			float y2 = fptr[8];
+			float g2 = fptr[9];
+			float z2 = fptr[10];
+			float w2 = fptr[11];
+			float tu2 = fptr[12];
+			float tv2 = fptr[13];
+
+			float x3 = fptr[14];
+			float y3 = fptr[15];
+			float g3 = fptr[16];
+			float z3 = fptr[17];
+			float w3 = fptr[18];
+			float tu3 = fptr[19];
+			float tv3 = fptr[20];
+
+			Vertex[0].x = x1;
+			Vertex[0].y = y1;
+			Vertex[0].w = w1;
+			Vertex[0].tu = tu1;
+			Vertex[0].tv = tv1;
+			Vertex[0].z = z1;
+			diffuse = (BYTE)CLAMP255(g1);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[0].diffuse = color;
+
+			Vertex[1].x = x2;
+			Vertex[1].y = y2;
+			Vertex[1].w = w2;
+			Vertex[1].tu = tu2;
+			Vertex[1].tv = tv2;
+			Vertex[1].z = z2;
+			diffuse = (BYTE)CLAMP255(g2);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[1].diffuse = color;
+
+			Vertex[2].x = x3;
+			Vertex[2].y = y3;
+			Vertex[2].w = w3;
+			Vertex[2].tu = tu3;
+			Vertex[2].tv = tv3;
+			Vertex[2].z = z3;
+			diffuse = (BYTE)CLAMP255(g3);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[2].diffuse = color;
+
+			draw_verts_count = 3;
+
+		}
+
+		if(draw_verts_count > 0)
+		{
+
+			LPDIRECT3DVERTEXBUFFER9 VertBuff;
+
+			g_d3d_Device->CreateVertexBuffer(draw_verts_count * sizeof(VERTEX_COLOR_TEX), D3DUSAGE_WRITEONLY,
+				D3DFVF_XYZRHW | D3DFVF_TEX1 | D3DFVF_DIFFUSE, D3DPOOL_MANAGED, &VertBuff, 0);
+
+			VERTEX_COLOR_TEX* v = 0;
+			VertBuff->Lock(0, 0, (void**)& v, 0);
+
+			memcpy(&v[0], &Vertex[0], sizeof(VERTEX_COLOR_TEX)* draw_verts_count);
+
+			VertBuff->Unlock();
+	
+			hr = g_d3d_Device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+			if (FAILED(hr)) return;
+
+			hr = g_d3d_Device->SetRenderState(D3DRS_ZENABLE, TRUE);
+			if (FAILED(hr)) return;
+
+			hr = g_d3d_Device->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+			if (FAILED(hr)) return;
+
+			g_d3d_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+			g_d3d_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+			g_d3d_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+			hr = g_d3d_Device->SetTexture(0, m_pLevelTile[tex_page]);
+		
+			if (FAILED(hr)) return;
+			hr = g_d3d_Device->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1 | D3DFVF_DIFFUSE);
+			if (FAILED(hr)) return;
+			hr = g_d3d_Device->SetStreamSource(0, VertBuff, 0, sizeof(VERTEX_COLOR_TEX));
+			if (FAILED(hr)) return;
+			hr = g_d3d_Device->SetVertexDeclaration(g_pVertDeclTexColor);
+			if (FAILED(hr)) return;
+
+			//нарисуем примитивы
+			hr = g_d3d_Device->DrawPrimitive(
+				D3DPT_TRIANGLELIST,             //тип примитива
+				0,                              //смещение первой вершины в буфере
+				draw_verts_count / 3);                //кол-во треугольников (count вершин / 3)
+
+	
+			g_d3d_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+
+			if (VertBuff)
+			{
+				VertBuff->Release();
+				VertBuff = nullptr;
+			}
+
+		}
+
+		sptr += 2;
+	}
+
+	hr = pEffectTexColor->EndPass();
+	if (FAILED(hr)) return;
+
+	hr = pEffectTexColor->End();
+	if (FAILED(hr)) return;
+
+	hr = g_d3d_Device->EndScene();
+	if (FAILED(hr)) return;
+
+
+	//----------- free vert buff для следующего кадра
+
+	for (int n = 0; n < MAXBUCKETS; n++)
+	{
+		if (Bucket_Tex_Color_Opaque[n].count != 0)
+		{
+			if (Bucket_Tex_Color_Opaque[n].VertBuff)
+			{
+				Bucket_Tex_Color_Opaque[n].VertBuff->Release();
+				Bucket_Tex_Color_Opaque[n].VertBuff = nullptr;
+			}
+
+		}
+
+	}
+
+	if (Bucket_Colored.count > 0)
+	{
+		Bucket_Colored.VertBuff->Release();
+		Bucket_Colored.VertBuff = nullptr;
+	}
+
+
+	if (Bucket_Lines.count > 0)
+	{
+		Bucket_Lines.VertBuff->Release();
+		Bucket_Lines.VertBuff = nullptr;
+	}
+
+	if (Bucket_TransQuad.count > 0)
+	{
+		Bucket_TransQuad.VertBuff->Release();
+		Bucket_TransQuad.VertBuff = nullptr;
+	}
+
+}
+
 int32_t S_DumpScreen()
 {
-
 	int nframes;
 
 	nframes = Sync();
@@ -572,8 +1307,16 @@ int32_t S_DumpScreen()
 		nframes++;
 	}
 
-	// ScreenPartialDump()
-	Present_BackBuffer();
+	if (Hardware)
+	{
+		HRESULT hr = g_d3d_Device->Present(NULL, NULL, NULL, NULL);
+		if (FAILED(hr)) return 0;
+	}
+	else
+	{
+		// ScreenPartialDump()
+		Present_BackBuffer();
+	}
 
 	SpinMessageLoop();
 	g_FPSCounter++;
@@ -639,9 +1382,7 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 
 		if (zv > 0)
 		{
-			// if (zv > (g_DrawDistMax << W2V_SHIFT ))
-			// if (zv > (DRAW_DIST_MAX << W2V_SHIFT ))
-			if (zv > (DRAW_DIST_FADE << W2V_SHIFT))
+			if (zv > (DRAW_DIST_MAX << W2V_SHIFT))
 			{
 				z_toofar++;
 			}
@@ -842,16 +1583,14 @@ void PrintRooms(int16_t room_number)
 			phd_TranslateAbs(mesh->x, mesh->y, mesh->z);
 			phd_RotY(mesh->y_rot);
 
-			int clip =
-				S_GetObjectBounds(&g_StaticObjects[mesh->static_number].x_minp);
+			int clip = S_GetObjectBounds(&g_StaticObjects[mesh->static_number].x_minp);
 
 			if (clip)
 			{
 				Output_CalculateStaticLight(mesh->shade);
-				Output_DrawPolygons(
-					g_Meshes[g_StaticObjects[mesh->static_number].mesh_number],
-					clip);
+				Output_DrawPolygons(g_Meshes[g_StaticObjects[mesh->static_number].mesh_number], clip);
 			}
+
 			phd_PopMatrix();
 		}
 	}
@@ -873,37 +1612,18 @@ void PrintRooms(int16_t room_number)
 
 void DrawRoom(int16_t *obj_ptr)
 {
-	/*
-	g_Float_Phd_Left = (float) g_PhdLeft;
-	g_Float_Phd_Right = (float) g_PhdRight;
-	g_Float_Phd_Top = (float) g_PhdTop;
-	g_Float_Phd_Bottom = (float) g_PhdBottom;
-	*/
-
-	//*obj_ptr its count of data
-	// obj_ptr + 1 its data itself
 
 	obj_ptr = CalcRoomVertices(obj_ptr);
 	obj_ptr = S_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
 	obj_ptr = S_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
-	
 	obj_ptr = DrawRoomSprites(obj_ptr + 1, *obj_ptr);
 	
-
-	// draw objects
-
-	// draw static objects
 }
 
 int32_t CalcFogShade(int32_t depth)
 {
-	/*
 	int32_t fog_begin = DRAW_DIST_FADE;
 	int32_t fog_end = DRAW_DIST_MAX;
-	*/
-
-	int32_t fog_begin = DRAW_DIST_MAX; // 0x5000 my - 22528 git value
-	int32_t fog_end = DRAW_DIST_FADE;  // 0x8000 my - 30720 git value
 
 	if (depth < fog_begin)
 	{
@@ -921,7 +1641,6 @@ int32_t S_SaveGame(SAVEGAME_INFO *save, int32_t slot)
 {
 	char filename[80];
 	sprintf(filename, g_GameFlow.save_game_fmt, slot);
-	// LOG_DEBUG("%s", filename);
 
 	FILE *fp = fopen(filename, "wb");
 
@@ -945,7 +1664,7 @@ int32_t S_SaveGame(SAVEGAME_INFO *save, int32_t slot)
 
 	if (!save->start)
 	{
-		// Shell_ExitSystem("null save->start");
+		// ExitSystem("null save->start");
 		return 0;
 	}
 	fwrite(&save->start[0], sizeof(START_INFO), g_GameFlow.level_count, fp);
@@ -997,7 +1716,7 @@ int32_t S_LoadGame(SAVEGAME_INFO *save, int32_t slot)
 
 	if (!save->start)
 	{
-		// Shell_ExitSystem("null save->start");
+		// ExitSystem("null save->start");
 		return 0;
 	}
 
@@ -1022,18 +1741,6 @@ int32_t S_LoadGame(SAVEGAME_INFO *save, int32_t slot)
 	fread(&save->challenge_failed, sizeof(uint8_t), 1, fp);
 	fread(&save->buffer[0], sizeof(char), MAX_SAVEGAME_BUFFER, fp);
 	fclose(fp);
-
-	/*
-	for (int i = 0; i < g_GameFlow.level_count; i++)
-	{
-		if (g_GameFlow.levels[i].level_type == GFL_CURRENT)
-		{
-			save->start[save->current_level] = save->start[i];
-		}
-	}
-	*/
-
-	// save->start[save->current_level] = save->start[21];
 
 	return 1;
 }

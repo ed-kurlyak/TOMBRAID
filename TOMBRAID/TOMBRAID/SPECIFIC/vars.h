@@ -20,6 +20,40 @@
 #include "types.h"
 #include "winmain.h"
 
+#include <d3dx9.h>
+#include <math.h>
+
+#pragma comment (lib, "d3d9.lib")
+#pragma comment (lib, "d3dx9.lib")
+
+extern float BRIGHTNESS;
+
+//удалить используется для теста
+//extern LPDIRECT3DTEXTURE9 g_pTexture;
+
+extern uint32_t TexturePageCount;
+
+extern LPDIRECT3DTEXTURE9* m_pLevelTile;
+extern LPDIRECT3DDEVICE9 g_d3d_Device;
+extern LPDIRECT3D9 g_d3d;
+extern IDirect3DVertexDeclaration9* g_pVertDeclTexColor;
+extern IDirect3DVertexDeclaration9* g_pVertDeclColor;
+extern IDirect3DVertexDeclaration9* g_pVertDeclLines;
+extern ID3DXEffect* pEffectTexColor;
+extern D3DXHANDLE g_hTechTexColor;
+
+//массив непрозрачных полигонов
+//отсортированных по текстурам
+#define MAXBUCKETS 20
+#define MAXBUCKETS 20
+
+extern TEXTUREBUCKET_OPAQUE Bucket_Tex_Color_Opaque[MAXBUCKETS];
+extern COLOREDBUCKET Bucket_Colored;
+extern LINESBUCKET Bucket_Lines;
+extern TRANSQUADBUCKET Bucket_TransQuad;
+//extern TEXTUREBUCKET_TRANSPARENT Bucket_Tex_Color_Transparent[MAXBUCKETS];
+
+
 extern int g_LevelNumTR;
 
 extern int Game_Finished;
@@ -85,10 +119,11 @@ extern "C" char *phd_winptr;
 extern "C" char depthq_table[32][256];
 extern "C" char gouraud_table[256][32];
 
+extern RGB888 GamePalette[256];
 extern RGB888 GameNormalPalette[256];
 extern RGB888 GameWaterPalette[256];
 
-// extern PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
+// extern PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES];
 
 extern int8_t *TexturePagePtrs[MAX_TEXTPAGES];
 
@@ -104,7 +139,7 @@ extern int32_t g_PhdLeft;
 extern int32_t g_PhdBottom;
 extern int32_t g_PhdRight;
 extern int32_t g_PhdTop;
-extern PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
+extern PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES];
 extern PHD_TEXTURE g_PhdTextureInfo[MAX_TEXTURES];
 extern PHD_MATRIX *g_PhdMatrixPtr;
 extern PHD_MATRIX g_W2VMatrix;

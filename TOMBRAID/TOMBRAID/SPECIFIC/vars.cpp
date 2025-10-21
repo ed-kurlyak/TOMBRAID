@@ -6,6 +6,30 @@
 #include "types.h"
 #include <windows.h>
 
+float BRIGHTNESS = 1.0f;
+
+//LPDIRECT3DTEXTURE9 g_pTexture;
+
+uint32_t TexturePageCount;
+
+
+LPDIRECT3DTEXTURE9* m_pLevelTile = NULL;
+LPDIRECT3DDEVICE9 g_d3d_Device;
+LPDIRECT3D9 g_d3d;
+IDirect3DVertexDeclaration9* g_pVertDeclTexColor;
+IDirect3DVertexDeclaration9* g_pVertDeclColor;
+IDirect3DVertexDeclaration9* g_pVertDeclLines;
+ID3DXEffect* pEffectTexColor;
+D3DXHANDLE g_hTechTexColor;
+
+TEXTUREBUCKET_OPAQUE Bucket_Tex_Color_Opaque[MAXBUCKETS];
+COLOREDBUCKET Bucket_Colored;
+LINESBUCKET Bucket_Lines;
+TRANSQUADBUCKET Bucket_TransQuad;
+//TEXTUREBUCKET_TRANSPARENT Bucket_Tex_Color_Opaque[MAXBUCKETS];
+
+
+
 int g_LevelNumTR;
 
 int Game_Finished = 0;
@@ -149,10 +173,11 @@ char *phd_winptr = NULL;
 char depthq_table[32][256] = {0};  // depth cueing tables..
 char gouraud_table[256][32] = {0}; // Gouraud shade table..
 
+RGB888 GamePalette[256];
 RGB888 GameNormalPalette[256];
 RGB888 GameWaterPalette[256];
 
-// PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
+// PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES];
 
 int8_t *TexturePagePtrs[MAX_TEXTPAGES];
 
@@ -193,7 +218,7 @@ int32_t g_PhdLeft = 0;
 int32_t g_PhdBottom = 0;
 int32_t g_PhdRight = 0;
 int32_t g_PhdTop = 0;
-PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES] = {0};
+PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES] = {0};
 PHD_TEXTURE g_PhdTextureInfo[MAX_TEXTURES] = {0};
 PHD_MATRIX *g_PhdMatrixPtr = NULL;
 PHD_MATRIX g_W2VMatrix = {0};

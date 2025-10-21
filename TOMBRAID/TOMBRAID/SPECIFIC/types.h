@@ -1,10 +1,93 @@
 #pragma once
 
+#include "windows.h"
 #include "const.h"
+
+#include <d3dx9.h>
+#include <math.h>
+
+#pragma comment (lib, "d3d9.lib")
+#pragma comment (lib, "d3dx9.lib")
+
 //#include "global/const.h"
 
 //#include <stdbool.h>
 //#include <stdint.h>
+
+struct VERTEX_TRANS_QUAD
+{
+	float x, y, z, w;
+	DWORD diffuse;
+};
+
+struct VERTEX_COLOR_LINE
+{
+	float x, y, z, w;
+	DWORD diffuse;
+};
+
+struct VERTEX_COLOR_TEX
+{
+	//D3DXVECTOR4 p;
+	float x, y, z, w;
+	//D3DXVECTOR2 t;
+	float tu, tv;
+	DWORD diffuse;
+
+};
+
+struct VERTEX_COLOR
+{
+	//D3DXVECTOR4 p;
+	float x, y, z, w;
+	//D3DXVECTOR2 t;
+	//float tu, tv;
+	DWORD diffuse;
+
+};
+
+#define VERTSPERBUCKET (2 * 1024 + 32)
+
+struct TEXTUREBUCKET_OPAQUE
+{
+	DWORD tpage;
+	LPDIRECT3DTEXTURE9 lp_tpage;
+	int count;
+	VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
+	LPDIRECT3DVERTEXBUFFER9 VertBuff;
+};
+
+struct TRANSQUADBUCKET
+{
+	int count;
+	VERTEX_TRANS_QUAD Vertex[VERTSPERBUCKET];
+	LPDIRECT3DVERTEXBUFFER9 VertBuff;
+};
+
+struct LINESBUCKET
+{
+	int count;
+	VERTEX_COLOR_LINE Vertex[VERTSPERBUCKET];
+	LPDIRECT3DVERTEXBUFFER9 VertBuff;
+};
+
+struct COLOREDBUCKET
+{
+	int count;
+	VERTEX_COLOR Vertex[VERTSPERBUCKET];
+	LPDIRECT3DVERTEXBUFFER9 VertBuff;
+};
+
+struct TEXTUREBUCKET_TRANSPARENT
+{
+	DWORD tpage;
+	LPDIRECT3DTEXTURE9 lp_tpage;
+	int count;
+	VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
+	LPDIRECT3DVERTEXBUFFER9 VertBuff;
+};
+
+
 
 #define uint32_t unsigned int
 #define int32_t int
@@ -71,14 +154,16 @@ typedef enum
 
 typedef struct VBUF
 {
-	float x, y, z;
-	float u, v, g;
+	float x, y, z, w;
+	float u, v;
+	//BYTE g;
+	float g;
 } VBUF;
 
 typedef struct VBUF2
 {
 	// float x, y, z, g;
-	float x, y, g;
+	float x, y, z, g;
 } VBUF2;
 
 typedef struct
@@ -98,7 +183,7 @@ typedef struct
 		*/
 } SOUND_SAMPLE_INFO;
 
-typedef struct phdspritestruct
+typedef struct PHD_SPRITE
 {
 	uint16_t tpage;
 	uint16_t offset;
@@ -108,7 +193,7 @@ typedef struct phdspritestruct
 	int16_t y1;
 	int16_t x2;
 	int16_t y2;
-} PHDSPRITESTRUCT;
+} PHD_SPRITE;
 
 typedef enum GAME_BUFFER
 {

@@ -1,6 +1,7 @@
 #include <windows.h>
 
 #include "camera.h"
+#include "cinema.h"
 #include "winmain.h"
 /*
 #include "3dsystem/3d_gen.h"
@@ -606,7 +607,7 @@ void CalculateCamera()
 
 	if (g_Camera.type == CAM_CINEMATIC)
 	{
-		// InGameCinematicCamera();
+		InGameCinematicCamera();
 		return;
 	}
 

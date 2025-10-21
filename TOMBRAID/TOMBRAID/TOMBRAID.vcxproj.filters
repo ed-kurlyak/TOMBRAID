@@ -378,6 +378,12 @@
     <ClCompile Include="objects\wolf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SPECIFIC\drawprimitive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPECIFIC\cinema.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SPECIFIC\3d_gen.h">
@@ -708,6 +714,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="objects\wolf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SPECIFIC\drawprimitive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SPECIFIC\cinema.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

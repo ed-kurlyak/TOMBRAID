@@ -34,8 +34,11 @@ nSprite,short int nShade,short int nScale)
 		{
 		int xv,yv,zv,zp;
 		int x1,y1,x2,y2;
-		PHDSPRITESTRUCT* pSpriteInfo;
-		
+		PHD_SPRITE* pSpriteInfo;
+		
+
+
+
 		if (dwFlags&SPRITE_ABS)
 				{
 				nX-=w2v_matrix[M03];
@@ -122,7 +125,10 @@ nSprite,short int nShade,short int nScale)
 		}
 		else
 				InsertSprite(zv,x1,y1,x2,y2,nSprite,nShade,-1,DRAW_TLV_WGT,0);
-		
+		
+
+
+
 }
 
 */
@@ -187,7 +193,7 @@ void	S_DrawPickup( int x, int y, int scale, short int sprnum, short int
 shade, uint16 flags )
 {
 		// Draw sprite at specific screen location with scalable width and
-height PHDSPRITESTRUCT *sptr; int x1, y1, x2, y2;
+height PHD_SPRITE *sptr; int x1, y1, x2, y2;
 
 		sptr = &g_PhdSpriteInfo[sprnum];
 		x1 = ((sptr->x1 * scale)>>16)+x;
@@ -210,7 +216,7 @@ short int	*ins_room_sprite( short int *objptr, int num )
 {
 		PHD_VBUF		*vn;
 		int			x1,y1,x2,y2,zv;
-		PHDSPRITESTRUCT	*sptr;
+		PHD_SPRITE	*sptr;
 
 		for ( ;num>0;num--,objptr+=2 )
 		{
@@ -265,7 +271,7 @@ void S_DrawScreenSprite2d( int sx, int sy, int z, int scaleH, int scaleV, short
 int sprnum, short int shade, uint16 flags)
 {
 		// Draw sprite at specific screen location with scalable width and
-height PHDSPRITESTRUCT *sptr; int x1, y1, x2, y2;
+height PHD_SPRITE *sptr; int x1, y1, x2, y2;
 
 		sptr = &g_PhdSpriteInfo[sprnum];
 		x1 = ((sptr->x1 * scaleH)>>16) + sx;
@@ -281,13 +287,19 @@ height PHDSPRITESTRUCT *sptr; int x1, y1, x2, y2;
 		b = (TextLight[shade]>>(16+3))&0x1f;
 		g = (TextLight[shade]>>(8+3))&0x1f;
 		r = (TextLight[shade]>>(3))&0x1f;
-				
+				
+
+
+
 		nShade1 = r<<10|g<<5|b;
 
 		b = (TextDark[shade]>>(16+3))&0x1f;
 		g = (TextDark[shade]>>(8+3))&0x1f;
 		r = (TextDark[shade]>>(3))&0x1f;
-		
+		
+
+
+
 		nShade2 = r<<10|g<<5|b;
 
 		if(flags != 65535)
@@ -309,7 +321,7 @@ void S_DrawScreenSprite( int sx, int sy, int z, int scaleH, int scaleV, short
 int sprnum, short int shade, uint16 flags )
 {
 		// Draw sprite at specific screen location with scalable width and
-height PHDSPRITESTRUCT *sptr; int x1, y1, x2, y2;
+height PHD_SPRITE *sptr; int x1, y1, x2, y2;
 
 		sptr = &g_PhdSpriteInfo[sprnum];
 		x1 = (((sptr->x1>>3) * scaleH)>>16) + sx;
@@ -348,7 +360,7 @@ void draw_scaled_spriteC(short int *inptr)
 	unsigned char *pixptr, *dqptr;
 	unsigned char *ssptr, *slptr;
 	unsigned char pix;
-	PHDSPRITESTRUCT *sptr;
+	PHD_SPRITE *sptr;
 
 	x1 = (int)*(inptr);		// Get Top Left X
 	y1 = (int)*(inptr + 1); // Get Top Left Y

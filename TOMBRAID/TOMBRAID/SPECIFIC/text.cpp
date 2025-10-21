@@ -26,6 +26,7 @@
 #include "types.h"
 #include "util.h"
 #include "vars.h"
+#include "drawprimitive.h"
 
 #define TEXT_BOX_OFFSET 2
 #define TEXT_MAX_STRING_SIZE 100
@@ -506,6 +507,6 @@ static void Text_DrawText(TEXTSTRING *textstring)
 		sy = Screen_GetRenderScale(bypos);
 		sh = Screen_GetRenderScale(bwidth);
 		sv = Screen_GetRenderScale(bheight);
-		Output_DrawScreenBox(sx, sy, sh, sv);
+		S_Output_DrawScreenBox(sx, sy, sh, sv);
 	}
 }

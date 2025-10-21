@@ -45,6 +45,8 @@
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
@@ -153,9 +155,11 @@
     <ClCompile Include="SPECIFIC\backbuffer.cpp" />
     <ClCompile Include="SPECIFIC\box.cpp" />
     <ClCompile Include="SPECIFIC\camera.cpp" />
+    <ClCompile Include="SPECIFIC\cinema.cpp" />
     <ClCompile Include="SPECIFIC\collide.cpp" />
     <ClCompile Include="SPECIFIC\control_util.cpp" />
     <ClCompile Include="SPECIFIC\draw.cpp" />
+    <ClCompile Include="SPECIFIC\drawprimitive.cpp" />
     <ClCompile Include="SPECIFIC\file.cpp" />
     <ClCompile Include="SPECIFIC\game.cpp" />
     <ClCompile Include="SPECIFIC\gameflow.cpp" />
@@ -276,10 +280,12 @@
     <ClInclude Include="SPECIFIC\backbuffer.h" />
     <ClInclude Include="SPECIFIC\box.h" />
     <ClInclude Include="SPECIFIC\camera.h" />
+    <ClInclude Include="SPECIFIC\cinema.h" />
     <ClInclude Include="SPECIFIC\collide.h" />
     <ClInclude Include="SPECIFIC\const.h" />
     <ClInclude Include="SPECIFIC\control_util.h" />
     <ClInclude Include="SPECIFIC\draw.h" />
+    <ClInclude Include="SPECIFIC\drawprimitive.h" />
     <ClInclude Include="SPECIFIC\file.h" />
     <ClInclude Include="SPECIFIC\game.h" />
     <ClInclude Include="SPECIFIC\gameflow.h" />

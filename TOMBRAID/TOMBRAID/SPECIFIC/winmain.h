@@ -6,6 +6,10 @@
 
 #include "types.h"
 
+extern int DX9Clipping;
+
+extern int Hardware;
+
 extern int CheatsMode;
 
 extern int lara_dist;
@@ -41,3 +45,5 @@ void phd_InitWindow(int x, int y, int width, int height, int nearz, int farz,
 					int view_angle, int scrwidth, int scrheight,
 					unsigned char *BackBuff);
 int SpinMessageLoop();
+
+void Create_Shader_Effect();

@@ -14,58 +14,80 @@
 #include "input.h"
 #include "sound.h"
 #include "savegame.h"
+#include "drawprimitive.h"
+
+#include "3d_gen.h" //временно для phd_AlterFOV()
+
+#include "cinema.h"
 
 //***************************
 // SETUP START
 //***************************
 
 // SETUP PART #1
-//настройки моя игра
-int MY_GAME = 0;
+//HARDWARE or SOFTWARE
 
-// SETUP PART #2 FULLSCREEN/NO
-int Fullscreen = 0;
+int Hardware = 1;
+
+int Fullscreen_Hardware = 0;
 
 //---------------------------
-// SETUP PART #3 WIDESCREEN/NO
+// SETUP PART #9 CLIPPING DX9 or Software
+int DX9Clipping = 1;
+
+
+// SETUP PART #3 FULLSCREEN/NO
+int Fullscreen_Software = 0;
+
+//---------------------------
+// SETUP PART #4 WIDESCREEN/NO
 // учет аспекта в matrix.cpp phd_GenerateW2V()
 int Widescreen = 0;
 
 //---------------------------
-// SETUP PART #4 GAME TYPE - TR1/GOLD
+// SETUP PART #5 GAME TYPE - TR1/GOLD
 int GameType = VER_TR1;
 // int GameType = VER_TR1_GOLD;
 
 //---------------------------
-// SETUP PART #5 SCREEN RESOLUTION
+// SETUP PART #6 SCREEN RESOLUTION
 
 /*
 int SCREEN_WIDTH = 1600;
 int SCREEN_HEIGHT = 900;
 */
 
-/*
+
+
 int SCREEN_WIDTH = 1280;
 int SCREEN_HEIGHT = 720;
-*/
 
-int SCREEN_WIDTH = 800;
-int SCREEN_HEIGHT = 600;
+
 
 /*
+int SCREEN_WIDTH = 800;
+int SCREEN_HEIGHT = 600;
+*/
+
+/*
+
 int SCREEN_WIDTH = 640;
 int SCREEN_HEIGHT = 480;
 */
 
+
 //---------------------------
-// SETUP PART #6 LARA DIST
+// SETUP PART #7 LARA DIST
 // false is original TR1 Lara dist
 //влияет на g_PhdPersp
 int lara_dist = false;
 
-// SETUP PART #7 CHEATS MODE
+//---------------------------
+
+// SETUP PART #8 CHEATS MODE
 // full ammo/medi/health
-int CheatsMode = 0;
+int CheatsMode = 1;
+
 
 //***************************
 // SETUP END
@@ -265,7 +287,7 @@ void phd_InitWindow(int x, int y, int width, int height, int nearz, int farz,
 	g_SurfaceMinY = 0;
 	g_SurfaceMaxX = (float)Screen_GetResWidth() - 1;
 	g_SurfaceMaxY = (float)Screen_GetResHeight() - 1;
-
+	
 	// int values screen width/height
 	g_PhdWinxmin = 0;
 	g_PhdWinymin = 0;
@@ -374,7 +396,8 @@ int LoadTitle()
 	g_LevelNumTR = g_GameFlow.title_level_num;
 	Initialise_Level(g_GameFlow.title_level_num); // title.phd level #20
 	//палитру создаем только после загрузки уровня
-	Create_Normal_Palette();
+	if (!Hardware)
+		Create_Normal_Palette();
 
 	int ret = Display_Inventory(INV_TITLE_MODE);
 
@@ -420,22 +443,248 @@ int LoadTitle()
 	return 0;
 }
 
+bool Create_Device()
+{
+	g_d3d = Direct3DCreate9(D3D_SDK_VERSION);
+
+	D3DPRESENT_PARAMETERS d3dpp;
+	ZeroMemory(&d3dpp, sizeof(d3dpp));
+	if(Fullscreen_Hardware)
+	{
+		d3dpp.Windowed = FALSE;
+	}
+	else
+	{
+		d3dpp.Windowed = TRUE;
+	}
+	d3dpp.hDeviceWindow = g_hWnd;
+	d3dpp.BackBufferWidth = Screen_GetResWidth();
+	d3dpp.BackBufferHeight = Screen_GetResHeight();
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;
+	d3dpp.EnableAutoDepthStencil = TRUE;
+	d3dpp.AutoDepthStencilFormat = D3DFMT_D24X8;
+
+	if (FAILED(g_d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hWnd,
+		D3DCREATE_HARDWARE_VERTEXPROCESSING,
+		&d3dpp, &g_d3d_Device)))
+	{
+		MessageBox(NULL, "Error create device!", "Info", MB_OK);
+		return false;
+	}
+
+
+
+	HRESULT hr;
+
+	
+	hr = g_d3d_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
+	if (FAILED(hr)) return false;
+
+	/*
+	hr = g_d3d_Device->SetRenderState(D3DRS_ZENABLE, TRUE);
+	if (FAILED(hr)) return false;
+
+	//включить тест глубины
+	g_d3d_Device->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
+
+	//разрешить запись в z-буфер
+	g_d3d_Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
+	//функция сравнения глубины: "меньше или равно"
+	g_d3d_Device->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+
+	*/
+	//hr = g_d3d_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	//if (FAILED(hr)) return false;
+
+	hr = g_d3d_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	if (FAILED(hr)) return false;
+
+
+	//магнитудная фильтрация (масштабирование вверх)
+	hr = g_d3d_Device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	if (FAILED(hr)) return false;
+
+	//минимальная фильтрация (масштабирование вниз)
+	hr = g_d3d_Device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	if (FAILED(hr)) return false;
+
+	//фильтрация MIP-уровней
+	hr = g_d3d_Device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+	if (FAILED(hr)) return false;
+
+	/*
+	hr = g_d3d_Device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+	if (FAILED(hr)) return false;
+
+	
+	hr = g_d3d_Device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+	if (FAILED(hr)) return false;
+	*/
+
+	if(DX9Clipping)
+	{
+
+		hr = g_d3d_Device->SetRenderState(D3DRS_CLIPPING, TRUE);
+		if (FAILED(hr)) return false;
+
+
+	D3DVIEWPORT9 viewport;
+	viewport.X = 0;
+	viewport.Y = 0;
+	viewport.Width = Screen_GetResWidth();
+	viewport.Height = Screen_GetResHeight();
+	viewport.MinZ = 0.0f;
+	viewport.MaxZ = 1.0f;
+	g_d3d_Device->SetViewport(&viewport);
+	
+	}
+	else
+	{
+		// ОТКЛЮЧИТЕ клиппинг полностью
+		hr = g_d3d_Device->SetRenderState(D3DRS_CLIPPING, FALSE);
+		if (FAILED(hr)) return false;
+
+		// Также отключите clip planes
+		hr = g_d3d_Device->SetRenderState(D3DRS_CLIPPLANEENABLE, 0);
+		if (FAILED(hr)) return false;
+	}
+
+
+	//D3DXCreateTextureFromFile(g_d3d_Device, "texture256.bmp", &g_pTexture);
+
+	return true;
+
+}
+
+
+void Create_Shader_Effect()
+{
+	HRESULT hr;
+	ID3DXBuffer* errorBuffer = 0;
+
+	hr = D3DXCreateEffectFromFile(g_d3d_Device, ".\\shader\\textured.fx", 0, 0, 0, 0, &pEffectTexColor, &errorBuffer);
+	if (errorBuffer)
+	{
+		::MessageBox(0, (char*)errorBuffer->GetBufferPointer(), 0, 0);
+		errorBuffer->Release();
+	}
+	if (FAILED(hr)) return;
+
+	g_hTechTexColor = pEffectTexColor->GetTechniqueByName("TexturedTech");
+	//mhWVP  = pEffectTexColor->GetParameterByName(0, "gWVP");
+
+
+
+	/*
+	D3DVERTEXELEMENT9 decl[]=
+   {
+	   {0,	0, D3DDECLTYPE_FLOAT4,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_POSITION,0},
+	   {0, 16, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0},
+	   D3DDECL_END()
+   };
+   */
+
+
+	D3DVERTEXELEMENT9 decl_tex_color[] =
+	{
+		{ 0,  0,  D3DDECLTYPE_FLOAT4, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 }, // x, y, z, w
+		{ 0, 16, D3DDECLTYPE_FLOAT2,   D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 }, // tu, tv
+		{ 0, 24, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,    0 }, // diffuse
+		D3DDECL_END()
+	};
+
+
+	hr = g_d3d_Device->CreateVertexDeclaration(decl_tex_color, &g_pVertDeclTexColor);
+	if (FAILED(hr)) return;
+
+
+
+
+	D3DVERTEXELEMENT9 decl_color[] =
+	{
+		{ 0,  0,  D3DDECLTYPE_FLOAT4, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 }, // x, y, z, w
+		{ 0, 16, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,    0 }, // diffuse
+		D3DDECL_END()
+	};
+
+
+	hr = g_d3d_Device->CreateVertexDeclaration(decl_color, &g_pVertDeclColor);
+	if (FAILED(hr)) return;
+
+
+	D3DVERTEXELEMENT9 declLine[] =
+	{
+		{ 0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 12, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0 },
+		D3DDECL_END()
+	};
+
+	hr = g_d3d_Device->CreateVertexDeclaration(decl_color, &g_pVertDeclLines);
+	if (FAILED(hr)) return;
+
+
+
+}
+
+
+void FreeGameMemory()
+{
+
+	if (m_pLevelTile)
+	{
+		for (UINT i = 0; i < TexturePageCount; i++)
+		{
+			if (m_pLevelTile[i])
+			{
+				m_pLevelTile[i]->Release();
+				m_pLevelTile[i] = nullptr;
+			}
+		}
+
+		delete[] m_pLevelTile;
+		m_pLevelTile = nullptr;
+	}
+
+}
+
+
 int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 				   LPSTR lpCmdLine, int nCmdShow)
 {
-
-	//настройки моя игра
-	if (MY_GAME)
+	//switch hardware dx9 or software
+	if (Hardware)
 	{
-		Fullscreen = 1;
-		Widescreen = 1;
-		GameType = VER_TR1;
-		//GameType = VER_TR1_GOLD;
-		SCREEN_WIDTH = 800;
-		SCREEN_HEIGHT = 600;
-		CheatsMode = 1;
+		S_DrawObjectGT4 = S_DrawObjectGT4_HW;
+		S_DrawObjectGT3 = S_DrawObjectGT3_HW;
+		S_DrawObjectG4 = S_DrawObjectG4_HW;
+		S_DrawObjectG3 = S_DrawObjectG3_HW;
+		S_Output_DrawShadow = S_Output_DrawShadow_HW;
+		S_Output_DrawSprite = S_Output_DrawSprite_HW;
+		S_Output_DrawScreenFBox = S_Output_DrawScreenFBox_HW;
+		S_Output_DrawScreenFlatQuad = S_Output_DrawScreenFlatQuad_HW;
+		S_Output_DrawTriangle = S_Output_DrawTriangle_HW;
+		S_Output_DrawLine = S_Output_DrawLine_HW;
+		S_InitialisePolyList = S_InitialisePolyList_HW;
+		S_OutputPolyList = S_OutputPolyList_HW;
 	}
-
+	else
+	{
+		S_DrawObjectGT4 = S_DrawObjectGT4_SW;
+		S_DrawObjectGT3 = S_DrawObjectGT3_SW;
+		S_DrawObjectG4 = S_DrawObjectG4_SW;
+		S_DrawObjectG3 = S_DrawObjectG3_SW;
+		S_Output_DrawShadow = S_Output_DrawShadow_SW;
+		S_Output_DrawSprite = S_Output_DrawSprite_SW;
+		S_Output_DrawScreenFBox = S_Output_DrawScreenFBox_SW;
+		S_Output_DrawScreenFlatQuad = S_Output_DrawScreenFlatQuad_SW;
+		S_Output_DrawTriangle = S_Output_DrawTriangle_SW;
+		S_Output_DrawLine = S_Output_DrawLine_SW;
+		S_InitialisePolyList = S_InitialisePolyList_SW;
+		S_OutputPolyList = S_OutputPolyList_SW;
+		
+	}
 
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
@@ -443,6 +692,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	g_hInst = hInstance;
 
 	WNDCLASS wcl = {0};
+	wcl.style = CS_CLASSDC;
 	wcl.lpfnWndProc = WndProc;
 	wcl.hInstance = hInstance;
 	wcl.lpszClassName = "Sample";
@@ -451,14 +701,14 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	if (!RegisterClass(&wcl))
 		return 0;
 
-	if (!Fullscreen)
+	if (!Fullscreen_Software)
 	{
 		g_hWnd =
 			CreateWindow("Sample", "Tomb Raider 1 Ed Kurlyak",
 						 WS_OVERLAPPEDWINDOW, 0, 0, Screen_GetResWidth(),
 						 Screen_GetResHeight(), NULL, NULL, hInstance, NULL);
 	}
-	else if (Fullscreen)
+	else if (Fullscreen_Software)
 	{
 		g_hWnd =
 			CreateWindow("Sample", "Tomb Raider 1 Ed Kurlyak",
@@ -469,7 +719,8 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	if (!g_hWnd)
 		return 0;
 
-	if (!Fullscreen)
+
+	if (!Fullscreen_Software)
 	{
 		RECT WindowRect = {0, 0, Screen_GetResWidth(), Screen_GetResHeight()};
 
@@ -487,11 +738,18 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		MoveWindow(g_hWnd, PosX, PosY, WidthX, WidthY, FALSE);
 	}
+	
+	if (Hardware)
+	{
+		Create_Device();
+		Create_Shader_Effect();
+	}
+
 
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
 
-	if (Fullscreen)
+	if (Fullscreen_Software)
 	{
 		if (SetDisplayMode())
 		{
@@ -571,13 +829,18 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	Init_Game_Malloc();
 	S_FrontEndCheck();
 	Settings_Read();
-	Create_BackBuffer();
+	
+	if(!Hardware)
+		Create_BackBuffer();
+	
 	InitialiseStartInfo();
 
 	bool intro_played = false;
 	bool loop_continue = true;
 
 	int32_t gf_option = LoadTitle();
+
+	phd_AlterFOV(80 * PHD_DEGREE);
 
 	while (loop_continue)
 	{
@@ -596,7 +859,9 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			break;
 
 		case GF_START_CINE:
-			// gf_option = GameFlow_InterpretSequence(gf_param, GFL_CUTSCENE);
+			
+			gf_option = Play_Cinematic(gf_param);
+			
 			break;
 
 		case GF_START_DEMO:
@@ -609,7 +874,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			break;
 
 		case GF_LEVEL_COMPLETE:
-			gf_option = LevelStats(g_CurrentLevel);
+			gf_option = Print_Final_Stats(gf_param);
 			g_LevelNumTR = gf_param;
 			break;
 
@@ -623,15 +888,20 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 	free(g_GameMemory);
-	Delete_BackBuffer();
+	
+	if (!Hardware)
+		Delete_BackBuffer();
 
-	if (Fullscreen)
+	if (Fullscreen_Software)
 	{
 		if (RestorePreviousDisplayMode())
 		{
 			//предыдущий режим восстановлен успешно
 		}
 	}
+
+	if(Hardware)
+		FreeGameMemory();
 
 	DestroyWindow(g_hWnd);
 	UnregisterClass(wcl.lpszClassName, wcl.hInstance);

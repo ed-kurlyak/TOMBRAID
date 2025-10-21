@@ -88,7 +88,8 @@ int Initialise_Level(int LevelNum)
 	// new for tr1
 	//создаем палитру после загрузки уровня
 	//т.е. данных о палитре из файла уровня
-	Create_Normal_Palette();
+	if (!Hardware)
+		Create_Normal_Palette();
 
 	if (g_Lara.item_number != NO_ITEM)
 	{
