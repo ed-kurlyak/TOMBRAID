@@ -5399,7 +5399,7 @@ void S_Output_DrawTriangle_HW(VBUF2* vertices, int vert_count, int depth)
 
 		Bucket_Colored.Vertex[Bucket_Colored.count].x = vertices[i].x;
 		Bucket_Colored.Vertex[Bucket_Colored.count].y = vertices[i].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].z = (float) depth;
+		Bucket_Colored.Vertex[Bucket_Colored.count].z = (float)depth;
 		Bucket_Colored.Vertex[Bucket_Colored.count].w = 1.0f;
 		Bucket_Colored.Vertex[Bucket_Colored.count].diffuse = color2;
 
@@ -5409,7 +5409,7 @@ void S_Output_DrawTriangle_HW(VBUF2* vertices, int vert_count, int depth)
 
 		Bucket_Colored.Vertex[Bucket_Colored.count].x = vertices[i + 1].x;
 		Bucket_Colored.Vertex[Bucket_Colored.count].y = vertices[i + 1].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].z = depth;
+		Bucket_Colored.Vertex[Bucket_Colored.count].z = (float) depth;
 		Bucket_Colored.Vertex[Bucket_Colored.count].w = 1.0f;
 		Bucket_Colored.Vertex[Bucket_Colored.count].diffuse = color2;
 
