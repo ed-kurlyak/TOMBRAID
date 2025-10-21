@@ -3600,6 +3600,7 @@ void Output_DrawScreenSprite(int32_t sx, int32_t sy, int32_t z, int32_t scale_h,
 	}
 }
 
+//функция рисует текст на экране
 void Output_DrawScreenSprite2D(int32_t sx, int32_t sy, int32_t z,
 							   int32_t scale_h, int32_t scale_v, int32_t sprnum,
 							   int16_t shade, uint16_t flags, int32_t page)
@@ -3616,6 +3617,8 @@ void Output_DrawScreenSprite2D(int32_t sx, int32_t sy, int32_t z,
 	{
 		if(Hardware)
 		{
+			//30 << W2V_SHIFT значит немного дальше чем
+			//ближняя плоскость отсечения значение Z_NEAR 20
 			S_Output_DrawSprite(x1, y1, x2, y2, 30 << W2V_SHIFT, sprnum, 0);
 		}
 		else
@@ -3710,6 +3713,8 @@ void S_Output_DrawSprite_SW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int 
 	surfacenum++;
 }
 
+//рисует спрайт когда в игре пользователь поднимает предмет
+//предмет отображается в виде спрайта справа внизу экрана
 void Output_DrawUISprite(int32_t x, int32_t y, int32_t scale, int16_t sprnum,
 						 int16_t shade)
 {
@@ -3728,7 +3733,16 @@ void Output_DrawUISprite(int32_t x, int32_t y, int32_t scale, int16_t sprnum,
 	if (x2 >= g_PhdLeft && y2 >= g_PhdTop && x1 <= g_PhdRight &&
 		y1 <= g_PhdBottom)
 	{
-		S_Output_DrawSprite(x1, y1, x2, y2, 200, sprnum, shade);
+		if(Hardware)
+		{
+			//30 << W2V_SHIFT значит немного дальше чем
+			//ближняя плоскость отсечения значение Z_NEAR 20
+			S_Output_DrawSprite(x1, y1, x2, y2, 30 << W2V_SHIFT, sprnum, shade);
+		}
+		else
+		{
+			S_Output_DrawSprite(x1, y1, x2, y2, 200, sprnum, shade);
+		}
 	}
 }
 
@@ -3984,6 +3998,8 @@ void Output_DrawScreenLine(int32_t sx, int32_t sy, int32_t w, int32_t h,
 
 	if (Hardware)
 	{
+		//35 << W2V_SHIFT значит немного дальше чем
+		//ближняя плоскость отсечения значение Z_NEAR 20
 		S_Output_DrawLine(vertices, 35 << W2V_SHIFT);
 	}
 	else
@@ -5270,6 +5286,8 @@ void S_Output_DrawScreenFBox_HW(int32_t sx, int32_t sy, int32_t w, int32_t h)
 	vertices[3].x = (float)sx;
 	vertices[3].y = (float)(sy + h);
 	
+	//40 << W2V_SHIFT значит немного дальше чем
+	//ближняя плоскость отсечения значение Z_NEAR 20
 	int depth = 40 << W2V_SHIFT;
 
 	int vert_count = 4;
