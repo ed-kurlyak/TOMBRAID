@@ -26,9 +26,6 @@ TEXTUREBUCKET_OPAQUE Bucket_Tex_Color_Opaque[MAXBUCKETS];
 COLOREDBUCKET Bucket_Colored;
 LINESBUCKET Bucket_Lines;
 TRANSQUADBUCKET Bucket_TransQuad;
-//TEXTUREBUCKET_TRANSPARENT Bucket_Tex_Color_Opaque[MAXBUCKETS];
-
-
 
 int g_LevelNumTR;
 

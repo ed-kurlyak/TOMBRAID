@@ -5450,7 +5450,7 @@ void S_Output_DrawLine_HW(VBUF2* vertices, int depth)
 
 	Bucket_Lines.Vertex[Bucket_Lines.count].diffuse = color;
 
-		Bucket_Lines.count++;
+	Bucket_Lines.count++;
 
 	Bucket_Lines.Vertex[Bucket_Lines.count].x = vertices[1].x;
 	Bucket_Lines.Vertex[Bucket_Lines.count].y = vertices[1].y;

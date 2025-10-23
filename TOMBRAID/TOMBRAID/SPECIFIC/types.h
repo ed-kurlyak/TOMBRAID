@@ -46,7 +46,7 @@ struct VERTEX_COLOR
 
 };
 
-#define VERTSPERBUCKET (2 * 1024 + 32)
+#define VERTSPERBUCKET (6 * 1024 + 32)
 
 struct TEXTUREBUCKET_OPAQUE
 {
@@ -77,17 +77,6 @@ struct COLOREDBUCKET
 	VERTEX_COLOR Vertex[VERTSPERBUCKET];
 	LPDIRECT3DVERTEXBUFFER9 VertBuff;
 };
-
-struct TEXTUREBUCKET_TRANSPARENT
-{
-	DWORD tpage;
-	LPDIRECT3DTEXTURE9 lp_tpage;
-	int count;
-	VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
-	LPDIRECT3DVERTEXBUFFER9 VertBuff;
-};
-
-
 
 #define uint32_t unsigned int
 #define int32_t int

@@ -774,7 +774,6 @@ void S_OutputPolyList_HW()
 		}
 	}
 
-
 	///------------------- colored poly
 
 	if (Bucket_Colored.count > 0)

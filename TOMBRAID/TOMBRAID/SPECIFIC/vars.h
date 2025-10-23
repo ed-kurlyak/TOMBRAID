@@ -44,15 +44,12 @@ extern D3DXHANDLE g_hTechTexColor;
 
 //массив непрозрачных полигонов
 //отсортированных по текстурам
-#define MAXBUCKETS 20
-#define MAXBUCKETS 20
+#define MAXBUCKETS 30
 
 extern TEXTUREBUCKET_OPAQUE Bucket_Tex_Color_Opaque[MAXBUCKETS];
 extern COLOREDBUCKET Bucket_Colored;
 extern LINESBUCKET Bucket_Lines;
 extern TRANSQUADBUCKET Bucket_TransQuad;
-//extern TEXTUREBUCKET_TRANSPARENT Bucket_Tex_Color_Transparent[MAXBUCKETS];
-
 
 extern int g_LevelNumTR;
 
