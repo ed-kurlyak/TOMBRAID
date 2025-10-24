@@ -33,7 +33,7 @@
 
 static int32_t m_MedipackCoolDown = 0;
 
-int Print_Final_Stats(int32_t level_num)
+int Print_Level_Stats(int32_t level_num)
 {
 	if (GameType == VER_TR1)
 	{
@@ -49,21 +49,21 @@ int Print_Final_Stats(int32_t level_num)
 			break;
 
 		case 1:
-			LevelStats(1);
+			Print_Final_Stats(1);
 			return 2;
 
 			break;
 
 		case 2:
 
-			LevelStats(2);
+			Print_Final_Stats(2);
 			return 3;
 
 			break;
 
 		case 3:
 
-			LevelStats(3);
+			Print_Final_Stats(3);
 			return 4;
 
 			break;
@@ -76,28 +76,28 @@ int Print_Final_Stats(int32_t level_num)
 
 		case 5:
 
-			LevelStats(5);
+			Print_Final_Stats(5);
 			return 6;
 
 			break;
 
 		case 6:
 
-			LevelStats(6);
+			Print_Final_Stats(6);
 			return 7;
 
 			break;
 
 		case 7:
 
-			LevelStats(7);
+			Print_Final_Stats(7);
 			return 8;
 
 			break;
 
 		case 8:
 
-			LevelStats(8);
+			Print_Final_Stats(8);
 			return 9;
 
 			break;
@@ -110,28 +110,28 @@ int Print_Final_Stats(int32_t level_num)
 
 		case 10:
 
-			LevelStats(10);
+			Print_Final_Stats(10);
 			return 11;
 
 			break;
 
 		case 11:
 
-			LevelStats(11);
+			Print_Final_Stats(11);
 			return 12;
 
 			break;
 
 		case 12:
 
-			LevelStats(12);
+			Print_Final_Stats(12);
 			return 13;
 
 			break;
 
 		case 13:
 
-			LevelStats(13);
+			Print_Final_Stats(13);
 			return 0x52;
 
 			break;
@@ -145,7 +145,7 @@ int Print_Final_Stats(int32_t level_num)
 
 		case 15:
 
-			LevelStats(15);
+			Print_Final_Stats(15);
 			//Final_Titiles_After_Last_Level();
 			return GF_EXIT_TO_TITLE;
 
@@ -153,14 +153,14 @@ int Print_Final_Stats(int32_t level_num)
 
 		case 16:
 
-			LevelStats(4);
+			Print_Final_Stats(4);
 			return 5;
 
 			break;
 
 		case 17:
 
-			LevelStats(9);
+			Print_Final_Stats(9);
 			return 10;
 
 			break;
@@ -173,7 +173,7 @@ int Print_Final_Stats(int32_t level_num)
 
 		case 19:
 
-			LevelStats(14);
+			Print_Final_Stats(14);
 			return 15;
 
 			break;
@@ -188,14 +188,15 @@ int Print_Final_Stats(int32_t level_num)
 	}
 	else
 	{
-		return LevelStats(level_num);
+		return Print_Final_Stats(level_num);
 	}
 
 	return 0;
 
 }
 
-int LevelStats(int32_t level_num)
+
+int Print_Final_Stats(int32_t level_num)
 {
 	char string[100];
 	char time_str[100];
@@ -267,6 +268,12 @@ int LevelStats(int32_t level_num)
 
 	// wait till action key release
 	// while (g_Input.select || g_Input.deselect)
+	
+	while (g_Input.select || g_Input.deselect)
+	{
+		Input_Update();
+	}
+	
 	while (!g_Input.select && !g_Input.deselect)
 	{
 		Input_Update();

@@ -42,6 +42,40 @@ int32_t StartCinematic(int32_t level_num)
 
     InitCinematicRooms();
 
+	int audio;
+
+	switch (level_num)
+	{
+	case 16:
+		g_Camera.pos.x = 36668;
+		g_Camera.pos.z = 63180;
+		g_Camera.target_angle = -23312;
+		audio = 23;
+		break;
+
+	case 17:
+
+		g_Camera.pos.x = 51962;
+		g_Camera.pos.z = 53760;
+		g_Camera.target_angle = 16380;
+		audio = 25;
+
+		break;
+
+	case 18:
+		g_Camera.target_angle = 16384;
+		FlipMap();
+		audio = 24;
+
+		break;
+
+	case 19:
+		g_Camera.target_angle = 16384;
+		audio = 22;
+		break;
+
+	}
+
     g_CineFrame = 0;
 
     return GF_NOP;
@@ -93,9 +127,11 @@ int32_t DoCinematic(int32_t nframes)
     static int32_t frame_count = 0;
 
     frame_count += m_CinematicAnimationRate * nframes;
-    while (frame_count >= 0) {
+    while (frame_count >= 0)
+	{
         Input_Update();
-        if (g_Input.option) {
+        if (g_Input.option)
+		{
             return 1;
         }
 

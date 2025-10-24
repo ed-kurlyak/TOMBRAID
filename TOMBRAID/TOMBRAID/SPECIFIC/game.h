@@ -3,8 +3,8 @@
 #include "types.h"
 
 int32_t DrawPhaseCinematic();
+int Print_Level_Stats(int32_t level_num);
 int Print_Final_Stats(int32_t level_num);
-int LevelStats(int32_t level_num);
 int Game_Loop(int demo_mode);
 void Initialise_Camera();
 int Control_Phase(int32_t nframes, int32_t demo_mode);

@@ -873,7 +873,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			break;
 
 		case GF_LEVEL_COMPLETE:
-			gf_option = Print_Final_Stats(gf_param);
+			gf_option = Print_Level_Stats(gf_param);
 			g_LevelNumTR = gf_param;
 			break;
 
