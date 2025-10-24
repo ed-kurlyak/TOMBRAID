@@ -27,22 +27,22 @@
 // SETUP PART #1
 //HARDWARE or SOFTWARE
 
-int Hardware = 1;
+int Hardware = 0;
 
 int Fullscreen_Hardware = 0;
 
 //---------------------------
 // SETUP PART #9 CLIPPING DX9 or Software
-int DX9Clipping = 1;
+int DX9Clipping = 0;
 
 
 // SETUP PART #3 FULLSCREEN/NO
-int Fullscreen_Software = 0;
+int Fullscreen_Software = 1;
 
 //---------------------------
 // SETUP PART #4 WIDESCREEN/NO
 // учет аспекта в matrix.cpp phd_GenerateW2V()
-int Widescreen = 0;
+int Widescreen = 1;
 
 //---------------------------
 // SETUP PART #5 GAME TYPE - TR1/GOLD
@@ -57,16 +57,16 @@ int SCREEN_WIDTH = 1600;
 int SCREEN_HEIGHT = 900;
 */
 
-
+/*
 int SCREEN_WIDTH = 1280;
 int SCREEN_HEIGHT = 720;
+*/
 
 
 
-/*
 int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 600;
-*/
+
 
 /*
 

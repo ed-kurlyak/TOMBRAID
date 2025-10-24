@@ -291,7 +291,7 @@ int Print_Final_Stats(int32_t level_num)
 
 	//добавил я что бы не вылетало LoadTitle
 	//после финальной статистики
-	while (g_Input.select && g_Input.deselect)
+	while (g_Input.select || g_Input.deselect)
 	{
 		Input_Update();
 	}
