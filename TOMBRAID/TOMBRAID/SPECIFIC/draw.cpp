@@ -221,10 +221,8 @@ void Output_DrawShadow(int16_t size, int16_t *bptr, ITEM_INFO *item)
 	{
 		int32_t angle = (PHD_180 + i * PHD_360) / g_ShadowInfo.vertex_count;
 
-		g_ShadowInfo.vertex[i].x =
-			x_mid + (x_add * 2) * phd_sin(angle) / PHD_90;
-		g_ShadowInfo.vertex[i].z =
-			z_mid + (z_add * 2) * phd_cos(angle) / PHD_90;
+		g_ShadowInfo.vertex[i].x = x_mid + (x_add * 2) * phd_sin(angle) / PHD_90;
+		g_ShadowInfo.vertex[i].z = z_mid + (z_add * 2) * phd_cos(angle) / PHD_90;
 		g_ShadowInfo.vertex[i].y = 0;
 	}
 
@@ -247,8 +245,7 @@ void Output_DrawShadow(int16_t size, int16_t *bptr, ITEM_INFO *item)
 		PHD_VBUF *vn2 = &m_VBuf[1];
 		PHD_VBUF *vn3 = &m_VBuf[2];
 
-		bool visible =
-			((int32_t)(((vn3->xs - vn2->xs) * (vn1->ys - vn2->ys)) -
+		bool visible = ((int32_t)(((vn3->xs - vn2->xs) * (vn1->ys - vn2->ys)) -
 					   ((vn1->xs - vn2->xs) * (vn3->ys - vn2->ys))) >= 0);
 
 		if (!clip_and && clip_positive && visible)
@@ -321,9 +318,9 @@ void S_Output_DrawShadow_SW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 			info3dptr = info;
 
-			surfacenum++;
-
 		} // if(vert_count > 0)
+
+		surfacenum++;
 	}
 }
 
@@ -5099,6 +5096,66 @@ int16_t* S_DrawObjectG3_HW(int16_t* obj_ptr, int32_t number)
 
 void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 {
+	VBUF2 vertices[32] = { 0 };
+
+	for (int i = 0; i < vertex_count; i++)
+	{
+		VBUF2* vertex = &vertices[i];
+		PHD_VBUF* vbuf = &vbufs[i];
+		vertex->x = (float)vbuf->xs;
+		vertex->y = (float)vbuf->ys;
+		vertex->z = (float)vbuf->zv - 8.0f;
+		//vertex->g = 24.0f;
+	}
+
+	if (clip)
+	{
+		vertex_count = ClipVertices2(vertex_count, &vertices[0]);
+
+		if (!vertex_count)
+		{
+			return;
+		}
+	}
+
+	BYTE r = 0;
+	BYTE g = 0;
+	BYTE b = 0;
+	BYTE a = 128;
+
+	DWORD color = (a << 24) | (r << 16) | (g << 8) | b;
+
+	for (int i = 1; i < vertex_count - 1; i++)
+	{
+		//vert 1
+
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].x = vertices[0].x;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].y = vertices[0].y;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].z = vertices[0].z;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].w = 1.0f;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].diffuse = color;
+		Bucket_TransQuad.count++;
+
+		//vert 2
+
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].x = vertices[i].x;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].y = vertices[i].y;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].z = vertices[i].z;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].w = 1.0f;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].diffuse = color;
+		Bucket_TransQuad.count++;
+
+		//vert 3
+
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].x = vertices[i + 1].x;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].y = vertices[i + 1].y;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].z = vertices[i + 1].z;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].w = 1.0f;
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].diffuse = color;
+		Bucket_TransQuad.count++;
+
+	}
+
 
 }
 

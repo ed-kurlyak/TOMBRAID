@@ -289,6 +289,13 @@ int Print_Final_Stats(int32_t level_num)
 		S_DumpScreen();
 	}
 
+	//добавил я что бы не вылетало LoadTitle
+	//после финальной статистики
+	while (g_Input.select && g_Input.deselect)
+	{
+		Input_Update();
+	}
+
 	if (level_num == g_GameFlow.last_level_num)
 	{
 		Game_Finished = 1;
