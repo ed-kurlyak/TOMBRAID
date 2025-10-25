@@ -318,9 +318,10 @@ void S_Output_DrawShadow_SW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 			info3dptr = info;
 
-		} // if(vert_count > 0)
+			surfacenum++;
 
-		surfacenum++;
+		} // if(vert_count > 0)
+		
 	}
 }
 
