@@ -4,10 +4,22 @@ float g_ScreenHeight;
 float ZNear;
 float ZFar;
 
-/*
-float ZNear = 327680.0f;
-float ZFar  = 603979776.0f;
-*/
+float TransformZ(float zv, float f_znear, float f_zfar, float fov, float phd_winwidth)
+{
+    float MINZR = 0.005f;
+    float MAXZR = 0.995f;
+    float ZRANGE = (MAXZR - MINZR);
+
+    fov /= 2.0f;
+    float f_persp = ((phd_winwidth / 2.0f) * cos(fov)) / sin(fov);
+
+    float f_b = (ZRANGE * f_znear * f_zfar) / (f_znear - f_zfar);
+    f_b = -f_b; // как в оригинале движка
+    float f_a = MINZR - (f_b / f_znear);
+
+    float p_sz = f_a - (f_b * (zv / f_persp));
+    return p_sz;
+}
 
 //pass 0 
 //текстурированные цветные (освещенные) полигоны (не прозрачные)
@@ -39,10 +51,14 @@ PSInput vs_main_tex_color(VSInput input)
     output.pos.y = 1.0f - (2.0f * input.pos.y / g_ScreenHeight);
     //output.pos.z = input.pos.z;
 
-    //перспективный z буфер глюки с аптечками и спрайтами
+    //#1перспективный z буфер глюки с аптечками и спрайтами
     //output.pos.z = (input.pos.z * Q - Q * ZNear) / input.pos.z;
-    //линейный z буфер нет глюков с аптечками и спрайтами
+    
+    //#2линейный z буфер нет глюков с аптечками и спрайтами
     output.pos.z = (input.pos.z - ZNear) / (ZFar - ZNear);
+    
+    //#3взято z буффер из TR2 расчет
+    //output.pos.z = TransformZ(input.pos.z, ZNear, ZFar, 80, g_ScreenWidth);
 
     output.pos.w = 1;       
     //клиппинг в экранных координатах делать когда tex * 1/w
@@ -99,10 +115,14 @@ PSInput2 vs_main_color(VSInput2 input)
     output.pos.y = 1.0f - (2.0f * input.pos.y / g_ScreenHeight);
     //output.pos.z = input.pos.z; 
 
-    //перспективный z буфер глюки с аптечками и спрайтами
+    //#1перспективный z буфер глюки с аптечками и спрайтами
     //output.pos.z = (input.pos.z * Q - Q * ZNear) / input.pos.z;
-    //линейный z буфер нет глюков с аптечками и спрайтами
+    
+    //#2линейный z буфер нет глюков с аптечками и спрайтами
     output.pos.z = (input.pos.z - ZNear) / (ZFar - ZNear);
+    
+    //#3взято z буффер из TR2 расчет
+    //output.pos.z = TransformZ(input.pos.z, ZNear, ZFar, 80, g_ScreenWidth);
     
     output.pos.w = 1;       
 
@@ -139,10 +159,14 @@ PSInput vs_main_transparent(VSInput input)
     output.pos.y = 1.0f - (2.0f * input.pos.y / g_ScreenHeight);
     //output.pos.z = input.pos.z;
 
-    //перспективный z буфер глюки с аптечками и спрайтами
+    //#1перспективный z буфер глюки с аптечками и спрайтами
     //output.pos.z = (input.pos.z * Q - Q * ZNear) / input.pos.z;
-    //линейный z буфер нет глюков с аптечками и спрайтами
+    
+    //#2линейный z буфер нет глюков с аптечками и спрайтами
     output.pos.z = (input.pos.z - ZNear) / (ZFar - ZNear);
+    
+    //#3взято z буффер из TR2 расчет
+    //output.pos.z = TransformZ(input.pos.z, ZNear, ZFar, 80, g_ScreenWidth);
     
     output.pos.w = 1;       
     //клиппинг в экранных координатах делать когда tex * 1/w
@@ -202,10 +226,14 @@ VS_OUTPUT_LINES vs_main_lines(VS_INPUT_LINES input)
     output.pos.y = 1.0f - (2.0f * input.pos.y / g_ScreenHeight);
     //output.pos.z = input.pos.z;
 
-    //перспективный z буфер глюки с аптечками и спрайтами
+    //#1перспективный z буфер глюки с аптечками и спрайтами
     //output.pos.z = (input.pos.z * Q - Q * ZNear) / input.pos.z;
-    //линейный z буфер нет глюков с аптечками и спрайтами
+    
+    //#2линейный z буфер нет глюков с аптечками и спрайтами
     output.pos.z = (input.pos.z - ZNear) / (ZFar - ZNear);
+    
+    //#3взято z буффер из TR2 расчет
+    //output.pos.z = TransformZ(input.pos.z, ZNear, ZFar, 80, g_ScreenWidth);
     
     output.pos.w = 1;       
 
@@ -247,10 +275,15 @@ PSInput_transquad vs_main_transquad(VSInput_transquad input)
     output.pos.y = 1.0f - (2.0f * input.pos.y / g_ScreenHeight);
     //output.pos.z = input.pos.z; 
 
-    //перспективный z буфер глюки с аптечками и спрайтами
+    //#1перспективный z буфер глюки с аптечками и спрайтами
     //output.pos.z = (input.pos.z * Q - Q * ZNear) / input.pos.z;
-    //линейный z буфер нет глюков с аптечками и спрайтами
+    
+    //#2линейный z буфер нет глюков с аптечками и спрайтами
     output.pos.z = (input.pos.z - ZNear) / (ZFar - ZNear);
+    
+    //#3взято z буффер из TR2 расчет
+    //output.pos.z = TransformZ(input.pos.z, ZNear, ZFar, 80, g_ScreenWidth);
+
     
     output.pos.w = 1;       
 

@@ -105,6 +105,7 @@ void FlameControl(int16_t fx_num)
 	}
 	else if (ItemNearLara(&fx->pos, 600))
 	{
+
 		if (g_Lara.water_status == LWS_CHEAT)
 		{
 			return;

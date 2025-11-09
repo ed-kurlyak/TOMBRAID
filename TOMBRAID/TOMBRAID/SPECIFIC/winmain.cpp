@@ -27,13 +27,13 @@
 // SETUP PART #1
 //HARDWARE or SOFTWARE
 
-int Hardware = 1;
+int Hardware = 0;
 
 int Fullscreen_Hardware = 0;
 
 //---------------------------
 // SETUP PART #9 CLIPPING DX9 or Software
-int DX9Clipping = 1;
+int DX9Clipping = 0;
 
 
 // SETUP PART #3 FULLSCREEN/NO
@@ -86,7 +86,7 @@ int lara_dist = false;
 
 // SETUP PART #8 CHEATS MODE
 // full ammo/medi/health
-int CheatsMode = 1;
+int CheatsMode = 0;
 
 
 //***************************
