@@ -830,9 +830,20 @@ void S_OutputPolyList_HW()
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_SHADEMODE, D3DSHADE_GOURAUD);
 
 
-	//отображение с билинейным сглаживанием
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAG, D3DFILTER_LINEAR);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMIN, D3DFILTER_LINEAR);
+	if(DXNearestTexture)
+	{
+
+		//without smoothing
+		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAG, D3DFILTER_NEAREST);
+		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMIN, D3DFILTER_NEAREST);
+	}
+
+	else
+	{
+		//отображение с билинейным сглаживанием
+		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAG, D3DFILTER_LINEAR);
+		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMIN, D3DFILTER_LINEAR);
+	}
 
 
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREPERSPECTIVE, true);

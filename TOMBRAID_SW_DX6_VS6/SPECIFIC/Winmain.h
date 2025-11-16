@@ -17,6 +17,8 @@ extern int CheatsMode;
 
 extern int lara_dist;
 
+extern int DXNearestTexture;
+
 //раскоментировать учет аспекта в
 // matrix.cpp phd_GenerateW2V()
 extern int SCREEN_WIDTH;

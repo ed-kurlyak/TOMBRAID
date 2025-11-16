@@ -31,6 +31,8 @@ int Hardware = 1;
 
 int Fullscreen_Hardware = 0;
 
+int DXNearestTexture = 1;
+
 //---------------------------
 // SETUP PART #9 CLIPPING DX9 or Software
 //int DX9Clipping = 0;
