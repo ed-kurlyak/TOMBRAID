@@ -3693,6 +3693,8 @@ void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum,
 
 	PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];
 
+	/*
+
 	int32_t xa1;
 	int32_t ya1;
 	int32_t xa2;
@@ -3729,13 +3731,13 @@ void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum,
 	int32_t y1 = ViewPort_GetCenterY() + (yv + (ya1 << W2V_SHIFT)) / zp;
 	int32_t x2 = ViewPort_GetCenterX() + (xv + (xa2 << W2V_SHIFT)) / zp;
 	int32_t y2 = ViewPort_GetCenterY() + (yv + (ya2 << W2V_SHIFT)) / zp;
+	*/
 
-	/*
+	
 	int32_t x1 = ViewPort_GetCenterX() + (xv + (sprite->x1 << W2V_SHIFT)) / zp;
 	int32_t y1 = ViewPort_GetCenterY() + (yv + (sprite->y1 << W2V_SHIFT)) / zp;
 	int32_t x2 = ViewPort_GetCenterX() + (xv + (sprite->x2 << W2V_SHIFT)) / zp;
 	int32_t y2 = ViewPort_GetCenterY() + (yv + (sprite->y2 << W2V_SHIFT)) / zp;
-	*/
 
 	g_PhdLeft = 0;
 	g_PhdTop = 0;
