@@ -7,11 +7,10 @@
 
 #include "types.h"
 
-//extern int DX9Clipping;
 
 extern int Hardware;
 
-extern int Fullscreen_Hardware;
+extern int Fullscreen;
 
 extern int CheatsMode;
 
@@ -51,6 +50,6 @@ void phd_InitWindow(int x, int y, int width, int height, int nearz, int farz,
 					unsigned char *BackBuff);
 int SpinMessageLoop();
 
-void Create_Shader_Effect();
+//void Create_Shader_Effect();
 
 #endif

@@ -29,15 +29,9 @@
 
 int Hardware = 1;
 
-int Fullscreen_Hardware = 0;
+int Fullscreen = 0;
 
-//---------------------------
-// SETUP PART #9 CLIPPING DX9 or Software
-//int DX9Clipping = 0;
-
-
-// SETUP PART #3 FULLSCREEN/NO
-int Fullscreen_Software = 0;
+int DXNearestTexture = 0;
 
 //---------------------------
 // SETUP PART #4 WIDESCREEN/NO
@@ -57,20 +51,19 @@ int SCREEN_WIDTH = 1600;
 int SCREEN_HEIGHT = 900;
 */
 
-
+/*
 int SCREEN_WIDTH = 1280;
 int SCREEN_HEIGHT = 720;
-
-
-
-/*
-int SCREEN_WIDTH = 800;
-int SCREEN_HEIGHT = 600;
 */
 
 
-/*
 
+int SCREEN_WIDTH = 800;
+int SCREEN_HEIGHT = 600;
+
+
+
+/*
 int SCREEN_WIDTH = 640;
 int SCREEN_HEIGHT = 480;
 */
@@ -516,7 +509,15 @@ HRESULT WINAPI D3DEnumDeviceCallback(GUID* pGUID,
 	return D3DENUMRET_OK;
 }
 
+void Hide_Cursor()
+{
 
+	//удаляем курсор (проблема в полноэкранных приложениях Windows)
+	while (СursorCounter >= 0)
+	{
+		СursorCounter = ShowCursor(FALSE);
+	}
+}
 bool Create_Device()
 {
 	HRESULT hr;
@@ -550,9 +551,8 @@ bool Create_Device()
 	// for more info on this. Note: this call could fail if another application
 	// already controls a fullscreen, exclusive mode.
 	
-	if (Fullscreen_Hardware)
+	if (Fullscreen)
 	{
-		
 		//hr = g_pDD2->SetCooperativeLevel(g_hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN | DDSCL_ALLOWMODEX | DDSCL_ALLOWREBOOT | DDSCL_NOWINDOWCHANGES);
 		hr = g_pDD2->SetCooperativeLevel(g_hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN | DDSCL_ALLOWMODEX | DDSCL_ALLOWREBOOT);
 		if (FAILED(hr))
@@ -596,7 +596,7 @@ bool Create_Device()
 	ClientToScreen(g_hWnd, (POINT*)& g_RcScreenRect.right);
 
 
-	if (Fullscreen_Hardware)
+	if (Fullscreen)
 	{
 
 		
@@ -888,14 +888,14 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	if (!RegisterClass(&wcl))
 		return 0;
 
-	if (!Fullscreen_Software && !Fullscreen_Hardware)
+	if (!Fullscreen)
 	{
 		g_hWnd =
 			CreateWindow("Sample", "Tomb Raider 1 Ed Kurlyak",
 						 WS_OVERLAPPEDWINDOW, 0, 0, Screen_GetResWidth(),
 						 Screen_GetResHeight(), NULL, NULL, hInstance, NULL);
 	}
-	else if (Fullscreen_Software || Fullscreen_Hardware)
+	else if (Fullscreen)
 	{
 		g_hWnd =
 			CreateWindow("Sample", "Tomb Raider 1 Ed Kurlyak",
@@ -907,7 +907,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		return 0;
 
 
-	if (!Fullscreen_Software &&  !Fullscreen_Hardware)
+	if (!Fullscreen)
 	{
 		RECT WindowRect = {0, 0, Screen_GetResWidth(), Screen_GetResHeight()};
 
@@ -936,23 +936,22 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
 
-	if (Fullscreen_Software)
+	if (!Hardware && Fullscreen)
 	{
 		if (SetDisplayMode())
 		{
 			//видеорежим установлен успешно
 		}
 
-		//удаляем курсор (проблема в полноэкранных приложениях Windows)
-		while (СursorCounter >= 0)
-		{
-			СursorCounter = ShowCursor(FALSE);
-		}
+		Hide_Cursor();
 	}
 	else
 	{
 		ShowCursor(TRUE);
 	}
+
+	if (Fullscreen)
+		Hide_Cursor();
 
 	//новое для ТР1
 	Init_GameFlow();
@@ -1079,7 +1078,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	if (!Hardware)
 		Delete_BackBuffer();
 
-	if (Fullscreen_Software)
+	if (!Hardware && Fullscreen)
 	{
 		if (RestorePreviousDisplayMode())
 		{
@@ -1089,6 +1088,8 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	if(Hardware)
 		FreeGameMemory();
+
+	ShowCursor(TRUE);
 
 	DestroyWindow(g_hWnd);
 	UnregisterClass(wcl.lpszClassName, wcl.hInstance);

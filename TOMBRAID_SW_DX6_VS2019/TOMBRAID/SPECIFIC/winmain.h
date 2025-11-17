@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-//extern int DX9Clipping;
-
 extern int Hardware;
 
-extern int Fullscreen_Hardware;
+extern int DXNearestTexture;
+
+extern int Fullscreen;
 
 extern int CheatsMode;
 

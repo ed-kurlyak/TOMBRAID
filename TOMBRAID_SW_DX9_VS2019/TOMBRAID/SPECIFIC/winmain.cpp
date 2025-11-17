@@ -29,15 +29,7 @@
 
 int Hardware = 1;
 
-int Fullscreen_Hardware = 0;
-
-//---------------------------
-// SETUP PART #9 CLIPPING DX9 or Software
-//int DX9Clipping = 0;
-
-
-// SETUP PART #3 FULLSCREEN/NO
-int Fullscreen_Software = 0;
+int Fullscreen = 0;
 
 //---------------------------
 // SETUP PART #4 WIDESCREEN/NO
@@ -404,6 +396,9 @@ int LoadTitle()
 	if (ret == GF_START_DEMO)
 		return GF_START_DEMO;
 
+	if (ret == GF_EXIT_GAME)
+		return GF_EXIT_GAME;
+
 	switch (g_InvChosen)
 	{
 	case O_PHOTO_OPTION:
@@ -443,13 +438,22 @@ int LoadTitle()
 	return 0;
 }
 
+void Hide_Cursor()
+{
+	//удаляем курсор (проблема в полноэкранных приложениях Windows)
+	while (СursorCounter >= 0)
+	{
+		СursorCounter = ShowCursor(FALSE);
+	}
+}
+
 bool Create_Device()
 {
 	g_d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
 	D3DPRESENT_PARAMETERS d3dpp;
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
-	if(Fullscreen_Hardware)
+	if(Hardware && Fullscreen)
 	{
 		d3dpp.Windowed = FALSE;
 	}
@@ -708,14 +712,14 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	if (!RegisterClass(&wcl))
 		return 0;
 
-	if (!Fullscreen_Software)
+	if (!Fullscreen)
 	{
 		g_hWnd =
 			CreateWindow("Sample", "Tomb Raider 1 Ed Kurlyak",
 						 WS_OVERLAPPEDWINDOW, 0, 0, Screen_GetResWidth(),
 						 Screen_GetResHeight(), NULL, NULL, hInstance, NULL);
 	}
-	else if (Fullscreen_Software)
+	else if (Fullscreen)
 	{
 		g_hWnd =
 			CreateWindow("Sample", "Tomb Raider 1 Ed Kurlyak",
@@ -727,7 +731,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		return 0;
 
 
-	if (!Fullscreen_Software)
+	if (!Fullscreen)
 	{
 		RECT WindowRect = {0, 0, Screen_GetResWidth(), Screen_GetResHeight()};
 
@@ -756,23 +760,22 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
 
-	if (Fullscreen_Software)
+	if (!Hardware && Fullscreen)
 	{
 		if (SetDisplayMode())
 		{
 			//видеорежим установлен успешно
 		}
 
-		//удаляем курсор (проблема в полноэкранных приложениях Windows)
-		while (СursorCounter >= 0)
-		{
-			СursorCounter = ShowCursor(FALSE);
-		}
+		Hide_Cursor();
 	}
 	else
 	{
 		ShowCursor(TRUE);
 	}
+
+	if (Fullscreen)
+		Hide_Cursor();
 
 	//новое для ТР1
 	Init_GameFlow();
@@ -899,7 +902,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	if (!Hardware)
 		Delete_BackBuffer();
 
-	if (Fullscreen_Software)
+	if (!Hardware && Fullscreen)
 	{
 		if (RestorePreviousDisplayMode())
 		{

@@ -825,10 +825,18 @@ void S_OutputPolyList_HW()
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_SHADEMODE, D3DSHADE_GOURAUD);
 
 
-	//отображение с билинейным сглаживанием
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAG, D3DFILTER_LINEAR);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMIN, D3DFILTER_LINEAR);
-
+	if(DXNearestTexture)
+	{
+		//отображение без сглаживания
+		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAG, D3DFILTER_NEAREST);
+		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMIN, D3DFILTER_NEAREST);
+	}
+	else
+	{
+		//отображение с билинейным сглаживанием
+		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAG, D3DFILTER_LINEAR);
+		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMIN, D3DFILTER_LINEAR);
+	}
 
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREPERSPECTIVE, true);
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREADDRESS, D3DTADDRESS_CLAMP);
@@ -1183,7 +1191,7 @@ int32_t S_DumpScreen()
 		//HRESULT hr = g_pD3dDevice->Present(NULL, NULL, NULL, NULL);
 		//if (FAILED(hr)) return 0;
 
-		if (Fullscreen_Hardware)
+		if (Fullscreen)
 		{
 			g_pDdsPrimary->Flip(NULL, DDFLIP_WAIT);
 		}

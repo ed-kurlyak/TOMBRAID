@@ -1199,7 +1199,7 @@ int32_t S_DumpScreen()
 		//HRESULT hr = g_pD3dDevice->Present(NULL, NULL, NULL, NULL);
 		//if (FAILED(hr)) return 0;
 
-		if (Fullscreen_Hardware)
+		if (Fullscreen)
 		{
 			g_pDdsPrimary->Flip(NULL, DDFLIP_WAIT);
 		}
