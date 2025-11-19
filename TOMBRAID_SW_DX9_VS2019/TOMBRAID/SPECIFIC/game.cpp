@@ -564,8 +564,13 @@ int Get_Key_State(int key)
 	}
 }
 
+#define VK_L 0x4C
+
 void Input_Update()
 {
+
+	if(Get_Key_State(VK_L))
+		g_LevelComplete = true;
 
 	g_Input.forward = S_Input_Key(INPUT_KEY_UP);
 	g_Input.back = S_Input_Key(INPUT_KEY_DOWN);
@@ -719,11 +724,11 @@ void DrawRooms(int16_t current_room)
 
 	r->bound_active = 1;
 
-	g_CameraUnderwater = r->flags & RF_UNDERWATER;
-
 	g_RoomsToDrawCount = 0;
 
 	g_RoomsToDraw[g_RoomsToDrawCount++] = current_room;
+
+	g_CameraUnderwater = r->flags & RF_UNDERWATER;
 
 	GetRoomBounds(current_room);
 
@@ -742,6 +747,11 @@ void DrawRooms(int16_t current_room)
 			Create_Normal_Palette();
 	}
 
+	for (int i = 0; i < g_RoomsToDrawCount; i++)
+	{
+		PrintRooms(g_RoomsToDraw[i]);
+	}
+
 	if (g_Objects[O_LARA].loaded)
 	{
 		if (g_RoomInfo[g_LaraItem->room_number].flags & RF_UNDERWATER)
@@ -755,10 +765,7 @@ void DrawRooms(int16_t current_room)
 		DrawLara(g_LaraItem);
 	}
 
-	for (int i = 0; i < g_RoomsToDrawCount; i++)
-	{
-		PrintRooms(g_RoomsToDraw[i]);
-	}
+	
 }
 
 void S_OutputPolyList_SW()

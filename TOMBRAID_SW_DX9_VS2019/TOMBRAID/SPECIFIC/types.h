@@ -147,6 +147,8 @@ typedef struct VBUF
 	float u, v;
 	//BYTE g;
 	float g;
+
+	//float r, g, b;
 } VBUF;
 
 typedef struct VBUF2

@@ -564,8 +564,13 @@ int Get_Key_State(int key)
 	}
 }
 
+#define VK_L 0x4C
+
 void Input_Update()
 {
+
+	if (Get_Key_State(VK_L))
+		g_LevelComplete = true;
 
 	g_Input.forward = S_Input_Key(INPUT_KEY_UP);
 	g_Input.back = S_Input_Key(INPUT_KEY_DOWN);

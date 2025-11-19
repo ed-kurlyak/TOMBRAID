@@ -4377,19 +4377,35 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 									BYTE g;
 									BYTE b;
 
-									r = (BYTE)CLAMP255(vertices[0].g * 2 / 3);
-									g = (BYTE)CLAMP255(vertices[0].g * 2 / 3);
+									r = (BYTE)CLAMP255(vertices[0].g);
+									g = (BYTE)CLAMP255(vertices[0].g);
 									b = (BYTE)CLAMP255(vertices[0].g);
+
+									r = r * 2 / 3;
+									g = g * 2 / 3;
+									b = b;
+
 									color1 = (0xFF << 24) | (r << 16) | (g << 8) | b;
 
-									r = (BYTE)CLAMP255(vertices[i].g * 2 / 3);
-									g = (BYTE)CLAMP255(vertices[i].g * 2 / 3);
+									r = (BYTE)CLAMP255(vertices[i].g);
+									g = (BYTE)CLAMP255(vertices[i].g);
 									b = (BYTE)CLAMP255(vertices[i].g);
+
+									r = r * 2 / 3;
+									g = g * 2 / 3;
+									b = b;
+
 									color2 = (0xFF << 24) | (r << 16) | (g << 8) | b;
 
-									r = (BYTE)CLAMP255(vertices[i + 1].g * 2 / 3);
-									g = (BYTE)CLAMP255(vertices[i + 1].g * 2 / 3);
+									r = (BYTE)CLAMP255(vertices[i + 1].g);
+									g = (BYTE)CLAMP255(vertices[i + 1].g);
 									b = (BYTE)CLAMP255(vertices[i + 1].g);
+
+									r = r * 2 / 3;
+									g = g * 2 / 3;
+									b = b;
+
+
 									color3 = (0xFF << 24) | (r << 16) | (g << 8) | b;
 
 								}

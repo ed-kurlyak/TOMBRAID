@@ -125,7 +125,7 @@ void (*g_LaraCollisionRoutines[])(ITEM_INFO *item, COLL_INFO *coll) = {
 */
 
 int CurrentRoom;
-int g_CameraUnderwater;
+int g_CameraUnderwater = false;
 
 INPUT_STATE g_Input = {0};
 INPUT_STATE g_InputDB = {0};
