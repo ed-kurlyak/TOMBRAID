@@ -695,7 +695,28 @@ void BaddyObjects()
 		g_Objects[O_BAT].save_flags = 1;
 	}
 
-	SetupDino(&g_Objects[O_DINOSAUR]);
+	//SetupDino(&g_Objects[O_DINOSAUR]);
+
+	if (!g_Objects[O_DINOSAUR].loaded)
+	{
+		g_Objects[O_DINOSAUR].initialise = InitialiseCreature;
+		g_Objects[O_DINOSAUR].control = DinoControl;
+		g_Objects[O_DINOSAUR].draw_routine = DrawUnclippedItem;
+		g_Objects[O_DINOSAUR].collision = CreatureCollision;
+		g_Objects[O_DINOSAUR].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_DINOSAUR].hit_points = DINO_HITPOINTS;
+		g_Objects[O_DINOSAUR].pivot_length = 2000;
+		g_Objects[O_DINOSAUR].radius = DINO_RADIUS;
+		g_Objects[O_DINOSAUR].smartness = DINO_SMARTNESS;
+		g_Objects[O_DINOSAUR].intelligent = 1;
+		g_Objects[O_DINOSAUR].save_position = 1;
+		g_Objects[O_DINOSAUR].save_hitpoints = 1;
+		g_Objects[O_DINOSAUR].save_anim = 1;
+		g_Objects[O_DINOSAUR].save_flags = 1;
+		g_AnimBones[g_Objects[O_DINOSAUR].bone_index + 40] |= BEB_ROT_Y;
+		g_AnimBones[g_Objects[O_DINOSAUR].bone_index + 44] |= BEB_ROT_Y;
+	}
+
 	SetupRaptor(&g_Objects[O_RAPTOR]);
 	SetupLarson(&g_Objects[O_LARSON]);
 	SetupPierre(&g_Objects[O_PIERRE]);

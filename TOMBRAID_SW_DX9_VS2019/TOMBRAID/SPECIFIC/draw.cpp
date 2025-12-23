@@ -4263,7 +4263,7 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 
 					vertices[i].u = ((tex->uv[i].u1 & 0xFF00) + 127) / 65536.0f * vertices[i].w;
 					vertices[i].v = ((tex->uv[i].v1 & 0xFF00) + 127) / 65536.0f * vertices[i].w;
-					vertices[i].g = 1000; // ((8192.0f - vns[i]->g) * multiplier);
+					vertices[i].g = ((8192.0f - vns[i]->g) * multiplier);
 
 				}
 

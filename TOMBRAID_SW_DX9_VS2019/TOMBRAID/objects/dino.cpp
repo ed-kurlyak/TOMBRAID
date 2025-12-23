@@ -9,7 +9,7 @@
 //#include "game/random.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
+/*
 void SetupDino(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -33,7 +33,7 @@ void SetupDino(OBJECT_INFO *obj)
 	g_AnimBones[obj->bone_index + 40] |= BEB_ROT_Y;
 	g_AnimBones[obj->bone_index + 44] |= BEB_ROT_Y;
 }
-
+*/
 void DinoControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];
