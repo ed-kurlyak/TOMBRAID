@@ -11,7 +11,7 @@
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
 #include "..\\effects\\body_part.h"
-
+/*
 void SetupAbortion(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -32,6 +32,7 @@ void SetupAbortion(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 4] |= BEB_ROT_Y;
 }
+*/
 
 void AbortionControl(int16_t item_num)
 {

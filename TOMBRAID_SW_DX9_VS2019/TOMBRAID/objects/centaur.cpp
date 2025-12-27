@@ -14,7 +14,7 @@
 
 BITE_INFO g_CentaurRocket = {11, 415, 41, 13};
 BITE_INFO g_CentaurRear = {50, 30, 0, 5};
-
+/*
 void SetupCentaur(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -36,6 +36,7 @@ void SetupCentaur(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 40] |= 0xCu;
 }
+*/
 
 void CentaurControl(int16_t item_num)
 {

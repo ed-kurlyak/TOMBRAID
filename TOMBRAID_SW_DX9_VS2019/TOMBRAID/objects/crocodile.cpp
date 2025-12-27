@@ -9,7 +9,7 @@
 #include "blood.h"
 
 BITE_INFO g_CrocodileBite = {5, -21, 467, 9};
-
+/*
 void SetupCrocodile(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -31,7 +31,7 @@ void SetupCrocodile(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 28] |= BEB_ROT_Y;
 }
-
+*/
 void CrocControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

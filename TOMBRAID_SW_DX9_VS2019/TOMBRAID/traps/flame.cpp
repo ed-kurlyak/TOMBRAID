@@ -9,14 +9,19 @@
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\sphere.h"
 #include "..\\SPECIFIC\\vars.h"
-
+/*
 void SetupFlameEmitter(OBJECT_INFO *obj)
 {
 	obj->control = FlameEmitterControl;
 	obj->draw_routine = DrawDummyItem;
 }
-
-void SetupFlame(OBJECT_INFO *obj) { obj->control = FlameControl; }
+*/
+/*
+void SetupFlame(OBJECT_INFO *obj)
+{ 
+	obj->control = FlameControl;
+}
+*/
 
 void FlameEmitterControl(int16_t item_num)
 {

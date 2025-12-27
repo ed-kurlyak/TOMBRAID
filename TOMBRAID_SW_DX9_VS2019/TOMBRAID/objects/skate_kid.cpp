@@ -12,7 +12,7 @@
 
 BITE_INFO g_KidGun1 = {0, 150, 34, 7};
 BITE_INFO g_KidGun2 = {0, 150, 37, 4};
-
+/*
 void SetupSkateKid(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -34,6 +34,7 @@ void SetupSkateKid(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index] |= BEB_ROT_Y;
 }
+*/
 
 void InitialiseSkateKid(int16_t item_num)
 {

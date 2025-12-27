@@ -13,6 +13,7 @@ BITE_INFO g_PierreGun1 = {60, 200, 0, 11};
 BITE_INFO g_PierreGun2 = {-57, 200, 0, 14};
 int16_t g_PierreItemNum = NO_ITEM;
 
+/*
 void SetupPierre(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -33,6 +34,7 @@ void SetupPierre(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 24] |= BEB_ROT_Y;
 }
+*/
 
 void PierreControl(int16_t item_num)
 {

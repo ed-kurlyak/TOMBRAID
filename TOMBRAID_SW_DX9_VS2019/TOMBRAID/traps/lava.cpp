@@ -8,16 +8,21 @@
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
+/*
 void SetupLavaEmitter(OBJECT_INFO *obj)
 {
 	obj->control = LavaEmitterControl;
 	obj->draw_routine = DrawDummyItem;
 	obj->collision = ObjectCollision;
 }
-
-void SetupLava(OBJECT_INFO *obj) { obj->control = LavaControl; }
-
+*/
+/*
+void SetupLava(OBJECT_INFO *obj) 
+{ 
+	obj->control = LavaControl;
+}
+*/
+/*
 void SetupLavaWedge(OBJECT_INFO *obj)
 {
 	obj->control = LavaWedgeControl;
@@ -26,7 +31,7 @@ void SetupLavaWedge(OBJECT_INFO *obj)
 	obj->save_anim = 1;
 	obj->save_flags = 1;
 }
-
+*/
 void LavaBurn(ITEM_INFO *item)
 {
 	if (g_Lara.water_status == LWS_CHEAT)

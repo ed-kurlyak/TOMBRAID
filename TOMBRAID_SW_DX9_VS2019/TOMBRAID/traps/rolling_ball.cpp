@@ -10,7 +10,7 @@
 #include "..\\SPECIFIC\\sphere.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
+/*
 void SetupRollingBall(OBJECT_INFO *obj)
 {
 	obj->initialise = InitialiseRollingBall;
@@ -20,7 +20,7 @@ void SetupRollingBall(OBJECT_INFO *obj)
 	obj->save_anim = 1;
 	obj->save_flags = 1;
 }
-
+*/
 void InitialiseRollingBall(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

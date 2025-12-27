@@ -7,8 +7,12 @@
 #include "..\\SPECIFIC\\sphere.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
-void SetupBubble(OBJECT_INFO *obj) { obj->control = ControlBubble1; }
+/*
+void SetupBubble(OBJECT_INFO *obj) 
+{ 
+	obj->control = ControlBubble1;
+}
+*/
 
 void LaraBubbles(ITEM_INFO *item)
 {

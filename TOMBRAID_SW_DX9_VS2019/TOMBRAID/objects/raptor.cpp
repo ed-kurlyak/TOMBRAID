@@ -8,7 +8,7 @@
 #include "blood.h"
 
 BITE_INFO g_RaptorBite = {0, 66, 318, 22};
-
+/*
 void SetupRaptor(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -30,6 +30,7 @@ void SetupRaptor(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 84] |= BEB_ROT_Y;
 }
+*/
 
 void RaptorControl(int16_t item_num)
 {

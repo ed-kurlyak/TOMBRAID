@@ -15,7 +15,7 @@
 BITE_INFO g_WarriorBite = {-27, 98, 0, 10};
 BITE_INFO g_WarriorRocket = {51, 213, 0, 14};
 BITE_INFO g_WarriorShard = {-35, 269, 0, 9};
-
+/*
 void SetupWarrior(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -38,7 +38,8 @@ void SetupWarrior(OBJECT_INFO *obj)
 	g_AnimBones[obj->bone_index] |= BEB_ROT_Y;
 	g_AnimBones[obj->bone_index + 8] |= BEB_ROT_Y;
 }
-
+*/
+/*
 void SetupWarrior2(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -49,7 +50,8 @@ void SetupWarrior2(OBJECT_INFO *obj)
 	obj->initialise = InitialiseWarrior2;
 	obj->smartness = WARRIOR2_SMARTNESS;
 }
-
+*/
+/*
 void SetupWarrior3(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -59,7 +61,7 @@ void SetupWarrior3(OBJECT_INFO *obj)
 	*obj = g_Objects[O_WARRIOR1];
 	obj->initialise = InitialiseWarrior2;
 }
-
+*/
 void FlyerControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

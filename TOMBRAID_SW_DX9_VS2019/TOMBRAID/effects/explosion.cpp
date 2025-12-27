@@ -3,8 +3,12 @@
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
-
-void SetupExplosion(OBJECT_INFO *obj) { obj->control = ControlExplosion1; }
+/*
+void SetupExplosion(OBJECT_INFO *obj) 
+{ 
+	obj->control = ControlExplosion1;
+}
+*/
 
 void ControlExplosion1(int16_t fx_num)
 {

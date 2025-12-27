@@ -8,7 +8,7 @@
 #include "..\\SPECIFIC\\vars.h"
 #include "blood.h"
 #include "rat.h"
-
+/*
 void SetupVole(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -30,6 +30,7 @@ void SetupVole(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 4] |= BEB_ROT_Y;
 }
+*/
 
 void VoleControl(int16_t item_num)
 {

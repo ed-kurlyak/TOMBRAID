@@ -26,7 +26,7 @@ static void BaddieBiteEffect(ITEM_INFO *item, BITE_INFO *bite)
 	DoBloodSplat(pos.x, pos.y, pos.z, item->speed, item->pos.y_rot,
 				 item->room_number);
 }
-
+/*
 void SetupTeethTrap(OBJECT_INFO *obj)
 {
 	obj->control = TeethTrapControl;
@@ -34,7 +34,7 @@ void SetupTeethTrap(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	obj->save_anim = 1;
 }
-
+*/
 void TeethTrapControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

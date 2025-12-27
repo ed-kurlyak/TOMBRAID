@@ -8,7 +8,7 @@
 #include "..\\SPECIFIC\\vars.h"
 
 BITE_INFO g_BaldyGun = {-20, 440, 20, 9};
-
+/*
 void SetupBaldy(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -29,7 +29,7 @@ void SetupBaldy(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index] |= BEB_ROT_Y;
 }
-
+*/
 void InitialiseBaldy(int16_t item_num)
 {
 	InitialiseCreature(item_num);

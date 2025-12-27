@@ -4,8 +4,12 @@
 #include "..\\SPECIFIC\\sphere.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
-void SetupTwinkle(OBJECT_INFO *obj) { obj->control = ControlTwinkle; }
+/*
+void SetupTwinkle(OBJECT_INFO *obj) 
+{ 
+	obj->control = ControlTwinkle;
+}
+*/
 
 void Twinkle(GAME_VECTOR *pos)
 {

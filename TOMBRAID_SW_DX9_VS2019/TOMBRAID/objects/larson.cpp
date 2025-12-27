@@ -8,7 +8,7 @@
 #include "..\\SPECIFIC\\winmain.h"
 
 BITE_INFO g_LarsonGun = {-60, 170, 0, 14};
-
+/*
 void SetupLarson(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -29,7 +29,7 @@ void SetupLarson(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 24] |= BEB_ROT_Y;
 }
-
+*/
 void LarsonControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

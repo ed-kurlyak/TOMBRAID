@@ -5,7 +5,7 @@
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
-
+/*
 void SetupCabin(OBJECT_INFO *obj)
 {
 	obj->control = CabinControl;
@@ -14,6 +14,7 @@ void SetupCabin(OBJECT_INFO *obj)
 	obj->save_anim = 1;
 	obj->save_flags = 1;
 }
+*/
 
 void CabinControl(int16_t item_num)
 {

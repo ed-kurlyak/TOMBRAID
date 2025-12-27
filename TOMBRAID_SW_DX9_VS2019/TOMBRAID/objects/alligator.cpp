@@ -9,7 +9,7 @@
 #include "..\\SPECIFIC\\vars.h"
 #include "alligator.h"
 #include "blood.h"
-
+/*
 void SetupAlligator(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -31,6 +31,7 @@ void SetupAlligator(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 28] |= BEB_ROT_Y;
 }
+*/
 
 void AlligatorControl(int16_t item_num)
 {

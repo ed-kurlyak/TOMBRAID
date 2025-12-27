@@ -10,7 +10,7 @@
 
 #define DAMOCLES_SWORD_ACTIVATE_DIST ((WALL_L * 3) / 2)
 #define DAMOCLES_SWORD_DAMAGE 100
-
+/*
 void SetupDamoclesSword(OBJECT_INFO *obj)
 {
 	obj->initialise = InitialiseDamoclesSword;
@@ -21,7 +21,7 @@ void SetupDamoclesSword(OBJECT_INFO *obj)
 	obj->save_anim = 1;
 	obj->save_flags = 1;
 }
-
+*/
 void InitialiseDamoclesSword(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

@@ -8,7 +8,7 @@
 //#include "game/shell.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
-
+/*
 void SetupStatue(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -21,7 +21,7 @@ void SetupStatue(OBJECT_INFO *obj)
 	obj->save_anim = 1;
 	obj->save_flags = 1;
 }
-
+*/
 void InitialiseStatue(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

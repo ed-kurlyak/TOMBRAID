@@ -6,7 +6,7 @@
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "movable_block.h"
-
+/*
 void SetupThorsHandle(OBJECT_INFO *obj)
 {
 	obj->initialise = InitialiseThorsHandle;
@@ -16,7 +16,7 @@ void SetupThorsHandle(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	obj->save_anim = 1;
 }
-
+*/
 void SetupThorsHead(OBJECT_INFO *obj)
 {
 	obj->collision = ThorsHeadCollision;

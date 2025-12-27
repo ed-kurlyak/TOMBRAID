@@ -17,6 +17,7 @@
 //#include "specific/s_misc.h"
 #include "..\\SPECIFIC\\sound.h"
 
+/*
 void SetupLightningEmitter(OBJECT_INFO *obj)
 {
 	obj->initialise = InitialiseLightning;
@@ -25,6 +26,7 @@ void SetupLightningEmitter(OBJECT_INFO *obj)
 	obj->collision = LightningCollision;
 	obj->save_flags = 1;
 }
+*/
 
 void InitialiseLightning(int16_t item_num)
 {

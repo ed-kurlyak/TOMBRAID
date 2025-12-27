@@ -8,7 +8,7 @@
 #include "blood.h"
 
 BITE_INFO g_LionBite = {-2, -10, 132, 21};
-
+/*
 void SetupLion(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -30,7 +30,8 @@ void SetupLion(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 76] |= BEB_ROT_Y;
 }
-
+*/
+/*
 void SetupLioness(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -52,7 +53,8 @@ void SetupLioness(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 76] |= BEB_ROT_Y;
 }
-
+*/
+/*
 void SetupPuma(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -74,6 +76,7 @@ void SetupPuma(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 76] |= BEB_ROT_Y;
 }
+*/
 
 void LionControl(int16_t item_num)
 {

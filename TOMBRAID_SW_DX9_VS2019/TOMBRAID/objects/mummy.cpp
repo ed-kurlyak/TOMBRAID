@@ -8,7 +8,7 @@
 #include "..\\SPECIFIC\\phd_math.h"
 #include "..\\SPECIFIC\\util.h"
 #include "..\\SPECIFIC\\vars.h"
-
+/*
 void SetupMummy(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -24,6 +24,7 @@ void SetupMummy(OBJECT_INFO *obj)
 	obj->save_anim = 1;
 	g_AnimBones[obj->bone_index + 8] |= BEB_ROT_Y;
 }
+*/
 
 void InitialiseMummy(int16_t item_num)
 {

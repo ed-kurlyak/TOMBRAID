@@ -14,7 +14,7 @@
 #include "..\\SPECIFIC\\winmain.h"
 
 BITE_INFO g_NatlaGun = {5, 220, 7, 4};
-
+/*
 void SetupNatla(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -35,8 +35,13 @@ void SetupNatla(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 8] |= BEB_ROT_Z | BEB_ROT_X;
 }
-
-void SetupNatlaGun(OBJECT_INFO *obj) { obj->control = ControlNatlaGun; }
+*/
+/*
+void SetupNatlaGun(OBJECT_INFO *obj) 
+{ 
+	obj->control = ControlNatlaGun;
+}
+*/
 
 void NatlaControl(int16_t item_num)
 {

@@ -8,7 +8,7 @@
 #include "..\\SPECIFIC\\winmain.h"
 
 BITE_INFO g_ApeBite = {0, -19, 75, 15};
-
+/*
 void SetupApe(OBJECT_INFO *obj)
 {
 	if (!obj->loaded)
@@ -30,6 +30,7 @@ void SetupApe(OBJECT_INFO *obj)
 	obj->save_flags = 1;
 	g_AnimBones[obj->bone_index + 52] |= BEB_ROT_Y;
 }
+*/
 
 void ApeVault(int16_t item_num, int16_t angle)
 {
