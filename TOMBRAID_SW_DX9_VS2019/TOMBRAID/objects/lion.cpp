@@ -1,5 +1,4 @@
 #include "lion.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\lot.h"
@@ -8,75 +7,6 @@
 #include "blood.h"
 
 BITE_INFO g_LionBite = {-2, -10, 132, 21};
-/*
-void SetupLion(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = LionControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = LION_HITPOINTS;
-	obj->pivot_length = 400;
-	obj->radius = LION_RADIUS;
-	obj->smartness = LION_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 76] |= BEB_ROT_Y;
-}
-*/
-/*
-void SetupLioness(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = LionControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = LIONESS_HITPOINTS;
-	obj->pivot_length = 400;
-	obj->radius = LIONESS_RADIUS;
-	obj->smartness = LIONESS_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 76] |= BEB_ROT_Y;
-}
-*/
-/*
-void SetupPuma(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = LionControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = PUMA_HITPOINTS;
-	obj->pivot_length = 400;
-	obj->radius = PUMA_RADIUS;
-	obj->smartness = PUMA_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 76] |= BEB_ROT_Y;
-}
-*/
 
 void LionControl(int16_t item_num)
 {

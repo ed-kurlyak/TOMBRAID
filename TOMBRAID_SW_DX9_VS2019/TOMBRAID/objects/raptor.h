@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define RAPTOR_ATTACK_RANGE SQUARE(WALL_L * 3 / 2) // = 2359296
 #define RAPTOR_BITE_DAMAGE 100
 #define RAPTOR_CHARGE_DAMAGE 100
@@ -34,5 +32,4 @@ typedef enum
 
 extern BITE_INFO g_RaptorBite;
 
-void SetupRaptor(OBJECT_INFO *obj);
 void RaptorControl(int16_t item_num);

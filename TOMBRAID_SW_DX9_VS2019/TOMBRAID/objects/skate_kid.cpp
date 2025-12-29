@@ -1,40 +1,15 @@
 #include "skate_kid.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\lot.h"
-//#include "game/music.h"
 #include "..\\SPECIFIC\\people.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
 
 BITE_INFO g_KidGun1 = {0, 150, 34, 7};
 BITE_INFO g_KidGun2 = {0, 150, 37, 4};
-/*
-void SetupSkateKid(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseSkateKid;
-	obj->control = SkateKidControl;
-	obj->draw_routine = DrawSkateKid;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = SKATE_KID_HITPOINTS;
-	obj->radius = SKATE_KID_RADIUS;
-	obj->smartness = SKATE_KID_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index] |= BEB_ROT_Y;
-}
-*/
 
 void InitialiseSkateKid(int16_t item_num)
 {

@@ -1,8 +1,5 @@
 #include "keyhole.h"
-
-//#include "config.h"
 #include "..\\SPECIFIC\\collide.h"
-//#include "game/input.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\inv.h"
 #include "..\\SPECIFIC\\lara.h"
@@ -28,12 +25,6 @@ int16_t g_KeyHoleBounds[12] = {
 int32_t g_PickUpX;
 int32_t g_PickUpY;
 int32_t g_PickUpZ;
-
-void SetupKeyHole(OBJECT_INFO *obj)
-{
-	obj->collision = KeyHoleCollision;
-	obj->save_flags = 1;
-}
 
 void KeyHoleCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
 {

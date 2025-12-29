@@ -1,5 +1,4 @@
 #include "mummy.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\draw.h"
@@ -8,23 +7,6 @@
 #include "..\\SPECIFIC\\phd_math.h"
 #include "..\\SPECIFIC\\util.h"
 #include "..\\SPECIFIC\\vars.h"
-/*
-void SetupMummy(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseMummy;
-	obj->control = MummyControl;
-	obj->collision = ObjectCollision;
-	obj->hit_points = MUMMY_HITPOINTS;
-	obj->save_flags = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	g_AnimBones[obj->bone_index + 8] |= BEB_ROT_Y;
-}
-*/
 
 void InitialiseMummy(int16_t item_num)
 {

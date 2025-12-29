@@ -26,7 +26,6 @@
 #include "..\\objects\\keyhole.h"
 #include "..\\objects\\larson.h"
 #include "..\\objects\\lion.h"
-#include "..\\objects\\misc.h"
 #include "..\\objects\\mummy.h"
 #include "..\\objects\\mutant.h"
 #include "..\\objects\\natla.h"

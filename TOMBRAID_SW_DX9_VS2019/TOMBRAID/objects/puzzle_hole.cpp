@@ -1,7 +1,5 @@
 #include "puzzle_hole.h"
-
 #include "..\\SPECIFIC\\collide.h"
-//#include "game/input.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\inv.h"
 #include "..\\SPECIFIC\\lara.h"
@@ -25,14 +23,6 @@ int16_t g_PuzzleHoleBounds[12] = {
 	-10 * PHD_DEGREE,
 	+10 * PHD_DEGREE,
 };
-
-void SetupPuzzleHole(OBJECT_INFO *obj)
-{
-	obj->collision = PuzzleHoleCollision;
-	obj->save_flags = 1;
-}
-
-void SetupPuzzleDone(OBJECT_INFO *obj) { obj->save_flags = 1; }
 
 void PuzzleHoleCollision(int16_t item_num, ITEM_INFO *lara_item,
 						 COLL_INFO *coll)

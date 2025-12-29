@@ -1,22 +1,8 @@
 #include "cog.h"
-
-/*
-#include "game/control.h"
-#include "game/items.h"
-#include "global/vars.h"
-*/
-
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
-/*
-void SetupCog(OBJECT_INFO *obj)
-{
-	obj->control = CogControl;
-	obj->save_flags = 1;
-}
-*/
 
 void CogControl(int16_t item_num)
 {

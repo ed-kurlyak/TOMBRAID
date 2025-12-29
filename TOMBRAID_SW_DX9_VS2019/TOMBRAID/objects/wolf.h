@@ -1,11 +1,5 @@
 #pragma once
 
-/*
-#include "global/types.h"
-
-#include <stdint.h>
-*/
-
 #include "..\\SPECIFIC\\types.h"
 
 #define WOLF_SLEEP_FRAME 96
@@ -26,25 +20,7 @@
 #define WOLF_RADIUS (WALL_L / 3) // = 341
 #define WOLF_SMARTNESS 0x2000
 
-typedef enum
-{
-	WOLF_EMPTY = 0,
-	WOLF_STOP = 1,
-	WOLF_WALK = 2,
-	WOLF_RUN = 3,
-	WOLF_JUMP = 4,
-	WOLF_STALK = 5,
-	WOLF_ATTACK = 6,
-	WOLF_HOWL = 7,
-	WOLF_SLEEP = 8,
-	WOLF_CROUCH = 9,
-	WOLF_FASTTURN = 10,
-	WOLF_DEATH = 11,
-	WOLF_BITE = 12,
-} WOLF_ANIM;
-
 extern BITE_INFO g_WolfJawBite;
 
-// void SetupWolf(OBJECT_INFO *obj);
 void InitialiseWolf(int16_t item_num);
 void WolfControl(int16_t item_num);

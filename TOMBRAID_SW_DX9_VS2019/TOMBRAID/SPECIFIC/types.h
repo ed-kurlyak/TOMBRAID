@@ -14,6 +14,32 @@
 //#include <stdbool.h>
 //#include <stdint.h>
 
+typedef enum
+{
+	WOLF_EMPTY = 0,
+	WOLF_STOP = 1,
+	WOLF_WALK = 2,
+	WOLF_RUN = 3,
+	WOLF_JUMP = 4,
+	WOLF_STALK = 5,
+	WOLF_ATTACK = 6,
+	WOLF_HOWL = 7,
+	WOLF_SLEEP = 8,
+	WOLF_CROUCH = 9,
+	WOLF_FASTTURN = 10,
+	WOLF_DEATH = 11,
+	WOLF_BITE = 12,
+} WOLF_ANIM;
+
+
+typedef enum
+{
+	VOLE_EMPTY = 0,
+	VOLE_SWIM = 1,
+	VOLE_ATTACK = 2,
+	VOLE_DEATH = 3,
+} VOLE_ANIM;
+
 struct VERTEX_TRANS_QUAD
 {
 	float x, y, z, w;

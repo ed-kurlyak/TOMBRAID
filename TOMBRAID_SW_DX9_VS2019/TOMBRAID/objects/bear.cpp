@@ -1,49 +1,12 @@
-/*
-#include "game/ai/bear.h"
-
-#include "game/box.h"
-#include "game/collide.h"
-#include "game/effects/blood.h"
-#include "game/lot.h"
-#include "game/random.h"
-#include "global/types.h"
-#include "global/vars.h"
-*/
-
 #include "bear.h"
 #include "blood.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\types.h"
 #include "..\\SPECIFIC\\vars.h"
-//#include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\lot.h"
 #include "..\\SPECIFIC\\winmain.h"
 
 BITE_INFO g_BearHeadBite = {0, 96, 335, 14};
-
-/*
-void SetupBear(OBJECT_INFO *obj)
-{
-	if (!obj->loaded) {
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = BearControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = BEAR_HITPOINTS;
-	obj->pivot_length = 500;
-	obj->radius = BEAR_RADIUS;
-	obj->smartness = BEAR_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 52] |= BEB_ROT_Y;
-}
-*/
 
 void BearControl(int16_t item_num)
 {

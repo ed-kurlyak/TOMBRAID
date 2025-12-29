@@ -1,5 +1,4 @@
 #include "crocodile.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
@@ -9,29 +8,6 @@
 #include "..\\SPECIFIC\\vars.h"
 #include "alligator.h"
 #include "blood.h"
-/*
-void SetupAlligator(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = AlligatorControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 3;
-	obj->hit_points = ALLIGATOR_HITPOINTS;
-	obj->pivot_length = 600;
-	obj->radius = ALLIGATOR_RADIUS;
-	obj->smartness = ALLIGATOR_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 28] |= BEB_ROT_Y;
-}
-*/
 
 void AlligatorControl(int16_t item_num)
 {

@@ -1,11 +1,5 @@
 #pragma once
 
-/*
-#include "global/types.h"
-
-#include <stdint.h>
-*/
-
 #include "..\\SPECIFIC\\types.h"
 
 #define BEAR_CHARGE_DAMAGE 3
@@ -42,5 +36,4 @@ typedef enum
 
 extern BITE_INFO g_BearHeadBite;
 
-// void SetupBear(OBJECT_INFO *obj);
 void BearControl(int16_t item_num);

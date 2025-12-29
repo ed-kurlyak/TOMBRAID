@@ -1,48 +1,8 @@
 #include "bridge.h"
 #include "cog.h"
-/*
-#include "game/collide.h"
-#include "game/draw.h"
-#include "game/objects/cog.h"
-#include "global/vars.h"
-*/
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\vars.h"
-#include "cog.h"
-
-void SetupBridgeFlat(OBJECT_INFO *obj)
-{
-	obj->floor = BridgeFlatFloor;
-	obj->ceiling = BridgeFlatCeiling;
-}
-
-void SetupBridgeTilt1(OBJECT_INFO *obj)
-{
-	obj->floor = BridgeTilt1Floor;
-	obj->ceiling = BridgeTilt1Ceiling;
-}
-
-void SetupBridgeTilt2(OBJECT_INFO *obj)
-{
-	obj->floor = BridgeTilt2Floor;
-	obj->ceiling = BridgeTilt2Ceiling;
-}
-
-void SetupDrawBridge(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->ceiling = DrawBridgeCeiling;
-	obj->collision = DrawBridgeCollision;
-	obj->control = CogControl;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	obj->floor = DrawBridgeFloor;
-}
 
 int32_t OnDrawBridge(ITEM_INFO *item, int32_t x, int32_t y)
 {

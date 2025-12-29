@@ -2,7 +2,6 @@
 
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
-//#include "game/input.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\lara.h"
@@ -31,23 +30,6 @@ int16_t g_Switch2Bounds[12] = {
 	-80 * PHD_DEGREE, +80 * PHD_DEGREE, -80 * PHD_DEGREE, +80 * PHD_DEGREE,
 };
 
-/*
-void SetupSwitch1(OBJECT_INFO *obj)
-{
-	obj->control = SwitchControl;
-	obj->collision = SwitchCollision;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-
-void SetupSwitch2(OBJECT_INFO *obj)
-{
-	obj->control = SwitchControl;
-	obj->collision = SwitchCollision2;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-*/
 void SwitchControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

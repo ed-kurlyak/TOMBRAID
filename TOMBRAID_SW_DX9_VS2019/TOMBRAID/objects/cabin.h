@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 typedef enum
 {
 	CABIN_START = 0,
@@ -13,5 +11,4 @@ typedef enum
 	CABIN_FINISH = 4,
 } CABIN_ANIM;
 
-void SetupCabin(OBJECT_INFO *obj);
 void CabinControl(int16_t item_num);

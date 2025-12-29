@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define LION_BITE_DAMAGE 250
 #define LION_POUNCE_DAMAGE 150
 #define LION_TOUCH 0x380066
@@ -39,7 +37,4 @@ typedef enum
 
 extern BITE_INFO g_LionBite;
 
-void SetupLion(OBJECT_INFO *obj);
-void SetupLioness(OBJECT_INFO *obj);
-void SetupPuma(OBJECT_INFO *obj);
 void LionControl(int16_t item_num);

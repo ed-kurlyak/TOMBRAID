@@ -1,5 +1,4 @@
 #include "larson.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\lot.h"
@@ -8,28 +7,7 @@
 #include "..\\SPECIFIC\\winmain.h"
 
 BITE_INFO g_LarsonGun = {-60, 170, 0, 14};
-/*
-void SetupLarson(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = LarsonControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = LARSON_HITPOINTS;
-	obj->radius = LARSON_RADIUS;
-	obj->smartness = LARSON_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 24] |= BEB_ROT_Y;
-}
-*/
+
 void LarsonControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

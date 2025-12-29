@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define BALDY_SHOT_DAMAGE 150
 #define BALDY_WALK_TURN (PHD_DEGREE * 3)	// = 546
 #define BALDY_RUN_TURN (PHD_DEGREE * 6)		// = 1092
@@ -26,6 +24,5 @@ typedef enum
 
 extern BITE_INFO g_BaldyGun;
 
-void SetupBaldy(OBJECT_INFO *obj);
 void InitialiseBaldy(int16_t item_num);
 void BaldyControl(int16_t item_num);

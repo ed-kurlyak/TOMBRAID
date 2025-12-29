@@ -1,5 +1,4 @@
 #include "rat.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
@@ -9,29 +8,7 @@
 #include "blood.h"
 
 BITE_INFO g_RatBite = {0, -11, 108, 3};
-/*
-void SetupRat(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = RatControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = RAT_HITPOINTS;
-	obj->pivot_length = 200;
-	obj->radius = RAT_RADIUS;
-	obj->smartness = RAT_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 4] |= BEB_ROT_Y;
-}
-*/
+
 void RatControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];
