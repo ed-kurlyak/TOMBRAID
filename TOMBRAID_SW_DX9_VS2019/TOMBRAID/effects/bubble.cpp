@@ -1,5 +1,4 @@
 #include "bubble.h"
-
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\phd_math.h"
@@ -7,12 +6,6 @@
 #include "..\\SPECIFIC\\sphere.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-/*
-void SetupBubble(OBJECT_INFO *obj) 
-{ 
-	obj->control = ControlBubble1;
-}
-*/
 
 void LaraBubbles(ITEM_INFO *item)
 {

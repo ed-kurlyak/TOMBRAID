@@ -1,5 +1,4 @@
 #include "rolling_ball.h"
-
 #include "..\\OBJECTS\\blood.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
@@ -10,17 +9,7 @@
 #include "..\\SPECIFIC\\sphere.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-/*
-void SetupRollingBall(OBJECT_INFO *obj)
-{
-	obj->initialise = InitialiseRollingBall;
-	obj->control = RollingBallControl;
-	obj->collision = RollingBallCollision;
-	obj->save_position = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-*/
+
 void InitialiseRollingBall(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

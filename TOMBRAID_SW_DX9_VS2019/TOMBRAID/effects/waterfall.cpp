@@ -1,16 +1,8 @@
 #include "waterfall.h"
-
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-/*
-void SetupWaterfall(OBJECT_INFO *obj)
-{
-	g_Objects[O_WATERFALL].control = ControlWaterFall;
-	g_Objects[O_WATERFALL].draw_routine = DrawDummyItem;
-}
-*/
 
 void ControlWaterFall(int16_t item_num)
 {

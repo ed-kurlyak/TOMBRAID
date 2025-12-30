@@ -16,6 +16,13 @@
 
 typedef enum
 {
+	DART_EMITTER_IDLE = 0,
+	DART_EMITTER_FIRE = 1,
+} DART_EMITTER_STATE;
+
+
+typedef enum
+{
 	WOLF_EMPTY = 0,
 	WOLF_STOP = 1,
 	WOLF_WALK = 2,

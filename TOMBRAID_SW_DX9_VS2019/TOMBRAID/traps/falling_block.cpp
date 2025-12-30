@@ -1,21 +1,8 @@
 #include "falling_block.h"
-
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
-
-/*
-void SetupFallingBlock(OBJECT_INFO *obj)
-{
-	obj->control = FallingBlockControl;
-	obj->floor = FallingBlockFloor;
-	obj->ceiling = FallingBlockCeiling;
-	obj->save_position = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-*/
 
 void FallingBlockControl(int16_t item_num)
 {

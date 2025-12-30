@@ -17,5 +17,4 @@ extern BITE_INFO g_Teeth2B;
 extern BITE_INFO g_Teeth3A;
 extern BITE_INFO g_Teeth3B;
 
-void SetupTeethTrap(OBJECT_INFO *obj);
 void TeethTrapControl(int16_t item_num);

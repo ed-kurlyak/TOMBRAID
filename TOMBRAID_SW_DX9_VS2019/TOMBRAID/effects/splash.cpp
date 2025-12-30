@@ -1,17 +1,10 @@
 #include "splash.h"
-
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\phd_math.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-/*
-void SetupSplash(OBJECT_INFO *obj) 
-{ 
-	obj->control = ControlSplash1;
-}
-*/
 
 void Splash(ITEM_INFO *item)
 {

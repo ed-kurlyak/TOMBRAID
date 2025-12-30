@@ -1,12 +1,8 @@
 #include "ricochet.h"
-
 #include "..\\SPECIFIC\\items.h"
-//#include "game/random.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
-void SetupRicochet(OBJECT_INFO *obj) { obj->control = ControlRicochet1; }
 
 void Ricochet(GAME_VECTOR *pos)
 {

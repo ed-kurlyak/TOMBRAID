@@ -1,29 +1,10 @@
 #include "thors_hammer.h"
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "movable_block.h"
-/*
-void SetupThorsHandle(OBJECT_INFO *obj)
-{
-	obj->initialise = InitialiseThorsHandle;
-	obj->control = ThorsHandleControl;
-	obj->draw_routine = DrawUnclippedItem;
-	obj->collision = ThorsHandleCollision;
-	obj->save_flags = 1;
-	obj->save_anim = 1;
-}
-*/
-void SetupThorsHead(OBJECT_INFO *obj)
-{
-	obj->collision = ThorsHeadCollision;
-	obj->draw_routine = DrawUnclippedItem;
-	obj->save_flags = 1;
-	obj->save_anim = 1;
-}
 
 void InitialiseThorsHandle(int16_t item_num)
 {

@@ -1,5 +1,4 @@
 #include "body_part.h"
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
@@ -9,15 +8,6 @@
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
-/*
-void SetupBodyPart(OBJECT_INFO *obj)
-{
-	obj->control = ControlBodyPart;
-	obj->nmeshes = 0;
-	obj->loaded = 1;
-}
-*/
 
 int32_t ExplodingDeath(int16_t item_num, int32_t mesh_bits, int16_t damage)
 {

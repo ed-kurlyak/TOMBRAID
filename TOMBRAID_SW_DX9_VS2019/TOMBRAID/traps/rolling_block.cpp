@@ -1,5 +1,4 @@
 #include "rolling_block.h"
-
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
@@ -21,16 +20,6 @@ int16_t g_MovingBlockBounds[12] = {
 	+10 * PHD_DEGREE,
 };
 
-/*
-void SetupRollingBlock(OBJECT_INFO *obj)
-{
-	obj->initialise = InitialiseRollingBlock;
-	obj->control = RollingBlockControl;
-	obj->save_position = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-*/
 void InitialiseRollingBlock(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

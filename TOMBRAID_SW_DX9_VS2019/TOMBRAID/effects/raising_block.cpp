@@ -1,5 +1,4 @@
 #include "raising_block.h"
-
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
 

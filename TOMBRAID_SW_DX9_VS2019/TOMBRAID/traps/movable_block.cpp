@@ -1,27 +1,11 @@
 #include "movable_block.h"
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
-//#include "game/effects/dino_stomp.h"
-//#include "game/input.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\lara.h"
-//#include "game/sound.h"
 #include "..\\SPECIFIC\\/vars.h"
 #include "..\\SPECIFIC\\sound.h"
-/*
-void SetupMovableBlock(OBJECT_INFO *obj)
-{
-	obj->initialise = InitialiseMovableBlock;
-	obj->control = MovableBlockControl;
-	obj->draw_routine = DrawMovableBlock;
-	obj->collision = MovableBlockCollision;
-	obj->save_position = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-*/
 
 void InitialiseMovableBlock(int16_t item_num)
 {

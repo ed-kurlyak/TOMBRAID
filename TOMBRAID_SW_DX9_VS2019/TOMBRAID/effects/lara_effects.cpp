@@ -3,14 +3,6 @@
 #include "../SPECIFIC/util.h"
 #include "../SPECIFIC/vars.h"
 
-/*
-#include "game/effects/lara_effects.h"
-
-#include "3dsystem/3d_gen.h"
-#include "config.h"
-#include "global/vars.h"
-*/
-
 void LaraNormal(ITEM_INFO *item)
 {
 	item->current_anim_state = AS_STOP;
@@ -21,7 +13,10 @@ void LaraNormal(ITEM_INFO *item)
 	phd_AlterFOV(80 * PHD_DEGREE);
 }
 
-void LaraHandsFree(ITEM_INFO *item) { g_Lara.gun_status = LGS_ARMLESS; }
+void LaraHandsFree(ITEM_INFO *item)
+{ 
+	g_Lara.gun_status = LGS_ARMLESS;
+}
 
 void LaraDrawRightGun(ITEM_INFO *item)
 {

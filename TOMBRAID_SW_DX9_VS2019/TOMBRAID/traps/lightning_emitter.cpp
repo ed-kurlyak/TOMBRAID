@@ -1,32 +1,15 @@
 #include "lightning_emitter.h"
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\init.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\matrix.h"
-//#include "game/output.h"
-//#include "..\\SPECIFIC\\winmain.h"
 #include "..\\SPECIFIC\\screen.h"
-//#include "game/sound.h"
 #include "..\\SPECIFIC\\sphere.h"
-//#include "game/viewport.h"
 #include "..\\SPECIFIC\\const.h"
 #include "..\\SPECIFIC\\vars.h"
-//#include "specific/s_misc.h"
 #include "..\\SPECIFIC\\sound.h"
-
-/*
-void SetupLightningEmitter(OBJECT_INFO *obj)
-{
-	obj->initialise = InitialiseLightning;
-	obj->control = LightningControl;
-	obj->draw_routine = DrawLightning;
-	obj->collision = LightningCollision;
-	obj->save_flags = 1;
-}
-*/
 
 void InitialiseLightning(int16_t item_num)
 {

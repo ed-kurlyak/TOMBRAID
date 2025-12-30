@@ -1,8 +1,6 @@
 #include "midas_touch.h"
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\draw.h"
-//#include "game/input.h"
 #include "..\\SPECIFIC\\inv.h"
 #include "..\\SPECIFIC\\vars.h"
 
@@ -20,13 +18,6 @@ int16_t g_MidasBounds[12] = {
 	-10 * PHD_DEGREE,
 	+10 * PHD_DEGREE,
 };
-/*
-void SetupMidasTouch(OBJECT_INFO *obj)
-{
-	obj->collision = MidasCollision;
-	obj->draw_routine = DrawDummyItem;
-}
-*/
 
 void MidasCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
 {
