@@ -1,11 +1,7 @@
 #include "items.h"
-
-//#include "game/shell.h"
 #include "const.h"
 #include "vars.h"
 #include <windows.h>
-
-//#include <stdio.h>
 
 void InitialiseItemArray(int32_t num_items)
 {

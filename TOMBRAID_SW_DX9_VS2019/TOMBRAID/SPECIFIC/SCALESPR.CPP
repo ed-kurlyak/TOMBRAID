@@ -1,8 +1,3 @@
-//#include "..\specific\standard.h"
-//#include "..\specific\global.h"
-//#include "3Dglodef.h"
-//#include "..\specific\litesrc.h"
-
 #include "SCALESPR.H"
 #include "types.h"
 #include "vars.h"

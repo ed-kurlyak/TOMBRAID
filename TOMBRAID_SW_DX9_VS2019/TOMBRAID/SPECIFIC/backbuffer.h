@@ -1,7 +1,6 @@
 #pragma once
 
 #include "..\scitech\INCLUDE\MGRAPH.H"
-//#pragma comment (lib, "./scitech/LIB/WIN32/VC/MGLLT.LIB")
 #pragma comment(lib, ".\\scitech\\LIB\\WIN32\\VC\\MGLLT.LIB")
 #pragma comment(lib, "winmm.lib")
 

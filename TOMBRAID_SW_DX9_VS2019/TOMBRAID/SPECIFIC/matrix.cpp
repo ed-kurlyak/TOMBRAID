@@ -1,6 +1,5 @@
-#include "matrix.h"
 #include <windows.h>
-
+#include "matrix.h"
 #include "phd_math.h"
 #include "vars.h"
 

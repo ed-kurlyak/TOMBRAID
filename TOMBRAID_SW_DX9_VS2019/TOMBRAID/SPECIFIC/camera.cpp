@@ -1,26 +1,11 @@
 #include <windows.h>
-
 #include "camera.h"
 #include "cinema.h"
 #include "winmain.h"
-/*
-#include "3dsystem/3d_gen.h"
-#include "3dsystem/phd_math.h"
-#include "game/cinema.h"
-#include "game/control.h"
-#include "game/draw.h"
-#include "game/random.h"
-#include "game/sound.h"
-#include "global/const.h"
-#include "global/vars.h"
-
-#include <stddef.h>
-*/
 
 #include "3d_gen.h"
 #include "draw.h"
 #include "phd_math.h"
-//#include "game/random.h"
 #include "const.h"
 #include "control_util.h"
 #include "sound.h"

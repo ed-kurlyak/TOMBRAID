@@ -1,7 +1,6 @@
 #include <malloc.h>
 #include <windows.h>
 #include <stdio.h>
-
 #include "game.h"
 #include "gameflow.h"
 #include "init.h"

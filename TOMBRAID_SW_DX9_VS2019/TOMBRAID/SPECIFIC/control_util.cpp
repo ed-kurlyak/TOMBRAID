@@ -1,9 +1,7 @@
-#include "control_util.h"
-
-#include "..//traps//movable_block.h"
-
-#include "vars.h"
 #include <windows.h>
+#include "control_util.h"
+#include "..//traps//movable_block.h"
+#include "vars.h"
 
 // TODO: some of these functions have side effects, make them go away
 
@@ -317,9 +315,6 @@ int16_t GetHeight(FLOOR_INFO *floor, int32_t x, int32_t y, int32_t z)
 				}
 				else
 				{
-					//при загрузке уровня LEVEL4.PHD
-					//выдает ошибку исполнения GetHeight() GetCeiling()
-
 					ITEM_INFO *item = &g_Items[trigger & VALUE_BITS];
 					OBJECT_INFO *object = &g_Objects[item->object_number];
 					if (object->floor)
@@ -440,9 +435,6 @@ int16_t GetCeiling(FLOOR_INFO *floor, int32_t x, int32_t y, int32_t z)
 				}
 				else
 				{
-					//при загрузке уровня LEVEL4.PHD
-					//выдает ошибку исполнения GetHeight() GetCeiling()
-
 					ITEM_INFO *item = &g_Items[trigger & VALUE_BITS];
 					OBJECT_INFO *object = &g_Objects[item->object_number];
 					if (object->ceiling)

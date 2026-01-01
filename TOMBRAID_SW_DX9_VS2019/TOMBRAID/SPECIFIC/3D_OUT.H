@@ -66,14 +66,6 @@ extern "C" void __cdecl transA(int min_y, int max_y, short int colbase);
 extern "C" void __cdecl gtmapA(int min_y, int max_y, char *tptr);
 extern "C" void __cdecl wgtmapA(int min_y, int max_y, char *tptr);
 
-/*
-extern "C" void	__fastcall flatA( int min_y, int max_y, char color );
-extern "C" void	__fastcall gourA( int min_y, int max_y, short int colbase );
-extern "C" void	__fastcall transA( int min_y, int max_y, short int colbase );
-extern "C" void	__fastcall gtmapA( int min_y, int max_y, char *tptr );
-extern "C" void	__fastcall wgtmapA( int min_y, int max_y, char *tptr );
-*/
-
 void draw_poly_flat(short int *iptr);
 void draw_poly_trans(short int *iptr);
 void draw_poly_gouraud(short int *iptr);
@@ -88,10 +80,7 @@ void wgtmap_persp16_fp(int ymin, int ymax, char *tptr);
 void draw_poly_gtmap_persp(short int *iptr);
 void draw_poly_wgtmap_persp(short int *iptr);
 
-// extern void (*poly_draw_routines[])(short int *);
 void (*poly_draw_routines[])(short int *);
-// void	phd_SortPolyList( int number,int buffer[][10]);
 void phd_SortPolyList(int number, int buffer[][2]);
-// void	do_quickysorty( int left, int right, int buffer[][10] );
 void do_quickysorty(int left, int right, int buffer[][2]);
 void phd_PrintPolyList(void *ptr);

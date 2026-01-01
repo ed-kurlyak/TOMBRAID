@@ -1,13 +1,9 @@
-//#include "3Dglodef.h"
-
 #include "3D_LINE.H"
 #include "3d_out.h"
 #include "SCALESPR.H"
 #include "types.h"
 #include "vars.h"
 #include "winmain.h"
-
-// extern	XBUF_PERSP	xbuffer[];
 
 XBUF_PERSP xbuffer[MAX_SCANLINES] = {0}; // Edge buffer for Polygon Draw
 

@@ -14,6 +14,8 @@
 //#include <stdbool.h>
 //#include <stdint.h>
 
+#define ROOM_TRANSPARENCY  0xff
+
 typedef enum
 {
 	DART_EMITTER_IDLE = 0,
@@ -84,7 +86,6 @@ struct VERTEX_COLOR
 struct TEXTUREBUCKET_OPAQUE
 {
 	DWORD tpage;
-	LPDIRECT3DTEXTURE9 lp_tpage;
 	int count;
 	VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
 	LPDIRECT3DVERTEXBUFFER9 VertBuff;

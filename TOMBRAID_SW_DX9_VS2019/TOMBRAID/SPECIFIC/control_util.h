@@ -11,8 +11,3 @@ int32_t zLOS(GAME_VECTOR *start, GAME_VECTOR *target);
 int32_t xLOS(GAME_VECTOR *start, GAME_VECTOR *target);
 int32_t ClipTarget(GAME_VECTOR *start, GAME_VECTOR *target, FLOOR_INFO *floor);
 int GetSecretCount();
-/*
-void FlipMap();
-void RemoveRoomFlipItems(ROOM_INFO *r);
-void AddRoomFlipItems(ROOM_INFO *r);
-*/

@@ -5,7 +5,6 @@
 #include "screen.h"
 #include "vars.h"
 #include "cinema.h"
-
 #include "..\\objects\\abortion.h"
 #include "..\\objects\\alligator.h"
 #include "..\\objects\\ape.h"
@@ -42,34 +41,28 @@
 #include "..\\objects\\trapdoor.h"
 #include "..\\objects\\vole.h"
 #include "..\\objects\\wolf.h"
-
 #include "..\\traps\\dart.h"
 #include "..\\traps\\dart_emitter.h"
 #include "..\\traps\\falling_block.h"
 #include "..\\traps\\movable_block.h"
 #include "..\\traps\\pendulum.h"
-
 #include "..\\traps\\damocles_sword.h"
 #include "..\\traps\\falling_ceiling.h"
 #include "..\\traps\\rolling_ball.h"
 #include "..\\traps\\spikes.h"
 #include "..\\traps\\teeth_trap.h"
-
 #include "..\\traps\\lightning_emitter.h"
 #include "..\\traps\\midas_touch.h"
 #include "..\\traps\\rolling_block.h"
 #include "..\\traps\\thors_hammer.h"
-
 #include "..\\traps\\flame.h"
 #include "..\\traps\\lava.h"
-
 #include "..\\effects\\body_part.h"
 #include "..\\effects\\missile.h"
 #include "..\\effects\\ricochet.h"
 #include "..\\effects\\splash.h"
 #include "..\\effects\\twinkle.h"
 #include "..\\effects\\waterfall.h"
-
 #include "box.h"
 #include "items.h"
 #include "sound.h"
@@ -184,10 +177,6 @@ bool S_LoadLevel(char *szLevelName)
 	return true;
 }
 
-//uint32_t TexturePageCount;
-#define ROOM_TRANSPARENCY  0xff
-
-
 //не забыть освободить
 void Create_DX_Textures()
 {
@@ -199,7 +188,6 @@ void Create_DX_Textures()
 	{
 		BYTE alpha = 0;
 		UINT TexTile = p;
-		//UINT offset, c_index;
 		UINT c_index;
 		BYTE* TempTexTile = new BYTE[256 * 256 * 4];
 
@@ -209,9 +197,6 @@ void Create_DX_Textures()
 		{
 			for (UINT k = 0; k < 256; ++k)
 			{
-				//c_index = (j * 256) + k;
-				//offset = Level->Textile16[TexTile].Tile[c_index];
-
 				uint8_t pal_idx = *input_ptr++;
 
 				uint8_t alpha = pal_idx == 0 ? 0 : 0xFF;
@@ -219,19 +204,6 @@ void Create_DX_Textures()
 				UINT r = GameNormalPalette[pal_idx].r;
 				UINT g = GameNormalPalette[pal_idx].g;
 				UINT b = GameNormalPalette[pal_idx].b;
-				/*
-				UINT r = GameNormalPalette[TexturePagePtrs[TexTile][c_index]].r;
-				UINT g = GameNormalPalette[TexturePagePtrs[TexTile][c_index]].g;
-				UINT b = GameNormalPalette[TexturePagePtrs[TexTile][c_index]].b;
-				*/
-
-				//если пиксель черного цвета это прозначность альфа=0
-				/*
-				if (TexturePagePtrs[TexTile][c_index] != 0)
-					alpha = 255;
-				else
-					alpha = 0;
-				*/
 
 				c_index = (j * 1024) + (k * 4);
 
@@ -239,14 +211,6 @@ void Create_DX_Textures()
 				TempTexTile[c_index + 1] = g; //g
 				TempTexTile[c_index + 2] = b; //b
 				TempTexTile[c_index + 3] = alpha;
-
-				/*
-				TempTexTile[c_index + 0] = ((offset >> 10) & 0x1f) * 8; //r
-				TempTexTile[c_index + 1] = ((offset >> 5) & 0x1f) * 8; //g
-				TempTexTile[c_index + 2] = (offset & 0x1f) * 8; //b
-				TempTexTile[c_index + 3] = (offset & 0x8000) ? ROOM_TRANSPARENCY : 0;
-				*/
-
 			}
 		}
 
@@ -274,22 +238,6 @@ void Create_DX_Textures()
 				dest[srcIndex + 3] = src[srcIndex + 3]; //a
 			}
 		}
-		/*
-		int indx = 0;
-		for (int i = 0; i < 256 * 256; i++)
-		{
-
-			imageData[indx + 0] = TempTexTile[indx + 2];//b
-			imageData[indx + 1] = TempTexTile[indx + 1];//g
-			imageData[indx + 2] = TempTexTile[indx + 0];//r
-			imageData[indx + 3] = TempTexTile[indx + 3];//a
-
-			
-
-			indx += 4;
-		}
-	*/
-
 
 		pSurface->UnlockRect();
 		pSurface->Release();
@@ -297,16 +245,12 @@ void Create_DX_Textures()
 		s++;
 
 		delete[] TempTexTile;
-
-
 	}
 
 }
 
 bool Load_Texture_Pages(FILE *fp)
 {
-	//int32_t TexturePageCount;
-
 	fread(&TexturePageCount, 4, 1, fp);
 
 	int8_t *Buff = (int8_t *)Game_Alloc(TexturePageCount * 256 * 256, GBUF_TEXTURE_PAGES);
@@ -1612,9 +1556,6 @@ bool LoadSoundEffects(FILE *fp)
 	g_SoundEffectsTable = (OBJECT_VECTOR *)Game_Alloc(
 		sizeof(OBJECT_VECTOR) * g_NumberSoundEffects, GBUF_SOUND_FX);
 
-	// g_SoundEffectsTable = (OBJECT_VECTOR*)malloc(sizeof(OBJECT_VECTOR) *
-	// g_NumberSoundEffects);
-
 	if (!g_SoundEffectsTable)
 	{
 		return false;
@@ -1922,7 +1863,6 @@ bool LoadSoundSamples(FILE *fp)
 		}
 
 		pWF->cbSize = sizeof(WAVEFORMATEX);
-		// pWF->cbSize = 0;
 
 		dwWaveLength = dwHeader[10];
 
@@ -1940,11 +1880,7 @@ bool LoadSoundSamples(FILE *fp)
 
 						fclose(fp);
 				}
-		
-
-
-
-				*/
+		*/
 
 		if (FAILED(DS_MakeSample(
 				i, pWF,

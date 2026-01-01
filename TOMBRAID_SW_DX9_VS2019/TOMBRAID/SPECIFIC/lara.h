@@ -1,10 +1,5 @@
 #pragma once
 
-//#include "global/types.h"
-
-//#include <stdbool.h>
-//#include <stdint.h>
-
 #include "types.h"
 
 extern WEAPON_INFO g_Weapons[NUM_WEAPONS];
@@ -196,4 +191,3 @@ void LookLeftRight();
 void LookUpDown();
 void ResetLook();
 
-// void LaraCheatGetStuff();

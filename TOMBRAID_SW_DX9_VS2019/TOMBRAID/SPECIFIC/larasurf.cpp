@@ -1,5 +1,4 @@
 #include <windows.h>
-
 #include "collide.h"
 #include "control_util.h"
 #include "draw.h"
@@ -8,22 +7,6 @@
 #include "phd_math.h"
 #include "types.h"
 #include "vars.h"
-
-/*
-#include "game/lara.h"
-
-#include "3dsystem/phd_math.h"
-#include "config.h"
-#include "game/collide.h"
-#include "game/control.h"
-#include "game/input.h"
-#include "global/const.h"
-#include "global/types.h"
-#include "global/vars.h"
-
-#include <stddef.h>
-#include <stdint.h>
-*/
 
 void LaraSurface(ITEM_INFO *item, COLL_INFO *coll)
 {
@@ -118,18 +101,15 @@ void LaraAsSurfSwim(ITEM_INFO *item, COLL_INFO *coll)
 
 	g_Lara.dive_count = 0;
 
-	// if (!g_Config.enable_tr3_sidesteps || !g_Input.slow)
+	if (g_Input.left)
 	{
-		if (g_Input.left)
-		{
-			item->pos.y_rot -= LARA_SLOW_TURN;
-		}
-		else if (g_Input.right)
-		{
-			item->pos.y_rot += LARA_SLOW_TURN;
-		}
+		item->pos.y_rot -= LARA_SLOW_TURN;
 	}
-
+	else if (g_Input.right)
+	{
+		item->pos.y_rot += LARA_SLOW_TURN;
+	}
+	
 	if (!g_Input.forward)
 	{
 		item->goal_anim_state = AS_SURFTREAD;
@@ -156,20 +136,6 @@ void LaraAsSurfBack(ITEM_INFO *item, COLL_INFO *coll)
 
 	g_Lara.dive_count = 0;
 
-	/*
-if (!g_Config.enable_tr3_sidesteps || !g_Input.slow)
-	{
-	if (g_Input.left)
-			{
-		item->pos.y_rot -= LARA_SLOW_TURN / 2;
-	}
-			else if (g_Input.right)
-			{
-		item->pos.y_rot += LARA_SLOW_TURN / 2;
-	}
-}
-	*/
-
 	if (!g_Input.back)
 	{
 		item->goal_anim_state = AS_SURFTREAD;
@@ -191,18 +157,6 @@ void LaraAsSurfLeft(ITEM_INFO *item, COLL_INFO *coll)
 	}
 
 	g_Lara.dive_count = 0;
-
-	/*
-if (g_Config.enable_tr3_sidesteps && g_Input.slow && g_Input.left)
-	{
-	item->fall_speed += 8;
-	if (item->fall_speed > SURF_MAXSPEED)
-			{
-		item->fall_speed = SURF_MAXSPEED;
-	}
-	return;
-}
-	*/
 
 	if (g_Input.left)
 	{
@@ -234,18 +188,6 @@ void LaraAsSurfRight(ITEM_INFO *item, COLL_INFO *coll)
 	}
 
 	g_Lara.dive_count = 0;
-
-	/*
-if (g_Config.enable_tr3_sidesteps && g_Input.slow && g_Input.right)
-	{
-	item->fall_speed += 8;
-	if (item->fall_speed > SURF_MAXSPEED)
-			{
-		item->fall_speed = SURF_MAXSPEED;
-	}
-	return;
-}
-	*/
 
 	if (g_Input.left)
 	{
@@ -334,9 +276,7 @@ void LaraAsSurfTread(ITEM_INFO *item, COLL_INFO *coll)
 	{
 		item->goal_anim_state = AS_SURFLEFT;
 	}
-	else if (
-		g_Input.step_right
-		/*|| (g_Config.enable_tr3_sidesteps && g_Input.slow && g_Input.right)*/)
+	else if (g_Input.step_right)
 	{
 		item->goal_anim_state = AS_SURFRIGHT;
 	}

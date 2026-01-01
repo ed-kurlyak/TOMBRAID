@@ -1,16 +1,12 @@
 #include <windows.h>
-
 #include "lara.h"
-
 #include "3d_gen.h"
 #include "matrix.h"
 #include "phd_math.h"
-//#include "config.h"
 #include "../effects/ricochet.h"
 #include "../objects/blood.h"
 #include "control_util.h"
 #include "draw.h"
-//#include "game/input.h"
 #include "const.h"
 #include "inv.h"
 #include "sound.h"
@@ -18,9 +14,6 @@
 #include "types.h"
 #include "vars.h"
 #include "winmain.h"
-
-//#include <stddef.h>
-//#include <stdint.h>
 
 #define PISTOL_LOCK_YMIN (-60 * PHD_DEGREE)
 #define PISTOL_LOCK_YMAX (+60 * PHD_DEGREE)

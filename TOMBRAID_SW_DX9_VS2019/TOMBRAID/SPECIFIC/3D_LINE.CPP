@@ -1,5 +1,3 @@
-//#include "3Dglodef.h"
-
 #include "3D_LINE.H"
 #include "types.h"
 #include "vars.h"

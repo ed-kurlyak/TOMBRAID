@@ -1,15 +1,8 @@
 #include "3d_gen.h"
-
 #include "matrix.h"
 #include "phd_math.h"
 #include "vars.h"
-//#include "winmain.h"
 #include "screen.h"
-//#include "config.h"
-//#include "game/output.h"
-//#include "game/screen.h"
-//#include "global/vars.h"
-
 #include <math.h>
 
 void phd_LookAt(int32_t xsrc, int32_t ysrc, int32_t zsrc, int32_t xtar,
@@ -88,22 +81,6 @@ void phd_RotateLight(int16_t pitch, int16_t yaw)
 
 void phd_AlterFOV(PHD_ANGLE fov)
 {
-	// In places that use GAME_FOV, it can be safely changed to user's choice.
-	// But for cinematics, the FOV value chosen by devs needs to stay
-	// unchanged, otherwise the game renders the low camera in the Lost Valley
-	// cutscene wrong.
-
-	/*
-	if (g_Config.fov_vertical)
-	{
-	//double aspect_ratio = SCREEN_WIDTH / (double)SCREEN_HEIGHT;
-	double fov_rad_h = fov * PI / 32760;
-	double fov_rad_v = 2 * atan(aspect_ratio * tan(fov_rad_h / 2));
-	//fov = round((fov_rad_v / PI) * 32760);
-			fov = (PHD_ANGLE)(fov_rad_v / PI) * 32760;
-}
-	*/
-
 	int16_t c = phd_cos(fov / 2);
 	int16_t s = phd_sin(fov / 2);
 

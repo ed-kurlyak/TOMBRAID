@@ -1,15 +1,4 @@
 ﻿#include "lot.h"
-
-/*
-#include "game/gamebuf.h"
-#include "game/shell.h"
-#include "global/const.h"
-#include "global/vars.h"
-
-#include <stddef.h>
-
-*/
-
 #include "const.h"
 #include "init.h"
 #include "vars.h"

@@ -1,17 +1,6 @@
 #include "screen.h"
 #include "vars.h"
 #include "winmain.h"
-
-/*
-#include "3dsystem/3d_gen.h"
-#include "3dsystem/matrix.h"
-#include "config.h"
-#include "game/output.h"
-#include "game/viewport.h"
-#include "global/vars.h"
-
-*/
-
 #include <math.h>
 
 static int32_t m_ResolutionIdx = 0;

@@ -1,12 +1,5 @@
 #pragma once
 
-/*
-#include "global/types.h"
-
-#include <stdbool.h>
-#include <stdint.h>
-*/
-
 #include "types.h"
 
 #define TEXT_HEIGHT 11

@@ -1,12 +1,10 @@
 #include "people.h"
-
 #include "..\\OBJECTS\\blood.h"
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\winmain.h"
 #include "..\\effects\\ricochet.h"
-//#include "game/sound.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\sphere.h"

@@ -1,5 +1,4 @@
 #include <windows.h>
-
 #include "..\\OBJECTS\\keyhole.h"
 #include "..\\OBJECTS\\puzzle_hole.h"
 #include "..\\OBJECTS\\switch.h"
@@ -24,7 +23,6 @@
 #include "util.h"
 #include "vars.h"
 #include "winmain.h"
-
 #include "drawprimitive.h"
 
 void DrawAnimatingItem(ITEM_INFO *item)
@@ -1574,8 +1572,6 @@ int ClipVertices(int number, VBUF* input)
 	return (j);
 }
 
-
-
 //оригинал из Tomb 1 Main ver 2.0
 /*
 int32_t ClipVertices(int32_t num, VBUF *source)
@@ -1786,7 +1782,6 @@ int32_t ClipVertices(int32_t num, VBUF *source)
 
 }
 */
-
 
 int32_t ClipVertices2(int32_t num, VBUF2 *source)
 {
@@ -3674,6 +3669,7 @@ void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum,
 
 	//сдвиг (над полом) экранных координат маленькой аптечки
 	//что бы аптечка не тонула в полу
+	//дл€ случа€ если z-buff не линейный
 	
 	if (sprnum == 7)
 	{
@@ -3981,22 +3977,18 @@ void S_Output_DrawLightningSegment(int x1, int y1, int z1, int thickness1,
 
 	vertices[0].x = (float)x1;
 	vertices[0].y = (float)y1;
-	// vertices[0].z = (float)8589934592.0f / z1;
 	vertices[0].g = 0.0f;
 
 	vertices[1].x = (float)(thickness1 + x1);
 	vertices[1].y = (float)y1;
-	// vertices[1].z = (float)8589934592.0f / z1;
 	vertices[1].g = 0.0f;
 
 	vertices[2].x = (float)(thickness2 + x2);
 	vertices[2].y = (float)y2;
-	// vertices[2].z = 8589934592.0f / z2;
 	vertices[2].g = 0.0f;
 
 	vertices[3].x = (float)x2;
 	vertices[3].y = (float)y2;
-	// vertices[3].z = 8589934592.0f / z2;
 	vertices[3].g = 0.0f;
 
 	int num = ClipVertices2(4, vertices);
@@ -4028,12 +4020,10 @@ void Output_DrawScreenLine(int32_t sx, int32_t sy, int32_t w, int32_t h,
 
 	vertices[0].x = (float)sx;
 	vertices[0].y = (float)sy;
-	// vertices[0].z = depth;
 	vertices[0].g = (float)color; // Compose_Colour(255, 255, 255);
 
 	vertices[1].x = (float)sx + w;
 	vertices[1].y = (float)sy + h;
-	// vertices[1].z = depth;
 	vertices[1].g = (float)color; // Compose_Colour(255, 255, 255);
 
 	if (Hardware)
@@ -4097,7 +4087,6 @@ void S_Output_DrawLine_SW(VBUF2* vertices, int depth)
 	info[2] = (short int)vertices[0].y;
 	info[3] = (short int)vertices[1].x;
 	info[4] = (short int)vertices[1].y;
-	// info[5] = ColorLighting2; //color
 	info[5] = (short int)vertices[0].g; // color
 
 	info += 6;
@@ -4184,9 +4173,9 @@ int16_t* DrawRoomSprites(int16_t* obj_ptr, int32_t number)
 
 }
 
-//-----------------------------------------
-//hardware funcs section
-//-----------------------------------------
+/********************************************************
+*		hardware funcs section
+*********************************************************/
 
 #define TEX_VERT_BUFF_TO_DX_BUFFER(OUT_BUCKET, IN_VERTICES, IN_COLOR)  \
 do {                                                                \
@@ -4210,6 +4199,48 @@ do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].diffuse = IN_COLOR;         \
     OUT_BUCKET.count++;                                             \
 } while(0)
+
+
+#define COLOR_VERT_BUFF_TO_DX_BUFFER2(OUT_BUCKET, IN_VERTICES, DEPTH, IN_COLOR)  \
+do {                                                                \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].x = IN_VERTICES.x;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].y = IN_VERTICES.y;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].z = DEPTH;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].w = 1.0f;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].diffuse = IN_COLOR;         \
+    OUT_BUCKET.count++;                                             \
+} while(0)
+
+#define TRANSP_VERT_BUFF_TO_DX_BUFFER(OUT_BUCKET, IN_VERTICES, IN_COLOR)  \
+do {                                                                \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].x = IN_VERTICES.x;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].y = IN_VERTICES.y;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].z = IN_VERTICES.z;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].w = 1.0f;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].diffuse = IN_COLOR;         \
+    OUT_BUCKET.count++;                                             \
+} while(0)
+
+#define TRANSP_VERT_BUFF_TO_DX_BUFFER2(OUT_BUCKET, IN_VERTICES, IN_COLOR)  \
+do {                                                                \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].x = IN_VERTICES.x;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].y = IN_VERTICES.y;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].z = IN_VERTICES.z;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].w = IN_VERTICES.w;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].diffuse = IN_COLOR;         \
+    OUT_BUCKET.count++;                                             \
+} while(0)
+
+#define LINE_VERT_BUFF_TO_DX_BUFFER(OUT_BUCKET, IN_VERTICES, DEPTH, IN_COLOR)  \
+do {                                                                \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].x = IN_VERTICES.x;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].y = IN_VERTICES.y;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].z = DEPTH;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].w = 1.0f / DEPTH;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].diffuse = IN_COLOR;         \
+    OUT_BUCKET.count++;                                             \
+} while(0)
+
 
 
 void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* tex1, PHD_UV* tex2, PHD_UV* tex3, int draw_type, int tpage)
@@ -4246,20 +4277,25 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 			{
 				//полигон смотрит к зрителю
 				float multiplier = 0.0625f * BRIGHTNESS;
-				float one = (256.0f * 8.0f * 16384.0f); // как в TR2: 33554432.0f
+				
+				
 				
 				for (int i = 0; i < 3; i++)
 				{
+					/*
+					//альтернативный расчет
+					float one = (256.0f * 8.0f * 16384.0f); // как в TR2: 33554432.0f
 					float ooz = (float)g_PhdPersp / vns[i]->zv;     // перспектива
 					float f_oneopersp = one / g_PhdPersp;   // нормализаци€ в fixed-point диапазон
 					ooz *= f_oneopersp;
+					*/
 
 					vertices[i].x = (float)vns[i]->xs;
 					vertices[i].y = (float)vns[i]->ys;
 					vertices[i].z = (float)vns[i]->zv;
-					//vertices[i].w = 1.0f / vns[i]->zv;
+					vertices[i].w = 1.0f / vns[i]->zv;
 
-					vertices[i].w = ooz;
+					//vertices[i].w = ooz;
 
 					vertices[i].u = ((tex->uv[i].u1 & 0xFF00) + 127) / 65536.0f * vertices[i].w;
 					vertices[i].v = ((tex->uv[i].v1 & 0xFF00) + 127) / 65536.0f * vertices[i].w;
@@ -4273,13 +4309,8 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 				if (vns[0]->clip || vns[1]->clip || vns[2]->clip)
 				{
 
-				ClipVerts: //если необходимо отсечение по границе экрана
-
-					//if (!DX9Clipping)
-					{
-
+					ClipVerts: //если необходимо отсечение по границе экрана
 						vert_count = ClipVertices(vert_count, &vertices[0]);
-					}
 				}
 
 				if (vert_count)
@@ -4292,9 +4323,6 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 					{
 						if (vert_count > 0)
 						{
-
-
-							//int buket = FindBucket(tex->tpage);
 							int buket = FindBucket(tpage);
 
 							for (int i = 1; i < vert_count - 1; i++)
@@ -4396,7 +4424,6 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 
 						if (vert_count > 0)
 						{
-
 							do
 							{
 								*(float*)& info[0] = vertices[indx].x;
@@ -4462,8 +4489,6 @@ int16_t* S_DrawObjectGT4_HW(int16_t* obj_ptr, int32_t number)
 {
 
 	PHD_VBUF* vns[4];
-	//VBUF vertices[8];
-	//POINT_INFO points[4];
 	PHD_TEXTURE* tex;
 	int32_t vert_count = 0;
 
@@ -4480,6 +4505,10 @@ int16_t* S_DrawObjectGT4_HW(int16_t* obj_ptr, int32_t number)
 
 			tex = &g_PhdTextureInfo[*obj_ptr++];
 
+			//дл€ ClipVertices в экранных координатах важно что бы
+			//на входе был треугольник, иначе искажени€ цвета/текстур
+			//или переделать ClipVertices дл€ полигона TriangleStrip
+			//как в оригинальном коде TR3
 			Draw_Textured_Triangle(vns[0], vns[1], vns[2], &tex->uv[0], &tex->uv[1], &tex->uv[2], tex->drawtype + 2, tex->tpage);
 			Draw_Textured_Triangle(vns[0], vns[2], vns[3], &tex->uv[0], &tex->uv[2], &tex->uv[3], tex->drawtype + 2, tex->tpage);
 
@@ -4496,8 +4525,6 @@ int16_t* S_DrawObjectGT4_HW(int16_t* obj_ptr, int32_t number)
 int16_t* S_DrawObjectGT3_HW(int16_t* obj_ptr, int32_t number)
 {
 	PHD_VBUF* vns[3];
-	//VBUF vertices[8];
-	//POINT_INFO points[3];
 	PHD_TEXTURE* tex;
 	int32_t vert_count = 0;
 
@@ -4528,7 +4555,6 @@ void Draw_Colored_Triangle(PHD_VBUF* v1, PHD_VBUF* v2, PHD_VBUF* v3, int color)
 {
 	PHD_VBUF* vns[4];
 	VBUF2 vertices[8];
-	//int color;
 	int32_t vert_count = 3;
 
 	vns[0] = v1;
@@ -4557,19 +4583,15 @@ void Draw_Colored_Triangle(PHD_VBUF* v1, PHD_VBUF* v2, PHD_VBUF* v3, int color)
 				}
 				vert_count = 3;
 
-				//if (!DX9Clipping)
+				//если необходимо отсечение по границе экрана
+				if (vns[0]->clip || vns[1]->clip || vns[2]->clip)
 				{
-					//если необходимо отсечение по границе экрана
-					if (vns[0]->clip || vns[1]->clip || vns[2]->clip)
-					{
-
-						//		ClipVerts:		//если необходимо отсечение
-						//по границе экрана
-						vert_count =
-							ClipVertices2(vert_count, &vertices[0]);
-					}
-
+					//		ClipVerts:		//если необходимо отсечение
+					//по границе экрана
+					vert_count =
+						ClipVertices2(vert_count, &vertices[0]);
 				}
+
 
 				//		Skip_ClipVerts:
 
@@ -4608,8 +4630,6 @@ void Draw_Colored_Triangle(PHD_VBUF* v1, PHD_VBUF* v2, PHD_VBUF* v3, int color)
 
 						COLOR_VERT_BUFF_TO_DX_BUFFER(Bucket_Colored, vertices[0], color);
 
-
-
 						light = (8192.0f - vertices[i].g) / divisor;
 
 						r1 = CLAMP255(r * light);
@@ -4619,8 +4639,6 @@ void Draw_Colored_Triangle(PHD_VBUF* v1, PHD_VBUF* v2, PHD_VBUF* v3, int color)
 						color = (0xFF << 24) | (r1 << 16) | (g1 << 8) | b1;
 
 						COLOR_VERT_BUFF_TO_DX_BUFFER(Bucket_Colored, vertices[i], color);
-
-
 
 						light = (8192.0f - vertices[i + 1].g) / divisor;
 
@@ -4648,7 +4666,6 @@ int16_t* S_DrawObjectG4_HW(int16_t* obj_ptr, int32_t number)
 {
 
 	PHD_VBUF* vns[4];
-	//VBUF2 vertices[8];
 	int color;
 	int32_t vert_count = 4;
 
@@ -4656,7 +4673,6 @@ int16_t* S_DrawObjectG4_HW(int16_t* obj_ptr, int32_t number)
 
 	if (number > 0)
 	{
-
 		do
 		{
 			vns[0] = &m_VBuf[*obj_ptr++];
@@ -4668,8 +4684,6 @@ int16_t* S_DrawObjectG4_HW(int16_t* obj_ptr, int32_t number)
 
 			Draw_Colored_Triangle(vns[0], vns[1], vns[2], color);
 			Draw_Colored_Triangle(vns[0], vns[2], vns[3], color);
-
-
 			
 			num_ColoredQuad--;
 			// if not all clip
@@ -4685,7 +4699,6 @@ int16_t* S_DrawObjectG3_HW(int16_t* obj_ptr, int32_t number)
 {
 
 	PHD_VBUF* vns[4];
-	//VBUF2 vertices[8];
 	int color;
 	int32_t vert_count = 3;
 
@@ -4693,7 +4706,6 @@ int16_t* S_DrawObjectG3_HW(int16_t* obj_ptr, int32_t number)
 
 	if (number > 0)
 	{
-
 		do
 		{
 			vns[0] = &m_VBuf[*obj_ptr++];
@@ -4713,8 +4725,6 @@ int16_t* S_DrawObjectG3_HW(int16_t* obj_ptr, int32_t number)
 
 	return obj_ptr;
 }
-
-#define SHADOW_BIAS		131072
 
 void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 {
@@ -4750,35 +4760,15 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 	for (int i = 1; i < vertex_count - 1; i++)
 	{
 		//vert 1
-
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].x = vertices[0].x;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].y = vertices[0].y;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].z = vertices[0].z;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].w = 1.0f;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].diffuse = color;
-		Bucket_TransQuad.count++;
+		TRANSP_VERT_BUFF_TO_DX_BUFFER(Bucket_TransQuad, vertices[0], color);
 
 		//vert 2
-
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].x = vertices[i].x;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].y = vertices[i].y;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].z = vertices[i].z;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].w = 1.0f;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].diffuse = color;
-		Bucket_TransQuad.count++;
+		TRANSP_VERT_BUFF_TO_DX_BUFFER(Bucket_TransQuad, vertices[i], color);
 
 		//vert 3
-
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].x = vertices[i + 1].x;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].y = vertices[i + 1].y;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].z = vertices[i + 1].z;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].w = 1.0f;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].diffuse = color;
-		Bucket_TransQuad.count++;
+		TRANSP_VERT_BUFF_TO_DX_BUFFER(Bucket_TransQuad, vertices[i + 1], color);
 
 	}
-
-
 }
 
 void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int z, int sprnum, int shade)
@@ -4886,6 +4876,8 @@ void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int 
 
 	surfacenum++;
 	
+	//вариант без сортировки при помощи alpha blending
+
 	/*
 	int buket = FindBucket(sprite->tpage);
 
@@ -4923,22 +4915,30 @@ void S_Output_DrawScreenFBox_HW(int32_t sx, int32_t sy, int32_t w, int32_t h)
 
 	VBUF vertices[4];
 
+	//40 << W2V_SHIFT значит немного дальше чем
+	//ближн€€ плоскость отсечени€ значение Z_NEAR 20
+	float depth = (float)(40 << W2V_SHIFT);
+
 	vertices[0].x = (float)sx;
 	vertices[0].y = (float)sy;
+	vertices[0].z = depth;
+	vertices[0].w = 1.0f / depth;
 
 	vertices[1].x = (float) (sx + w);
 	vertices[1].y = (float)sy;
+	vertices[1].z = depth;
+	vertices[1].w = 1.0f / depth;
 
 	vertices[2].x = (float)(sx + w);
 	vertices[2].y = (float)(sy + h);
-
+	vertices[2].z = depth;
+	vertices[2].w = 1.0f / depth;
+	
 	vertices[3].x = (float)sx;
 	vertices[3].y = (float)(sy + h);
+	vertices[3].z = depth;
+	vertices[3].w = 1.0f / depth;
 	
-	//40 << W2V_SHIFT значит немного дальше чем
-	//ближн€€ плоскость отсечени€ значение Z_NEAR 20
-	int depth = 40 << W2V_SHIFT;
-
 	int vert_count = 4;
 
 	BYTE r = 0;
@@ -4951,57 +4951,41 @@ void S_Output_DrawScreenFBox_HW(int32_t sx, int32_t sy, int32_t w, int32_t h)
 	for ( int i = 1; i < vert_count - 1; i++ )
 	{
 		//vert 1
-
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].x = vertices[0].x;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].y = vertices[0].y;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].z = (float)depth;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].w = 1.0f / depth;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].diffuse = color;
-		Bucket_TransQuad.count++;
+		TRANSP_VERT_BUFF_TO_DX_BUFFER2(Bucket_TransQuad, vertices[0], color);
 
 		//vert 2
-
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].x = vertices[i].x;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].y = vertices[i].y;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].z = (float)depth;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].w = 1.0f / depth;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].diffuse = color;
-		Bucket_TransQuad.count++;
+		TRANSP_VERT_BUFF_TO_DX_BUFFER2(Bucket_TransQuad, vertices[i], color);
 
 		//vert 3
-
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].x = vertices[i + 1].x;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].y = vertices[i + 1].y;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].z = (float)depth;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].w = 1.0f / depth;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].diffuse = color;
-		Bucket_TransQuad.count++;
-	
+		TRANSP_VERT_BUFF_TO_DX_BUFFER2(Bucket_TransQuad, vertices[i + 1], color);
 	}
-
-
 }
 
+//draw health/water bar
 void S_Output_DrawScreenFlatQuad_HW(int32_t sx, int32_t sy, int32_t w, int32_t h, RGB888 color, int depth)
 {
 	VBUF vertices[4];
 
+	float depth2 = (float)(depth << W2V_SHIFT);
+
 	vertices[0].x = (float)sx;
 	vertices[0].y = (float)sy;
-
+	vertices[0].z = depth2;
+	
 	vertices[1].x = (float)(sx + w);
 	vertices[1].y = (float)sy;
-
+	vertices[1].z = depth2;
+		
 	vertices[2].x = (float)(sx + w);
 	vertices[2].y = (float)(sy + h);
-
+	vertices[2].z = depth2;
+	
 	vertices[3].x = (float)sx;
 	vertices[3].y = (float)(sy + h);
-
+	vertices[3].z = depth2;
+	
 	int vert_count = 4;
-
-	depth = depth << W2V_SHIFT;
-
+	
 	BYTE r = color.r;
 	BYTE g = color.g;
 	BYTE b = color.b;
@@ -5011,33 +4995,13 @@ void S_Output_DrawScreenFlatQuad_HW(int32_t sx, int32_t sy, int32_t w, int32_t h
 	for (int i = 1; i < vert_count - 1; i++)
 	{
 		//vert 1
-		Bucket_Colored.Vertex[Bucket_Colored.count].x = vertices[0].x;
-		Bucket_Colored.Vertex[Bucket_Colored.count].y = vertices[0].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].z = (float)depth;
-		Bucket_Colored.Vertex[Bucket_Colored.count].w = 1.0f;
-		Bucket_Colored.Vertex[Bucket_Colored.count].diffuse = color2;
-
-		Bucket_Colored.count++;
+		COLOR_VERT_BUFF_TO_DX_BUFFER(Bucket_Colored, vertices[0], color2);
 
 		//vert 2
-
-		Bucket_Colored.Vertex[Bucket_Colored.count].x = vertices[i].x;
-		Bucket_Colored.Vertex[Bucket_Colored.count].y = vertices[i].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].z = (float) depth;
-		Bucket_Colored.Vertex[Bucket_Colored.count].w = 1.0f;
-		Bucket_Colored.Vertex[Bucket_Colored.count].diffuse = color2;
-
-		Bucket_Colored.count++;
+		COLOR_VERT_BUFF_TO_DX_BUFFER(Bucket_Colored, vertices[i], color2);
 
 		//vert 3
-
-		Bucket_Colored.Vertex[Bucket_Colored.count].x = vertices[i + 1].x;
-		Bucket_Colored.Vertex[Bucket_Colored.count].y = vertices[i + 1].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].z = (float) depth;
-		Bucket_Colored.Vertex[Bucket_Colored.count].w = 1.0f;
-		Bucket_Colored.Vertex[Bucket_Colored.count].diffuse = color2;
-
-		Bucket_Colored.count++;
+		COLOR_VERT_BUFF_TO_DX_BUFFER(Bucket_Colored, vertices[i + 1], color2);
 	}
 }
 
@@ -5054,42 +5018,18 @@ void S_Output_DrawTriangle_HW(VBUF2* vertices, int vert_count, int depth)
 	for (int i = 1; i < vert_count - 1; i++)
 	{
 		//vert 1
-		Bucket_Colored.Vertex[Bucket_Colored.count].x = vertices[0].x;
-		Bucket_Colored.Vertex[Bucket_Colored.count].y = vertices[0].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].z = (float) depth;
-		Bucket_Colored.Vertex[Bucket_Colored.count].w = 1.0f;
-		Bucket_Colored.Vertex[Bucket_Colored.count].diffuse = color2;
-
-		Bucket_Colored.count++;
+		COLOR_VERT_BUFF_TO_DX_BUFFER2(Bucket_Colored, vertices[0], (float)depth, color2);
 
 		//vert 2
-
-		Bucket_Colored.Vertex[Bucket_Colored.count].x = vertices[i].x;
-		Bucket_Colored.Vertex[Bucket_Colored.count].y = vertices[i].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].z = (float)depth;
-		Bucket_Colored.Vertex[Bucket_Colored.count].w = 1.0f;
-		Bucket_Colored.Vertex[Bucket_Colored.count].diffuse = color2;
-
-		Bucket_Colored.count++;
+		COLOR_VERT_BUFF_TO_DX_BUFFER2(Bucket_Colored, vertices[i], (float)depth, color2);
 
 		//vert 3
-
-		Bucket_Colored.Vertex[Bucket_Colored.count].x = vertices[i + 1].x;
-		Bucket_Colored.Vertex[Bucket_Colored.count].y = vertices[i + 1].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].z = (float) depth;
-		Bucket_Colored.Vertex[Bucket_Colored.count].w = 1.0f;
-		Bucket_Colored.Vertex[Bucket_Colored.count].diffuse = color2;
-
-		Bucket_Colored.count++;
+		COLOR_VERT_BUFF_TO_DX_BUFFER2(Bucket_Colored, vertices[i + 1], (float)depth, color2);
 	}
 }
 
 void S_Output_DrawLine_HW(VBUF2* vertices, int depth)
 {
-	Bucket_Lines.Vertex[Bucket_Lines.count].x = vertices[0].x;
-	Bucket_Lines.Vertex[Bucket_Lines.count].y = vertices[0].y;
-	Bucket_Lines.Vertex[Bucket_Lines.count].z = (float) depth;
-	Bucket_Lines.Vertex[Bucket_Lines.count].w = 1.0f / depth;
 
 	BYTE diffuse = (BYTE)CLAMP255(vertices[0].g);
 	BYTE r = GameNormalPalette[diffuse].r;
@@ -5097,14 +5037,7 @@ void S_Output_DrawLine_HW(VBUF2* vertices, int depth)
 	BYTE b = GameNormalPalette[diffuse].b;
 	DWORD color = (0xFF << 24) | (r << 16) | (g << 8) | b;
 
-	Bucket_Lines.Vertex[Bucket_Lines.count].diffuse = color;
-
-	Bucket_Lines.count++;
-
-	Bucket_Lines.Vertex[Bucket_Lines.count].x = vertices[1].x;
-	Bucket_Lines.Vertex[Bucket_Lines.count].y = vertices[1].y;
-	Bucket_Lines.Vertex[Bucket_Lines.count].z = (float) depth;
-	Bucket_Lines.Vertex[Bucket_Lines.count].w = 1.0f / depth;
+	LINE_VERT_BUFF_TO_DX_BUFFER(Bucket_Lines, vertices[0], (float)depth, color);
 
 	diffuse = (BYTE)CLAMP255(vertices[1].g);
 	r = GameNormalPalette[diffuse].r;
@@ -5112,12 +5045,7 @@ void S_Output_DrawLine_HW(VBUF2* vertices, int depth)
 	b = GameNormalPalette[diffuse].b;
 	color = (0xFF << 24) | (r << 16) | (g << 8) | b;
 
-
-	Bucket_Lines.Vertex[Bucket_Lines.count].diffuse = color;
-
-	Bucket_Lines.count++;
-
-
+	LINE_VERT_BUFF_TO_DX_BUFFER(Bucket_Lines, vertices[1], (float)depth, color);
 }
 
 int FindBucket(DWORD tpage)
@@ -5133,20 +5061,9 @@ int FindBucket(DWORD tpage)
 	for (int n = 0; n < MAXBUCKETS; n++)
 	{
 		if (Bucket_Tex_Color_Opaque[n].tpage == -1)
-			//if(Bucket_Tex_Color_Opaque[n].tpage == (LPDIRECT3DTEXTURE9) 0xFFFFFFFF)		
 		{
 			Bucket_Tex_Color_Opaque[n].tpage = tpage;
 
-			//полигоны без текстуры
-			if (tpage == 0xFFFFFFFF)
-			{
-				Bucket_Tex_Color_Opaque[n].lp_tpage = NULL;
-			}
-			//полигоны с текстурой
-			else
-			{
-				Bucket_Tex_Color_Opaque[n].lp_tpage = m_pLevelTile[tpage];
-			}
 			return n;
 		}
 
@@ -5160,8 +5077,6 @@ void InitBuckets()
 	for (int n = 0; n < MAXBUCKETS; n++)
 	{
 		Bucket_Tex_Color_Opaque[n].tpage = -1;
-		//Bucket_Tex_Color_Opaque[n].tpage = 0xFFFFFFFF;
-		Bucket_Tex_Color_Opaque[n].lp_tpage = NULL;
 		Bucket_Tex_Color_Opaque[n].count = 0;
 	}
 

@@ -1,22 +1,4 @@
 #include "cinema.h"
-
-/*
-#include "3dsystem/3d_gen.h"
-#include "3dsystem/phd_math.h"
-#include "game/control.h"
-#include "game/draw.h"
-#include "game/input.h"
-#include "game/items.h"
-#include "game/music.h"
-#include "game/setup.h"
-#include "game/sound.h"
-#include "global/const.h"
-#include "global/types.h"
-#include "global/vars.h"
-#include "specific/s_misc.h"
-*/
-
-
 #include "setup.h"
 #include "vars.h"
 #include "game.h"
@@ -25,7 +7,6 @@
 #include "items.h"
 #include "draw.h"
 #include "control_util.h"
-
 
 static const int32_t m_CinematicAnimationRate = 0x8000;
 

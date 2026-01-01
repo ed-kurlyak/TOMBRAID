@@ -1,10 +1,6 @@
 #include "option.h"
-
-//#include "config.h"
 #include "gameflow.h"
-//#include "game/input.h"
 #include "screen.h"
-//#include "game/settings.h"
 #include "text.h"
 #include "vars.h"
 

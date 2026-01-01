@@ -1,11 +1,9 @@
 #include "collide.h"
-
 #include "control_util.h"
 #include "draw.h"
 #include "items.h"
 #include "matrix.h"
 #include "phd_math.h"
-//#include "game/sound.h"
 #include "const.h"
 #include "sound.h"
 #include "sphere.h"

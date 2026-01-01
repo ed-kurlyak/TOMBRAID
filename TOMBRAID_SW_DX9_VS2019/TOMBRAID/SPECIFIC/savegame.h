@@ -1,9 +1,6 @@
 #pragma once
 
-//#include "global/types.h"
 #include "types.h"
-
-//#include <stdint.h>
 
 void InitialiseStartInfo();
 void ModifyStartInfo(int32_t level_num);

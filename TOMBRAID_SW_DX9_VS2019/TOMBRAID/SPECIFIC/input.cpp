@@ -1,25 +1,11 @@
 #include "input.h"
 #include "windows.h"
 
-//#include "config.h"
-//#include "inv.h"
-//#include "lara.h"
-//#include "game/shell.h"
-//#include "vars.h"
-//#include "global/vars_platform.h"
-//#include "log.h"
-//#include "specific/s_shell.h"
-
-/*
-#include <dinput.h>
-#include <stdbool.h>
-*/
 
 //#define KEY_DOWN(a) ((m_DIKeys[(a)] & 0x80) != 0)
 #define KEY_DOWN(a) (GetAsyncKeyState(a) & 0xFF00)
 
 bool m_KeyConflict[INPUT_KEY_NUMBER_OF] = {false};
-// bool m_KeyConflict[INPUT_KEY_NUMBER_OF];
 
 S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF] = {
 	// built-in controls
@@ -57,10 +43,11 @@ S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF] = {
 	// clang-format on
 };
 
-// static LPDIRECTINPUT8 m_DInput = NULL;
-// static LPDIRECTINPUTDEVICE8 m_IDID_SysKeyboard = NULL;
-// static LPDIRECTINPUTDEVICE8 m_IDID_Joystick = NULL;
 /*
+static LPDIRECTINPUT8 m_DInput = NULL;
+static LPDIRECTINPUTDEVICE8 m_IDID_SysKeyboard = NULL;
+static LPDIRECTINPUTDEVICE8 m_IDID_Joystick = NULL;
+
 uint8_t m_DIKeys[256] = { 0 };
 
 int32_t m_MedipackCoolDown = 0;

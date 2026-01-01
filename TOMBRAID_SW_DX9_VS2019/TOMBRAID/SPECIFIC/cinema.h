@@ -1,6 +1,5 @@
 #pragma once
 
-//#include <stdint.h>
 #include "types.h"
 
 int32_t  Play_Cinematic(int32_t level_num);

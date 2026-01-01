@@ -2,8 +2,6 @@
 
 #include "types.h"
 
-//#include <stdint.h>
-
 void InitialiseCamera();
 void MoveCamera(GAME_VECTOR *ideal, int32_t speed);
 void ClipCamera(int32_t *x, int32_t *y, int32_t target_x, int32_t target_y,
@@ -21,7 +19,6 @@ void CombatCamera(ITEM_INFO *item);
 void LookCamera(ITEM_INFO *item);
 void FixedCamera();
 void CalculateCamera();
-
 void CameraOffsetAdditionalAngle(int16_t delta);
 void CameraOffsetAdditionalElevation(int16_t delta);
 void CameraOffsetReset();

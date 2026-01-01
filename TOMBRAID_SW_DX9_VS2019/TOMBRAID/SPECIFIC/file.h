@@ -2,7 +2,6 @@
 #define _FILE_
 
 #include "types.h"
-//#include "draw.h"
 #include "init.h"
 #include "types.h"
 #include "vars.h"

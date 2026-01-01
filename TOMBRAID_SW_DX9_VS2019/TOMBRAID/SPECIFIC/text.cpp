@@ -1,26 +1,6 @@
-/*
-#include "game/text.h"
-
-#include "game/output.h"
-#include "game/screen.h"
-#include "global/const.h"
-#include "global/types.h"
-#include "global/vars.h"
-#include "util.h"
-
-#include <stdio.h>
-#include <string.h>
-*/
-
 #include "text.h"
-
 #include "draw.h"
 #include "screen.h"
-//#include <stdio.h>
-//#include <string.h>
-
-//#include "game/output.h"
-//#include "game/screen.h"
 #include "const.h"
 #include "overlay.h"
 #include "types.h"

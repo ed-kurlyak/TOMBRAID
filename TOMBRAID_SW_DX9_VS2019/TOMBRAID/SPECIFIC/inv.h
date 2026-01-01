@@ -2,8 +2,6 @@
 
 #include "types.h"
 
-//#include <stdint.h>
-
 extern int16_t g_InvKeysCurrent;
 extern int16_t g_InvKeysObjects;
 extern int16_t g_InvKeysQtys[];

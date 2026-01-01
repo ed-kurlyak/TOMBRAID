@@ -1,5 +1,4 @@
 #include <windows.h>
-
 #include "../effects/twinkle.h"
 #include "collide.h"
 #include "control_util.h"
@@ -8,25 +7,7 @@
 #include "lara.h"
 #include "phd_math.h"
 #include "vars.h"
-//#include "..\effects\twinkle.h"
 #include "sound.h"
-
-/*
-#include "game/lara.h"
-
-#include "3dsystem/phd_math.h"
-#include "config.h"
-#include "game/collide.h"
-#include "game/control.h"
-#include "game/draw.h"
-#include "game/effects/twinkle.h"
-#include "game/input.h"
-#include "game/sound.h"
-#include "global/const.h"
-#include "global/vars.h"
-
-#include <stddef.h>
-*/
 
 void LookLeftRight()
 {
@@ -120,20 +101,6 @@ void LaraAboveWater(ITEM_INFO *item, COLL_INFO *coll)
 	coll->slopes_are_pits = 0;
 	coll->enable_spaz = 1;
 	coll->enable_baddie_push = 1;
-
-	/*
-if (g_Config.enable_enhanced_look && item->hit_points > 0)
-	{
-	if (g_Input.look)
-			{
-		LookLeftRight();
-	}
-			else
-			{
-		ResetLook();
-	}
-}
-	*/
 
 	g_LaraControlRoutines[item->current_anim_state](item, coll);
 
@@ -506,13 +473,6 @@ void LaraAsTurnL(ITEM_INFO *item, COLL_INFO *coll)
 		return;
 	}
 
-	/*
-if (g_Config.enable_enhanced_look && g_Input.look) {
-	item->goal_anim_state = AS_STOP;
-	return;
-}
-	*/
-
 	g_Lara.turn_rate -= LARA_TURN_RATE;
 	if (g_Lara.gun_status == LGS_READY)
 	{
@@ -652,13 +612,6 @@ void LaraAsFastTurn(ITEM_INFO *item, COLL_INFO *coll)
 		item->goal_anim_state = AS_STOP;
 		return;
 	}
-
-	/*
-if (g_Config.enable_enhanced_look && g_Input.look) {
-	item->goal_anim_state = AS_STOP;
-	return;
-}
-	*/
 
 	if (g_Lara.turn_rate >= 0)
 	{
@@ -1137,13 +1090,6 @@ void LaraColWalk(ITEM_INFO *item, COLL_INFO *coll)
 
 void LaraColRun(ITEM_INFO *item, COLL_INFO *coll)
 {
-	/*
-if (g_Config.fix_qwop_glitch) {
-	item->gravity_status = 0;
-	item->fall_speed = 0;
-}
-	*/
-
 	g_Lara.move_angle = item->pos.y_rot;
 	coll->bad_pos = NO_BAD_POS;
 	coll->bad_neg = -STEPUP_HEIGHT;
@@ -1236,12 +1182,6 @@ void LaraColStop(ITEM_INFO *item, COLL_INFO *coll)
 		return;
 	}
 
-	/*
-if (g_Config.fix_descending_glitch && LaraFallen(item, coll)) {
-	return;
-}
-	*/
-
 	if (coll->mid_floor > 100)
 	{
 		item->current_anim_state = AS_FORWARDJUMP;
@@ -1291,9 +1231,7 @@ void LaraColForwardJump(ITEM_INFO *item, COLL_INFO *coll)
 		item->fall_speed = 0;
 		item->speed = 0;
 
-		// if (!g_Config.fix_wall_jump_glitch) {
 		AnimateLara(item);
-		//}
 	}
 }
 
@@ -1485,12 +1423,6 @@ void LaraColCompress(ITEM_INFO *item, COLL_INFO *coll)
 	coll->bad_ceiling = 0;
 	GetLaraCollisionInfo(item, coll);
 
-	/*
-if (g_Config.fix_descending_glitch && LaraFallen(item, coll)) {
-	return;
-}
-	*/
-
 	if (coll->mid_ceiling > -100)
 	{
 		item->goal_anim_state = AS_STOP;
@@ -1528,12 +1460,6 @@ void LaraColBack(ITEM_INFO *item, COLL_INFO *coll)
 		item->anim_number = AA_STOP;
 		item->frame_number = AF_STOP;
 	}
-
-	/*
-if (g_Config.fix_descending_glitch && LaraFallen(item, coll)) {
-	return;
-}
-	*/
 
 	if (coll->mid_floor > STEP_L / 2 && coll->mid_floor < (STEP_L * 3) / 2)
 	{
@@ -1590,12 +1516,6 @@ void LaraColStepRight(ITEM_INFO *item, COLL_INFO *coll)
 		item->frame_number = AF_STOP;
 	}
 
-	/*
-if (g_Config.fix_descending_glitch && LaraFallen(item, coll)) {
-	return;
-}
-	*/
-
 	if (TestLaraSlide(item, coll))
 	{
 		return;
@@ -1626,12 +1546,6 @@ void LaraColStepLeft(ITEM_INFO *item, COLL_INFO *coll)
 		item->anim_number = AA_STOP;
 		item->frame_number = AF_STOP;
 	}
-
-	/*
-if (g_Config.fix_descending_glitch && LaraFallen(item, coll)) {
-	return;
-}
-	*/
 
 	if (TestLaraSlide(item, coll))
 	{

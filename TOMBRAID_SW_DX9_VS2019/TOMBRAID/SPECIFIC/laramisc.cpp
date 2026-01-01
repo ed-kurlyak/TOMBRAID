@@ -1,30 +1,19 @@
 #include <windows.h>
-
 #include "lara.h"
-
 #include "phd_math.h"
-//#include "config.h"
 #include "camera.h"
 #include "collide.h"
 #include "control_util.h"
-//#include "game/effects/splash.h"
-//#include "game/gameflow.h"
-//#include "game/input.h"
 #include "inv.h"
 #include "items.h"
 #include "lot.h"
-//#include "game/music.h"
 #include "const.h"
 #include "sound.h"
 #include "types.h"
 #include "vars.h"
-//#include "log.h"
 #include "..\\EFFECTS\\splash.h"
 #include "draw.h"
 #include "util.h"
-
-//#include <stddef.h>
-//#include <stdint.h>
 
 void LaraControl(int16_t item_num)
 {
@@ -46,13 +35,6 @@ void LaraControl(int16_t item_num)
 			(g_Input.slow ? -2 : 2) * LARA_HITPOINTS / 100; // change by 2%
 		CLAMP(item->hit_points, 0, LARA_HITPOINTS);
 	}
-
-	/*
-if (g_InputDB.item_cheat)
-	{
-	LaraCheatGetStuff();
-}
-	*/
 
 	if (g_Lara.water_status != LWS_CHEAT && g_Input.fly_cheat)
 	{

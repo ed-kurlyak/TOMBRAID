@@ -1,14 +1,8 @@
 #include "option.h"
-
-//#include "config.h"
 #include "gameflow.h"
-//#include "game/input.h"
-//#include "game/music.h"
-//#include "game/settings.h"
 #include "sound.h"
 #include "text.h"
 #include "vars.h"
-
 #include <stdio.h>
 
 typedef enum SOUND_TEXT

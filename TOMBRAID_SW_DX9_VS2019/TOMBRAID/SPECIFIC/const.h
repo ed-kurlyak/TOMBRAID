@@ -1,6 +1,6 @@
 #pragma once
 
-//#include "util.h"
+#define SHADOW_BIAS		131072
 
 #define CLIP_VERTCOUNT_SCALE 4
 
@@ -9,11 +9,11 @@
 
 #define MAX_BADDIE_COLLISION 12
 
-//#define DRAW_DIST_MAX 0x5000
+#define Z_NEAR (20 << W2V_SHIFT)
 #define DRAW_DIST_MAX 0x7000
-
-//#define DRAW_DIST_FADE 0x3000
 #define DRAW_DIST_FADE 0x5000
+#define DRAW_DISTANCE_MAX 0x5000 << W2V_SHIFT
+#define DRAW_DISTANCE_MIN 20 << W2V_SHIFT
 
 #define HAIR_SEGMENTS 6
 
@@ -21,24 +21,7 @@
 #define MIN(x, y) ((x) <= (y) ? (x) : (y))
 #define MAX(x, y) ((x) >= (y) ? (x) : (y))
 
-#define Z_NEAR (20 << W2V_SHIFT)
-//#define Z_NEAR (127 << W2V_SHIFT)
-
-// 20 * 1024 = 0x5000
-//#define DRAW_DISTANCE_MAX ((20 * 1024) << W2V_SHIFT)
-#define DRAW_DISTANCE_MAX 0x5000 << W2V_SHIFT
-#define DRAW_DISTANCE_MIN 20 << W2V_SHIFT
-//#define DRAW_DISTANCE_MIN  (127 << W2V_SHIFT)
-
-//#define MAX_SOUND_SAMPLES 370
-
 #define SQUARE(A) ((A) * (A))
-
-//#define Center_X (SCREEN_WIDTH / 2)
-//#define Center_Y (SCREEN_HEIGHT / 2)
-
-//#define WIEVPORT_CENTER_X (SCREEN_WIDTH / 2)
-//#define WIEVPORT_CENTER_Y (SCREEN_HEIGHT / 2)
 
 #define PHD_ONE 0x10000
 #define PHD_DEGREE (PHD_ONE / 360) // = 182

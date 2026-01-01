@@ -1,7 +1,5 @@
 #include "inv.h"
-
 #include "3d_gen.h"
-//#include "game/gameflow.h"
 #include "const.h"
 #include "items.h"
 #include "overlay.h"
@@ -10,9 +8,6 @@
 #include "vars.h"
 #include <stdio.h>
 #include <windows.h>
-
-//#include <stdint.h>
-//#include <stdio.h>
 
 TEXTSTRING *g_InvItemText[2] = {NULL, NULL};
 TEXTSTRING *g_InvRingText = NULL;

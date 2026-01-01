@@ -3,8 +3,6 @@
 #include "..\\SPECIFIC\\const.h"
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define PEOPLE_POSE_CHANCE 0x60				  // = 96
 #define PEOPLE_SHOOT_RANGE SQUARE(WALL_L * 7) // = 51380224
 #define PEOPLE_SHOT_DAMAGE 50

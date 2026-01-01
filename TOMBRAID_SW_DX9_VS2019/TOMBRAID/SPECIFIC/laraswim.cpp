@@ -9,24 +9,6 @@
 #include "vars.h"
 #include <windows.h>
 
-/*
-#include "game/lara.h"
-
-#include "3dsystem/phd_math.h"
-#include "config.h"
-#include "game/box.h"
-#include "game/collide.h"
-#include "game/control.h"
-#include "game/input.h"
-#include "game/objects/door.h"
-#include "global/const.h"
-#include "global/types.h"
-#include "global/vars.h"
-
-#include <stddef.h>
-#include <stdint.h>
-*/
-
 static int32_t m_OpenDoorsCheatCooldown = 0;
 
 void LaraUnderWater(ITEM_INFO *item, COLL_INFO *coll)
@@ -44,18 +26,6 @@ void LaraUnderWater(ITEM_INFO *item, COLL_INFO *coll)
 	coll->lava_is_pit = 0;
 	coll->enable_spaz = 0;
 	coll->enable_baddie_push = 0;
-
-	/*
-if (g_Config.enable_enhanced_look && item->hit_points > 0)
-	{
-	if (g_Input.look)
-			{
-		LookLeftRight();
-	} else {
-		ResetLook();
-	}
-}
-	*/
 
 	g_LaraControlRoutines[item->current_anim_state](item, coll);
 
@@ -224,15 +194,6 @@ void LaraAsGlide(ITEM_INFO *item, COLL_INFO *coll)
 
 void LaraAsTread(ITEM_INFO *item, COLL_INFO *coll)
 {
-	/*
-if (g_Config.enable_enhanced_look)
-	{
-	if (g_Input.look)
-			{
-		LookUpDown();
-	}
-}
-	*/
 
 	if (item->hit_points <= 0)
 	{

@@ -1,8 +1,6 @@
 #include "option.h"
-
 #include "game.h"
 #include "gameflow.h"
-//#include "game/input.h"
 #include "inv.h"
 #include "requester.h"
 #include "screen.h"

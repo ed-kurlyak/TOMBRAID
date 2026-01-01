@@ -1,27 +1,8 @@
 #include "savegame.h"
 
-/*
-#include "game/ai/pod.h"
-#include "game/control.h"
-#include "game/gamebuf.h"
-#include "game/gameflow.h"
-#include "game/inv.h"
-#include "game/items.h"
-#include "game/lara.h"
-#include "game/lot.h"
-#include "game/objects/pickup.h"
-#include "game/objects/puzzle_hole.h"
-#include "game/shell.h"
-#include "game/traps/movable_block.h"
-#include "game/traps/rolling_block.h"
-#include "global/const.h"
-#include "global/vars.h"
-*/
-
 #include "../objects/pod.h"
 #include "control_util.h"
 #include "draw.h"
-//#include "game/gamebuf.h"
 #include "../objects/pickup.h"
 #include "../objects/puzzle_hole.h"
 #include "gameflow.h"
@@ -29,13 +10,10 @@
 #include "items.h"
 #include "lara.h"
 #include "lot.h"
-//#include "game/shell.h"
 #include "../traps/movable_block.h"
 #include "../traps/rolling_block.h"
 #include "const.h"
 #include "vars.h"
-
-//#include <stddef.h>
 
 #define SAVE_CREATURE (1 << 7)
 

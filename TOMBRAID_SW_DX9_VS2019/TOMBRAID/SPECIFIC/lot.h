@@ -2,8 +2,6 @@
 
 #include "types.h"
 
-//#include <stdint.h>
-
 void InitialiseLOTArray();
 void DisableBaddieAI(int16_t item_num);
 int32_t EnableBaddieAI(int16_t item_num, int32_t always);

@@ -1,7 +1,5 @@
 #pragma once
 
-//#include <stdint.h>
-
 #include "types.h"
 
 extern TEXTSTRING *m_AmmoText;
@@ -18,7 +16,5 @@ void Overlay_DrawAirBar();
 void Overlay_DrawPickups();
 void Overlay_DrawFPSInfo();
 void Overlay_DrawGameInfo();
-
 void Overlay_AddPickup(int16_t object_num);
-
 void Overlay_MakeAmmoString(char *string);

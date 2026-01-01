@@ -1,16 +1,9 @@
 #include "lara.h"
-
-//#include "config.h"
-//#include "game/random.h"
 #include "winmain.h"
-//#include "game/input.h"
 #include "const.h"
 #include "sound.h"
 #include "types.h"
 #include "vars.h"
-
-//#include <stddef.h>
-//#include <stdint.h>
 
 void DrawShotgun()
 {
@@ -295,7 +288,7 @@ void FireShotgun()
 		}
 	}
 	/*
-		if (fired)
+	if (fired)
 		{
 		if (g_Config.enable_shotgun_flash)
 				{

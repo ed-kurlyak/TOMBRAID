@@ -1,22 +1,4 @@
-﻿/*
-#include "game/box.h"
-
-#include "3dsystem/phd_math.h"
-#include "config.h"
-#include "game/control.h"
-#include "game/draw.h"
-#include "game/items.h"
-#include "game/lot.h"
-#include "game/random.h"
-#include "game/sphere.h"
-#include "global/const.h"
-#include "global/vars.h"
-
-#include <stddef.h>
-*/
-
-#include <windows.h>
-
+﻿#include <windows.h>
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"

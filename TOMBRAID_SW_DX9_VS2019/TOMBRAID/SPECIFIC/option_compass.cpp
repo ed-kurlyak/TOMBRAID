@@ -1,11 +1,7 @@
 #include "option.h"
-
-//#include "config.h"
 #include "gameflow.h"
-//#include "game/input.h"
 #include "text.h"
 #include "vars.h"
-
 #include <stdio.h>
 
 #define TOP_Y -100

@@ -66,7 +66,7 @@ void Output_DrawSpriteRel(int32_t x, int32_t y, int32_t z, int16_t sprnum,
 int16_t* DrawRoomSprites(int16_t* obj_ptr, int32_t number);
 
 //---------------------------------------------
-// software section funcs
+//	software section funcs
 //---------------------------------------------
 
 int16_t* S_DrawObjectGT4_SW(int16_t* obj_ptr, int32_t number);
@@ -83,7 +83,7 @@ void S_Output_DrawTriangle_SW(VBUF2* vertices, int vert_count, int depth);
 void S_Output_DrawLine_SW(VBUF2* vertices, int depth);
 
 //---------------------------------------------
-// hardware section funcs
+//	hardware section funcs
 //---------------------------------------------
 
 int16_t* S_DrawObjectGT4_HW(int16_t* obj_ptr, int32_t number);
@@ -99,8 +99,4 @@ void S_Output_DrawLine_HW(VBUF2* vertices, int depth);
 
 void InitBuckets();
 int FindBucket(DWORD tpage);
-
-//-------------------------------------------------------------
-
-
 

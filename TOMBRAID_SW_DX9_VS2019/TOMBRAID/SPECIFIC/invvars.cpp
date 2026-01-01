@@ -837,19 +837,6 @@ INVENTORY_ITEM *g_InvMainList[23] = {
 	&g_InvItemMagnum,
 	&g_InvItemUzi,
 	&g_InvItemGrenade,
-
-	/*
-
-NULL,
-NULL,
-NULL,
-NULL,
-NULL,
-NULL,
-	*/
-
-	//------------------------
-
 	NULL,
 	NULL,
 	NULL,

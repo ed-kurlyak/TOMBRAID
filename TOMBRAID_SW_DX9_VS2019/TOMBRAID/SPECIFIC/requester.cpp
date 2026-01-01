@@ -1,12 +1,9 @@
 #include "requester.h"
-
-//#include "game/input.h"
 #include "const.h"
 #include "screen.h"
 #include "text.h"
 #include "types.h"
 #include "vars.h"
-
 #include <string.h>
 
 #define BOX_BORDER 2

@@ -1,16 +1,8 @@
-
-
 #include "option.h"
-
-//#include "config.h"
 #include "gameflow.h"
-//#include "game/input.h"
 #include "screen.h"
-//#include "game/settings.h"
 #include "text.h"
-//#include "specific/s_input.h"
 #include "vars.h"
-
 #include "input.h"
 #include "winmain.h"
 
@@ -138,12 +130,6 @@ static void Option_ControlInitText()
 	Text_CentreH(m_Text[1], 1);
 	Text_CentreV(m_Text[1], 1);
 
-	/*
-const TEXT_COLUMN_PLACEMENT *cols = g_Config.enable_cheats
-	? CtrlTextPlacementCheats
-	: CtrlTextPlacementNormal;
-	*/
-
 	const TEXT_COLUMN_PLACEMENT *cols = CtrlTextPlacementNormal;
 
 	if (!m_TextB[0])
@@ -217,12 +203,6 @@ static void Option_ControlUpdateText()
 		g_GameFlow.strings[g_Config.input.layout ? GS_CONTROL_USER_KEYS
 												 : GS_CONTROL_DEFAULT_KEYS]);
 
-	/*
-const TEXT_COLUMN_PLACEMENT *cols = g_Config.enable_cheats
-	? CtrlTextPlacementCheats
-	: CtrlTextPlacementNormal;
-	*/
-
 	const TEXT_COLUMN_PLACEMENT *cols = CtrlTextPlacementNormal;
 
 	for (const TEXT_COLUMN_PLACEMENT *col = cols;
@@ -255,12 +235,6 @@ static void Option_ControlShutdownText()
 
 void Option_FlashConflicts()
 {
-	/*
-const TEXT_COLUMN_PLACEMENT *cols = g_Config.enable_cheats
-	? CtrlTextPlacementCheats
-	: CtrlTextPlacementNormal;
-
-	*/
 	const TEXT_COLUMN_PLACEMENT *cols = CtrlTextPlacementNormal;
 
 	for (const TEXT_COLUMN_PLACEMENT *item = cols; item->col_num != -1; item++)
@@ -320,13 +294,6 @@ void Option_Control(INVENTORY_ITEM *inv_item)
 	{
 		Option_ControlInitText();
 	}
-
-	/*
-const TEXT_COLUMN_PLACEMENT *cols = g_Config.enable_cheats
-	? CtrlTextPlacementCheats
-	: CtrlTextPlacementNormal;
-
-	*/
 
 	const TEXT_COLUMN_PLACEMENT *cols = CtrlTextPlacementNormal;
 

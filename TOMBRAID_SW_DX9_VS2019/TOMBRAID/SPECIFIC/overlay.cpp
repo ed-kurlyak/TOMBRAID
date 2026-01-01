@@ -1,25 +1,18 @@
 #include "overlay.h"
-
-//#include "config.h"
-//#include "game/clock.h"
-//#include "game/output.h"
 #include "screen.h"
 #include "text.h"
-#//include "game/viewport.h"
 #include "backbuffer.h"
 #include "const.h"
 #include "draw.h"
 #include "types.h"
 #include "vars.h"
 #include "drawprimitive.h"
-
 #include <stdio.h>
 
 #define COLOR_STEPS 5
 #define MAX_PICKUP_COLUMNS 4
 #define MAX_PICKUPS 16
 
-// static TEXTSTRING *m_AmmoText = NULL;
 TEXTSTRING *m_AmmoText = NULL;
 TEXTSTRING *m_FPSText = NULL;
 static int16_t m_BarOffsetY[6] = {0};

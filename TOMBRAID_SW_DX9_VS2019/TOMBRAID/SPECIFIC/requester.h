@@ -2,8 +2,6 @@
 
 #include "types.h"
 
-//#include <stdint.h>
-
 void InitRequester(REQUEST_INFO *req);
 void RemoveRequester(REQUEST_INFO *req);
 int32_t DisplayRequester(REQUEST_INFO *req);

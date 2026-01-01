@@ -1,31 +1,21 @@
 #include "inv.h"
 #include "draw.h"
-
 #include "3d_gen.h"
 #include "matrix.h"
-//#include "config.h"
 #include "game.h"
 #include "gameflow.h"
-//#include "game/input.h"
 #include "lara.h"
 #include "option.h"
-//#include "game/output.h"
 #include "overlay.h"
 #include "savegame.h"
 #include "screen.h"
-//#include "game/settings.h"
 #include "sound.h"
 #include "text.h"
-//#include "game/viewport.h"
 #include "const.h"
 #include "types.h"
 #include "vars.h"
 #include "backbuffer.h"
 #include "drawprimitive.h"
-//#include "specific/s_misc.h"
-
-//#include <stdint.h>
-//#include <string.h>
 
 typedef enum
 {
@@ -803,93 +793,6 @@ int32_t Display_Inventory(int inv_mode)
 		// load/save game
 		return 1;
 
-		/*
-	case O_PASSPORT_OPTION:
-		
-
-
-		if (g_InvMode == INV_TITLE_MODE)
-		{
-			return g_InvChosen;
-			
-
-
-			if (g_InvExtraData[0] == 0)
-			{
-				// page 1: load game
-				return GF_START_SAVED_GAME | g_InvExtraData[1];
-			}
-			else if (g_InvExtraData[0] == 1)
-			{
-				// page 2: new game
-				InitialiseStartInfo();
-				return GF_START_GAME | g_GameFlow.first_level_num;
-			}
-			else
-			{
-				// page 3: exit game
-				return GF_EXIT_GAME;
-			}
-			
-
-
-		}
-		else
-		{
-			if (g_InvExtraData[0] == 0)
-			{
-				// page 1: load game
-				return GF_START_SAVED_GAME | g_InvExtraData[1];
-			}
-			
-
-
-			else if (g_InvExtraData[0] == 1)
-			{
-				// page 1: save game, or new game in gym
-				if (g_CurrentLevel == g_GameFlow.gym_level_num)
-				{
-					InitialiseStartInfo();
-					return GF_START_GAME | g_GameFlow.first_level_num;
-				}
-				else
-				{
-					CreateSaveGameInfo();
-					S_SaveGame(&g_SaveGame, g_InvExtraData[1]);
-					Settings_Write(); //save keyboard config
-					return GF_NOP;
-				}
-			}
-
-			
-
-
-			
-
-
-			else
-			{
-				// page 3: exit to title
-				return GF_EXIT_TO_TITLE;
-			}
-			
-
-
-
-			break;
-			
-
-
-		}
-
-		
-
-
-	case O_PHOTO_OPTION:
-		g_InvExtraData[1] = 0;
-		return GF_START_GAME | g_GameFlow.gym_level_num;
-		*/
-
 	case O_GUN_OPTION:
 		UseItem(O_GUN_OPTION);
 		break;
@@ -915,7 +818,6 @@ int32_t Display_Inventory(int inv_mode)
 		break;
 	}
 
-	// return GF_NOP;
 	return 0;
 }
 

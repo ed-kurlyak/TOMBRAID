@@ -1,6 +1,5 @@
 #include "lara.h"
 #include <windows.h>
-
 #include "sound.h"
 #include "types.h"
 #include "vars.h"

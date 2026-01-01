@@ -1,5 +1,4 @@
 #include <windows.h>
-
 #include "util.h"
 #include "input.h"
 #include "text.h"
@@ -21,14 +20,11 @@
 #include "sound.h"
 #include "backbuffer.h"
 #include "overlay.h"
-
 #include "option.h"
 #include "screen.h"
-
 #include "savegame.h"
 #include "game.h"
 #include "gameflow.h"
-
 #include "drawprimitive.h"
 
 static int32_t m_MedipackCoolDown = 0;
@@ -37,7 +33,6 @@ int Print_Level_Stats(int32_t level_num)
 {
 	if (GameType == VER_TR1)
 	{
-
 		if (level_num > 19)
 			return GF_EXIT_TO_TITLE;
 
@@ -266,9 +261,6 @@ int Print_Final_Stats(int32_t level_num)
 	Text_CentreH(txt, 1);
 	Text_CentreV(txt, 1);
 
-	// wait till action key release
-	// while (g_Input.select || g_Input.deselect)
-	
 	while (g_Input.select || g_Input.deselect)
 	{
 		Input_Update();
@@ -1581,13 +1573,6 @@ void PrintRooms(int16_t room_number)
 	phd_PushMatrix();
 	phd_TranslateAbs(r->x, r->y, r->z);
 
-	/*
-	g_PhdLeft = r->left;
-	g_PhdRight = r->right;
-	g_PhdTop = r->top;
-	g_PhdBottom = r->bottom;
-	*/
-
 	DrawRoom(r->data);
 
 	for (int i = r->item_number; i != NO_ITEM; i = g_Items[i].next_item)
@@ -1628,13 +1613,6 @@ void PrintRooms(int16_t room_number)
 	}
 
 	phd_PopMatrix();
-
-	/*
-	r->left = Screen_GetResWidth() - 1;
-	r->bottom = 0;
-	r->right = 0;
-	r->top = Screen_GetResHeight() - 1;
-	*/
 }
 
 void DrawRoom(int16_t *obj_ptr)

@@ -1,10 +1,6 @@
 #ifndef _3D_GEN_
 #define _3D_GEN_
 
-//#include "global/types.h"
-
-//#include <stdint.h>
-
 #include "types.h"
 
 void phd_LookAt(int32_t xsrc, int32_t ysrc, int32_t zsrc, int32_t xtar,

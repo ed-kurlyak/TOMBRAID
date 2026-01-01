@@ -1,7 +1,6 @@
 #ifndef _PHD_MATH_
 #define _PHD_MATH_
 
-//#include <stdint.h>
 #include "types.h"
 
 int32_t phd_cos(int32_t angle);
