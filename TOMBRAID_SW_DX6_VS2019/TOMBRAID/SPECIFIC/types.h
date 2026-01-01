@@ -38,7 +38,7 @@ struct VERTEX_COLOR_TEX
 	//D3DXVECTOR2 t;
 	D3DCOLOR diffuse;    // diffuse цвет
 	D3DCOLOR specular; // specular цвет
-	
+
 	float tu, tv;
 	//DWORD diffuse;
 
