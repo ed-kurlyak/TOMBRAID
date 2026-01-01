@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define PIERRE_POSE_CHANCE 0x60 // = 96
 #define PIERRE_SHOT_DAMAGE 50
 #define PIERRE_WALK_TURN (PHD_DEGREE * 3)	// = 546
@@ -33,5 +31,4 @@ extern int16_t g_PierreItemNum;
 extern BITE_INFO g_PierreGun1;
 extern BITE_INFO g_PierreGun2;
 
-void SetupPierre(OBJECT_INFO *obj);
 void PierreControl(int16_t item_num);

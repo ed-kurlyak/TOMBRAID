@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define CROCODILE_BITE_DAMAGE 100
 #define CROCODILE_BITE_RANGE SQUARE(435) // = 189225
 #define CROCODILE_DIE_ANIM 11
@@ -30,5 +28,4 @@ typedef enum
 
 extern BITE_INFO g_CrocodileBite;
 
-void SetupCrocodile(OBJECT_INFO *obj);
 void CrocControl(int16_t item_num);

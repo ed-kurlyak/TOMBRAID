@@ -1,26 +1,11 @@
 #include "statue.h"
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\init.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\lot.h"
 #include "..\\effects\\body_part.h"
-//#include "game/shell.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
-
-void SetupStatue(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseStatue;
-	obj->control = StatueControl;
-	obj->collision = ObjectCollision;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
 
 void InitialiseStatue(int16_t item_num)
 {

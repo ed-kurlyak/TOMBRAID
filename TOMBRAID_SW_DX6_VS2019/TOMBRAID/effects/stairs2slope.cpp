@@ -1,6 +1,5 @@
-#include "stairs2slope.h"
 #include <windows.h>
-
+#include "stairs2slope.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
 

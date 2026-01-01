@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define ABORTION_DIE_ANIM 13
 #define ABORTION_PART_DAMAGE 250
 #define ABORTION_ATTACK_DAMAGE 500
@@ -35,5 +33,4 @@ typedef enum
 	ABORTION_KILL = 11,
 } ABORTION_ANIM;
 
-void SetupAbortion(OBJECT_INFO *obj);
 void AbortionControl(int16_t item_num);

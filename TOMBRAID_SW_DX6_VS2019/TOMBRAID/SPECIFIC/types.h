@@ -14,10 +14,40 @@
 #pragma comment (lib, "ddraw.lib")
 #pragma comment (lib, "dxguid.lib")
 
-//#include "global/const.h"
+#define ROOM_TRANSPARENCY  0xff
 
-//#include <stdbool.h>
-//#include <stdint.h>
+typedef enum
+{
+	DART_EMITTER_IDLE = 0,
+	DART_EMITTER_FIRE = 1,
+} DART_EMITTER_STATE;
+
+
+typedef enum
+{
+	WOLF_EMPTY = 0,
+	WOLF_STOP = 1,
+	WOLF_WALK = 2,
+	WOLF_RUN = 3,
+	WOLF_JUMP = 4,
+	WOLF_STALK = 5,
+	WOLF_ATTACK = 6,
+	WOLF_HOWL = 7,
+	WOLF_SLEEP = 8,
+	WOLF_CROUCH = 9,
+	WOLF_FASTTURN = 10,
+	WOLF_DEATH = 11,
+	WOLF_BITE = 12,
+} WOLF_ANIM;
+
+
+typedef enum
+{
+	VOLE_EMPTY = 0,
+	VOLE_SWIM = 1,
+	VOLE_ATTACK = 2,
+	VOLE_DEATH = 3,
+} VOLE_ANIM;
 
 struct VERTEX_TRANS_QUAD
 {
@@ -36,11 +66,12 @@ struct VERTEX_COLOR_TEX
 	//D3DXVECTOR4 p;
 	float x, y, z, w;
 	//D3DXVECTOR2 t;
+	
 	D3DCOLOR diffuse;    // diffuse цвет
 	D3DCOLOR specular; // specular цвет
 
 	float tu, tv;
-	//DWORD diffuse;
+
 
 };
 
@@ -90,7 +121,7 @@ struct COLOREDBUCKET
 	//VERTEX_COLOR
 	//VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
 	D3DTLVERTEX Vertex[VERTSPERBUCKET];
-	
+
 	//LPDIRECT3DVERTEXBUFFER9 VertBuff;
 };
 
@@ -163,6 +194,8 @@ typedef struct VBUF
 	float u, v;
 	//BYTE g;
 	float g;
+
+	//float r, g, b;
 } VBUF;
 
 typedef struct VBUF2
@@ -1485,7 +1518,6 @@ typedef struct PHD_VBUF
 	int16_t g;
 	uint16_t u;
 	uint16_t v;
-	float ooz;
 	*/
 
 	float xv;
@@ -1499,7 +1531,6 @@ typedef struct PHD_VBUF
 	int16_t g;
 	uint16_t u;
 	uint16_t v;
-	
 } PHD_VBUF;
 
 typedef struct PHD_UV

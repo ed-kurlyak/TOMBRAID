@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define NATLA_SHOT_DAMAGE 100
 #define NATLA_NEAR_DEATH 200
 #define NATLA_FLY_MODE 0x8000
@@ -34,7 +32,5 @@ typedef enum
 
 extern BITE_INFO g_NatlaGun;
 
-void SetupNatla(OBJECT_INFO *obj);
-void SetupNatlaGun(OBJECT_INFO *obj);
 void NatlaControl(int16_t item_num);
 void ControlNatlaGun(int16_t fx_num);

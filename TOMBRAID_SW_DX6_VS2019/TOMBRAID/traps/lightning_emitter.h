@@ -20,7 +20,6 @@ typedef struct
 	PHD_VECTOR shoot[LIGHTNING_SHOOTS][LIGHTNING_STEPS];
 } LIGHTNING;
 
-void SetupLightningEmitter(OBJECT_INFO *obj);
 void InitialiseLightning(int16_t item_num);
 void LightningControl(int16_t item_num);
 void LightningCollision(int16_t item_num, ITEM_INFO *lara_item,

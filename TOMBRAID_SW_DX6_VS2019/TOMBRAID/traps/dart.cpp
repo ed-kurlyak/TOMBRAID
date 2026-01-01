@@ -1,38 +1,10 @@
 #include "dart.h"
-
-/*
-#include "game/collide.h"
-#include "game/control.h"
-#include "game/draw.h"
-#include "game/effects/blood.h"
-#include "game/items.h"
-#include "game/random.h"
-#include "global/vars.h"
-*/
-
 #include "..\\OBJECTS\\blood.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
-/*
-void SetupDart(OBJECT_INFO *obj)
-{
-	obj->collision = ObjectCollision;
-	obj->control = DartsControl;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->save_flags = 1;
-}
-*/
-/*
-void SetupDartEffect(OBJECT_INFO *obj)
-{
-	obj->control = DartEffectControl;
-	obj->draw_routine = DrawSpriteItem;
-}
-*/
 
 void DartsControl(int16_t item_num)
 {

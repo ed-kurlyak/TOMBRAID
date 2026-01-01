@@ -1,17 +1,4 @@
 #include "pickup.h"
-
-/*
-#include "game/collide.h"
-#include "game/control.h"
-#include "game/draw.h"
-#include "game/input.h"
-#include "game/inv.h"
-#include "game/items.h"
-#include "game/lara.h"
-#include "game/overlay.h"
-#include "global/vars.h"
-*/
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
@@ -43,15 +30,6 @@ int16_t g_PickUpBoundsUW[12] = {
 	-45 * PHD_DEGREE,
 	+45 * PHD_DEGREE,
 };
-
-/*
-void SetupPickupObject(OBJECT_INFO *obj)
-{
-	obj->draw_routine = DrawPickupItem;
-	obj->collision = PickUpCollision;
-	obj->save_flags = 1;
-}
-*/
 
 void PickUpCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
 {

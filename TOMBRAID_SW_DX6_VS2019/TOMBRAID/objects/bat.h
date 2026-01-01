@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define BAT_ATTACK_DAMAGE 2
 #define BAT_TURN (20 * PHD_DEGREE) // = 3640
 #define BAT_HITPOINTS 1
@@ -22,6 +20,5 @@ typedef enum
 
 extern BITE_INFO g_BatBite;
 
-// void SetupBat(OBJECT_INFO *obj);
 void BatControl(int16_t item_num);
 void InitialiseBat(int16_t item_num);

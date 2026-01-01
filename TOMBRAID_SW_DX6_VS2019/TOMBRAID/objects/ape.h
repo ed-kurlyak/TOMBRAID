@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define APE_ATTACK_DAMAGE 200
 #define APE_TOUCH 0xFF00
 #define APE_DIE_ANIM 7
@@ -42,6 +40,5 @@ typedef enum
 
 extern BITE_INFO g_ApeBite;
 
-void SetupApe(OBJECT_INFO *obj);
 void ApeVault(int16_t item_num, int16_t angle);
 void ApeControl(int16_t item_num);

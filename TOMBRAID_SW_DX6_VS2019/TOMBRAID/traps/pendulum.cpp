@@ -1,23 +1,9 @@
 #include "pendulum.h"
-
-//#include "game/collide.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\objects\\blood.h"
-//#include "game/random.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
-/*
-void SetupPendulum(OBJECT_INFO *obj)
-{
-	obj->control = PendulumControl;
-	obj->collision = TrapCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->save_flags = 1;
-	obj->save_anim = 1;
-}
-*/
 
 void PendulumControl(int16_t item_num)
 {

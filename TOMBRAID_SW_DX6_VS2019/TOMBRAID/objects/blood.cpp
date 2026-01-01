@@ -1,17 +1,8 @@
 #include "blood.h"
-
 #include "..\\SPECIFIC\\phd_math.h"
-//#include "game/items.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
-
-/*
-void SetupBlood(OBJECT_INFO *obj)
-{
-	obj->control = ControlBlood1;
-}
-*/
 
 int16_t DoBloodSplat(int32_t x, int32_t y, int32_t z, int16_t speed,
 					 int16_t direction, int16_t room_num)

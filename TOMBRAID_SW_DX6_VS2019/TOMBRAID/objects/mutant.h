@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define FLYER_CHARGE_DAMAGE 100
 #define FLYER_LUNGE_DAMAGE 150
 #define FLYER_PUNCH_DAMAGE 200
@@ -49,10 +47,6 @@ enum FLYER_ANIM
 extern BITE_INFO g_WarriorBite;
 extern BITE_INFO g_WarriorRocket;
 extern BITE_INFO g_WarriorShard;
-
-void SetupWarrior(OBJECT_INFO *obj);
-void SetupWarrior2(OBJECT_INFO *obj);
-void SetupWarrior3(OBJECT_INFO *obj);
 
 void FlyerControl(int16_t item_num);
 

@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define RAT_BITE_DAMAGE 20
 #define RAT_CHARGE_DAMAGE 20
 #define RAT_TOUCH 0x300018F
@@ -29,5 +27,4 @@ typedef enum
 
 extern BITE_INFO g_RatBite;
 
-void SetupRat(OBJECT_INFO *obj);
 void RatControl(int16_t item_num);

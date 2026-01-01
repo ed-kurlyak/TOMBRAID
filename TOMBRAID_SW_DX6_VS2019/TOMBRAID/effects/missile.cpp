@@ -1,16 +1,12 @@
 #include "missile.h"
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\phd_math.h"
 #include "..\\SPECIFIC\\winmain.h"
-//#include "game/sound.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
-
-void SetupMissile(OBJECT_INFO *obj) { obj->control = ControlMissile; }
 
 void ControlMissile(int16_t fx_num)
 {

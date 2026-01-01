@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define MUMMY_HITPOINTS 18
 
 typedef enum
@@ -13,6 +11,5 @@ typedef enum
 	MUMMY_DEATH = 2,
 } MUMMY_ANIM;
 
-void SetupMummy(OBJECT_INFO *obj);
 void InitialiseMummy(int16_t item_num);
 void MummyControl(int16_t item_num);

@@ -1,19 +1,9 @@
 #include "falling_ceiling.h"
-
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
-
-void SetupFallingCeilling(OBJECT_INFO *obj)
-{
-	obj->control = FallingCeilingControl;
-	obj->collision = TrapCollision;
-	obj->save_position = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
 
 void FallingCeilingControl(int16_t item_num)
 {

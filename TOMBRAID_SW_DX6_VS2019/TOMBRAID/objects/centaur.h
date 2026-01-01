@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define CENTAUR_PART_DAMAGE 100
 #define CENTAUR_REAR_DAMAGE 200
 #define CENTAUR_TOUCH 0x30199
@@ -29,5 +27,4 @@ typedef enum
 extern BITE_INFO g_CentaurRocket;
 extern BITE_INFO g_CentaurRear;
 
-void SetupCentaur(OBJECT_INFO *obj);
 void CentaurControl(int16_t item_num);

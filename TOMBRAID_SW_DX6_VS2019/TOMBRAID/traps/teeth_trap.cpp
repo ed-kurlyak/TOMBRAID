@@ -1,5 +1,4 @@
 #include "teeth_trap.h"
-
 #include "..\\OBJECTS\\blood.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
@@ -25,14 +24,6 @@ static void BaddieBiteEffect(ITEM_INFO *item, BITE_INFO *bite)
 	GetJointAbsPosition(item, &pos, bite->mesh_num);
 	DoBloodSplat(pos.x, pos.y, pos.z, item->speed, item->pos.y_rot,
 				 item->room_number);
-}
-
-void SetupTeethTrap(OBJECT_INFO *obj)
-{
-	obj->control = TeethTrapControl;
-	obj->collision = TrapCollision;
-	obj->save_flags = 1;
-	obj->save_anim = 1;
 }
 
 void TeethTrapControl(int16_t item_num)

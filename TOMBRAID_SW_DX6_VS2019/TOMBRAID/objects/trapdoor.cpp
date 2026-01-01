@@ -1,19 +1,7 @@
 #include "trapdoor.h"
-
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\vars.h"
-
-/*
-void SetupTrapDoor(OBJECT_INFO *obj)
-{
-	obj->control = TrapDoorControl;
-	obj->floor = TrapDoorFloor;
-	obj->ceiling = TrapDoorCeiling;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-*/
 
 void TrapDoorControl(int16_t item_num)
 {

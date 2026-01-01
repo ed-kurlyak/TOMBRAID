@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define LARSON_POSE_CHANCE 0x60 // = 96
 #define LARSON_SHOT_DAMAGE 50
 #define LARSON_WALK_TURN (PHD_DEGREE * 3)	// = 546
@@ -28,5 +26,4 @@ typedef enum
 
 extern BITE_INFO g_LarsonGun;
 
-void SetupLarson(OBJECT_INFO *obj);
 void LarsonControl(int16_t item_num);

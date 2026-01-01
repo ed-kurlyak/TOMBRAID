@@ -1,13 +1,7 @@
-#include "door.h"
-
 #include <windows.h>
-
-//#include "game/collide.h"
-//#include "game/control.h"
+#include "door.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
-
-//#include "game/gamebuf.h"
 #include "..\\SPECIFIC\\init.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
@@ -15,18 +9,6 @@
 static void OpenThatDoor(DOORPOS_DATA *d);
 static void ShutThatDoor(DOORPOS_DATA *d, ITEM_INFO *item);
 static int8_t LaraDoorCollision(ITEM_INFO *item);
-
-/*
-void SetupDoor(OBJECT_INFO *obj)
-{
-	obj->initialise = InitialiseDoor;
-	obj->control = DoorControl;
-	obj->draw_routine = DrawUnclippedItem;
-	obj->collision = DoorCollision;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-*/
 
 static int8_t LaraDoorCollision(ITEM_INFO *item)
 {

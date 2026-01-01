@@ -1,17 +1,9 @@
 #include "earthquake.h"
-
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
-
-void SetupEarthquake(OBJECT_INFO *obj)
-{
-	obj->control = EarthQuakeControl;
-	obj->draw_routine = DrawDummyItem;
-	obj->save_flags = 1;
-}
 
 void EarthQuake(ITEM_INFO *item)
 {

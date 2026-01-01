@@ -1,26 +1,13 @@
 #include "damocles_sword.h"
-
 #include "..\\OBJECTS\\blood.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\winmain.h"
-//#include "game/sound.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
 
 #define DAMOCLES_SWORD_ACTIVATE_DIST ((WALL_L * 3) / 2)
 #define DAMOCLES_SWORD_DAMAGE 100
-
-void SetupDamoclesSword(OBJECT_INFO *obj)
-{
-	obj->initialise = InitialiseDamoclesSword;
-	obj->control = DamoclesSwordControl;
-	obj->collision = DamoclesSwordCollision;
-	obj->shadow_size = UNIT_SHADOW;
-	obj->save_position = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
 
 void InitialiseDamoclesSword(int16_t item_num)
 {

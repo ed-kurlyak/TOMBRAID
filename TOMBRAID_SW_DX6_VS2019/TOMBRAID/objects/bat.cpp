@@ -1,21 +1,5 @@
-
-/*
-#include "game/ai/bat.h"
-
-#include "config.h"
-#include "game/box.h"
-#include "game/collide.h"
-#include "game/control.h"
-#include "game/draw.h"
-#include "game/effects/blood.h"
-#include "game/lot.h"
-#include "global/types.h"
-#include "global/vars.h"
-*/
-
 #include "bat.h"
 #include "blood.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
@@ -27,26 +11,6 @@ BITE_INFO g_BatBite = {0, 16, 45, 4};
 
 static void FixEmbeddedBatPosition(int16_t item_num);
 
-/*
-void SetupBat(OBJECT_INFO *obj)
-{
-	if (!obj->loaded) {
-		return;
-	}
-	obj->initialise = InitialiseBat;
-	obj->control = BatControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = BAT_HITPOINTS;
-	obj->radius = BAT_RADIUS;
-	obj->smartness = BAT_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-*/
 void BatControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

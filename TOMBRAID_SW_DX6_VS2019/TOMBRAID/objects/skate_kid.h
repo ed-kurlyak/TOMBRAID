@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define SKATE_KID_STOP_SHOT_DAMAGE 50
 #define SKATE_KID_SKATE_SHOT_DAMAGE 40
 #define SKATE_KID_STOP_RANGE SQUARE(WALL_L * 4)			 // = 16777216
@@ -30,7 +28,6 @@ typedef enum
 extern BITE_INFO g_KidGun1;
 extern BITE_INFO g_KidGun2;
 
-void SetupSkateKid(OBJECT_INFO *obj);
 void InitialiseSkateKid(int16_t item_num);
 void SkateKidControl(int16_t item_num);
 void DrawSkateKid(ITEM_INFO *item);

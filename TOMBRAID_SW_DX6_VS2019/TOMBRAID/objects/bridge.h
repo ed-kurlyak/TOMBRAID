@@ -2,10 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-void SetupBridgeFlat(OBJECT_INFO *obj);
-void SetupBridgeTilt1(OBJECT_INFO *obj);
-void SetupBridgeTilt2(OBJECT_INFO *obj);
-void SetupDrawBridge(OBJECT_INFO *obj);
 int32_t OnDrawBridge(ITEM_INFO *item, int32_t x, int32_t y);
 void DrawBridgeFloor(ITEM_INFO *item, int32_t x, int32_t y, int32_t z,
 					 int16_t *height);

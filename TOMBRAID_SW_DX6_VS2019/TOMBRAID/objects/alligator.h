@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define ALLIGATOR_BITE_DAMAGE 100
 #define ALLIGATOR_DIE_ANIM 4
 #define ALLIGATOR_FLOAT_SPEED (WALL_L / 32) // = 32
@@ -20,5 +18,4 @@ typedef enum
 	ALLIGATOR_DEATH = 3,
 } ALLIGATOR_ANIM;
 
-void SetupAlligator(OBJECT_INFO *obj);
 void AlligatorControl(int16_t item_num);

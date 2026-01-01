@@ -1,17 +1,8 @@
 #include "boat.h"
-
 #include "..\\SPECIFIC\\control_util.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\vars.h"
-
-void SetupBoat(OBJECT_INFO *obj)
-{
-	obj->control = BoatControl;
-	obj->save_flags = 1;
-	obj->save_anim = 1;
-	obj->save_position = 1;
-}
 
 void BoatControl(int16_t item_num)
 {

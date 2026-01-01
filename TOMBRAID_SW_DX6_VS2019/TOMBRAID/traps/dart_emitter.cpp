@@ -1,12 +1,8 @@
 #include "dart_emitter.h"
-
-//#include "game/control.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\items.h"
 #include "..\\SPECIFIC\\sound.h"
 #include "..\\SPECIFIC\\vars.h"
-
-void SetupDartEmitter(OBJECT_INFO *obj) { obj->control = DartEmitterControl; }
 
 void DartEmitterControl(int16_t item_num)
 {

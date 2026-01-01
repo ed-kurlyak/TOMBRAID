@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define COWBOY_SHOT_DAMAGE 70
 #define COWBOY_WALK_TURN (PHD_DEGREE * 3)	// = 546
 #define COWBOY_RUN_TURN (PHD_DEGREE * 6)	 // = 1092
@@ -27,5 +25,4 @@ typedef enum
 extern BITE_INFO g_CowboyGun1;
 extern BITE_INFO g_CowboyGun2;
 
-void SetupCowboy(OBJECT_INFO *obj);
 void CowboyControl(int16_t item_num);

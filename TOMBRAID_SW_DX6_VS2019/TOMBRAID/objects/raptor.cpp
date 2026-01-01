@@ -1,5 +1,4 @@
 #include "raptor.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\lot.h"
@@ -8,28 +7,6 @@
 #include "blood.h"
 
 BITE_INFO g_RaptorBite = {0, 66, 318, 22};
-
-void SetupRaptor(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = RaptorControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = RAPTOR_HITPOINTS;
-	obj->pivot_length = 400;
-	obj->radius = RAPTOR_RADIUS;
-	obj->smartness = RAPTOR_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 84] |= BEB_ROT_Y;
-}
 
 void RaptorControl(int16_t item_num)
 {

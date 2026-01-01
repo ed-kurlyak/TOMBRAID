@@ -2,8 +2,6 @@
 
 #include "..\\SPECIFIC\\types.h"
 
-//#include <stdint.h>
-
 #define DINO_ATTACK_RANGE SQUARE(WALL_L * 4) // = 16777216
 #define DINO_BITE_DAMAGE 10000
 #define DINO_BITE_RANGE SQUARE(1500) // = 2250000
@@ -31,6 +29,5 @@ typedef enum
 	DINO_KILL = 8,
 } DINO_ANIM;
 
-void SetupDino(OBJECT_INFO *obj);
 void DinoControl(int16_t item_num);
 void LaraDinoDeath(ITEM_INFO *item);

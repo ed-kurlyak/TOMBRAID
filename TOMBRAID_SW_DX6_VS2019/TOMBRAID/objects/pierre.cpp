@@ -1,5 +1,4 @@
 #include "pierre.h"
-
 #include "..\\SPECIFIC\\box.h"
 #include "..\\SPECIFIC\\collide.h"
 #include "..\\SPECIFIC\\control_util.h"
@@ -12,27 +11,6 @@
 BITE_INFO g_PierreGun1 = {60, 200, 0, 11};
 BITE_INFO g_PierreGun2 = {-57, 200, 0, 14};
 int16_t g_PierreItemNum = NO_ITEM;
-
-void SetupPierre(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = PierreControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = PIERRE_HITPOINTS;
-	obj->radius = PIERRE_RADIUS;
-	obj->smartness = PIERRE_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 24] |= BEB_ROT_Y;
-}
 
 void PierreControl(int16_t item_num)
 {
