@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7F247EFF-536A-408B-BB88-623267B0DFA0}</ProjectGuid>
+    <RootNamespace>TOMBRAID</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>16.0.35706.149</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4311;4005;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>libc.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="effects\body_part.cpp" />
+    <ClCompile Include="effects\bubble.cpp" />
+    <ClCompile Include="effects\chain_block.cpp" />
+    <ClCompile Include="effects\dino_stomp.cpp" />
+    <ClCompile Include="effects\earthquake.cpp" />
+    <ClCompile Include="effects\explosion.cpp" />
+    <ClCompile Include="effects\finish_level.cpp" />
+    <ClCompile Include="effects\flicker.cpp" />
+    <ClCompile Include="effects\flipmap.cpp" />
+    <ClCompile Include="effects\flood.cpp" />
+    <ClCompile Include="effects\lara_effects.cpp" />
+    <ClCompile Include="effects\missile.cpp" />
+    <ClCompile Include="effects\powerup.cpp" />
+    <ClCompile Include="effects\raising_block.cpp" />
+    <ClCompile Include="effects\ricochet.cpp" />
+    <ClCompile Include="effects\sand.cpp" />
+    <ClCompile Include="effects\splash.cpp" />
+    <ClCompile Include="effects\stairs2slope.cpp" />
+    <ClCompile Include="effects\turn_180.cpp" />
+    <ClCompile Include="effects\twinkle.cpp" />
+    <ClCompile Include="effects\waterfall.cpp" />
+    <ClCompile Include="objects\abortion.cpp" />
+    <ClCompile Include="objects\alligator.cpp" />
+    <ClCompile Include="objects\ape.cpp" />
+    <ClCompile Include="objects\baldy.cpp" />
+    <ClCompile Include="objects\bat.cpp" />
+    <ClCompile Include="objects\bear.cpp" />
+    <ClCompile Include="objects\blood.cpp" />
+    <ClCompile Include="objects\boat.cpp" />
+    <ClCompile Include="objects\bridge.cpp" />
+    <ClCompile Include="objects\cabin.cpp" />
+    <ClCompile Include="objects\centaur.cpp" />
+    <ClCompile Include="objects\cog.cpp" />
+    <ClCompile Include="objects\cowboy.cpp" />
+    <ClCompile Include="objects\crocodile.cpp" />
+    <ClCompile Include="objects\dino.cpp" />
+    <ClCompile Include="objects\door.cpp" />
+    <ClCompile Include="objects\gunshot.cpp" />
+    <ClCompile Include="objects\keyhole.cpp" />
+    <ClCompile Include="objects\larson.cpp" />
+    <ClCompile Include="objects\lion.cpp" />
+    <ClCompile Include="objects\misc.cpp" />
+    <ClCompile Include="objects\mummy.cpp" />
+    <ClCompile Include="objects\mutant.cpp" />
+    <ClCompile Include="objects\natla.cpp" />
+    <ClCompile Include="objects\pickup.cpp" />
+    <ClCompile Include="objects\pierre.cpp" />
+    <ClCompile Include="objects\pod.cpp" />
+    <ClCompile Include="objects\puzzle_hole.cpp" />
+    <ClCompile Include="objects\raptor.cpp" />
+    <ClCompile Include="objects\rat.cpp" />
+    <ClCompile Include="objects\scion.cpp" />
+    <ClCompile Include="objects\skate_kid.cpp" />
+    <ClCompile Include="objects\statue.cpp" />
+    <ClCompile Include="objects\switch.cpp" />
+    <ClCompile Include="objects\trapdoor.cpp" />
+    <ClCompile Include="objects\vole.cpp" />
+    <ClCompile Include="objects\wolf.cpp" />
+    <ClCompile Include="SPECIFIC\3d_gen.cpp" />
+    <ClCompile Include="SPECIFIC\3D_LINE.CPP" />
+    <ClCompile Include="SPECIFIC\3D_OUT.CPP" />
+    <ClCompile Include="SPECIFIC\backbuffer.cpp" />
+    <ClCompile Include="SPECIFIC\box.cpp" />
+    <ClCompile Include="SPECIFIC\camera.cpp" />
+    <ClCompile Include="SPECIFIC\cinema.cpp" />
+    <ClCompile Include="SPECIFIC\collide.cpp" />
+    <ClCompile Include="SPECIFIC\control_util.cpp" />
+    <ClCompile Include="SPECIFIC\draw.cpp" />
+    <ClCompile Include="SPECIFIC\file.cpp" />
+    <ClCompile Include="SPECIFIC\game.cpp" />
+    <ClCompile Include="SPECIFIC\gameflow.cpp" />
+    <ClCompile Include="SPECIFIC\init.cpp" />
+    <ClCompile Include="SPECIFIC\input.cpp" />
+    <ClCompile Include="SPECIFIC\inventry.cpp" />
+    <ClCompile Include="SPECIFIC\invfunc.cpp" />
+    <ClCompile Include="SPECIFIC\invvars.cpp" />
+    <ClCompile Include="SPECIFIC\items.cpp" />
+    <ClCompile Include="SPECIFIC\lara.cpp" />
+    <ClCompile Include="SPECIFIC\lara1gun.cpp" />
+    <ClCompile Include="SPECIFIC\lara2gun.cpp" />
+    <ClCompile Include="SPECIFIC\larafire.cpp" />
+    <ClCompile Include="SPECIFIC\laramisc.cpp" />
+    <ClCompile Include="SPECIFIC\larasurf.cpp" />
+    <ClCompile Include="SPECIFIC\laraswim.cpp" />
+    <ClCompile Include="SPECIFIC\lot.cpp" />
+    <ClCompile Include="SPECIFIC\matrix.cpp" />
+    <ClCompile Include="SPECIFIC\option.cpp" />
+    <ClCompile Include="SPECIFIC\option_compass.cpp" />
+    <ClCompile Include="SPECIFIC\option_control.cpp" />
+    <ClCompile Include="SPECIFIC\option_graphics.cpp" />
+    <ClCompile Include="SPECIFIC\option_passport.cpp" />
+    <ClCompile Include="SPECIFIC\option_sound.cpp" />
+    <ClCompile Include="SPECIFIC\overlay.cpp" />
+    <ClCompile Include="SPECIFIC\people.cpp" />
+    <ClCompile Include="SPECIFIC\phd_math.cpp" />
+    <ClCompile Include="SPECIFIC\requester.cpp" />
+    <ClCompile Include="SPECIFIC\savegame.cpp" />
+    <ClCompile Include="SPECIFIC\SCALESPR.CPP" />
+    <ClCompile Include="SPECIFIC\screen.cpp" />
+    <ClCompile Include="SPECIFIC\setup.cpp" />
+    <ClCompile Include="SPECIFIC\sound.cpp" />
+    <ClCompile Include="SPECIFIC\sphere.cpp" />
+    <ClCompile Include="SPECIFIC\text.cpp" />
+    <ClCompile Include="SPECIFIC\timer.cpp" />
+    <ClCompile Include="SPECIFIC\vars.cpp" />
+    <ClCompile Include="SPECIFIC\winmain.cpp" />
+    <ClCompile Include="traps\damocles_sword.cpp" />
+    <ClCompile Include="traps\dart.cpp" />
+    <ClCompile Include="traps\dart_emitter.cpp" />
+    <ClCompile Include="traps\falling_block.cpp" />
+    <ClCompile Include="traps\falling_ceiling.cpp" />
+    <ClCompile Include="traps\flame.cpp" />
+    <ClCompile Include="traps\lava.cpp" />
+    <ClCompile Include="traps\lightning_emitter.cpp" />
+    <ClCompile Include="traps\midas_touch.cpp" />
+    <ClCompile Include="traps\movable_block.cpp" />
+    <ClCompile Include="traps\pendulum.cpp" />
+    <ClCompile Include="traps\rolling_ball.cpp" />
+    <ClCompile Include="traps\rolling_block.cpp" />
+    <ClCompile Include="traps\spikes.cpp" />
+    <ClCompile Include="traps\teeth_trap.cpp" />
+    <ClCompile Include="traps\thors_hammer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="effects\body_part.h" />
+    <ClInclude Include="effects\bubble.h" />
+    <ClInclude Include="effects\chain_block.h" />
+    <ClInclude Include="effects\dino_stomp.h" />
+    <ClInclude Include="effects\earthquake.h" />
+    <ClInclude Include="effects\explosion.h" />
+    <ClInclude Include="effects\finish_level.h" />
+    <ClInclude Include="effects\flicker.h" />
+    <ClInclude Include="effects\flipmap.h" />
+    <ClInclude Include="effects\flood.h" />
+    <ClInclude Include="effects\lara_effects.h" />
+    <ClInclude Include="effects\missile.h" />
+    <ClInclude Include="effects\powerup.h" />
+    <ClInclude Include="effects\raising_block.h" />
+    <ClInclude Include="effects\ricochet.h" />
+    <ClInclude Include="effects\sand.h" />
+    <ClInclude Include="effects\splash.h" />
+    <ClInclude Include="effects\stairs2slope.h" />
+    <ClInclude Include="effects\turn_180.h" />
+    <ClInclude Include="effects\twinkle.h" />
+    <ClInclude Include="effects\waterfall.h" />
+    <ClInclude Include="objects\abortion.h" />
+    <ClInclude Include="objects\alligator.h" />
+    <ClInclude Include="objects\ape.h" />
+    <ClInclude Include="objects\baldy.h" />
+    <ClInclude Include="objects\bat.h" />
+    <ClInclude Include="objects\bear.h" />
+    <ClInclude Include="objects\blood.h" />
+    <ClInclude Include="objects\boat.h" />
+    <ClInclude Include="objects\bridge.h" />
+    <ClInclude Include="objects\cabin.h" />
+    <ClInclude Include="objects\centaur.h" />
+    <ClInclude Include="objects\cog.h" />
+    <ClInclude Include="objects\cowboy.h" />
+    <ClInclude Include="objects\crocodile.h" />
+    <ClInclude Include="objects\dino.h" />
+    <ClInclude Include="objects\door.h" />
+    <ClInclude Include="objects\gunshot.h" />
+    <ClInclude Include="objects\keyhole.h" />
+    <ClInclude Include="objects\larson.h" />
+    <ClInclude Include="objects\lion.h" />
+    <ClInclude Include="objects\misc.h" />
+    <ClInclude Include="objects\mummy.h" />
+    <ClInclude Include="objects\mutant.h" />
+    <ClInclude Include="objects\natla.h" />
+    <ClInclude Include="objects\pickup.h" />
+    <ClInclude Include="objects\pierre.h" />
+    <ClInclude Include="objects\pod.h" />
+    <ClInclude Include="objects\puzzle_hole.h" />
+    <ClInclude Include="objects\raptor.h" />
+    <ClInclude Include="objects\rat.h" />
+    <ClInclude Include="objects\scion.h" />
+    <ClInclude Include="objects\skate_kid.h" />
+    <ClInclude Include="objects\statue.h" />
+    <ClInclude Include="objects\switch.h" />
+    <ClInclude Include="objects\trapdoor.h" />
+    <ClInclude Include="objects\vole.h" />
+    <ClInclude Include="objects\wolf.h" />
+    <ClInclude Include="SPECIFIC\3d_gen.h" />
+    <ClInclude Include="SPECIFIC\3D_LINE.H" />
+    <ClInclude Include="SPECIFIC\3D_OUT.H" />
+    <ClInclude Include="SPECIFIC\backbuffer.h" />
+    <ClInclude Include="SPECIFIC\box.h" />
+    <ClInclude Include="SPECIFIC\camera.h" />
+    <ClInclude Include="SPECIFIC\cinema.h" />
+    <ClInclude Include="SPECIFIC\collide.h" />
+    <ClInclude Include="SPECIFIC\const.h" />
+    <ClInclude Include="SPECIFIC\control_util.h" />
+    <ClInclude Include="SPECIFIC\draw.h" />
+    <ClInclude Include="SPECIFIC\file.h" />
+    <ClInclude Include="SPECIFIC\game.h" />
+    <ClInclude Include="SPECIFIC\gameflow.h" />
+    <ClInclude Include="SPECIFIC\init.h" />
+    <ClInclude Include="SPECIFIC\input.h" />
+    <ClInclude Include="SPECIFIC\inv.h" />
+    <ClInclude Include="SPECIFIC\items.h" />
+    <ClInclude Include="SPECIFIC\lara.h" />
+    <ClInclude Include="SPECIFIC\lot.h" />
+    <ClInclude Include="SPECIFIC\matrix.h" />
+    <ClInclude Include="SPECIFIC\option.h" />
+    <ClInclude Include="SPECIFIC\overlay.h" />
+    <ClInclude Include="SPECIFIC\people.h" />
+    <ClInclude Include="SPECIFIC\phd_math.h" />
+    <ClInclude Include="SPECIFIC\requester.h" />
+    <ClInclude Include="SPECIFIC\savegame.h" />
+    <ClInclude Include="SPECIFIC\SCALESPR.H" />
+    <ClInclude Include="SPECIFIC\screen.h" />
+    <ClInclude Include="SPECIFIC\setup.h" />
+    <ClInclude Include="SPECIFIC\sound.h" />
+    <ClInclude Include="SPECIFIC\sphere.h" />
+    <ClInclude Include="SPECIFIC\timer.h" />
+    <ClInclude Include="SPECIFIC\types.h" />
+    <ClInclude Include="SPECIFIC\util.h" />
+    <ClInclude Include="SPECIFIC\vars.h" />
+    <ClInclude Include="SPECIFIC\winmain.h" />
+    <ClInclude Include="traps\damocles_sword.h" />
+    <ClInclude Include="traps\dart.h" />
+    <ClInclude Include="traps\dart_emitter.h" />
+    <ClInclude Include="traps\falling_block.h" />
+    <ClInclude Include="traps\falling_ceiling.h" />
+    <ClInclude Include="traps\flame.h" />
+    <ClInclude Include="traps\lava.h" />
+    <ClInclude Include="traps\lightning_emitter.h" />
+    <ClInclude Include="traps\midas_touch.h" />
+    <ClInclude Include="traps\movable_block.h" />
+    <ClInclude Include="traps\pendulum.h" />
+    <ClInclude Include="traps\rolling_ball.h" />
+    <ClInclude Include="traps\rolling_block.h" />
+    <ClInclude Include="traps\spikes.h" />
+    <ClInclude Include="traps\teeth_trap.h" />
+    <ClInclude Include="traps\thors_hammer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="SPECIFIC\3D_XOUTA.S" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  </ImportGroup>
+</Project>
