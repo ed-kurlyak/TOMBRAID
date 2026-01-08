@@ -24,7 +24,7 @@ The project is based on the source code from <a href="https://github.com/LostArt
 
 - The project is primarily for testing and reverse engineering purposes.  
 
-Projects descriptions:  
+Projects description:  
 
 TOMBRAID_SW_DDRAW6&HW_DX6_VS2019 - for software mode used DDRAW6, for hardware mode DX6, Visual Studio 2019  
 
