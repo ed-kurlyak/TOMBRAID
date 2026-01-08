@@ -15,7 +15,7 @@
 #include "sound.h"
 #include "savegame.h"
 #include "cinema.h"
-#include "stdio.h"
+#include <stdio.h>
 
 //***************************
 // SETUP START

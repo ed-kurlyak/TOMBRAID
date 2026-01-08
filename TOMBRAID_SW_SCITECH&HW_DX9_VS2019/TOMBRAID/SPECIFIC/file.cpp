@@ -854,6 +854,10 @@ void BaddyObjects()
 		g_AnimBones[g_Objects[O_APE].bone_index + 52] |= BEB_ROT_Y;
 	}
 
+	//мумия обвязанная белыми бинтами уровень 8a City of Khamoon
+	//g_Items.mesh_bits говорит какие части меша рисовать
+	//например O_WARRIOR3 в функции InitialiseWarrior2 mesh_bits
+	//говорит рисовать O_WARRIOR1 без крыльев
 	if (g_Objects[O_WARRIOR1].loaded)
 	{
 		g_Objects[O_WARRIOR1].initialise = InitialiseCreature;
@@ -875,6 +879,7 @@ void BaddyObjects()
 
 	if (g_Objects[O_WARRIOR2].loaded)
 	{
+		//информация о количестве мешей и стартовом меше переноситься из O_WARRIOR1
 		g_Objects[O_WARRIOR2] = g_Objects[O_WARRIOR1];
 		g_Objects[O_WARRIOR2].initialise = InitialiseWarrior2;
 		g_Objects[O_WARRIOR2].smartness = WARRIOR2_SMARTNESS;
@@ -882,6 +887,7 @@ void BaddyObjects()
 
 	if (g_Objects[O_WARRIOR3].loaded)
 	{
+		//информация о количестве мешей и стартовом меше переноситься из O_WARRIOR1
 		g_Objects[O_WARRIOR3] = g_Objects[O_WARRIOR1];
 		g_Objects[O_WARRIOR3].initialise = InitialiseWarrior2;
 	}

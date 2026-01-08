@@ -27,7 +27,7 @@
 // SETUP PART #1
 //HARDWARE or SOFTWARE
 
-int Hardware = 1;
+int Hardware = 0;
 
 int Fullscreen = 0;
 

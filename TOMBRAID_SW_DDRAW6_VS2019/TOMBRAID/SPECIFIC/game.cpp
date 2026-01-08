@@ -27,7 +27,8 @@
 #include "savegame.h"
 #include "game.h"
 #include "gameflow.h"
-#include "stdio.h"
+
+#include <stdio.h>
 
 
 

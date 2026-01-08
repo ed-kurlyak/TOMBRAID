@@ -138,17 +138,13 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 		int32_t x = pos->x - g_Camera.target.x;
 		int32_t y = pos->y - g_Camera.target.y;
 		int32_t z = pos->z - g_Camera.target.z;
-		
-
-
+		
 		if (ABS(x) > SOUND_RADIUS || ABS(y) > SOUND_RADIUS || ABS(z) >
 	SOUND_RADIUS)
 		{
 			return false;
 		}
-		
-
-
+		
 		distance = SQUARE(x) + SQUARE(y) + SQUARE(z);
 	}
 	else
@@ -156,9 +152,7 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 		distance = 0;
 	}
 
-	
-
-
+	
 	//distance = phd_sqrt(distance);
 	//int32_t volume = sample->volume - distance * SOUND_RANGE_MULT_CONSTANT;
 	// Корректировка громкости
@@ -171,9 +165,7 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 	{
 		volume -= Random_GetDraw() * SOUND_MAX_VOLUME_CHANGE >> 15;
 	}
-	
-
-
+	
 	if (volume <= 0 && mode != SOUND_MODE_AMBIENT)
 	{
 		return false;

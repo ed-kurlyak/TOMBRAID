@@ -262,25 +262,24 @@ void Output_DrawShadow(int16_t size, int16_t *bptr, ITEM_INFO *item)
 
 void S_Output_DrawShadow(PHD_VBUF *vbufs, int clip, int vertex_count)
 {
-
 	VBUF2 vertices[32];
 
 	for (int i = 0; i < vertex_count; i++)
 	{
-		VBUF2 *vertex = &vertices[i];
-		PHD_VBUF *vbuf = &vbufs[i];
+		VBUF2* vertex = &vertices[i];
+		PHD_VBUF* vbuf = &vbufs[i];
 		vertex->x = (float)vbuf->xs;
 		vertex->y = (float)vbuf->ys;
 		vertex->g = 24.0f;
 	}
 
-	int vert_count = 8;
+	int vert_count = vertex_count;
 
 	if (clip)
 	{
 		vert_count = ClipVertices2(vert_count, &vertices[0]);
 
-		if (!vertex_count)
+		if (!vert_count)
 		{
 			return;
 		}
@@ -288,12 +287,17 @@ void S_Output_DrawShadow(PHD_VBUF *vbufs, int clip, int vertex_count)
 
 	if (vert_count)
 	{
-		int depth = (vbufs[0].zv + vbufs[1].zv + vbufs[2].zv + vbufs[3].zv +
-					 vbufs[4].zv + vbufs[5].zv + vbufs[6].zv + vbufs[7].zv) /
-					8;
+		float depthF = 0;
 
-		int32_t *sort = sort3dptr;
-		int16_t *info = info3dptr;
+		for (int i = 0; i < vert_count; i++)
+		{
+			depthF += vbufs[i].zv;
+		}
+
+		int depth = (int)(depthF / vert_count);
+
+		int32_t* sort = sort3dptr;
+		int16_t* info = info3dptr;
 
 		sort[0] = (int32_t)info;
 		sort[1] = depth;
@@ -314,9 +318,6 @@ void S_Output_DrawShadow(PHD_VBUF *vbufs, int clip, int vertex_count)
 			{
 				info[0] = (short int)vertices[indx].x;
 				info[1] = (short int)vertices[indx].y;
-				// info[2] = (short int)vertices[indx].g;
-
-				// info += 3;
 				info += 2;
 				indx++;
 
@@ -327,44 +328,8 @@ void S_Output_DrawShadow(PHD_VBUF *vbufs, int clip, int vertex_count)
 			surfacenum++;
 
 		} // if(vert_count > 0)
+
 	}
-
-	// needs to be more than 8 cause clipping might return more polygons.
-	// GFX_3D_Vertex vertices[vertex_count * CLIP_VERTCOUNT_SCALE];
-	/*
-	GFX_3D_Vertex* vertices = (GFX_3D_Vertex*)malloc(vertex_count *
-CLIP_VERTCOUNT_SCALE * sizeof(GFX_3D_Vertex)); int i; int32_t tmp;
-
-for (i = 0; i < vertex_count; i++) {
-	GFX_3D_Vertex *vertex = &vertices[i];
-	PHD_VBUF *vbuf = &vbufs[i];
-	vertex->x = vbuf->xs;
-	vertex->y = vbuf->ys;
-	vertex->z = vbuf->zv * 0.0001f - 16.0f;
-	vertex->b = 0.0f;
-	vertex->g = 0.0f;
-	vertex->r = 0.0f;
-	vertex->a = 128.0f;
-}
-
-if (clip) {
-	int original = vertex_count;
-	vertex_count = S_Output_ClipVertices(vertex_count, vertices);
-	assert(vertex_count < original * CLIP_VERTCOUNT_SCALE);
-}
-
-if (!vertex_count) {
-	return;
-}
-
-S_Output_DisableTextureMode();
-
-GFX_3D_Renderer_SetBlendingEnabled(m_Renderer3D, true);
-S_Output_DrawTriangleStrip(vertices, vertex_count);
-GFX_3D_Renderer_SetBlendingEnabled(m_Renderer3D, false);
-
-	free(vertices);
-	*/
 }
 
 int S_GetObjectBounds(int16_t *bptr)

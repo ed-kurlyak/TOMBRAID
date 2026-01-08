@@ -233,12 +233,14 @@ void Output_DrawShadow(int16_t size, int16_t *bptr, ITEM_INFO *item)
 		int16_t clip_and = 1;
 		int16_t clip_positive = 1;
 		int16_t clip_or = 0;
+
 		for (i = 0; i < g_ShadowInfo.vertex_count; i++)
 		{
 			clip_and &= m_VBuf[i].clip;
 			clip_positive &= m_VBuf[i].clip >= 0;
 			clip_or |= m_VBuf[i].clip;
 		}
+
 		PHD_VBUF *vn1 = &m_VBuf[0];
 		PHD_VBUF *vn2 = &m_VBuf[1];
 		PHD_VBUF *vn3 = &m_VBuf[2];
@@ -269,13 +271,13 @@ void S_Output_DrawShadow_SW(PHD_VBUF* vbufs, int clip, int vertex_count)
 		vertex->g = 24.0f;
 	}
 
-	int vert_count = 8;
+	int vert_count = vertex_count;
 
 	if (clip)
 	{
 		vert_count = ClipVertices2(vert_count, &vertices[0]);
 
-		if (!vertex_count)
+		if (!vert_count)
 		{
 			return;
 		}
@@ -283,9 +285,14 @@ void S_Output_DrawShadow_SW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 	if (vert_count)
 	{
-		int depth = (vbufs[0].zv + vbufs[1].zv + vbufs[2].zv + vbufs[3].zv +
-					 vbufs[4].zv + vbufs[5].zv + vbufs[6].zv + vbufs[7].zv) /
-					8;
+		float depthF = 0;
+
+		for (int i = 0; i < vert_count; i++ )
+		{
+			depthF += vbufs[i].zv;
+		}
+
+		int depth = (int)(depthF / vert_count);
 
 		int32_t *sort = sort3dptr;
 		int16_t *info = info3dptr;

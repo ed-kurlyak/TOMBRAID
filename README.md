@@ -23,6 +23,23 @@ The project is based on the source code from <a href="https://github.com/LostArt
 ## Notes
 
 - The project is primarily for testing and reverse engineering purposes.  
-- Expect incomplete features and unfinished implementations.  
+
+Projects descriptions:  
+
+TOMBRAID_SW_DDRAW6&HW_DX6_VS2019 - for software mode used DDRAW6, for hardware mode DX6, Visual Studio 2019  
+
+TOMBRAID_SW_DDRAW6_VS2019 - software mode used DDRAW6, Visual Studio 2019  
+
+TOMBRAID_SW_SCITECH&HW_DX6_VS6 - for software mode used SciTech MGA, for hardware mode DX6, Visual Studio 6.0  
+
+TOMBRAID_SW_SCITECH&HW_DX6_VS2019 - for software mode used SciTech MGA, for hardware mode DX6, Visual Studio 2019
+
+TOMBRAID_SW_SCITECH&HW_DX9_VS2019 - software mode used SciTech MGA, for hardware mode DX9, Visual Studio 2019
+
+TOMBRAID_SW_SCITECH_VS2019 - software mode used SciTech MGA, Visual Studio 2019  
+
+
+
+
 
 <img src="https://github.com/ed-kurlyak/TOMBRAID/blob/main/pics/tomb1.png" alt="Lara Croft Tomb Raider 1 image">

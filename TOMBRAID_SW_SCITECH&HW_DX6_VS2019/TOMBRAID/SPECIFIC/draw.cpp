@@ -264,20 +264,20 @@ void S_Output_DrawShadow_SW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 	for (int i = 0; i < vertex_count; i++)
 	{
-		VBUF2 *vertex = &vertices[i];
-		PHD_VBUF *vbuf = &vbufs[i];
+		VBUF2* vertex = &vertices[i];
+		PHD_VBUF* vbuf = &vbufs[i];
 		vertex->x = (float)vbuf->xs;
 		vertex->y = (float)vbuf->ys;
 		vertex->g = 24.0f;
 	}
 
-	int vert_count = 8;
+	int vert_count = vertex_count;
 
 	if (clip)
 	{
 		vert_count = ClipVertices2(vert_count, &vertices[0]);
 
-		if (!vertex_count)
+		if (!vert_count)
 		{
 			return;
 		}
@@ -285,12 +285,17 @@ void S_Output_DrawShadow_SW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 	if (vert_count)
 	{
-		int depth = (vbufs[0].zv + vbufs[1].zv + vbufs[2].zv + vbufs[3].zv +
-					 vbufs[4].zv + vbufs[5].zv + vbufs[6].zv + vbufs[7].zv) /
-					8;
+		float depthF = 0;
 
-		int32_t *sort = sort3dptr;
-		int16_t *info = info3dptr;
+		for (int i = 0; i < vert_count; i++)
+		{
+			depthF += vbufs[i].zv;
+		}
+
+		int depth = (int)(depthF / vert_count);
+
+		int32_t* sort = sort3dptr;
+		int16_t* info = info3dptr;
 
 		sort[0] = (int32_t)info;
 		sort[1] = depth;
@@ -321,7 +326,7 @@ void S_Output_DrawShadow_SW(PHD_VBUF* vbufs, int clip, int vertex_count)
 			surfacenum++;
 
 		} // if(vert_count > 0)
-		
+
 	}
 }
 
