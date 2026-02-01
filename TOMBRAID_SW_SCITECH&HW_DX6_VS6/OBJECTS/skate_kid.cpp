@@ -13,28 +13,6 @@
 BITE_INFO g_KidGun1 = {0, 150, 34, 7};
 BITE_INFO g_KidGun2 = {0, 150, 37, 4};
 
-void SetupSkateKid(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseSkateKid;
-	obj->control = SkateKidControl;
-	obj->draw_routine = DrawSkateKid;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = SKATE_KID_HITPOINTS;
-	obj->radius = SKATE_KID_RADIUS;
-	obj->smartness = SKATE_KID_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index] |= BEB_ROT_Y;
-}
-
 void InitialiseSkateKid(int16_t item_num)
 {
 	InitialiseCreature(item_num);

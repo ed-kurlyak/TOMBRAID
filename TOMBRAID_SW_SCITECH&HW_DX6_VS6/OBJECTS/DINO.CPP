@@ -10,30 +10,6 @@
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
 
-void SetupDino(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = DinoControl;
-	obj->draw_routine = DrawUnclippedItem;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = DINO_HITPOINTS;
-	obj->pivot_length = 2000;
-	obj->radius = DINO_RADIUS;
-	obj->smartness = DINO_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 40] |= BEB_ROT_Y;
-	g_AnimBones[obj->bone_index + 44] |= BEB_ROT_Y;
-}
-
 void DinoControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

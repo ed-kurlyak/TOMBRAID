@@ -750,31 +750,399 @@ void BaddyObjects()
 		g_Objects[O_BAT].save_flags = 1;
 	}
 
-	SetupDino(&g_Objects[O_DINOSAUR]);
-	SetupRaptor(&g_Objects[O_RAPTOR]);
-	SetupLarson(&g_Objects[O_LARSON]);
-	SetupPierre(&g_Objects[O_PIERRE]);
-	SetupRat(&g_Objects[O_RAT]);
-	SetupVole(&g_Objects[O_VOLE]);
-	SetupLion(&g_Objects[O_LION]);
-	SetupLioness(&g_Objects[O_LIONESS]);
-	SetupPuma(&g_Objects[O_PUMA]);
-	SetupCrocodile(&g_Objects[O_CROCODILE]);
-	SetupAlligator(&g_Objects[O_ALLIGATOR]);
-	SetupApe(&g_Objects[O_APE]);
-	SetupWarrior(&g_Objects[O_WARRIOR1]);
-	SetupWarrior2(&g_Objects[O_WARRIOR2]);
-	SetupWarrior3(&g_Objects[O_WARRIOR3]);
-	SetupCentaur(&g_Objects[O_CENTAUR]);
-	SetupMummy(&g_Objects[O_MUMMY]);
-	SetupSkateKid(&g_Objects[O_MERCENARY1]);
-	SetupCowboy(&g_Objects[O_MERCENARY2]);
-	SetupBaldy(&g_Objects[O_MERCENARY3]);
-	SetupAbortion(&g_Objects[O_ABORTION]);
-	SetupNatla(&g_Objects[O_NATLA]);
-	SetupPod(&g_Objects[O_PODS]);
-	SetupBigPod(&g_Objects[O_BIG_POD]);
-	SetupStatue(&g_Objects[O_STATUE]);
+	if (g_Objects[O_DINOSAUR].loaded)
+	{
+		g_Objects[O_DINOSAUR].initialise = InitialiseCreature;
+		g_Objects[O_DINOSAUR].control = DinoControl;
+		g_Objects[O_DINOSAUR].draw_routine = DrawUnclippedItem;
+		g_Objects[O_DINOSAUR].collision = CreatureCollision;
+		g_Objects[O_DINOSAUR].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_DINOSAUR].hit_points = DINO_HITPOINTS;
+		g_Objects[O_DINOSAUR].pivot_length = 2000;
+		g_Objects[O_DINOSAUR].radius = DINO_RADIUS;
+		g_Objects[O_DINOSAUR].smartness = DINO_SMARTNESS;
+		g_Objects[O_DINOSAUR].intelligent = 1;
+		g_Objects[O_DINOSAUR].save_position = 1;
+		g_Objects[O_DINOSAUR].save_hitpoints = 1;
+		g_Objects[O_DINOSAUR].save_anim = 1;
+		g_Objects[O_DINOSAUR].save_flags = 1;
+		g_AnimBones[g_Objects[O_DINOSAUR].bone_index + 40] |= BEB_ROT_Y;
+		g_AnimBones[g_Objects[O_DINOSAUR].bone_index + 44] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_RAPTOR].loaded)
+	{
+		g_Objects[O_RAPTOR].initialise = InitialiseCreature;
+		g_Objects[O_RAPTOR].control = RaptorControl;
+		g_Objects[O_RAPTOR].collision = CreatureCollision;
+		g_Objects[O_RAPTOR].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_RAPTOR].hit_points = RAPTOR_HITPOINTS;
+		g_Objects[O_RAPTOR].pivot_length = 400;
+		g_Objects[O_RAPTOR].radius = RAPTOR_RADIUS;
+		g_Objects[O_RAPTOR].smartness = RAPTOR_SMARTNESS;
+		g_Objects[O_RAPTOR].intelligent = 1;
+		g_Objects[O_RAPTOR].save_position = 1;
+		g_Objects[O_RAPTOR].save_hitpoints = 1;
+		g_Objects[O_RAPTOR].save_anim = 1;
+		g_Objects[O_RAPTOR].save_flags = 1;
+		g_AnimBones[g_Objects[O_RAPTOR].bone_index + 84] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_LARSON].loaded)
+	{
+		g_Objects[O_LARSON].initialise = InitialiseCreature;
+		g_Objects[O_LARSON].control = LarsonControl;
+		g_Objects[O_LARSON].collision = CreatureCollision;
+		g_Objects[O_LARSON].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_LARSON].hit_points = LARSON_HITPOINTS;
+		g_Objects[O_LARSON].radius = LARSON_RADIUS;
+		g_Objects[O_LARSON].smartness = LARSON_SMARTNESS;
+		g_Objects[O_LARSON].intelligent = 1;
+		g_Objects[O_LARSON].save_position = 1;
+		g_Objects[O_LARSON].save_hitpoints = 1;
+		g_Objects[O_LARSON].save_anim = 1;
+		g_Objects[O_LARSON].save_flags = 1;
+		g_AnimBones[g_Objects[O_LARSON].bone_index + 24] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_PIERRE].loaded)
+	{
+		g_Objects[O_PIERRE].initialise = InitialiseCreature;
+		g_Objects[O_PIERRE].control = PierreControl;
+		g_Objects[O_PIERRE].collision = CreatureCollision;
+		g_Objects[O_PIERRE].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_PIERRE].hit_points = PIERRE_HITPOINTS;
+		g_Objects[O_PIERRE].radius = PIERRE_RADIUS;
+		g_Objects[O_PIERRE].smartness = PIERRE_SMARTNESS;
+		g_Objects[O_PIERRE].intelligent = 1;
+		g_Objects[O_PIERRE].save_position = 1;
+		g_Objects[O_PIERRE].save_hitpoints = 1;
+		g_Objects[O_PIERRE].save_anim = 1;
+		g_Objects[O_PIERRE].save_flags = 1;
+		g_AnimBones[g_Objects[O_PIERRE].bone_index + 24] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_RAT].loaded)
+	{
+		g_Objects[O_RAT].initialise = InitialiseCreature;
+		g_Objects[O_RAT].control = RatControl;
+		g_Objects[O_RAT].collision = CreatureCollision;
+		g_Objects[O_RAT].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_RAT].hit_points = RAT_HITPOINTS;
+		g_Objects[O_RAT].pivot_length = 200;
+		g_Objects[O_RAT].radius = RAT_RADIUS;
+		g_Objects[O_RAT].smartness = RAT_SMARTNESS;
+		g_Objects[O_RAT].intelligent = 1;
+		g_Objects[O_RAT].save_position = 1;
+		g_Objects[O_RAT].save_hitpoints = 1;
+		g_Objects[O_RAT].save_anim = 1;
+		g_Objects[O_RAT].save_flags = 1;
+		g_AnimBones[g_Objects[O_RAT].bone_index + 4] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_VOLE].loaded)
+	{
+		g_Objects[O_VOLE].initialise = InitialiseCreature;
+		g_Objects[O_VOLE].control = VoleControl;
+		g_Objects[O_VOLE].collision = CreatureCollision;
+		g_Objects[O_VOLE].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_VOLE].hit_points = RAT_HITPOINTS;
+		g_Objects[O_VOLE].pivot_length = 200;
+		g_Objects[O_VOLE].radius = RAT_RADIUS;
+		g_Objects[O_VOLE].smartness = RAT_SMARTNESS;
+		g_Objects[O_VOLE].intelligent = 1;
+		g_Objects[O_VOLE].save_position = 1;
+		g_Objects[O_VOLE].save_hitpoints = 1;
+		g_Objects[O_VOLE].save_anim = 1;
+		g_Objects[O_VOLE].save_flags = 1;
+		g_AnimBones[g_Objects[O_VOLE].bone_index + 4] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_LION].loaded)
+	{
+		g_Objects[O_LION].initialise = InitialiseCreature;
+		g_Objects[O_LION].control = LionControl;
+		g_Objects[O_LION].collision = CreatureCollision;
+		g_Objects[O_LION].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_LION].hit_points = LION_HITPOINTS;
+		g_Objects[O_LION].pivot_length = 400;
+		g_Objects[O_LION].radius = LION_RADIUS;
+		g_Objects[O_LION].smartness = LION_SMARTNESS;
+		g_Objects[O_LION].intelligent = 1;
+		g_Objects[O_LION].save_position = 1;
+		g_Objects[O_LION].save_hitpoints = 1;
+		g_Objects[O_LION].save_anim = 1;
+		g_Objects[O_LION].save_flags = 1;
+		g_AnimBones[g_Objects[O_LION].bone_index + 76] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_LIONESS].loaded)
+	{
+		g_Objects[O_LIONESS].initialise = InitialiseCreature;
+		g_Objects[O_LIONESS].control = LionControl;
+		g_Objects[O_LIONESS].collision = CreatureCollision;
+		g_Objects[O_LIONESS].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_LIONESS].hit_points = LIONESS_HITPOINTS;
+		g_Objects[O_LIONESS].pivot_length = 400;
+		g_Objects[O_LIONESS].radius = LIONESS_RADIUS;
+		g_Objects[O_LIONESS].smartness = LIONESS_SMARTNESS;
+		g_Objects[O_LIONESS].intelligent = 1;
+		g_Objects[O_LIONESS].save_position = 1;
+		g_Objects[O_LIONESS].save_hitpoints = 1;
+		g_Objects[O_LIONESS].save_anim = 1;
+		g_Objects[O_LIONESS].save_flags = 1;
+		g_AnimBones[g_Objects[O_LIONESS].bone_index + 76] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_PUMA].loaded)
+	{
+		g_Objects[O_PUMA].initialise = InitialiseCreature;
+		g_Objects[O_PUMA].control = LionControl;
+		g_Objects[O_PUMA].collision = CreatureCollision;
+		g_Objects[O_PUMA].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_PUMA].hit_points = PUMA_HITPOINTS;
+		g_Objects[O_PUMA].pivot_length = 400;
+		g_Objects[O_PUMA].radius = PUMA_RADIUS;
+		g_Objects[O_PUMA].smartness = PUMA_SMARTNESS;
+		g_Objects[O_PUMA].intelligent = 1;
+		g_Objects[O_PUMA].save_position = 1;
+		g_Objects[O_PUMA].save_hitpoints = 1;
+		g_Objects[O_PUMA].save_anim = 1;
+		g_Objects[O_PUMA].save_flags = 1;
+		g_AnimBones[g_Objects[O_PUMA].bone_index + 76] |= BEB_ROT_Y;
+	}
+
+
+	if (g_Objects[O_CROCODILE].loaded)
+	{
+		g_Objects[O_CROCODILE].initialise = InitialiseCreature;
+		g_Objects[O_CROCODILE].control = CrocControl;
+		g_Objects[O_CROCODILE].collision = CreatureCollision;
+		g_Objects[O_CROCODILE].shadow_size = UNIT_SHADOW / 3;
+		g_Objects[O_CROCODILE].hit_points = CROCODILE_HITPOINTS;
+		g_Objects[O_CROCODILE].pivot_length = 600;
+		g_Objects[O_CROCODILE].radius = CROCODILE_RADIUS;
+		g_Objects[O_CROCODILE].smartness = CROCODILE_SMARTNESS;
+		g_Objects[O_CROCODILE].intelligent = 1;
+		g_Objects[O_CROCODILE].save_position = 1;
+		g_Objects[O_CROCODILE].save_hitpoints = 1;
+		g_Objects[O_CROCODILE].save_anim = 1;
+		g_Objects[O_CROCODILE].save_flags = 1;
+		g_AnimBones[g_Objects[O_CROCODILE].bone_index + 28] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_ALLIGATOR].loaded)
+	{
+		g_Objects[O_ALLIGATOR].initialise = InitialiseCreature;
+		g_Objects[O_ALLIGATOR].control = AlligatorControl;
+		g_Objects[O_ALLIGATOR].collision = CreatureCollision;
+		g_Objects[O_ALLIGATOR].shadow_size = UNIT_SHADOW / 3;
+		g_Objects[O_ALLIGATOR].hit_points = ALLIGATOR_HITPOINTS;
+		g_Objects[O_ALLIGATOR].pivot_length = 600;
+		g_Objects[O_ALLIGATOR].radius = ALLIGATOR_RADIUS;
+		g_Objects[O_ALLIGATOR].smartness = ALLIGATOR_SMARTNESS;
+		g_Objects[O_ALLIGATOR].intelligent = 1;
+		g_Objects[O_ALLIGATOR].save_position = 1;
+		g_Objects[O_ALLIGATOR].save_hitpoints = 1;
+		g_Objects[O_ALLIGATOR].save_anim = 1;
+		g_Objects[O_ALLIGATOR].save_flags = 1;
+		g_AnimBones[g_Objects[O_ALLIGATOR].bone_index + 28] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_APE].loaded)
+	{
+		g_Objects[O_APE].initialise = InitialiseCreature;
+		g_Objects[O_APE].control = ApeControl;
+		g_Objects[O_APE].collision = CreatureCollision;
+		g_Objects[O_APE].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_APE].hit_points = APE_HITPOINTS;
+		g_Objects[O_APE].pivot_length = 250;
+		g_Objects[O_APE].radius = APE_RADIUS;
+		g_Objects[O_APE].smartness = APE_SMARTNESS;
+		g_Objects[O_APE].intelligent = 1;
+		g_Objects[O_APE].save_position = 1;
+		g_Objects[O_APE].save_hitpoints = 1;
+		g_Objects[O_APE].save_anim = 1;
+		g_Objects[O_APE].save_flags = 1;
+		g_AnimBones[g_Objects[O_APE].bone_index + 52] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_WARRIOR1].loaded)
+	{
+		g_Objects[O_WARRIOR1].initialise = InitialiseCreature;
+		g_Objects[O_WARRIOR1].control = FlyerControl;
+		g_Objects[O_WARRIOR1].collision = CreatureCollision;
+		g_Objects[O_WARRIOR1].shadow_size = UNIT_SHADOW / 3;
+		g_Objects[O_WARRIOR1].hit_points = FLYER_HITPOINTS;
+		g_Objects[O_WARRIOR1].pivot_length = 150;
+		g_Objects[O_WARRIOR1].radius = FLYER_RADIUS;
+		g_Objects[O_WARRIOR1].smartness = FLYER_SMARTNESS;
+		g_Objects[O_WARRIOR1].intelligent = 1;
+		g_Objects[O_WARRIOR1].save_position = 1;
+		g_Objects[O_WARRIOR1].save_hitpoints = 1;
+		g_Objects[O_WARRIOR1].save_anim = 1;
+		g_Objects[O_WARRIOR1].save_flags = 1;
+		g_AnimBones[g_Objects[O_WARRIOR1].bone_index] |= BEB_ROT_Y;
+		g_AnimBones[g_Objects[O_WARRIOR1].bone_index + 8] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_WARRIOR2].loaded)
+	{
+		g_Objects[O_WARRIOR2] = g_Objects[O_WARRIOR1];
+		g_Objects[O_WARRIOR2].initialise = InitialiseWarrior2;
+		g_Objects[O_WARRIOR2].smartness = WARRIOR2_SMARTNESS;
+	}
+
+	if (g_Objects[O_WARRIOR3].loaded)
+	{
+		g_Objects[O_WARRIOR3] = g_Objects[O_WARRIOR1];
+		g_Objects[O_WARRIOR3].initialise = InitialiseWarrior2;
+	}
+
+	if (g_Objects[O_CENTAUR].loaded)
+	{
+		g_Objects[O_CENTAUR].initialise = InitialiseCreature;
+		g_Objects[O_CENTAUR].control = CentaurControl;
+		g_Objects[O_CENTAUR].collision = CreatureCollision;
+		g_Objects[O_CENTAUR].shadow_size = UNIT_SHADOW / 3;
+		g_Objects[O_CENTAUR].hit_points = CENTAUR_HITPOINTS;
+		g_Objects[O_CENTAUR].pivot_length = 400;
+		g_Objects[O_CENTAUR].radius = CENTAUR_RADIUS;
+		g_Objects[O_CENTAUR].smartness = CENTAUR_SMARTNESS;
+		g_Objects[O_CENTAUR].intelligent = 1;
+		g_Objects[O_CENTAUR].save_position = 1;
+		g_Objects[O_CENTAUR].save_hitpoints = 1;
+		g_Objects[O_CENTAUR].save_anim = 1;
+		g_Objects[O_CENTAUR].save_flags = 1;
+		g_AnimBones[g_Objects[O_CENTAUR].bone_index + 40] |= 0xCu;
+	}
+
+	if (g_Objects[O_MUMMY].loaded)
+	{
+		g_Objects[O_MUMMY].initialise = InitialiseMummy;
+		g_Objects[O_MUMMY].control = MummyControl;
+		g_Objects[O_MUMMY].collision = ObjectCollision;
+		g_Objects[O_MUMMY].hit_points = MUMMY_HITPOINTS;
+		g_Objects[O_MUMMY].save_flags = 1;
+		g_Objects[O_MUMMY].save_hitpoints = 1;
+		g_Objects[O_MUMMY].save_anim = 1;
+		g_AnimBones[g_Objects[O_MUMMY].bone_index + 8] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_MERCENARY1].loaded)
+	{
+		g_Objects[O_MERCENARY1].initialise = InitialiseSkateKid;
+		g_Objects[O_MERCENARY1].control = SkateKidControl;
+		g_Objects[O_MERCENARY1].draw_routine = DrawSkateKid;
+		g_Objects[O_MERCENARY1].collision = CreatureCollision;
+		g_Objects[O_MERCENARY1].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_MERCENARY1].hit_points = SKATE_KID_HITPOINTS;
+		g_Objects[O_MERCENARY1].radius = SKATE_KID_RADIUS;
+		g_Objects[O_MERCENARY1].smartness = SKATE_KID_SMARTNESS;
+		g_Objects[O_MERCENARY1].intelligent = 1;
+		g_Objects[O_MERCENARY1].save_position = 1;
+		g_Objects[O_MERCENARY1].save_hitpoints = 1;
+		g_Objects[O_MERCENARY1].save_anim = 1;
+		g_Objects[O_MERCENARY1].save_flags = 1;
+		g_AnimBones[g_Objects[O_MERCENARY1].bone_index] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_MERCENARY2].loaded)
+	{
+		g_Objects[O_MERCENARY2].initialise = InitialiseCreature;
+		g_Objects[O_MERCENARY2].control = CowboyControl;
+		g_Objects[O_MERCENARY2].collision = CreatureCollision;
+		g_Objects[O_MERCENARY2].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_MERCENARY2].hit_points = COWBOY_HITPOINTS;
+		g_Objects[O_MERCENARY2].radius = COWBOY_RADIUS;
+		g_Objects[O_MERCENARY2].smartness = COWBOY_SMARTNESS;
+		g_Objects[O_MERCENARY2].intelligent = 1;
+		g_Objects[O_MERCENARY2].save_position = 1;
+		g_Objects[O_MERCENARY2].save_hitpoints = 1;
+		g_Objects[O_MERCENARY2].save_anim = 1;
+		g_Objects[O_MERCENARY2].save_flags = 1;
+		g_AnimBones[g_Objects[O_MERCENARY2].bone_index] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_MERCENARY3].loaded)
+	{
+		g_Objects[O_MERCENARY3].initialise = InitialiseBaldy;
+		g_Objects[O_MERCENARY3].control = BaldyControl;
+		g_Objects[O_MERCENARY3].collision = CreatureCollision;
+		g_Objects[O_MERCENARY3].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_MERCENARY3].hit_points = BALDY_HITPOINTS;
+		g_Objects[O_MERCENARY3].radius = BALDY_RADIUS;
+		g_Objects[O_MERCENARY3].smartness = BALDY_SMARTNESS;
+		g_Objects[O_MERCENARY3].intelligent = 1;
+		g_Objects[O_MERCENARY3].save_position = 1;
+		g_Objects[O_MERCENARY3].save_hitpoints = 1;
+		g_Objects[O_MERCENARY3].save_anim = 1;
+		g_Objects[O_MERCENARY3].save_flags = 1;
+		g_AnimBones[g_Objects[O_MERCENARY3].bone_index] |= BEB_ROT_Y;
+	}
+
+
+
+	if (g_Objects[O_ABORTION].loaded)
+	{
+		g_Objects[O_ABORTION].initialise = InitialiseCreature;
+		g_Objects[O_ABORTION].control = AbortionControl;
+		g_Objects[O_ABORTION].collision = CreatureCollision;
+		g_Objects[O_ABORTION].shadow_size = UNIT_SHADOW / 3;
+		g_Objects[O_ABORTION].hit_points = ABORTION_HITPOINTS;
+		g_Objects[O_ABORTION].radius = ABORTION_RADIUS;
+		g_Objects[O_ABORTION].smartness = ABORTION_SMARTNESS;
+		g_Objects[O_ABORTION].intelligent = 1;
+		g_Objects[O_ABORTION].save_position = 1;
+		g_Objects[O_ABORTION].save_hitpoints = 1;
+		g_Objects[O_ABORTION].save_anim = 1;
+		g_Objects[O_ABORTION].save_flags = 1;
+		g_AnimBones[g_Objects[O_ABORTION].bone_index + 4] |= BEB_ROT_Y;
+	}
+
+	if (g_Objects[O_NATLA].loaded)
+	{
+		g_Objects[O_NATLA].collision = CreatureCollision;
+		g_Objects[O_NATLA].initialise = InitialiseCreature;
+		g_Objects[O_NATLA].control = NatlaControl;
+		g_Objects[O_NATLA].shadow_size = UNIT_SHADOW / 2;
+		g_Objects[O_NATLA].hit_points = NATLA_HITPOINTS;
+		g_Objects[O_NATLA].radius = NATLA_RADIUS;
+		g_Objects[O_NATLA].smartness = NATLA_SMARTNESS;
+		g_Objects[O_NATLA].intelligent = 1;
+		g_Objects[O_NATLA].save_position = 1;
+		g_Objects[O_NATLA].save_hitpoints = 1;
+		g_Objects[O_NATLA].save_anim = 1;
+		g_Objects[O_NATLA].save_flags = 1;
+		g_AnimBones[g_Objects[O_NATLA].bone_index + 8] |= BEB_ROT_Z | BEB_ROT_X;
+	}
+
+	if (g_Objects[O_PODS].loaded)
+	{
+		g_Objects[O_PODS].initialise = InitialisePod;
+		g_Objects[O_PODS].control = PodControl;
+		g_Objects[O_PODS].collision = ObjectCollision;
+		g_Objects[O_PODS].save_anim = 1;
+		g_Objects[O_PODS].save_flags = 1;
+	}
+
+	if (g_Objects[O_BIG_POD].loaded)
+	{
+		g_Objects[O_BIG_POD].initialise = InitialisePod;
+		g_Objects[O_BIG_POD].control = PodControl;
+		g_Objects[O_BIG_POD].collision = ObjectCollision;
+		g_Objects[O_BIG_POD].save_anim = 1;
+		g_Objects[O_BIG_POD].save_flags = 1;
+	}
+
+	if (g_Objects[O_STATUE].loaded)
+	{
+		g_Objects[O_STATUE].initialise = InitialiseStatue;
+		g_Objects[O_STATUE].control = StatueControl;
+		g_Objects[O_STATUE].collision = ObjectCollision;
+		g_Objects[O_STATUE].save_anim = 1;
+		g_Objects[O_STATUE].save_flags = 1;
+	}
 }
 
 void TrapObjects()
@@ -792,16 +1160,39 @@ void TrapObjects()
 	g_Objects[O_PENDULUM].save_flags = 1;
 	g_Objects[O_PENDULUM].save_anim = 1;
 
-	//-----------------------
+	g_Objects[O_TEETH_TRAP].control = TeethTrapControl;	// obj# 42
+	g_Objects[O_TEETH_TRAP].collision = TrapCollision;
+	g_Objects[O_TEETH_TRAP].save_flags = 1;
+	g_Objects[O_TEETH_TRAP].save_anim = 1;
 
-	SetupTeethTrap(&g_Objects[O_TEETH_TRAP]);			  // obj# 42
-	SetupRollingBall(&g_Objects[O_ROLLING_BALL]);		  // obj# 38
-	SetupSpikes(&g_Objects[O_SPIKES]);					  // obj# 37
-	SetupFallingCeilling(&g_Objects[O_FALLING_CEILING1]); // obj# 53
-	SetupFallingCeilling(&g_Objects[O_FALLING_CEILING2]); // obj# 54
-	SetupDamoclesSword(&g_Objects[O_DAMOCLES_SWORD]);	 // obj# 43
+	g_Objects[O_ROLLING_BALL].initialise = InitialiseRollingBall;	// obj# 38
+	g_Objects[O_ROLLING_BALL].control = RollingBallControl;
+	g_Objects[O_ROLLING_BALL].collision = RollingBallCollision;
+	g_Objects[O_ROLLING_BALL].save_position = 1;
+	g_Objects[O_ROLLING_BALL].save_anim = 1;
+	g_Objects[O_ROLLING_BALL].save_flags = 1;
 
-	//--------------------------
+	g_Objects[O_SPIKES].collision = SpikeCollision;	// obj# 37
+
+	g_Objects[O_FALLING_CEILING1].control = FallingCeilingControl;	 // obj# 53
+	g_Objects[O_FALLING_CEILING1].collision = TrapCollision;
+	g_Objects[O_FALLING_CEILING1].save_position = 1;
+	g_Objects[O_FALLING_CEILING1].save_anim = 1;
+	g_Objects[O_FALLING_CEILING1].save_flags = 1;
+
+	g_Objects[O_FALLING_CEILING2].control = FallingCeilingControl;	 // obj# 54
+	g_Objects[O_FALLING_CEILING2].collision = TrapCollision;
+	g_Objects[O_FALLING_CEILING2].save_position = 1;
+	g_Objects[O_FALLING_CEILING2].save_anim = 1;
+	g_Objects[O_FALLING_CEILING2].save_flags = 1;
+
+	g_Objects[O_DAMOCLES_SWORD].initialise = InitialiseDamoclesSword;	// obj# 43
+	g_Objects[O_DAMOCLES_SWORD].control = DamoclesSwordControl;
+	g_Objects[O_DAMOCLES_SWORD].collision = DamoclesSwordCollision;
+	g_Objects[O_DAMOCLES_SWORD].shadow_size = UNIT_SHADOW;
+	g_Objects[O_DAMOCLES_SWORD].save_position = 1;
+	g_Objects[O_DAMOCLES_SWORD].save_anim = 1;
+	g_Objects[O_DAMOCLES_SWORD].save_flags = 1;
 
 	g_Objects[O_MOVABLE_BLOCK].initialise = InitialiseMovableBlock; // obj# 48
 	g_Objects[O_MOVABLE_BLOCK].control = MovableBlockControl;
@@ -841,10 +1232,26 @@ void TrapObjects()
 	g_Objects[O_ROLLING_BLOCK].save_anim = 1;
 	g_Objects[O_ROLLING_BLOCK].save_flags = 1;
 
-	SetupLightningEmitter(&g_Objects[O_LIGHTNING_EMITTER]); // obj# 46
-	SetupThorsHandle(&g_Objects[O_THORS_HANDLE]);			// obj# 44
-	SetupThorsHead(&g_Objects[O_THORS_HEAD]);				// obj# 45
-	SetupMidasTouch(&g_Objects[O_MIDAS_TOUCH]);				// obj# 128
+	g_Objects[O_LIGHTNING_EMITTER].initialise = InitialiseLightning;	// obj# 46
+	g_Objects[O_LIGHTNING_EMITTER].control = LightningControl;
+	g_Objects[O_LIGHTNING_EMITTER].draw_routine = DrawLightning;
+	g_Objects[O_LIGHTNING_EMITTER].collision = LightningCollision;
+	g_Objects[O_LIGHTNING_EMITTER].save_flags = 1;
+
+	g_Objects[O_THORS_HANDLE].initialise = InitialiseThorsHandle;	// obj# 44
+	g_Objects[O_THORS_HANDLE].control = ThorsHandleControl;
+	g_Objects[O_THORS_HANDLE].draw_routine = DrawUnclippedItem;
+	g_Objects[O_THORS_HANDLE].collision = ThorsHandleCollision;
+	g_Objects[O_THORS_HANDLE].save_flags = 1;
+	g_Objects[O_THORS_HANDLE].save_anim = 1;
+
+	g_Objects[O_THORS_HEAD].collision = ThorsHeadCollision;	// obj# 45
+	g_Objects[O_THORS_HEAD].draw_routine = DrawUnclippedItem;
+	g_Objects[O_THORS_HEAD].save_flags = 1;
+	g_Objects[O_THORS_HEAD].save_anim = 1;
+
+	g_Objects[O_MIDAS_TOUCH].collision = MidasCollision;	// obj# 128
+	g_Objects[O_MIDAS_TOUCH].draw_routine = DrawDummyItem;
 
 	g_Objects[O_DART_EMITTER].control = DartEmitterControl; // obj# 40
 
@@ -856,11 +1263,22 @@ void TrapObjects()
 	g_Objects[O_DART_EFFECT].control = DartEffectControl; // obj# 160
 	g_Objects[O_DART_EFFECT].draw_routine = DrawSpriteItem;
 
-	SetupFlameEmitter(&g_Objects[O_FLAME_EMITTER]); // obj# 179
-	SetupFlame(&g_Objects[O_FLAME]);				// obj# 178
-	SetupLavaEmitter(&g_Objects[O_LAVA_EMITTER]);   // obj# 177
-	SetupLava(&g_Objects[O_LAVA]);					// obj# 176
-	SetupLavaWedge(&g_Objects[O_LAVA_WEDGE]);		// obj# 180
+	g_Objects[O_FLAME_EMITTER].control = FlameEmitterControl;	// obj# 179
+	g_Objects[O_FLAME_EMITTER].draw_routine = DrawDummyItem;
+
+	g_Objects[O_FLAME].control = FlameControl;	// obj# 178
+
+	g_Objects[O_LAVA_EMITTER].control = LavaEmitterControl;	// obj# 177
+	g_Objects[O_LAVA_EMITTER].draw_routine = DrawDummyItem;
+	g_Objects[O_LAVA_EMITTER].collision = ObjectCollision;
+
+	g_Objects[O_LAVA].control = LavaControl;	// obj# 176
+
+	g_Objects[O_LAVA_WEDGE].control = LavaWedgeControl;	// obj# 180
+	g_Objects[O_LAVA_WEDGE].collision = CreatureCollision;
+	g_Objects[O_LAVA_WEDGE].save_position = 1;
+	g_Objects[O_LAVA_WEDGE].save_anim = 1;
+	g_Objects[O_LAVA_WEDGE].save_flags = 1;
 }
 
 void ObjectObjects()
@@ -965,10 +1383,20 @@ void ObjectObjects()
 	g_Objects[O_TRAPDOOR2].save_anim = 1;
 	g_Objects[O_TRAPDOOR2].save_flags = 1;
 
-	SetupCog(&g_Objects[O_COG_1]);			  // obj# 74
-	SetupCog(&g_Objects[O_COG_2]);			  // obj# 75
-	SetupCog(&g_Objects[O_COG_3]);			  // obj# 76
-	SetupMovingBar(&g_Objects[O_MOVING_BAR]); // obj# 47
+	g_Objects[O_COG_1].control = CogControl;	// obj# 74
+	g_Objects[O_COG_1].save_flags = 1;
+
+	g_Objects[O_COG_2].control = CogControl;	// obj# 75
+	g_Objects[O_COG_2].save_flags = 1;
+
+	g_Objects[O_COG_3].control = CogControl;	// obj# 76
+	g_Objects[O_COG_3].save_flags = 1;
+
+	g_Objects[O_MOVING_BAR].control = CogControl;	// obj# 47
+	g_Objects[O_MOVING_BAR].collision = ObjectCollision;
+	g_Objects[O_MOVING_BAR].save_flags = 1;
+	g_Objects[O_MOVING_BAR].save_anim = 1;
+	g_Objects[O_MOVING_BAR].save_position = 1;
 
 	g_Objects[O_PICKUP_ITEM1].draw_routine = DrawPickupItem; // obj# 141
 	g_Objects[O_PICKUP_ITEM1].collision = PickUpCollision;
@@ -1054,13 +1482,29 @@ void ObjectObjects()
 	g_Objects[O_BIGMEDI_ITEM].collision = PickUpCollision;
 	g_Objects[O_BIGMEDI_ITEM].save_flags = 1;
 
-	SetupScion1(&g_Objects[O_SCION_ITEM]);		  // obj# 143
-	SetupScion2(&g_Objects[O_SCION_ITEM2]);		  // obj# 144
-	SetupScion3(&g_Objects[O_SCION_ITEM3]);		  // obj# 145
-	SetupScion4(&g_Objects[O_SCION_ITEM4]);		  // obj# 146
-	SetupScionHolder(&g_Objects[O_SCION_HOLDER]); // obj# 147
+	g_Objects[O_SCION_ITEM].draw_routine = DrawPickupItem;	// obj# 143
+	g_Objects[O_SCION_ITEM].collision = PickUpScionCollision;
 
-	SetupLeadBar(&g_Objects[O_LEADBAR_ITEM]); // obj# 126
+	g_Objects[O_SCION_ITEM2].draw_routine = DrawPickupItem;	// obj# 144
+	g_Objects[O_SCION_ITEM2].collision = PickUpCollision;
+	g_Objects[O_SCION_ITEM2].save_flags = 1;
+
+	g_Objects[O_SCION_ITEM3].control = Scion3Control;	// obj# 145
+	g_Objects[O_SCION_ITEM3].hit_points = 5;
+	g_Objects[O_SCION_ITEM3].save_flags = 1;
+
+	g_Objects[O_SCION_ITEM4].control = ScionControl;	// obj# 146
+	g_Objects[O_SCION_ITEM4].collision = PickUpScion4Collision;
+	g_Objects[O_SCION_ITEM4].save_flags = 1;
+
+	g_Objects[O_SCION_HOLDER].control = ScionControl;	// obj# 147
+	g_Objects[O_SCION_HOLDER].collision = ObjectCollision;
+	g_Objects[O_SCION_HOLDER].save_anim = 1;
+	g_Objects[O_SCION_HOLDER].save_flags = 1;
+
+	g_Objects[O_LEADBAR_ITEM].draw_routine = DrawPickupItem;	// obj# 126
+	g_Objects[O_LEADBAR_ITEM].collision = PickUpCollision;
+	g_Objects[O_LEADBAR_ITEM].save_flags = 1;
 
 	//закоментировать строку ниже если нужно рисовать O_SAVEGAME_ITEM
 	g_Objects[O_SAVEGAME_ITEM].draw_routine = DrawDummyItem; // obj# 83
@@ -1098,10 +1542,20 @@ void ObjectObjects()
 	g_Objects[O_PUZZLE_DONE4].save_flags = 1; // obj# 122
 
 	// O_PORTACABIN это комната на тросу Natla Mines уровень
-	SetupCabin(&g_Objects[O_PORTACABIN]);	  // obj# 162
-	SetupBoat(&g_Objects[O_BOAT]);			   // obj# 182
-	SetupEarthquake(&g_Objects[O_EARTHQUAKE]); // obj# 183
+	g_Objects[O_PORTACABIN].control = CabinControl;	// obj# 162
+	g_Objects[O_PORTACABIN].draw_routine = DrawUnclippedItem;
+	g_Objects[O_PORTACABIN].collision = ObjectCollision;
+	g_Objects[O_PORTACABIN].save_anim = 1;
+	g_Objects[O_PORTACABIN].save_flags = 1;
 
+	g_Objects[O_BOAT].control = BoatControl;	// obj# 182
+	g_Objects[O_BOAT].save_flags = 1;
+	g_Objects[O_BOAT].save_anim = 1;
+	g_Objects[O_BOAT].save_position = 1;
+
+	g_Objects[O_EARTHQUAKE].control = EarthQuakeControl;
+	g_Objects[O_EARTHQUAKE].draw_routine = DrawDummyItem;
+	g_Objects[O_EARTHQUAKE].save_flags = 1;
 	
 	//player 1 - 77
 	g_Objects[O_PLAYER_1].initialise = InitialisePlayer1;
@@ -1119,28 +1573,36 @@ void ObjectObjects()
 	g_Objects[O_PLAYER_4].initialise = InitialiseGenPlayer;
 	g_Objects[O_PLAYER_4].control = ControlCinematicPlayer4;
 	g_Objects[O_PLAYER_4].hit_points = 1;
-	
 
 	g_Objects[O_BLOOD1].control = ControlBlood1; // obj# 158
 
-	SetupBubble(&g_Objects[O_BUBBLES1]); // obj# 155
+	g_Objects[O_BUBBLES1].control = ControlBubble1;	// obj# 155
 
 	//взрыв когда мумия разлетается на части O_BODY_PART
-	SetupExplosion(&g_Objects[O_EXPLOSION1]); // obj# 151
+	g_Objects[O_EXPLOSION1].control = ControlExplosion1;	// obj# 151
 
 	g_Objects[O_RICOCHET1].control = ControlRicochet1; // obj# 164
 
-	SetupTwinkle(&g_Objects[O_TWINKLE]);	 // obj# 165
-	SetupSplash(&g_Objects[O_SPLASH1]);		 // obj# 153
-	SetupWaterfall(&g_Objects[O_WATERFALL]); // obj# 170
+	g_Objects[O_TWINKLE].control = ControlTwinkle;	// obj# 165
+
+	g_Objects[O_SPLASH1].control = ControlSplash1;	// obj# 153
+
+	g_Objects[O_WATERFALL].control = ControlWaterFall;	// obj# 170
+	g_Objects[O_WATERFALL].draw_routine = DrawDummyItem;
 
 	//когда взрыв то мумия разлетается на части O_EXPLOSION1
-	SetupBodyPart(&g_Objects[O_BODY_PART]); // obj# 168
+	g_Objects[O_BODY_PART].control = ControlBodyPart;	// obj# 168
+	g_Objects[O_BODY_PART].nmeshes = 0;
+	g_Objects[O_BODY_PART].loaded = 1;
+	
+	g_Objects[O_MISSILE1].control = ControlNatlaGun;	// obj# 171
 
-	SetupNatlaGun(&g_Objects[O_MISSILE1]); // obj# 171
-	SetupMissile(&g_Objects[O_MISSILE2]);  // obj# 172
-	SetupMissile(&g_Objects[O_MISSILE3]);  // obj# 173
-	SetupGunShot(&g_Objects[O_GUN_FLASH]); // obj# 166
+	g_Objects[O_MISSILE2].control = ControlMissile;	// obj# 172
+
+	g_Objects[O_MISSILE3].control = ControlMissile;	// obj# 173
+
+	g_Objects[O_GUN_FLASH].control = ControlGunShot;  // obj# 166
+
 }
 
 bool LoadSprites(FILE *fp)

@@ -10,32 +10,6 @@
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\vars.h"
 
-void SetupPod(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialisePod;
-	obj->control = PodControl;
-	obj->collision = ObjectCollision;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-
-void SetupBigPod(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialisePod;
-	obj->control = PodControl;
-	obj->collision = ObjectCollision;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-}
-
 void InitialisePod(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

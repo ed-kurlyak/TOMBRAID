@@ -37,7 +37,7 @@ int DXNearestTexture = 0;
 //---------------------------
 // SETUP PART #4 WIDESCREEN/NO
 // учет аспекта в matrix.cpp phd_GenerateW2V()
-int Widescreen = 1;
+int Widescreen = 0;
 
 //---------------------------
 // SETUP PART #5 GAME TYPE - TR1/GOLD
@@ -57,14 +57,14 @@ int SCREEN_WIDTH = 1280;
 int SCREEN_HEIGHT = 720;
 */
 
-/*
+
 int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 600;
-*/
 
+/*
 int SCREEN_WIDTH = 640;
 int SCREEN_HEIGHT = 480;
-
+*/
 //---------------------------
 // SETUP PART #7 LARA DIST
 // false is original TR1 Lara dist

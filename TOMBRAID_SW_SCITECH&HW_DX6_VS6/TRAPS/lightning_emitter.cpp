@@ -17,15 +17,6 @@
 //#include "specific/s_misc.h"
 #include "..\\SPECIFIC\\sound.h"
 
-void SetupLightningEmitter(OBJECT_INFO *obj)
-{
-	obj->initialise = InitialiseLightning;
-	obj->control = LightningControl;
-	obj->draw_routine = DrawLightning;
-	obj->collision = LightningCollision;
-	obj->save_flags = 1;
-}
-
 void InitialiseLightning(int16_t item_num)
 {
 	LIGHTNING *l = (LIGHTNING *)Game_Alloc(sizeof(LIGHTNING), GBUF_TRAP_DATA);

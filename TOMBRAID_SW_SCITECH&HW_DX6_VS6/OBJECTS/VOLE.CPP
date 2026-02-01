@@ -9,28 +9,6 @@
 #include "blood.h"
 #include "rat.h"
 
-void SetupVole(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = VoleControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = RAT_HITPOINTS;
-	obj->pivot_length = 200;
-	obj->radius = RAT_RADIUS;
-	obj->smartness = RAT_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 4] |= BEB_ROT_Y;
-}
-
 void VoleControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

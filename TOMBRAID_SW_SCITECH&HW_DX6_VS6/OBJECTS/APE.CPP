@@ -9,28 +9,6 @@
 
 BITE_INFO g_ApeBite = {0, -19, 75, 15};
 
-void SetupApe(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = ApeControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = APE_HITPOINTS;
-	obj->pivot_length = 250;
-	obj->radius = APE_RADIUS;
-	obj->smartness = APE_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 52] |= BEB_ROT_Y;
-}
-
 void ApeVault(int16_t item_num, int16_t angle)
 {
 	ITEM_INFO *item = &g_Items[item_num];

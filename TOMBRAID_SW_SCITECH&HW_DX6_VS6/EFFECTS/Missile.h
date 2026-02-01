@@ -1,10 +1,7 @@
 #ifndef _MISSILE_
 #define _MISSILE_
 
-
 #include "..\\SPECIFIC\\types.h"
-
-//#include <stdint.h>
 
 #define SHARD_DAMAGE 30
 #define SHARD_SPEED 250

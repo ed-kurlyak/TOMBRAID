@@ -47,42 +47,10 @@ int16_t g_PickUpScion4Bounds[12] = {
 	0,
 };
 
-void SetupScion1(OBJECT_INFO *obj)
+void ScionControl(int16_t item_num)
 {
-	g_Objects[O_SCION_ITEM].draw_routine = DrawPickupItem;
-	g_Objects[O_SCION_ITEM].collision = PickUpScionCollision;
+	AnimateItem(&g_Items[item_num]);
 }
-
-void SetupScion2(OBJECT_INFO *obj)
-{
-	g_Objects[O_SCION_ITEM2].draw_routine = DrawPickupItem;
-	g_Objects[O_SCION_ITEM2].collision = PickUpCollision;
-	g_Objects[O_SCION_ITEM2].save_flags = 1;
-}
-
-void SetupScion3(OBJECT_INFO *obj)
-{
-	g_Objects[O_SCION_ITEM3].control = Scion3Control;
-	g_Objects[O_SCION_ITEM3].hit_points = 5;
-	g_Objects[O_SCION_ITEM3].save_flags = 1;
-}
-
-void SetupScion4(OBJECT_INFO *obj)
-{
-	g_Objects[O_SCION_ITEM4].control = ScionControl;
-	g_Objects[O_SCION_ITEM4].collision = PickUpScion4Collision;
-	g_Objects[O_SCION_ITEM4].save_flags = 1;
-}
-
-void SetupScionHolder(OBJECT_INFO *obj)
-{
-	g_Objects[O_SCION_HOLDER].control = ScionControl;
-	g_Objects[O_SCION_HOLDER].collision = ObjectCollision;
-	g_Objects[O_SCION_HOLDER].save_anim = 1;
-	g_Objects[O_SCION_HOLDER].save_flags = 1;
-}
-
-void ScionControl(int16_t item_num) { AnimateItem(&g_Items[item_num]); }
 
 void Scion3Control(int16_t item_num)
 {

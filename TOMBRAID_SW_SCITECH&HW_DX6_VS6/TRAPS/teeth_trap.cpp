@@ -27,14 +27,6 @@ static void BaddieBiteEffect(ITEM_INFO *item, BITE_INFO *bite)
 				 item->room_number);
 }
 
-void SetupTeethTrap(OBJECT_INFO *obj)
-{
-	obj->control = TeethTrapControl;
-	obj->collision = TrapCollision;
-	obj->save_flags = 1;
-	obj->save_anim = 1;
-}
-
 void TeethTrapControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

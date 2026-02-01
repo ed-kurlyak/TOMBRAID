@@ -6,8 +6,6 @@
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
 
-void SetupSpikes(OBJECT_INFO *obj) { obj->collision = SpikeCollision; }
-
 void SpikeCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll)
 {
 	ITEM_INFO *item = &g_Items[item_num];

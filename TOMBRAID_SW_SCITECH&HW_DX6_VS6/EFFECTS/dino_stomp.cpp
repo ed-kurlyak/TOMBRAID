@@ -1,5 +1,4 @@
 #include "dino_stomp.h"
-
 #include "..\\SPECIFIC\\vars.h"
 
 #define MAX_BOUNCE 100

@@ -16,28 +16,6 @@
 BITE_INFO g_CentaurRocket = {11, 415, 41, 13};
 BITE_INFO g_CentaurRear = {50, 30, 0, 5};
 
-void SetupCentaur(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = CentaurControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 3;
-	obj->hit_points = CENTAUR_HITPOINTS;
-	obj->pivot_length = 400;
-	obj->radius = CENTAUR_RADIUS;
-	obj->smartness = CENTAUR_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 40] |= 0xCu;
-}
-
 void CentaurControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

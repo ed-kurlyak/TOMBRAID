@@ -13,28 +13,6 @@
 #include "..\\SPECIFIC\\vars.h"
 #include "..\\SPECIFIC\\winmain.h"
 
-
-void SetupAbortion(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = AbortionControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 3;
-	obj->hit_points = ABORTION_HITPOINTS;
-	obj->radius = ABORTION_RADIUS;
-	obj->smartness = ABORTION_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 4] |= BEB_ROT_Y;
-}
-
 void AbortionControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];

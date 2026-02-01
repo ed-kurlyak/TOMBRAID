@@ -1,7 +1,5 @@
 #include "flicker.h"
-
 #include "..\\SPECIFIC\\control_util.h"
-//#include "game/sound.h"
 #include "..\\SPECIFIC\\draw.h"
 #include "..\\SPECIFIC\\vars.h"
 

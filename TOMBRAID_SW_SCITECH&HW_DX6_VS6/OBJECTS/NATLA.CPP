@@ -15,29 +15,6 @@
 
 BITE_INFO g_NatlaGun = {5, 220, 7, 4};
 
-void SetupNatla(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->collision = CreatureCollision;
-	obj->initialise = InitialiseCreature;
-	obj->control = NatlaControl;
-	obj->shadow_size = UNIT_SHADOW / 2;
-	obj->hit_points = NATLA_HITPOINTS;
-	obj->radius = NATLA_RADIUS;
-	obj->smartness = NATLA_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 8] |= BEB_ROT_Z | BEB_ROT_X;
-}
-
-void SetupNatlaGun(OBJECT_INFO *obj) { obj->control = ControlNatlaGun; }
-
 void NatlaControl(int16_t item_num)
 {
 	static int16_t facing = 0;

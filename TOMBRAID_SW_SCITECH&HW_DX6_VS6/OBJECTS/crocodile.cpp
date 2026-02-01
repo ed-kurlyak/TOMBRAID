@@ -10,28 +10,6 @@
 
 BITE_INFO g_CrocodileBite = {5, -21, 467, 9};
 
-void SetupCrocodile(OBJECT_INFO *obj)
-{
-	if (!obj->loaded)
-	{
-		return;
-	}
-	obj->initialise = InitialiseCreature;
-	obj->control = CrocControl;
-	obj->collision = CreatureCollision;
-	obj->shadow_size = UNIT_SHADOW / 3;
-	obj->hit_points = CROCODILE_HITPOINTS;
-	obj->pivot_length = 600;
-	obj->radius = CROCODILE_RADIUS;
-	obj->smartness = CROCODILE_SMARTNESS;
-	obj->intelligent = 1;
-	obj->save_position = 1;
-	obj->save_hitpoints = 1;
-	obj->save_anim = 1;
-	obj->save_flags = 1;
-	g_AnimBones[obj->bone_index + 28] |= BEB_ROT_Y;
-}
-
 void CrocControl(int16_t item_num)
 {
 	ITEM_INFO *item = &g_Items[item_num];
