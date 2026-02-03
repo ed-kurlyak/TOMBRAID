@@ -665,14 +665,17 @@ int Draw_Phase_Game()
 {
 	int result = 0;
 
+	//обнуляет массив вершин
 	S_InitialisePolyList();
 
 	DrawRooms(g_Camera.pos.room_number);
 
 	Overlay_DrawGameInfo();
 
+	//выводит массив вершин (картинку) в бак буфер
 	S_OutputPolyList();
 
+	//выводит бак буфер на экран present backbuffer
 	g_Camera.number_frames = S_DumpScreen();
 
 	S_AnimateTextures(g_Camera.number_frames);
@@ -718,19 +721,13 @@ void DrawRooms(int16_t current_room)
 
 	Clear_BackBuffer();
 
-	// static int prev_cam = 0;
-
-	// if(g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
 	if (g_CameraUnderwater)
 	{
-		// prev_cam = g_CameraUnderwater;
 		Create_Water_Palette();
 	}
 
-	// if(!g_CameraUnderwater && (prev_cam != g_CameraUnderwater) )
 	if (!g_CameraUnderwater)
 	{
-		// prev_cam = g_CameraUnderwater;
 		Create_Normal_Palette();
 	}
 
@@ -744,6 +741,7 @@ void DrawRooms(int16_t current_room)
 		{
 			SetupAboveWater(g_CameraUnderwater);
 		}
+
 		DrawLara(g_LaraItem);
 	}
 
@@ -787,17 +785,20 @@ void GetRoomBounds(int16_t room_num)
 	ROOM_INFO *r = &g_RoomInfo[room_num];
 	phd_PushMatrix();
 	phd_TranslateAbs(r->x, r->y, r->z);
+
 	if (r->doors)
 	{
 		for (int i = 0; i < r->doors->count; i++)
 		{
 			DOOR_INFO *door = &r->doors->door[i];
+
 			if (SetRoomBounds(&door->x, door->room_num, r))
 			{
 				GetRoomBounds(door->room_num);
 			}
 		}
 	}
+
 	phd_PopMatrix();
 }
 
@@ -1043,16 +1044,14 @@ void PrintRooms(int16_t room_number)
 			phd_TranslateAbs(mesh->x, mesh->y, mesh->z);
 			phd_RotY(mesh->y_rot);
 
-			int clip =
-				S_GetObjectBounds(&g_StaticObjects[mesh->static_number].x_minp);
+			int clip = S_GetObjectBounds(&g_StaticObjects[mesh->static_number].x_minp);
 
 			if (clip)
 			{
 				Output_CalculateStaticLight(mesh->shade);
-				Output_DrawPolygons(
-					g_Meshes[g_StaticObjects[mesh->static_number].mesh_number],
-					clip);
+				Output_DrawPolygons(g_Meshes[g_StaticObjects[mesh->static_number].mesh_number], clip);
 			}
+
 			phd_PopMatrix();
 		}
 	}
@@ -1074,26 +1073,14 @@ void PrintRooms(int16_t room_number)
 
 void DrawRoom(int16_t *obj_ptr)
 {
-	/*
-	g_Float_Phd_Left = (float) g_PhdLeft;
-	g_Float_Phd_Right = (float) g_PhdRight;
-	g_Float_Phd_Top = (float) g_PhdTop;
-	g_Float_Phd_Bottom = (float) g_PhdBottom;
-	*/
-
-	//*obj_ptr its count of data
 	// obj_ptr + 1 its data itself
+	//*obj_ptr its count of data
 
 	obj_ptr = CalcRoomVertices(obj_ptr);
 	obj_ptr = S_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
 	obj_ptr = S_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
 	
 	obj_ptr = DrawRoomSprites(obj_ptr + 1, *obj_ptr);
-	
-
-	// draw objects
-
-	// draw static objects
 }
 
 int32_t CalcFogShade(int32_t depth)

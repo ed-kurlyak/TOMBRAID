@@ -115,6 +115,8 @@ int Initialise_Level(int LevelNum)
 		ExtractSaveGameInfo();
 	}
 
+	phd_AlterFOV(80 * PHD_DEGREE);
+
 	/*
 	if (g_GameFlow.levels[g_CurrentLevel].music)
 	{

@@ -180,8 +180,7 @@ int Settings_Write()
 
 	for (int i = 0; i < INPUT_KEY_NUMBER_OF; i++)
 	{
-		S_INPUT_KEYCODE Key =
-			S_Input_GetAssignedKeyCode(INPUT_LAYOUT_USER, (INPUT_KEY)i);
+		S_INPUT_KEYCODE Key = S_Input_GetAssignedKeyCode(INPUT_LAYOUT_USER, (INPUT_KEY)i);
 
 		KeyBuff[i] = Key;
 	}
@@ -279,8 +278,6 @@ void phd_InitWindow(int x, int y, int width, int height, int nearz, int farz,
 	*/
 }
 
-int LtWM_QUIT;
-
 int SpinMessageLoop()
 {
 	MSG msg;
@@ -318,7 +315,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (wParam == SC_CLOSE) // Alt+F4 или крестик окна
 		{
 			PostQuitMessage(0);
-			// DestroyWindow(hWnd);
 			return 0;
 		}
 		break;
