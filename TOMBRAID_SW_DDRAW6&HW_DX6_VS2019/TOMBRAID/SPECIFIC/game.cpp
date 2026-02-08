@@ -1204,6 +1204,9 @@ int32_t S_DumpScreen()
 		}
 		else
 		{
+			//функция Blt есть в DirectDrawSurface начиная с интерфеса 3
+			//то есть IID_IDirectDrawSurface3 - ранее NOT_IMPLEMENTED HR ERROR
+			//для надо получать IID_IDirectDrawSurface3
 			g_pDdsPrimary->Blt(&g_RcScreenRect, g_pDdsBackBuffer,
 			&g_RcViewportRect, DDBLT_WAIT, NULL);
 		}

@@ -348,6 +348,9 @@ HRESULT Present_BackBuffer()
 
 	hr = g_pDdsBackBuffer->Unlock(NULL);
 
+	//функция Blt есть в DirectDrawSurface начиная с интерфеса 3
+	//то есть IID_IDirectDrawSurface3 - ранее NOT_IMPLEMENTED HR ERROR
+	//для надо получать IID_IDirectDrawSurface3
 	hr = g_pDdsPrimary->Blt(&g_RcScreenRect, g_pDdsBackBuffer,
 		&g_RcViewportRect, DDBLT_WAIT, NULL);
 

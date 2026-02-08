@@ -4250,6 +4250,17 @@ void COLOR_VERT_BUFF_TO_DX_BUFFER(COLOREDBUCKET &OUT_BUCKET, VBUF2 IN_VERTICES, 
     OUT_BUCKET.count++;
 }
 
+#define COLOR_VERT_BUFF_TO_DX_BUFFER2(OUT_BUCKET, IN_VERTICES, DEPTH, IN_COLOR)  \
+do {                                                                \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].sy = IN_VERTICES.y;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(DEPTH);       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = 1.0f;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;         \
+    OUT_BUCKET.count++;                                             \
+} while(0)
+
+
 float TransformZ(float ooz)
 {
 	float f_znear = 20 << W2V_SHIFT;
@@ -5180,44 +5191,22 @@ void S_Output_DrawTriangle_HW(VBUF2* vertices, int vert_count, int depth)
 	BYTE g = 0;
 	BYTE b = 255;
 
+	float one = (256.0f * 8.0f * 16384.0f);
+
 	DWORD color2 = (0xFF << 24) | (r << 16) | (g << 8) | b;
 
 	for (int i = 1; i < vert_count - 1; i++)
 	{
-		COLOR_VERT_BUFF_TO_DX_BUFFER(Bucket_Colored, vertices[0], color2);
-		COLOR_VERT_BUFF_TO_DX_BUFFER(Bucket_Colored, vertices[i], color2);
-		COLOR_VERT_BUFF_TO_DX_BUFFER(Bucket_Colored, vertices[i + 1], color2);
-
-		/*
 		//vert 1
-		Bucket_Colored.Vertex[Bucket_Colored.count].sx = vertices[0].x;
-		Bucket_Colored.Vertex[Bucket_Colored.count].sy = vertices[0].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].sz = (float) depth;
-		Bucket_Colored.Vertex[Bucket_Colored.count].rhw = 1.0f;
-		Bucket_Colored.Vertex[Bucket_Colored.count].color = color2;
-
-		Bucket_Colored.count++;
+		COLOR_VERT_BUFF_TO_DX_BUFFER2(Bucket_Colored, vertices[0], (float)one / depth, color2);
 
 		//vert 2
-
-		Bucket_Colored.Vertex[Bucket_Colored.count].sx = vertices[i].x;
-		Bucket_Colored.Vertex[Bucket_Colored.count].sy = vertices[i].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].sz = (float)depth;
-		Bucket_Colored.Vertex[Bucket_Colored.count].rhw = 1.0f;
-		Bucket_Colored.Vertex[Bucket_Colored.count].color = color2;
-
-		Bucket_Colored.count++;
+		COLOR_VERT_BUFF_TO_DX_BUFFER2(Bucket_Colored, vertices[i], (float)one / depth, color2);
 
 		//vert 3
+		COLOR_VERT_BUFF_TO_DX_BUFFER2(Bucket_Colored, vertices[i + 1], (float)one / depth, color2);
+		
 
-		Bucket_Colored.Vertex[Bucket_Colored.count].sx = vertices[i + 1].x;
-		Bucket_Colored.Vertex[Bucket_Colored.count].sy = vertices[i + 1].y;
-		Bucket_Colored.Vertex[Bucket_Colored.count].sz = (float) depth;
-		Bucket_Colored.Vertex[Bucket_Colored.count].rhw = 1.0f;
-		Bucket_Colored.Vertex[Bucket_Colored.count].color = color2;
-
-		Bucket_Colored.count++;
-		*/
 	}
 }
 

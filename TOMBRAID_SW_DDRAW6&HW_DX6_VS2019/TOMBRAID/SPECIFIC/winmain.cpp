@@ -29,7 +29,7 @@
 // SETUP PART #1
 //HARDWARE or SOFTWARE
 
-int Hardware = 0;
+int Hardware = 1;
 
 int Fullscreen = 0;
 
@@ -597,6 +597,10 @@ bool Create_Device()
 	ClientToScreen(g_hWnd, (POINT*)& g_RcScreenRect.left);
 	ClientToScreen(g_hWnd, (POINT*)& g_RcScreenRect.right);
 
+	//функция Blt есть в DirectDrawSurface начиная с интерфеса 3
+	//то есть IID_IDirectDrawSurface3 - ранее NOT_IMPLEMENTED HR ERROR
+	//для надо получать IID_IDirectDrawSurface3
+	//Blt используеся в оконном режиме работы
 
 	if (Fullscreen)
 	{
