@@ -4230,7 +4230,13 @@ int16_t* DrawRoomSprites(int16_t* obj_ptr, int32_t number)
 //hardware funcs section
 //-----------------------------------------
 
-float TransformZ(float ooz);
+float TransformZ(float zv);
+
+float TransformZ(float zv)
+{
+	return 	(zv - Z_NEAR) / (Z_FAR - Z_NEAR);
+}
+
 
 
 void TEX_VERT_BUFF_TO_DX_BUFFER(TEXTUREBUCKET_OPAQUE &OUT_BUCKET, VBUF IN_VERTICES, DWORD IN_COLOR)
@@ -4276,43 +4282,6 @@ do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;         \
     OUT_BUCKET.count++;                                             \
 } while(0)
-
-
-
-//float TransformZ(float ooz)
-float TransformZ(float zv)
-{
-	float f_znear = 20 << W2V_SHIFT;
-	float f_zfar = 0x9000 << W2V_SHIFT;
-
-	//float one = (256.0f * 8.0f * 16384.0f);
-
-	//float zv = one / ooz;
-	float res = (zv - f_znear) / (f_zfar - f_znear);
-	return res;
-
-	/*
-	// минимальные и максимальные значения Z для нормализации
-	const float MINZR = 0.005f;
-	const float MAXZR = 0.995f;
-	const float ZRANGE = MAXZR - MINZR;
-
-	// расчёт стандартных коэффициентов движка
-	float f_b = (ZRANGE * f_znear * f_zfar) / (f_znear - f_zfar);
-	float f_a = MINZR - (f_b / f_znear);
-	f_b = -f_b;
-
-	// масштабирование с учётом инверсии ooz
-	float f_boo = f_b / one;
-	float p_sz = f_a - f_boo * ooz;
-
-	return p_sz;
-	*/
-
-
-}
-
-
 
 void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* tex1, PHD_UV* tex2, PHD_UV* tex3, int draw_type, int tpage)
 {

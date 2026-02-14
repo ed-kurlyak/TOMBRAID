@@ -10,10 +10,12 @@
 #define MAX_BADDIE_COLLISION 12
 
 #define Z_NEAR (20 << W2V_SHIFT)
+#define Z_FAR (0x9000 << W2V_SHIFT)
 #define DRAW_DIST_MAX 0x7000
 #define DRAW_DIST_FADE 0x5000
 #define DRAW_DISTANCE_MAX 0x5000 << W2V_SHIFT
 #define DRAW_DISTANCE_MIN 20 << W2V_SHIFT
+
 
 
 #define HAIR_SEGMENTS 6
@@ -21,10 +23,6 @@
 #define ABS(x) (((x) < 0) ? (-(x)) : (x))
 #define MIN(x, y) ((x) <= (y) ? (x) : (y))
 #define MAX(x, y) ((x) >= (y) ? (x) : (y))
-
-#define Z_NEAR (20 << W2V_SHIFT)
-//#define Z_NEAR (127 << W2V_SHIFT)
-
 
 //#define MAX_SOUND_SAMPLES 370
 

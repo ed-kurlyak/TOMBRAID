@@ -878,7 +878,7 @@ void S_OutputPolyList_HW()
 	D3DXHANDLE hMyConstant4 = pEffectTexColor->GetParameterByName(NULL, "ZFar");
 	if (hMyConstant4)
 	{
-		float ZFar = 0x9000 << W2V_SHIFT;
+		float ZFar = Z_FAR;
 		pEffectTexColor->SetFloat(hMyConstant4, ZFar);
 	}
 
