@@ -4793,7 +4793,7 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 {
 	VBUF2 vertices[32] = { 0 };
 
-	float   one = (256.0f * 8.0f * 16384.0f);
+	//float   one = (256.0f * 8.0f * 16384.0f);
 
 	for (int i = 0; i < vertex_count; i++)
 	{
@@ -4801,8 +4801,9 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 		PHD_VBUF* vbuf = &vbufs[i];
 		vertex->x = (float)vbuf->xs;
 		vertex->y = (float)vbuf->ys;
-		vertex->z = (float)vbuf->zv;
-		vertex->w = one / float(vertex->z - SHADOW_BIAS);
+		vertex->z = (float)(vbuf->zv - SHADOW_BIAS);
+		//vertex->w = one / float(vertex->z - SHADOW_BIAS);
+		vertex->w = 1.0f / float(vertex->z - SHADOW_BIAS);
  		//vertex->g = 24.0f;
 	}
 
@@ -4832,7 +4833,7 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sx = vertices[0].x;
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sy = vertices[0].y;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sz = TransformZ(vertices[0].w);
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sz = TransformZ(vertices[0].z);
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].rhw = vertices[0].w;
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].color = color;
 		Bucket_TransQuad.count++;
@@ -4841,7 +4842,7 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sx = vertices[i].x;
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sy = vertices[i].y;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sz = TransformZ(vertices[i].w);
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sz = TransformZ(vertices[i].z);
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].rhw = vertices[i].w;
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].color = color;
 		Bucket_TransQuad.count++;
@@ -4850,7 +4851,7 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sx = vertices[i + 1].x;
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sy = vertices[i + 1].y;
-		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sz = TransformZ(vertices[i + 1].w);
+		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sz = TransformZ(vertices[i + 1].z);
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].rhw = vertices[i + 1].w;
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].color = color;
 		Bucket_TransQuad.count++;
