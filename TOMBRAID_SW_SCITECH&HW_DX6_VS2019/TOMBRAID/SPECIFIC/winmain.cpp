@@ -832,6 +832,66 @@ void FreeGameMemory()
 		m_pLevelTile = nullptr;
 	}
 
+	//освобождаем viewport
+	if (g_pViewport)
+	{
+		g_pViewport->Release();
+		g_pViewport = NULL;
+	}
+
+	//освобождаем D3D-устройство
+	if (g_pD3dDevice)
+	{
+		g_pD3dDevice->Release();
+		g_pD3dDevice = NULL;
+	}
+
+	//освобождаем Z-буфер
+	if (g_pDdsZBuffer)
+	{
+		g_pDdsZBuffer->Release();
+		g_pDdsZBuffer = NULL;
+	}
+
+	//освобождаем back buffer
+	if (g_pDdsBackBuffer)
+	{
+		g_pDdsBackBuffer->Release();
+		g_pDdsBackBuffer = NULL;
+	}
+
+	//освобождаем primary surface
+	if (g_pDdsPrimary)
+	{
+		g_pDdsPrimary->Release();
+		g_pDdsPrimary = NULL;
+	}
+
+	//освобождаем интерфейс Direct3D
+	if (g_pD3D)
+	{
+		g_pD3D->Release();
+		g_pD3D = NULL;
+	}
+
+	//освобождаем интерфейс DirectDraw2
+	if (g_pDD2)
+	{
+		g_pDD2->Release();
+		g_pDD2 = NULL;
+	}
+
+	//освобождаем интерфейс DirectDraw1
+	//ошибка acces violation release
+	/*
+	if (g_pDD1)
+	{
+		g_pDD1->Release();
+		g_pDD1 = NULL;
+	}
+	*/
+
+
 }
 
 
@@ -851,7 +911,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		S_Output_DrawScreenFlatQuad = S_Output_DrawScreenFlatQuad_HW;
 		S_Output_DrawTriangle = S_Output_DrawTriangle_HW;
 		S_Output_DrawLine = S_Output_DrawLine_HW;
-		S_InitialisePolyList = S_InitialisePolyList_HW;
+		//S_InitialisePolyList = S_InitialisePolyList_HW;
 		S_OutputPolyList = S_OutputPolyList_HW;
 	}
 	else
@@ -866,7 +926,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		S_Output_DrawScreenFlatQuad = S_Output_DrawScreenFlatQuad_SW;
 		S_Output_DrawTriangle = S_Output_DrawTriangle_SW;
 		S_Output_DrawLine = S_Output_DrawLine_SW;
-		S_InitialisePolyList = S_InitialisePolyList_SW;
+		//S_InitialisePolyList = S_InitialisePolyList_SW;
 		S_OutputPolyList = S_OutputPolyList_SW;
 		
 	}

@@ -132,7 +132,6 @@
     <ClCompile Include="objects\keyhole.cpp" />
     <ClCompile Include="objects\larson.cpp" />
     <ClCompile Include="objects\lion.cpp" />
-    <ClCompile Include="objects\misc.cpp" />
     <ClCompile Include="objects\mummy.cpp" />
     <ClCompile Include="objects\mutant.cpp" />
     <ClCompile Include="objects\natla.cpp" />
@@ -257,7 +256,6 @@
     <ClInclude Include="objects\keyhole.h" />
     <ClInclude Include="objects\larson.h" />
     <ClInclude Include="objects\lion.h" />
-    <ClInclude Include="objects\misc.h" />
     <ClInclude Include="objects\mummy.h" />
     <ClInclude Include="objects\mutant.h" />
     <ClInclude Include="objects\natla.h" />

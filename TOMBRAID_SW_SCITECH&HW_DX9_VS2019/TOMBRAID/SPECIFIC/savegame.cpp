@@ -159,7 +159,9 @@ void CreateStartInfo(int level_num)
 	start->num_big_medis = Inv_RequestItem(O_BIGMEDI_ITEM);
 	start->num_scions = Inv_RequestItem(O_SCION_ITEM);
 
+	/*
 	start->gun_type = (char)g_Lara.gun_type;
+
 	if (g_Lara.gun_status == LGS_READY)
 	{
 		start->gun_status = LGS_READY;
@@ -168,6 +170,7 @@ void CreateStartInfo(int level_num)
 	{
 		start->gun_status = LGS_ARMLESS;
 	}
+	*/
 }
 
 void CreateSaveGameInfo()
@@ -347,6 +350,9 @@ void ExtractSaveGameInfo()
 
 	for (int i = 0; i < g_LevelItemCount; i++)
 	{
+		if (i == 50)
+			int a = 10;
+
 		ITEM_INFO *item = &g_Items[i];
 		OBJECT_INFO *obj = &g_Objects[item->object_number];
 

@@ -161,30 +161,32 @@ void LaraGun()
 	}
 	else if (g_Lara.water_status == LWS_ABOVEWATER)
 	{
-		if (g_Lara.request_gun_type != LGT_UNARMED &&
-			(g_Lara.request_gun_type != g_Lara.gun_type ||
-				g_Lara.gun_status == LGS_ARMLESS))
+		if (g_Lara.request_gun_type != LGT_UNARMED
+			&& (g_Lara.request_gun_type != g_Lara.gun_type
+				|| g_Lara.gun_status == LGS_ARMLESS))
 		{
-			if (g_Lara.gun_status == LGS_ARMLESS)
-			{
+			if (g_Lara.gun_status == LGS_ARMLESS) {
 				g_Lara.gun_type = g_Lara.request_gun_type;
 				InitialiseNewWeapon();
 				draw = 1;
 				g_Lara.request_gun_type = LGT_UNARMED;
 			}
-			else if (g_Lara.gun_status == LGS_READY)
-			{
+			else if (g_Lara.gun_status == LGS_READY) {
 				draw = 1;
 			}
 		}
 		else if (g_Input.draw)
 		{
+			if (g_Lara.gun_type == LGT_UNARMED && Inv_RequestItem(O_GUN_ITEM))
+			{
+				g_Lara.gun_type = LGT_PISTOLS;
+				InitialiseNewWeapon();
+			}
 			draw = 1;
 			g_Lara.request_gun_type = LGT_UNARMED;
 		}
 	}
-	else if (g_Lara.gun_status == LGS_READY)
-	{
+	else if (g_Lara.gun_status == LGS_READY) {
 		draw = 1;
 	}
 
@@ -347,7 +349,13 @@ void InitialiseNewWeapon()
 	{
 	case LGT_PISTOLS:
 	case LGT_MAGNUMS:
-	case LGT_UZIS:
+	case LGT_UZIS: 
+		//g_Objects[O_PISTOLS].frame_base указывает на номер анимации 160
+		//анимация номер 160 первые 5 кадров от 0 до 4 кадров руки из ready в прицеливание,
+		//анимация 161 следующие 8 кадров от 5 до 12 прикладывает руки к кобуре,
+		//анимация 162 следующие 11 от 13 до 23 ставит руки от кобуры в позицию ready
+		//анимация 163 следующие от 24 кадры 9 отдача
+		//кадр 0 тоже как и 23 руки в позиции ready
 		g_Lara.right_arm.frame_base = g_Objects[O_PISTOLS].frame_base;
 		g_Lara.left_arm.frame_base = g_Objects[O_PISTOLS].frame_base;
 

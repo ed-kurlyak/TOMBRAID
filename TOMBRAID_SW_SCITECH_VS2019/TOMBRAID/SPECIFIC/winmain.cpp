@@ -20,16 +20,16 @@
 // SETUP START
 //***************************
 
-// SETUP PART #2 FULLSCREEN/NO
+// SETUP PART #1 FULLSCREEN/NO
 int Fullscreen = 0;
 
 //---------------------------
-// SETUP PART #3 WIDESCREEN/NO
+// SETUP PART #2 WIDESCREEN/NO
 // учет аспекта в matrix.cpp phd_GenerateW2V()
 int Widescreen = 0;
 
 //---------------------------
-// SETUP PART #4 GAME TYPE - TR1/GOLD
+// SETUP PART #3 GAME TYPE - TR1/GOLD
 int GameType = VER_TR1;
 // int GameType = VER_TR1_GOLD;
 
@@ -56,12 +56,12 @@ int SCREEN_HEIGHT = 480;
 */
 
 //---------------------------
-// SETUP PART #6 LARA DIST
+// SETUP PART #4 LARA DIST
 // false is original TR1 Lara dist
 //влияет на g_PhdPersp
 int lara_dist = false;
 
-// SETUP PART #7 CHEATS MODE
+// SETUP PART #5 CHEATS MODE
 // full ammo/medi
 int CheatsMode = 1;
 
@@ -374,6 +374,9 @@ int LoadTitle()
 
 	if (ret == GF_START_DEMO)
 		return GF_START_DEMO;
+
+	if (ret == GF_EXIT_GAME)
+		return GF_EXIT_GAME;
 
 	switch (g_InvChosen)
 	{

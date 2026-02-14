@@ -28,7 +28,6 @@
 #include "game.h"
 #include "gameflow.h"
 
-
 static int32_t m_MedipackCoolDown = 0;
 
 int Print_Level_Stats(int32_t level_num)
@@ -68,7 +67,8 @@ int Print_Level_Stats(int32_t level_num)
 
 		case 4:
 
-			return 0x50;
+			//return 0x50;
+			return 16 | GF_START_CINE;
 
 			break;
 
@@ -102,7 +102,8 @@ int Print_Level_Stats(int32_t level_num)
 
 		case 9:
 
-			return 0x51;
+			//return 0x51;
+			return 17 | GF_START_CINE;
 
 			break;
 
@@ -130,14 +131,16 @@ int Print_Level_Stats(int32_t level_num)
 		case 13:
 
 			Print_Final_Stats(13);
-			return 0x52;
+			//return 0x52;
+			return 18 | GF_START_CINE;
 
 			break;
 
 		case 14:
 
 			Play_FMV_Init_Malloc(7, 1);
-			return 0x53;
+			//return 0x53;
+			return 19 | GF_START_CINE;
 
 			break;
 
@@ -276,7 +279,7 @@ int Print_Final_Stats(int32_t level_num)
 	{
 		Input_Update();
 		S_InitialisePolyList();
-		Clear_BackBuffer();
+		//Clear_BackBuffer();
 		// Output_CopyBufferToScreen(); draw picture
 		Text_Draw();
 
@@ -559,8 +562,12 @@ int Get_Key_State(int key)
 	}
 }
 
+#define VK_L 0x4C
+
 void Input_Update()
 {
+	if (Get_Key_State(VK_L))
+		g_LevelComplete = true;
 
 	g_Input.forward = S_Input_Key(INPUT_KEY_UP);
 	g_Input.back = S_Input_Key(INPUT_KEY_DOWN);
@@ -578,8 +585,7 @@ void Input_Update()
 	g_Input.select = Get_Key_State(VK_CONTROL) || Get_Key_State(VK_RETURN);
 
 	g_Input.deselect = S_Input_Key(INPUT_KEY_OPTION);
-	g_Input.option =
-		S_Input_Key(INPUT_KEY_OPTION) && g_Camera.type != CAM_CINEMATIC;
+	g_Input.option = S_Input_Key(INPUT_KEY_OPTION) && g_Camera.type != CAM_CINEMATIC;
 	// g_Input.option = Get_Key_State(VK_ESCAPE) && g_Camera.type !=
 	// CAM_CINEMATIC;
 
@@ -641,6 +647,7 @@ int32_t DrawPhaseCinematic()
 {
 	S_InitialisePolyList();
 	//Output_ClearScreen();
+	//добавить clear backbuffer
 	g_CameraUnderwater = false;
 	for (int i = 0; i < g_RoomsToDrawCount; i++)
 	{
@@ -657,6 +664,7 @@ int32_t DrawPhaseCinematic()
 
 	g_Camera.number_frames = S_DumpScreen();
 	S_AnimateTextures(g_Camera.number_frames);
+
 	return g_Camera.number_frames;
 }
 
@@ -689,6 +697,8 @@ void S_InitialisePolyList()
 	info3dptr = (int16_t *)info3d_buffer;
 
 	surfacenum = 0;
+
+	Clear_BackBuffer();
 }
 
 void DrawRooms(int16_t current_room)
@@ -719,7 +729,7 @@ void DrawRooms(int16_t current_room)
 
 	GetRoomBounds(current_room);
 
-	Clear_BackBuffer();
+	//Clear_BackBuffer();
 
 	if (g_CameraUnderwater)
 	{
@@ -771,10 +781,10 @@ int32_t S_DumpScreen()
 		nframes++;
 	}
 
-	// ScreenPartialDump()
 	Present_BackBuffer();
 
 	SpinMessageLoop();
+
 	g_FPSCounter++;
 
 	return nframes;
@@ -783,6 +793,7 @@ int32_t S_DumpScreen()
 void GetRoomBounds(int16_t room_num)
 {
 	ROOM_INFO *r = &g_RoomInfo[room_num];
+
 	phd_PushMatrix();
 	phd_TranslateAbs(r->x, r->y, r->z);
 
@@ -816,12 +827,14 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 	}
 
 	DOOR_VBUF door_vbuf[4];
+
 	int32_t left = parent->right;
 	int32_t right = parent->left;
 	int32_t top = parent->bottom;
 	int32_t bottom = parent->top;
 
 	objptr += 3;
+
 	int32_t z_toofar = 0;
 	int32_t z_behind = 0;
 
@@ -834,9 +847,11 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 					 mptr->_12 * objptr[2] + mptr->_13;
 		int32_t zv = mptr->_20 * objptr[0] + mptr->_21 * objptr[1] +
 					 mptr->_22 * objptr[2] + mptr->_23;
+
 		door_vbuf[i].xv = xv;
 		door_vbuf[i].yv = yv;
 		door_vbuf[i].zv = zv;
+
 		objptr += 3;
 
 		if (zv > 0)
@@ -954,6 +969,7 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 	}
 
 	ROOM_INFO *r = &g_RoomInfo[room_num];
+
 	if (left < r->left)
 	{
 		r->left = left;
@@ -1077,6 +1093,7 @@ void DrawRoom(int16_t *obj_ptr)
 	//*obj_ptr its count of data
 
 	obj_ptr = CalcRoomVertices(obj_ptr);
+	
 	obj_ptr = S_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
 	obj_ptr = S_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
 	
@@ -1085,13 +1102,8 @@ void DrawRoom(int16_t *obj_ptr)
 
 int32_t CalcFogShade(int32_t depth)
 {
-	/*
 	int32_t fog_begin = DRAW_DIST_FADE;
 	int32_t fog_end = DRAW_DIST_MAX;
-	*/
-
-	int32_t fog_begin = DRAW_DIST_FADE; // 0x5000 my - 22528 git value
-	int32_t fog_end = DRAW_DIST_MAX;  // 0x8000 my - 30720 git value
 
 	if (depth < fog_begin)
 	{
@@ -1126,8 +1138,7 @@ int32_t S_SaveGame(SAVEGAME_INFO *save, int32_t slot)
 		}
 	}
 
-	sprintf(filename, "%s",
-			g_GameFlow.levels[g_SaveGame.current_level].level_title);
+	sprintf(filename, "%s",	g_GameFlow.levels[g_SaveGame.current_level].level_title);
 	fwrite(filename, sizeof(char), 75, fp);
 	fwrite(&g_SaveCounter, sizeof(int32_t), 1, fp);
 
@@ -1271,11 +1282,14 @@ int32_t S_FrontEndCheck()
 		sprintf(filename, g_GameFlow.save_game_fmt, i);
 
 		FILE *fp = fopen(filename, "rb");
+
 		if (fp)
 		{
 			fread(filename, sizeof(char), 75, fp);
+			
 			int32_t counter = 0;
 			fread(&counter, sizeof(int32_t), 1, fp);
+			
 			fclose(fp);
 
 			req->item_flags[req->items] &= ~RIF_BLOCKED;

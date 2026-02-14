@@ -74,7 +74,7 @@ static void InitLoadSaveGameRequester()
 {
 	REQUEST_INFO *req = &g_LoadSaveGameRequester;
 	InitRequester(req);
-	// GetSavedGamesList(req);
+	//GetSavedGamesList(req);
 	SetRequesterHeading(req, g_GameFlow.strings[GS_PASSPORT_SELECT_LEVEL]);
 
 	if (Screen_GetResHeightDownscaled() <= 240)

@@ -95,8 +95,7 @@ int Initialise_Level(int LevelNum)
 		InitialiseLara();
 	}
 
-	g_Effects =
-		(FX_INFO *)Game_Alloc(NUM_EFFECTS * sizeof(FX_INFO), GBUF_EFFECTS);
+	g_Effects =	(FX_INFO *)Game_Alloc(NUM_EFFECTS * sizeof(FX_INFO), GBUF_EFFECTS);
 
 	InitialiseFXArray();
 	InitialiseLOTArray();
@@ -114,6 +113,21 @@ int Initialise_Level(int LevelNum)
 	{
 		ExtractSaveGameInfo();
 	}
+	else
+	{
+		/*
+		g_Lara.request_gun_type = LGT_UNARMED;
+		g_Lara.gun_status = LGS_ARMLESS;
+		g_Lara.gun_type = LGT_UNARMED;
+		*/
+	}
+	
+	g_Lara.request_gun_type = LGT_UNARMED;
+
+	//g_Lara.request_gun_type = LGT_UNARMED;
+	//g_Lara.gun_status = LGS_ARMLESS;
+	//g_Lara.gun_type = LGT_UNARMED;
+
 
 	phd_AlterFOV(80 * PHD_DEGREE);
 
@@ -123,7 +137,8 @@ int Initialise_Level(int LevelNum)
 		Music_PlayLooped(g_GameFlow.levels[g_CurrentLevel].music);
 	}
 	*/
-	g_Lara.request_gun_type = LGT_UNARMED;
+	//g_Lara.request_gun_type = LGT_UNARMED;
+	//g_Lara.gun_status = LGS_ARMLESS;
 
 	g_Camera.underwater = 0;
 

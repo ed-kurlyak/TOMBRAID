@@ -506,7 +506,10 @@ void UseItem(int16_t object_num)
 	}
 }
 
-void ControlLaraExtra(int16_t item_num) { AnimateItem(&g_Items[item_num]); }
+void ControlLaraExtra(int16_t item_num)
+{ 
+	AnimateItem(&g_Items[item_num]); 
+}
 
 void InitialiseLaraLoad(int16_t item_num)
 {

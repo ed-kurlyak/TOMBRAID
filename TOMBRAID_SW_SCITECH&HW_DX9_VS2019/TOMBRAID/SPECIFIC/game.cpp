@@ -65,7 +65,8 @@ int Print_Level_Stats(int32_t level_num)
 
 		case 4:
 
-			return 0x50;
+			//return 0x50;
+			return 16 | GF_START_CINE;
 
 			break;
 
@@ -99,7 +100,8 @@ int Print_Level_Stats(int32_t level_num)
 
 		case 9:
 
-			return 0x51;
+			//return 0x51;
+			return 17 | GF_START_CINE;
 
 			break;
 
@@ -127,14 +129,16 @@ int Print_Level_Stats(int32_t level_num)
 		case 13:
 
 			Print_Final_Stats(13);
-			return 0x52;
+			//return 0x52;
+			return 18 | GF_START_CINE;
 
 			break;
 
 		case 14:
 
 			Play_FMV_Init_Malloc(7, 1);
-			return 0x53;
+			//return 0x53;
+			return 19 | GF_START_CINE;
 
 			break;
 
@@ -271,9 +275,6 @@ int Print_Final_Stats(int32_t level_num)
 		Input_Update();
 		S_InitialisePolyList();
 
-		if (!Hardware)
-			Clear_BackBuffer();
-		
 		// CopyBufferToScreen(); draw picture
 		Text_Draw();
 
@@ -678,6 +679,7 @@ int Draw_Phase_Game()
 	return g_Camera.number_frames;
 }
 
+/*
 void S_InitialisePolyList_SW()
 {
 	sort3dptr = (int32_t*)sort3d_buffer;
@@ -685,15 +687,20 @@ void S_InitialisePolyList_SW()
 
 	surfacenum = 0;
 }
+*/
 
-void S_InitialisePolyList_HW()
+//void S_InitialisePolyList_HW()
+void S_InitialisePolyList()
 {
 	sort3dptr = (int32_t*)sort3d_buffer;
 	info3dptr = (int16_t*)info3d_buffer;
 
 	surfacenum = 0;
 
-	InitBuckets();
+	if (!Hardware)
+		Clear_BackBuffer();
+	else
+		InitBuckets();
 }
 
 void DrawRooms(int16_t current_room)
@@ -724,8 +731,10 @@ void DrawRooms(int16_t current_room)
 
 	GetRoomBounds(current_room);
 
+	/*
 	if (!Hardware)
 		Clear_BackBuffer();
+		*/
 
 	if (g_CameraUnderwater)
 	{

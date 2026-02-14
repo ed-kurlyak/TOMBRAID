@@ -181,7 +181,9 @@ void CreateStartInfo(int level_num)
 	start->num_big_medis = Inv_RequestItem(O_BIGMEDI_ITEM);
 	start->num_scions = Inv_RequestItem(O_SCION_ITEM);
 
+	/*
 	start->gun_type = (char)g_Lara.gun_type;
+
 	if (g_Lara.gun_status == LGS_READY)
 	{
 		start->gun_status = LGS_READY;
@@ -190,6 +192,7 @@ void CreateStartInfo(int level_num)
 	{
 		start->gun_status = LGS_ARMLESS;
 	}
+	*/
 }
 
 void CreateSaveGameInfo()
@@ -285,6 +288,7 @@ void CreateSaveGameInfo()
 	WriteSG(&g_FlipTimer, sizeof(int32_t));
 }
 
+/*
 void ExtractSaveGameInfo()
 {
 	int8_t tmp8;
@@ -369,6 +373,10 @@ void ExtractSaveGameInfo()
 
 	for (int i = 0; i < g_LevelItemCount; i++)
 	{
+
+		if (i == 50)
+			int a = 10;
+
 		ITEM_INFO *item = &g_Items[i];
 		OBJECT_INFO *obj = &g_Objects[item->object_number];
 
@@ -543,6 +551,278 @@ void ExtractSaveGameInfo()
 	}
 
 	BOX_NODE *node = g_Lara.LOT.node;
+	ReadSGLara(&g_Lara);
+	g_Lara.LOT.node = node;
+	g_Lara.LOT.target_box = NO_BOX;
+
+	ReadSG(&g_FlipEffect, sizeof(int32_t));
+	ReadSG(&g_FlipTimer, sizeof(int32_t));
+}
+
+*/
+
+
+void ExtractSaveGameInfo()
+{
+	int8_t tmp8;
+	int16_t tmp16;
+	int32_t tmp32;
+
+	InitialiseLaraInventory(g_CurrentLevel);
+
+	for (int i = 0; i < g_SaveGame.num_pickup1; i++)
+	{
+		Inv_AddItem(O_PICKUP_ITEM1);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_pickup2; i++)
+	{
+		Inv_AddItem(O_PICKUP_ITEM2);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_puzzle1; i++)
+	{
+		Inv_AddItem(O_PUZZLE_ITEM1);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_puzzle2; i++)
+	{
+		Inv_AddItem(O_PUZZLE_ITEM2);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_puzzle3; i++)
+	{
+		Inv_AddItem(O_PUZZLE_ITEM3);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_puzzle4; i++)
+	{
+		Inv_AddItem(O_PUZZLE_ITEM4);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_key1; i++)
+	{
+		Inv_AddItem(O_KEY_ITEM1);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_key2; i++)
+	{
+		Inv_AddItem(O_KEY_ITEM2);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_key3; i++)
+	{
+		Inv_AddItem(O_KEY_ITEM3);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_key4; i++)
+	{
+		Inv_AddItem(O_KEY_ITEM4);
+	}
+
+	for (int i = 0; i < g_SaveGame.num_leadbar; i++)
+	{
+		Inv_AddItem(O_LEADBAR_ITEM);
+	}
+
+	ResetSG();
+
+	ReadSG(&tmp32, sizeof(int32_t));
+	if (tmp32)
+	{
+		FlipMap();
+	}
+
+	for (int i = 0; i < MAX_FLIP_MAPS; i++)
+	{
+		ReadSG(&tmp8, sizeof(int8_t));
+		g_FlipMapTable[i] = tmp8 << 8;
+	}
+
+	for (int i = 0; i < g_NumberCameras; i++)
+	{
+		ReadSG(&g_Camera.fixed[i].flags, sizeof(int16_t));
+	}
+
+	for (int i = 0; i < g_LevelItemCount; i++)
+	{
+		if (i == 50)
+			int a = 10;
+
+		ITEM_INFO* item = &g_Items[i];
+		OBJECT_INFO* obj = &g_Objects[item->object_number];
+
+		if (obj->control == MovableBlockControl)
+		{
+			AlterFloorHeight(item, WALL_L);
+		}
+		if (obj->control == RollingBlockControl)
+		{
+			AlterFloorHeight(item, WALL_L * 2);
+		}
+
+		if (obj->save_position)
+		{
+			ReadSG(&item->pos, sizeof(PHD_3DPOS));
+			ReadSG(&tmp16, sizeof(int16_t));
+			ReadSG(&item->speed, sizeof(int16_t));
+			ReadSG(&item->fall_speed, sizeof(int16_t));
+
+			if (item->room_number != tmp16)
+			{
+				ItemNewRoom(i, tmp16);
+			}
+
+			if (obj->shadow_size)
+			{
+				FLOOR_INFO* floor =
+					GetFloor(item->pos.x, item->pos.y, item->pos.z, &tmp16);
+				item->floor =
+					GetHeight(floor, item->pos.x, item->pos.y, item->pos.z);
+			}
+		}
+
+		if (obj->save_anim)
+		{
+			ReadSG(&item->current_anim_state, sizeof(int16_t));
+			ReadSG(&item->goal_anim_state, sizeof(int16_t));
+			ReadSG(&item->required_anim_state, sizeof(int16_t));
+			ReadSG(&item->anim_number, sizeof(int16_t));
+			ReadSG(&item->frame_number, sizeof(int16_t));
+		}
+
+		if (obj->save_hitpoints)
+		{
+			ReadSG(&item->hit_points, sizeof(int16_t));
+		}
+
+		if (obj->save_flags)
+		{
+			ReadSG(&item->flags, sizeof(int16_t));
+			ReadSG(&item->timer, sizeof(int16_t));
+
+			if (item->flags & IF_KILLED_ITEM)
+			{
+				KillItem(i);
+				item->status = IS_DEACTIVATED;
+			}
+			else
+			{
+				if ((item->flags & 1) && !item->active)
+				{
+					AddActiveItem(i);
+				}
+				item->status = (item->flags & 6) >> 1;
+				if (item->flags & 8)
+				{
+					item->gravity_status = 1;
+				}
+				if (!(item->flags & 16))
+				{
+					item->collidable = 0;
+				}
+			}
+
+			if (item->flags & SAVE_CREATURE)
+			{
+				EnableBaddieAI(i, 1);
+				CREATURE_INFO* creature = (CREATURE_INFO*)item->data;
+				if (creature)
+				{
+					ReadSG(&creature->head_rotation, sizeof(int16_t));
+					ReadSG(&creature->neck_rotation, sizeof(int16_t));
+					ReadSG(&creature->maximum_turn, sizeof(int16_t));
+					ReadSG(&creature->flags, sizeof(int16_t));
+					ReadSG(&creature->mood, sizeof(int32_t));
+				}
+				else
+				{
+					SkipSG(4 * 2 + 4);
+				}
+			}
+			else if (obj->intelligent)
+			{
+				item->data = NULL;
+			}
+
+			item->flags &= 0xFF00;
+
+			if (obj->collision == PuzzleHoleCollision &&
+				(item->status == IS_DEACTIVATED || item->status == IS_ACTIVE))
+			{
+				item->object_number += O_PUZZLE_DONE1 - O_PUZZLE_HOLE1;
+			}
+
+			if (obj->control == PodControl && item->status == IS_DEACTIVATED)
+			{
+				item->mesh_bits = 0x1FF;
+				item->collidable = 0;
+			}
+
+			if (obj->collision == PickUpCollision &&
+				item->status == IS_DEACTIVATED)
+			{
+				RemoveDrawnItem(i);
+			}
+		}
+
+		if (obj->control == MovableBlockControl &&
+			item->status == IS_NOT_ACTIVE)
+		{
+			AlterFloorHeight(item, -WALL_L);
+		}
+
+		if (obj->control == RollingBlockControl &&
+			item->current_anim_state != RBS_MOVING)
+		{
+			AlterFloorHeight(item, -WALL_L * 2);
+		}
+
+		if (item->object_number == O_PIERRE && item->hit_points <= 0 &&
+			(item->flags & IF_ONESHOT))
+		{
+			if (Inv_RequestItem(O_SCION_ITEM) == 1)
+			{
+				SpawnItem(item, O_MAGNUM_ITEM);
+				SpawnItem(item, O_SCION_ITEM2);
+				SpawnItem(item, O_KEY_ITEM1);
+			}
+			g_MusicTrackFlags[55] |= IF_ONESHOT;
+		}
+
+		if (item->object_number == O_MERCENARY1 && item->hit_points <= 0)
+		{
+			if (!Inv_RequestItem(O_UZI_ITEM))
+			{
+				SpawnItem(item, O_UZI_ITEM);
+			}
+		}
+
+		if (item->object_number == O_MERCENARY2 && item->hit_points <= 0)
+		{
+			if (!Inv_RequestItem(O_MAGNUM_ITEM))
+			{
+				SpawnItem(item, O_MAGNUM_ITEM);
+			}
+			g_MusicTrackFlags[52] |= IF_ONESHOT;
+		}
+
+		if (item->object_number == O_MERCENARY3 && item->hit_points <= 0)
+		{
+			if (!Inv_RequestItem(O_SHOTGUN_ITEM))
+			{
+				SpawnItem(item, O_SHOTGUN_ITEM);
+			}
+			g_MusicTrackFlags[51] |= IF_ONESHOT;
+		}
+
+		if (item->object_number == O_LARSON && item->hit_points <= 0)
+		{
+			g_MusicTrackFlags[51] |= IF_ONESHOT;
+		}
+	}
+
+	BOX_NODE* node = g_Lara.LOT.node;
 	ReadSGLara(&g_Lara);
 	g_Lara.LOT.node = node;
 	g_Lara.LOT.target_box = NO_BOX;

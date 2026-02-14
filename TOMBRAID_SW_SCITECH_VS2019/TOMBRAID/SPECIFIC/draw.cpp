@@ -51,8 +51,8 @@ void DrawAnimatingItem(ITEM_INFO *item)
 	}
 
 	CalculateObjectLighting(item, frmptr[0]);
-	int16_t *extra_rotation =
-		(int16_t *)(item->data ? item->data : &null_rotation);
+
+	int16_t *extra_rotation = (int16_t *)(item->data ? item->data : &null_rotation);
 
 	int32_t bit = 1;
 	int16_t **meshpp = &g_Meshes[object->mesh_index];
@@ -468,6 +468,13 @@ void CalculateObjectLighting(ITEM_INFO *item, int16_t *frame)
 
 void Output_DrawPolygons(int16_t *obj_ptr, int clip)
 {
+	//из документации Розетта Стоне
+	//пропускаем 5 слов
+	//int16_t x,y,z Mesh Centre;
+	//int32_t Mesh CollRadius;
+	//вторая половина CollRadius пропускается
+	//внутри Output_CalcObjectVertices
+
 	obj_ptr += 4;
 	obj_ptr = Output_CalcObjectVertices(obj_ptr);
 	if (obj_ptr)
@@ -575,24 +582,8 @@ int16_t *Output_CalcObjectVertices(int16_t *obj_ptr)
 
 int16_t *Output_CalcVerticeLight(int16_t *obj_ptr)
 {
-	/*
 	int32_t vertex_count = *obj_ptr++;
 
-	obj_ptr += 3 * vertex_count;
-
-	for (int i = 0; i < vertex_count; i++)
-	{
-		
-
-
-
-					//m_VBuf[i].g = 0;
-			//m_VBuf[i].g = 0x1FFF;
-			m_VBuf[i].g = 0x1FFF - 2700;
-}
-	*/
-
-	int32_t vertex_count = *obj_ptr++;
 	if (vertex_count > 0)
 	{
 		if (g_LsDivider)
@@ -609,26 +600,27 @@ int16_t *Output_CalcVerticeLight(int16_t *obj_ptr)
 						  g_PhdMatrixPtr->_12 * g_LsVectorView.y +
 						  g_PhdMatrixPtr->_22 * g_LsVectorView.z) /
 						 g_LsDivider;
+
 			for (int i = 0; i < vertex_count; i++)
 			{
-				int16_t shade =
-					g_LsAdder +
-					((obj_ptr[0] * xv + obj_ptr[1] * yv + obj_ptr[2] * zv) >>
-					 16);
+				int16_t shade =	g_LsAdder +	((obj_ptr[0] * xv + obj_ptr[1] * yv + obj_ptr[2] * zv) >> 16);
 				CLAMP(shade, 0, 0x1FFF);
 				m_VBuf[i].g = shade;
 				obj_ptr += 3;
 			}
+			
 			return obj_ptr;
 		}
 		else
 		{
 			int16_t shade = g_LsAdder;
 			CLAMP(shade, 0, 0x1FFF);
+
 			for (int i = 0; i < vertex_count; i++)
 			{
 				m_VBuf[i].g = shade;
 			}
+
 			obj_ptr += 3 * vertex_count;
 		}
 	}
@@ -2759,19 +2751,19 @@ void Output_CalculateLight(int32_t x, int32_t y, int32_t z, int16_t room_num)
 		int32_t brightest = 0;
 
 		PHD_VECTOR ls = {0, 0, 0};
+
 		for (int i = 0; i < r->num_lights; i++)
 		{
 			LIGHT_INFO *light = &r->light[i];
 			PHD_VECTOR lc;
+
 			lc.x = x - light->x;
 			lc.y = y - light->y;
 			lc.z = z - light->z;
 
-			int32_t distance =
-				(SQUARE(lc.x) + SQUARE(lc.y) + SQUARE(lc.z)) >> 12;
+			int32_t distance = (SQUARE(lc.x) + SQUARE(lc.y) + SQUARE(lc.z)) >> 12;
 			int32_t falloff = SQUARE(light->falloff) >> 12;
-			int32_t shade =
-				ambient + (light->intensity * falloff) / (distance + falloff);
+			int32_t shade = ambient + (light->intensity * falloff) / (distance + falloff);
 
 			if (shade > brightest)
 			{
@@ -2781,6 +2773,7 @@ void Output_CalculateLight(int32_t x, int32_t y, int32_t z, int16_t room_num)
 		}
 
 		g_LsAdder = (ambient + brightest) / 2;
+
 		if (brightest == ambient)
 		{
 			g_LsDivider = 0;
@@ -2789,6 +2782,7 @@ void Output_CalculateLight(int32_t x, int32_t y, int32_t z, int16_t room_num)
 		{
 			g_LsDivider = (1 << (W2V_SHIFT + 12)) / (brightest - g_LsAdder);
 		}
+
 		g_LsAdder = 0x1FFF - g_LsAdder;
 
 		PHD_ANGLE angles[2];

@@ -11,6 +11,6 @@ extern void (*S_Output_DrawScreenFBox)(int32_t sx, int32_t sy, int32_t w, int32_
 extern void (*S_Output_DrawScreenFlatQuad)(int32_t sx, int32_t sy, int32_t w, int32_t h, RGB888 color, int depth);
 extern void (*S_Output_DrawTriangle)(VBUF2* vertices, int vert_count, int depth);
 extern void (*S_Output_DrawLine)(VBUF2* vertices, int depth);
-extern void (*S_InitialisePolyList)();
+//extern void (*S_InitialisePolyList)();
 extern void (*S_OutputPolyList)();
 

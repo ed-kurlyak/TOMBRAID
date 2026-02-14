@@ -27,7 +27,7 @@
 // SETUP PART #1
 //HARDWARE or SOFTWARE
 
-int Hardware = 0;
+int Hardware = 1;
 
 int Fullscreen = 0;
 
@@ -681,7 +681,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		S_Output_DrawScreenFlatQuad = S_Output_DrawScreenFlatQuad_HW;
 		S_Output_DrawTriangle = S_Output_DrawTriangle_HW;
 		S_Output_DrawLine = S_Output_DrawLine_HW;
-		S_InitialisePolyList = S_InitialisePolyList_HW;
+		//S_InitialisePolyList = S_InitialisePolyList_HW;
 		S_OutputPolyList = S_OutputPolyList_HW;
 	}
 	else
@@ -696,7 +696,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		S_Output_DrawScreenFlatQuad = S_Output_DrawScreenFlatQuad_SW;
 		S_Output_DrawTriangle = S_Output_DrawTriangle_SW;
 		S_Output_DrawLine = S_Output_DrawLine_SW;
-		S_InitialisePolyList = S_InitialisePolyList_SW;
+		//S_InitialisePolyList = S_InitialisePolyList_SW;
 		S_OutputPolyList = S_OutputPolyList_SW;
 		
 	}

@@ -241,10 +241,12 @@ void AnimatePistols(int32_t weapon_type)
 	{
 		if (anir >= AF_G_AIM && anir < AF_G_AIM_L)
 		{
+			//поднимаем руку
 			anir++;
 		}
 		else if (anir == AF_G_AIM_L && g_Input.action)
 		{
+			//стрельба, отдача
 			angles[0] = g_Lara.right_arm.y_rot + g_LaraItem->pos.y_rot;
 			angles[1] = g_Lara.right_arm.x_rot;
 			if (FireWeapon(weapon_type, g_Lara.target, g_LaraItem, angles))
@@ -256,6 +258,7 @@ void AnimatePistols(int32_t weapon_type)
 		}
 		else if (anir >= AF_G_RECOIL)
 		{
+			//отдача > возврат в AF_G_AIM_L
 			anir++;
 			if (anir == AF_G_RECOIL + winfo->recoil_frame)
 			{
@@ -265,10 +268,12 @@ void AnimatePistols(int32_t weapon_type)
 	}
 	else if (anir >= AF_G_RECOIL)
 	{
+		//возврат после отдачи
 		anir = AF_G_AIM_L;
 	}
 	else if (anir > AF_G_AIM && anir <= AF_G_AIM_L)
 	{
+		//опускаем руку
 		anir--;
 	}
 	g_Lara.right_arm.frame_number = anir;

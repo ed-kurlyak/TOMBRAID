@@ -1705,7 +1705,7 @@ typedef struct START_INFO
 
 typedef struct SAVEGAME_INFO
 {
-	START_INFO start[22];
+	START_INFO start[22] = { 0 };
 	uint32_t timer;
 	uint32_t kills;
 	uint16_t secrets;

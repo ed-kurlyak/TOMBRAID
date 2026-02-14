@@ -202,7 +202,7 @@ int32_t Display_Inventory(int inv_mode)
 		//копируем картинку на экран
 		DoInventoryPicture();
 		//новая функция в коде нету здесь в этом месте
-		Clear_BackBuffer();
+		//Clear_BackBuffer();
 
 		phd_PushMatrix();
 		phd_TranslateAbs(ring.ringpos.x, ring.ringpos.y, ring.ringpos.z);

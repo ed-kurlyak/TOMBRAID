@@ -26,10 +26,6 @@ The project is based on the source code from <a href="https://github.com/LostArt
 
 ## Projects description:  
 
-- TOMBRAID_SW_DDRAW6&HW_DX6_VS2019 - for software mode used DDRAW6, for hardware mode DX6, Visual Studio 2019  
-
-- TOMBRAID_SW_DDRAW6_VS2019 - software mode used DDRAW6, Visual Studio 2019  
-
 - TOMBRAID_SW_SCITECH&HW_DX6_VS6 - for software mode used SciTech MGA, for hardware mode DX6, Visual Studio 6.0  
 
 - TOMBRAID_SW_SCITECH&HW_DX6_VS2019 - for software mode used SciTech MGA, for hardware mode DX6, Visual Studio 2019

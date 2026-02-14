@@ -58,6 +58,7 @@ void ModifyStartInfo(int32_t level_num)
 	START_INFO *start = &g_SaveGame.start[level_num];
 
 	start->gun_type = LGT_PISTOLS;
+	//start->gun_status = LGS_ARMLESS;	//я добавил
 	start->pistol_ammo = 1000;
 	start->got_pistols = 1;
 
@@ -181,7 +182,13 @@ void CreateStartInfo(int level_num)
 	start->num_big_medis = Inv_RequestItem(O_BIGMEDI_ITEM);
 	start->num_scions = Inv_RequestItem(O_SCION_ITEM);
 
+	/*
 	start->gun_type = (char)g_Lara.gun_type;
+
+	//этих строчек кажись нету в оригинальном tomb.exe
+	//start->gun_status = LGS_ARMLESS;	//я добавил
+	//в код начало ModifyStartInfo из за этого кода ниже
+	
 	if (g_Lara.gun_status == LGS_READY)
 	{
 		start->gun_status = LGS_READY;
@@ -190,6 +197,7 @@ void CreateStartInfo(int level_num)
 	{
 		start->gun_status = LGS_ARMLESS;
 	}
+	*/
 }
 
 void CreateSaveGameInfo()

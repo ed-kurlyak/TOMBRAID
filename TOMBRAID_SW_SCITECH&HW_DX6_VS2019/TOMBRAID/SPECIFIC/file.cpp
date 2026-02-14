@@ -757,7 +757,7 @@ void BaddyObjects()
 		g_AnimBones[g_Objects[O_DINOSAUR].bone_index + 44] |= BEB_ROT_Y;
 	}
 
-	if (!g_Objects[O_RAPTOR].loaded)
+	if (g_Objects[O_RAPTOR].loaded)
 	{
 		g_Objects[O_RAPTOR].initialise = InitialiseCreature;
 		g_Objects[O_RAPTOR].control = RaptorControl;

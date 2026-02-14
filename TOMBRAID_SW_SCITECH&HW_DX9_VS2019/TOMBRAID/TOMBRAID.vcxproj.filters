@@ -216,9 +216,6 @@
     <ClCompile Include="traps\midas_touch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="objects\misc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="effects\missile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -564,9 +561,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="traps\midas_touch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="objects\misc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="effects\missile.h">
