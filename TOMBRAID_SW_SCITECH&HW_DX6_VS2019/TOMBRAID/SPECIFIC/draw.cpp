@@ -4829,6 +4829,17 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 	for (int i = 1; i < vertex_count - 1; i++)
 	{
+
+		//vert 1
+		TRANSP_VERT_BUFF_TO_DX_BUFFER2(Bucket_TransQuad, vertices[0], color);
+
+		//vert 2
+		TRANSP_VERT_BUFF_TO_DX_BUFFER2(Bucket_TransQuad, vertices[i], color);
+
+		//vert 3
+		TRANSP_VERT_BUFF_TO_DX_BUFFER2(Bucket_TransQuad, vertices[i + 1], color);
+		
+		/*
 		//vert 1
 
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].sx = vertices[0].x;
@@ -4855,6 +4866,8 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].rhw = vertices[i + 1].w;
 		Bucket_TransQuad.Vertex[Bucket_TransQuad.count].color = color;
 		Bucket_TransQuad.count++;
+
+		*/
 
 	}
 
