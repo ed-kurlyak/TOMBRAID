@@ -4473,7 +4473,7 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 								*(float*)& info[4] = vertices[indx].g;
 
 								//*(float*)& info[6] = vertices[indx].z;
-								*(float*)& info[6] = TransformZ(vertices[indx].w);
+								*(float*)& info[6] = TransformZ(vertices[indx].z);
 								*(float*)& info[8] = vertices[indx].w;
 								*(float*)& info[10] = vertices[indx].u / vertices[indx].w;
 								*(float*)& info[12] = vertices[indx].v / vertices[indx].w;
