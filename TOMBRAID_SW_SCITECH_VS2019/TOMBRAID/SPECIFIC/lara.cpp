@@ -217,6 +217,7 @@ void LaraAsWalk(ITEM_INFO *item, COLL_INFO *coll)
 	if (g_Input.left)
 	{
 		g_Lara.turn_rate -= LARA_TURN_RATE;
+
 		if (g_Lara.turn_rate < -LARA_SLOW_TURN)
 		{
 			g_Lara.turn_rate = -LARA_SLOW_TURN;
@@ -225,6 +226,7 @@ void LaraAsWalk(ITEM_INFO *item, COLL_INFO *coll)
 	else if (g_Input.right)
 	{
 		g_Lara.turn_rate += LARA_TURN_RATE;
+
 		if (g_Lara.turn_rate > LARA_SLOW_TURN)
 		{
 			g_Lara.turn_rate = LARA_SLOW_TURN;

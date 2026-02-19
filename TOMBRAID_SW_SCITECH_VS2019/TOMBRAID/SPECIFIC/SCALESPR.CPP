@@ -35,7 +35,10 @@ nSprite,short int nShade,short int nScale)
 		int xv,yv,zv,zp;
 		int x1,y1,x2,y2;
 		PHDSPRITESTRUCT* pSpriteInfo;
-		
+		
+
+
+
 		if (dwFlags&SPRITE_ABS)
 				{
 				nX-=w2v_matrix[M03];
@@ -122,7 +125,10 @@ nSprite,short int nShade,short int nScale)
 		}
 		else
 				InsertSprite(zv,x1,y1,x2,y2,nSprite,nShade,-1,DRAW_TLV_WGT,0);
-		
+		
+
+
+
 }
 
 */
@@ -281,13 +287,19 @@ height PHDSPRITESTRUCT *sptr; int x1, y1, x2, y2;
 		b = (TextLight[shade]>>(16+3))&0x1f;
 		g = (TextLight[shade]>>(8+3))&0x1f;
 		r = (TextLight[shade]>>(3))&0x1f;
-				
+				
+
+
+
 		nShade1 = r<<10|g<<5|b;
 
 		b = (TextDark[shade]>>(16+3))&0x1f;
 		g = (TextDark[shade]>>(8+3))&0x1f;
 		r = (TextDark[shade]>>(3))&0x1f;
-		
+		
+
+
+
 		nShade2 = r<<10|g<<5|b;
 
 		if(flags != 65535)

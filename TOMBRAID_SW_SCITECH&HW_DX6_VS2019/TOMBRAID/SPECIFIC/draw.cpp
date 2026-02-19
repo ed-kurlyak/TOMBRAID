@@ -33,7 +33,9 @@ void DrawAnimatingItem(ITEM_INFO *item)
 
 	int16_t *frmptr[2];
 	int32_t rate;
+
 	int32_t frac = GetFrames(item, frmptr, &rate);
+
 	OBJECT_INFO *object = &g_Objects[item->object_number];
 
 	if (object->shadow_size)
@@ -1323,7 +1325,7 @@ int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices)
 
 	float multiplier = 0.0625f * BRIGHTNESS;
 
-	//float one = (256.0f * 8.0f * 16384.0f);
+	float one = (256.0f * 8.0f * 16384.0f);
 
 	int j = 0;
 
@@ -1442,7 +1444,7 @@ int32_t ZedClipper(int32_t vertex_count, POINT_INFO *pts, VBUF *vertices)
 	int32_t count = (int32_t)(v - vertices);
 	return count < 3 ? 0 : count;
 
-	return 1;
+	//return 1;
 }
 
 #define CLIP_GUV(OUT, B, A) \
@@ -1458,8 +1460,8 @@ do { \
 VBUF XYGUV_output[8];
 
 //из Томб Райдер 3
-//int RoomXYGUVClipper(int number, VBUF* input)
-int ClipVertices(int number, VBUF* input)
+int RoomXYGUVClipper(int number, VBUF* input)
+//int ClipVertices(int number, VBUF* input)
 {
 	/* Clips to X then to Y and returns new number of points: input must be able to hold extra points! */
 	VBUF* A, * B;
@@ -1597,7 +1599,6 @@ int ClipVertices(int number, VBUF* input)
 
 
 //оригинал из Tomb 1 Main ver 2.0
-/*
 int32_t ClipVertices(int32_t num, VBUF *source)
 {
 
@@ -1805,7 +1806,7 @@ int32_t ClipVertices(int32_t num, VBUF *source)
 	return j;
 
 }
-*/
+
 
 
 int32_t ClipVertices2(int32_t num, VBUF2 *source)
@@ -4237,13 +4238,12 @@ float TransformZ(float zv)
 	return 	(zv - Z_NEAR) / (Z_FAR - Z_NEAR);
 }
 
-
-
-void TEX_VERT_BUFF_TO_DX_BUFFER(TEXTUREBUCKET_OPAQUE &OUT_BUCKET, VBUF IN_VERTICES, DWORD IN_COLOR)
+void TEX_VERT_BUFF_TO_DX_BUFFER(TEXTUREBUCKET &OUT_BUCKET, VBUF IN_VERTICES, DWORD IN_COLOR)
 {                                                               
     OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;
     OUT_BUCKET.Vertex[OUT_BUCKET.count].sy = IN_VERTICES.y;
-    OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(IN_VERTICES.z);
+    //OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(IN_VERTICES.z);
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(1.0f / IN_VERTICES.w);
     OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = IN_VERTICES.w;
     OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;
     OUT_BUCKET.Vertex[OUT_BUCKET.count].tu = IN_VERTICES.u / IN_VERTICES.w;
@@ -4252,16 +4252,27 @@ void TEX_VERT_BUFF_TO_DX_BUFFER(TEXTUREBUCKET_OPAQUE &OUT_BUCKET, VBUF IN_VERTIC
 }
 
 
-void COLOR_VERT_BUFF_TO_DX_BUFFER(COLOREDBUCKET &OUT_BUCKET, VBUF2 IN_VERTICES, DWORD IN_COLOR)  \
+void COLOR_VERT_BUFF_TO_DX_BUFFER(COLOREDBUCKET& OUT_BUCKET, VBUF2 IN_VERTICES, DWORD IN_COLOR)
 {
-    OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;
-    OUT_BUCKET.Vertex[OUT_BUCKET.count].sy = IN_VERTICES.y;
-    OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(IN_VERTICES.z);
-    OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = 1.0f;
-    OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;
-    OUT_BUCKET.count++;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sy = IN_VERTICES.y;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(IN_VERTICES.z);
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = 1.0f;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;
+	OUT_BUCKET.count++;
 }
 
+void COLOR_VERT_BUFF_TO_DX_BUFFER2(COLOREDBUCKET& OUT_BUCKET, VBUF2 IN_VERTICES, float DEPTH, DWORD IN_COLOR)
+{
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sy = IN_VERTICES.y;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(DEPTH);
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = 1.0f;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;
+	OUT_BUCKET.count++;
+}
+
+/*
 #define COLOR_VERT_BUFF_TO_DX_BUFFER2(OUT_BUCKET, IN_VERTICES, DEPTH, IN_COLOR)  \
 do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;       \
@@ -4271,8 +4282,9 @@ do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;         \
     OUT_BUCKET.count++;                                             \
 } while(0)
+*/
 
-
+/*
 #define TRANSP_VERT_BUFF_TO_DX_BUFFER2(OUT_BUCKET, IN_VERTICES, IN_COLOR)  \
 do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;       \
@@ -4282,11 +4294,24 @@ do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;         \
     OUT_BUCKET.count++;                                             \
 } while(0)
+*/
+
+void TRANSP_VERT_BUFF_TO_DX_BUFFER2(TRANSQUADBUCKET& OUT_BUCKET, VBUF2 IN_VERTICES, DWORD IN_COLOR)
+{
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sy = IN_VERTICES.y;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(IN_VERTICES.z);
+	//OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = IN_VERTICES.w;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = 1.0f;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;
+	OUT_BUCKET.count++;
+}
 
 void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* tex1, PHD_UV* tex2, PHD_UV* tex3, int draw_type, int tpage)
 {
 	PHD_VBUF* vns[4];
 	VBUF vertices[8];
+	//VBUF vertices[32];
 	POINT_INFO points[4];
 	PHD_TEXTURE* tex;
 	int32_t vert_count = 0;
@@ -4358,6 +4383,7 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 
 					//не прозрачный перспект текст цвет
 					if (draw_type == 2)
+					//if (draw_type == 2 || draw_type == 3)
 					{
 						if (vert_count > 0)
 						{
@@ -4473,7 +4499,8 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 								*(float*)& info[4] = vertices[indx].g;
 
 								//*(float*)& info[6] = vertices[indx].z;
-								*(float*)& info[6] = TransformZ(vertices[indx].z);
+								//*(float*)& info[6] = TransformZ(vertices[indx].z);
+								*(float*)& info[6] = TransformZ(1.0f / vertices[indx].w);
 								*(float*)& info[8] = vertices[indx].w;
 								*(float*)& info[10] = vertices[indx].u / vertices[indx].w;
 								*(float*)& info[12] = vertices[indx].v / vertices[indx].w;
@@ -4490,6 +4517,7 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 						surfacenum++;
 
 					}
+					
 
 				} // if(vert_count)
 
@@ -4803,7 +4831,10 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 		vertex->y = (float)vbuf->ys;
 		vertex->z = (float)(vbuf->zv - SHADOW_BIAS);
 		//vertex->w = one / float(vertex->z - SHADOW_BIAS);
-		vertex->w = 1.0f / float(vertex->z - SHADOW_BIAS);
+		
+		//vertex->w = 1.0f / float(vertex->z - SHADOW_BIAS);
+		vertex->w = 1.0f;
+
  		//vertex->g = 24.0f;
 	}
 
@@ -4878,7 +4909,6 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int z, int sprnum, int shade)
 {
 
-	/*
 	float t1;
 	float t2;
 	float t3;
@@ -4888,11 +4918,12 @@ void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int 
 	float vshade;
 	PHD_SPRITE* sprite;
 	VBUF vertices[10];
-	
+
 	float multiplier = 0.0625f * BRIGHTNESS;
 
 	sprite = &g_PhdSpriteInfo[sprnum];
 	vshade = (8192.0f - shade) * multiplier;
+	
 	if (vshade > 255.0f)
 	{
 		vshade = 255.0f;
@@ -4904,7 +4935,7 @@ void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int 
 
 
 
-	
+
 
 	t1 = ((int)sprite->offset & 0xFF) + 0.5f;
 	t2 = ((int)sprite->offset >> 8) + 0.5f;
@@ -4913,7 +4944,8 @@ void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int 
 	vz = (float)z;
 
 	//float one = (256.0f * 8.0f * 16384.0f);
-	t5 = (float) (1.0f / z);
+	//t5 = (float) (1.0f / z);
+	t5 = (float)(z);
 	//t5 = (float)(one / z);
 
 	vertices[0].x = x1;
@@ -4937,7 +4969,7 @@ void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int 
 	vertices[1].v = t2 * 0.00390625f;
 	vertices[1].w = t5;
 	vertices[1].g = vshade;
-	
+
 	vertices[2].x = x2;
 	vertices[2].y = y2;
 	vertices[2].z = TransformZ(t5);
@@ -5004,143 +5036,6 @@ void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int 
 
 	surfacenum++;
 
-	*/
-
-
-
-	float t1;
-	float t2;
-	float t3;
-	float t4;
-	float t5;
-	float vz;
-	float vshade;
-	PHD_SPRITE* sprite;
-	VBUF vertices[10];
-
-	float multiplier = 0.0625f * BRIGHTNESS;
-
-	sprite = &g_PhdSpriteInfo[sprnum];
-	vshade = (8192.0f - shade) * multiplier;
-	if (vshade > 255.0f)
-	{
-		vshade = 255.0f;
-	}
-
-	t1 = ((int)sprite->offset & 0xFF) + 0.5f;
-	t2 = ((int)sprite->offset >> 8) + 0.5f;
-	t3 = ((int)sprite->width >> 8) + t1;
-	t4 = ((int)sprite->height >> 8) + t2;
-	vz = (float)z;
-	t5 = (float)(1.0f / z);
-
-	vertices[0].x = x1;
-	vertices[0].y = y1;
-	vertices[0].z = TransformZ(vz);
-	vertices[0].u = t1 * 0.00390625f;
-	vertices[0].v = t2 * 0.00390625f;
-	vertices[0].w = t5;
-	vertices[0].g = vshade;
-
-	vertices[1].x = x2;
-	vertices[1].y = y1;
-	vertices[1].z = TransformZ(vz);
-	vertices[1].u = t3 * 0.00390625f;
-	vertices[1].v = t2 * 0.00390625f;
-	vertices[1].w = t5;
-	vertices[1].g = vshade;
-
-	vertices[2].x = x2;
-	vertices[2].y = y2;
-	vertices[2].z = TransformZ(vz);
-	vertices[2].u = t3 * 0.00390625f;
-	vertices[2].v = t4 * 0.00390625f;
-	vertices[2].w = t5;
-	vertices[2].g = vshade;
-
-	vertices[3].x = x1;
-	vertices[3].y = y2;
-	vertices[3].z = TransformZ(vz);
-	vertices[3].u = t1 * 0.00390625f;
-	vertices[3].v = t4 * 0.00390625f;
-	vertices[3].w = t5;
-	vertices[3].g = vshade;
-
-	int vert_count = 4;
-
-	int32_t* sort = sort3dptr;
-	int16_t* info = info3dptr;
-
-	sort[0] = (int32_t)info;
-	sort[1] = z;
-
-	sort3dptr += 2;
-
-	info[0] = 8; //draw type sprite
-
-	info[1] = sprite->tpage;
-	info[2] = vert_count;
-
-	info += 3;
-
-	int32_t indx = 0;
-
-	if (vert_count > 0)
-	{
-
-		do
-		{
-			*(float*)& info[0] = vertices[indx].x;
-			*(float*)& info[2] = vertices[indx].y;
-			*(float*)& info[4] = vertices[indx].g;
-
-			*(float*)& info[6] = vertices[indx].z;
-			*(float*)& info[8] = vertices[indx].w;
-			*(float*)& info[10] = vertices[indx].u;
-			*(float*)& info[12] = vertices[indx].v;
-
-			info += 14;
-			indx++;
-
-		} while (indx < vert_count);
-
-		info3dptr = info;
-
-	} // if(vert_count > 0)
-
-	surfacenum++;
-
-	
-	/*
-	int buket = FindBucket(sprite->tpage);
-
-	float ZNear = Z_NEAR;
-	float ZFar = 0x9000 << W2V_SHIFT;
-
-	float Q = ZFar / (ZFar - ZNear);
-
-	for (int i = 1; i < vert_count - 1; i++)
-	{
-		DWORD color1;
-		DWORD color2;
-		DWORD color3;
-
-		DWORD diffuse;
-		
-		diffuse = (BYTE)CLAMP255(vertices[0].g);
-		color1 = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-
-		diffuse = (BYTE)CLAMP255(vertices[i].g);
-		color2 = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-
-		diffuse = (BYTE)CLAMP255(vertices[i + 1].g);
-		color3 = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-
-		TEX_VERT_BUFF_TO_DX_BUFFER(Bucket_Tex_Color_Opaque[buket], vertices[0], color1);
-		TEX_VERT_BUFF_TO_DX_BUFFER(Bucket_Tex_Color_Opaque[buket], vertices[i], color2);
-		TEX_VERT_BUFF_TO_DX_BUFFER(Bucket_Tex_Color_Opaque[buket], vertices[i + 1], color3);
-	}
-	*/
 }
 
 
@@ -5148,7 +5043,7 @@ void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int 
 void S_Output_DrawScreenFBox_HW(int32_t sx, int32_t sy, int32_t w, int32_t h)
 {
 
-	VBUF vertices[4];
+	VBUF2 vertices[4];
 
 	//40 << W2V_SHIFT значит немного дальше чем
 	//ближняя плоскость отсечения значение Z_NEAR 20
@@ -5157,22 +5052,26 @@ void S_Output_DrawScreenFBox_HW(int32_t sx, int32_t sy, int32_t w, int32_t h)
 	vertices[0].x = (float)sx;
 	vertices[0].y = (float)sy;
 	vertices[0].z = depth;
-	vertices[0].w = 1.0f / depth;
+	//vertices[0].w = 1.0f / depth;
+	vertices[0].w = 1.0f;
 
 	vertices[1].x = (float)(sx + w);
 	vertices[1].y = (float)sy;
 	vertices[1].z = depth;
-	vertices[1].w = 1.0f / depth;
+	//vertices[1].w = 1.0f / depth;
+	vertices[1].w = 1.0f;
 
 	vertices[2].x = (float)(sx + w);
 	vertices[2].y = (float)(sy + h);
 	vertices[2].z = depth;
-	vertices[2].w = 1.0f / depth;
+	//vertices[2].w = 1.0f / depth;
+	vertices[2].w = 1.0f;
 
 	vertices[3].x = (float)sx;
 	vertices[3].y = (float)(sy + h);
 	vertices[3].z = depth;
-	vertices[3].w = 1.0f / depth;
+	//vertices[3].w = 1.0f / depth;
+	vertices[3].w = 1.0f;
 
 	int vert_count = 4;
 
@@ -5395,6 +5294,14 @@ void InitBuckets()
 		//Bucket_Tex_Color_Opaque[n].tpage = 0xFFFFFFFF;
 		Bucket_Tex_Color_Opaque[n].lp_tpage = NULL;
 		Bucket_Tex_Color_Opaque[n].count = 0;
+		//memset(Bucket_Tex_Color_Opaque[n].Vertex, 0, VERTSPERBUCKET);
+
+		//Bucket_Sprites[n].tpage = -1;
+		//Bucket_Tex_Color_Opaque[n].tpage = 0xFFFFFFFF;
+		//Bucket_Sprites[n].lp_tpage = NULL;
+		//Bucket_Sprites[n].count = 0;
+		//memset(Bucket_Tex_Color_Opaque[n].Vertex, 0, VERTSPERBUCKET);
+		
 	}
 
 	Bucket_Colored.count = 0;

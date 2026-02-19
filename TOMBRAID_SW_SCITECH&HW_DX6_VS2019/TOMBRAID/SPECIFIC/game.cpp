@@ -692,33 +692,48 @@ int Draw_Phase_Game()
 	return g_Camera.number_frames;
 }
 
-/*
+
 void S_InitialisePolyList_SW()
 {
 	sort3dptr = (int32_t*)sort3d_buffer;
 	info3dptr = (int16_t*)info3d_buffer;
 
 	surfacenum = 0;
-}
-*/
 
-//void S_InitialisePolyList_HW()
-void S_InitialisePolyList()
+	Clear_BackBuffer();
+}
+
+
+void S_InitialisePolyList_HW()
+//void S_InitialisePolyList()
 {
+	/*
+	if (!Hardware)
+	{
+		sort3dptr = (int32_t*)sort3d_buffer;
+		info3dptr = (int16_t*)info3d_buffer;
+
+		surfacenum = 0;
+
+		Clear_BackBuffer();
+	}
+	else
+	{
+		InitBuckets();
+	}
+	*/
+
 	sort3dptr = (int32_t*)sort3d_buffer;
 	info3dptr = (int16_t*)info3d_buffer;
 
 	surfacenum = 0;
 
-	if (!Hardware)
-		Clear_BackBuffer();
-	else
-		InitBuckets();
+	InitBuckets();
 }
 
 void DrawRooms(int16_t current_room)
 {
-	ROOM_INFO *r;
+	ROOM_INFO* r;
 
 	CurrentRoom = current_room;
 
@@ -744,11 +759,6 @@ void DrawRooms(int16_t current_room)
 
 	GetRoomBounds(current_room);
 
-	/*
-	if (!Hardware)
-		Clear_BackBuffer();
-	*/
-
 	if (g_CameraUnderwater)
 	{
 		if (!Hardware)
@@ -773,7 +783,7 @@ void DrawRooms(int16_t current_room)
 		}
 		DrawLara(g_LaraItem);
 	}
-
+	
 	for (int i = 0; i < g_RoomsToDrawCount; i++)
 	{
 		PrintRooms(g_RoomsToDraw[i]);
@@ -883,15 +893,24 @@ void S_OutputPolyList_HW()
 	hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZFUNC, D3DCMP_LESSEQUAL);
 	if (FAILED(hr)) return;
 	
+	
 	/*
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, TRUE);
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND, D3DBLEND_SRCALPHA);
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	*/
 	
+	/*
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHATESTENABLE, TRUE);
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHAREF, 0);
 	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHAFUNC, D3DCMP_GREATER);
 	*/
+
+	//g_pD3dDevice->SetRenderState(D3DRENDERSTATE_COLORKEYENABLE, TRUE);
+	//g_pD3dDevice->SetRenderState(D3DRENDERSTATE_COLORKEYENABLE, FALSE);
+
+	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAPBLEND, D3DTBLEND_MODULATE);
+	
 
 	for (int n = 0; n < MAXBUCKETS; n++)
 	{
@@ -960,7 +979,7 @@ void S_OutputPolyList_HW()
 	}
 
 	
-
+	
 	phd_SortPolyList(surfacenum, sort3d_buffer);
 
 	int* sptr = (int*)sort3d_buffer;
@@ -978,7 +997,10 @@ void S_OutputPolyList_HW()
 
 		//VERTEX_COLOR_TEX Vertex[8];
 		//VERTEX_COLOR_TEX Vertex[8];
-		D3DTLVERTEX Vertex[8];
+		D3DTLVERTEX Vertex[10 * 3];
+		//VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
+		//может поместитьс€ 10 треугольников по 3 вершины
+		//VERTEX_COLOR_TEX Vertex[10 * 3];
 
 		float* fptr;
 
@@ -987,6 +1009,53 @@ void S_OutputPolyList_HW()
 
 		int draw_verts_count = 0;
 
+		fptr = (float*)iptr;
+
+		int f_indx = 0;
+
+		for (int i = 1; i < num_verts - 1; i++)
+		{
+			f_indx = i * 7;
+
+			Vertex[draw_verts_count].sx = fptr[0];
+			Vertex[draw_verts_count].sy = fptr[1];
+			diffuse = (BYTE)CLAMP255(fptr[2]);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[draw_verts_count].color = color;
+			Vertex[draw_verts_count].sz = fptr[3];
+			Vertex[draw_verts_count].rhw = fptr[4];
+			Vertex[draw_verts_count].tu = fptr[5];
+			Vertex[draw_verts_count].tv = fptr[6];
+
+			draw_verts_count++;
+
+			Vertex[draw_verts_count].sx = fptr[f_indx + 0];
+			Vertex[draw_verts_count].sy = fptr[f_indx + 1];
+			diffuse = (BYTE)CLAMP255(fptr[f_indx + 2]);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[draw_verts_count].color = color;
+			Vertex[draw_verts_count].sz = fptr[f_indx + 3];
+			Vertex[draw_verts_count].rhw = fptr[f_indx + 4];
+			Vertex[draw_verts_count].tu = fptr[f_indx + 5];
+			Vertex[draw_verts_count].tv = fptr[f_indx + 6];
+
+			draw_verts_count++;
+
+			Vertex[draw_verts_count].sx = fptr[f_indx + 7 + 0];
+			Vertex[draw_verts_count].sy = fptr[f_indx + 7 + 1];
+			diffuse = (BYTE)CLAMP255(fptr[f_indx + 7 + 2]);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[draw_verts_count].color = color;
+			Vertex[draw_verts_count].sz = fptr[f_indx + 7 + 3];
+			Vertex[draw_verts_count].rhw = fptr[f_indx + 7 + 4];
+			Vertex[draw_verts_count].tu = fptr[f_indx + 7 + 5];
+			Vertex[draw_verts_count].tv = fptr[f_indx + 7 + 6];
+
+			draw_verts_count++;
+
+			
+		}
+		/*
 		if(num_verts == 4)
 		{
 			fptr = (float*)iptr;
@@ -1150,12 +1219,12 @@ void S_OutputPolyList_HW()
 			draw_verts_count = 3;
 
 		}
-
+		*/
 		if(draw_verts_count > 0)
 		{
 			
-			//hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, FALSE);
-			hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, TRUE);
+			hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, FALSE);
+			//hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, TRUE);
 			if (FAILED(hr)) return;
 
 			hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
@@ -1182,6 +1251,8 @@ void S_OutputPolyList_HW()
 
 		sptr += 2;
 	}
+
+	
 	
 	
 	hr = g_pD3dDevice->EndScene();
@@ -1235,8 +1306,10 @@ int32_t S_DumpScreen()
 void GetRoomBounds(int16_t room_num)
 {
 	ROOM_INFO *r = &g_RoomInfo[room_num];
+
 	phd_PushMatrix();
 	phd_TranslateAbs(r->x, r->y, r->z);
+	
 	if (r->doors)
 	{
 		for (int i = 0; i < r->doors->count; i++)
@@ -1253,9 +1326,6 @@ void GetRoomBounds(int16_t room_num)
 
 int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 {
-	// XXX: the way the game passes the objptr is dangerous and relies on
-	// layout of DOOR_INFO
-
 	if ((objptr[0] * (parent->x + objptr[3] - g_W2VMatrix._03)) +
 			(objptr[1] * (parent->y + objptr[4] - g_W2VMatrix._13)) +
 			(objptr[2] * (parent->z + objptr[5] - g_W2VMatrix._23)) >=
@@ -1401,6 +1471,7 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 	}
 
 	ROOM_INFO *r = &g_RoomInfo[room_num];
+
 	if (left < r->left)
 	{
 		r->left = left;
@@ -1462,12 +1533,10 @@ void PrintRooms(int16_t room_number)
 	phd_PushMatrix();
 	phd_TranslateAbs(r->x, r->y, r->z);
 
-	/*
 	g_PhdLeft = r->left;
 	g_PhdRight = r->right;
 	g_PhdTop = r->top;
 	g_PhdBottom = r->bottom;
-	*/
 
 	DrawRoom(r->data);
 
@@ -1510,12 +1579,10 @@ void PrintRooms(int16_t room_number)
 
 	phd_PopMatrix();
 
-	/*
 	r->left = Screen_GetResWidth() - 1;
 	r->bottom = 0;
 	r->right = 0;
 	r->top = Screen_GetResHeight() - 1;
-	*/
 }
 
 void DrawRoom(int16_t *obj_ptr)

@@ -163,6 +163,7 @@ void DrawLightning(ITEM_INFO *item)
 	phd_RotYXZ(item->pos.y_rot, item->pos.x_rot, item->pos.z_rot);
 
 	int32_t clip = S_GetObjectBounds(frmptr[0]);
+
 	if (!clip)
 	{
 		phd_PopMatrix();

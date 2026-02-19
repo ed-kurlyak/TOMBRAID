@@ -29,7 +29,7 @@
 
 int Hardware = 1;
 
-int Fullscreen = 0;
+int Fullscreen = 1;
 
 //---------------------------
 // SETUP PART #4 WIDESCREEN/NO
@@ -475,7 +475,8 @@ bool Create_Device()
 	d3dpp.EnableAutoDepthStencil = TRUE;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 	d3dpp.Flags = D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL;
-	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+	//d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
 
 
 	if (FAILED(g_d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hWnd,
@@ -853,7 +854,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	bool loop_continue = true;
 
 	int32_t gf_option = LoadTitle();
-
+	
 	phd_AlterFOV(80 * PHD_DEGREE);
 
 	while (loop_continue)

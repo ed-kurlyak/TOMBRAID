@@ -43,6 +43,7 @@ int32_t TestCollision(ITEM_INFO *item, ITEM_INFO *lara_item)
 	}
 
 	item->touch_bits = flags;
+
 	return flags;
 }
 
@@ -102,6 +103,7 @@ int32_t GetSpheres(ITEM_INFO *item, SPHERE *ptr, int32_t world_space)
 
 	int16_t *extra_rotation =
 		(int16_t *)(item->data ? item->data : &null_rotation);
+
 	for (int i = 1; i < object->nmeshes; i++)
 	{
 		int32_t bone_extra_flags = bone[0];

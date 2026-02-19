@@ -978,7 +978,9 @@ void S_OutputPolyList_HW()
 
 		//VERTEX_COLOR_TEX Vertex[8];
 		//VERTEX_COLOR_TEX Vertex[8];
-		D3DTLVERTEX Vertex[8];
+		//VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
+		//может поместитьс€ 10 треугольников по 3 вершины
+		D3DTLVERTEX Vertex[10 * 3];
 
 		float* fptr;
 
@@ -987,6 +989,57 @@ void S_OutputPolyList_HW()
 
 		int draw_verts_count = 0;
 
+
+
+		fptr = (float*)iptr;
+
+		int f_indx = 0;
+
+		for (int i = 1; i < num_verts - 1; i++)
+		{
+			f_indx = i * 7;
+
+			Vertex[draw_verts_count].sx = fptr[0];
+			Vertex[draw_verts_count].sy = fptr[1];
+			diffuse = (BYTE)CLAMP255(fptr[2]);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[draw_verts_count].color = color;
+			Vertex[draw_verts_count].sz = fptr[3];
+			Vertex[draw_verts_count].rhw = fptr[4];
+			Vertex[draw_verts_count].tu = fptr[5];
+			Vertex[draw_verts_count].tv = fptr[6];
+
+			draw_verts_count++;
+
+			Vertex[draw_verts_count].sx = fptr[f_indx + 0];
+			Vertex[draw_verts_count].sy = fptr[f_indx + 1];
+			diffuse = (BYTE)CLAMP255(fptr[f_indx + 2]);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[draw_verts_count].color = color;
+			Vertex[draw_verts_count].sz = fptr[f_indx + 3];
+			Vertex[draw_verts_count].rhw = fptr[f_indx + 4];
+			Vertex[draw_verts_count].tu = fptr[f_indx + 5];
+			Vertex[draw_verts_count].tv = fptr[f_indx + 6];
+
+			draw_verts_count++;
+
+			Vertex[draw_verts_count].sx = fptr[f_indx + 7 + 0];
+			Vertex[draw_verts_count].sy = fptr[f_indx + 7 + 1];
+			diffuse = (BYTE)CLAMP255(fptr[f_indx + 7 + 2]);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[draw_verts_count].color = color;
+			Vertex[draw_verts_count].sz = fptr[f_indx + 7 + 3];
+			Vertex[draw_verts_count].rhw = fptr[f_indx + 7 + 4];
+			Vertex[draw_verts_count].tu = fptr[f_indx + 7 + 5];
+			Vertex[draw_verts_count].tv = fptr[f_indx + 7 + 6];
+
+			draw_verts_count++;
+
+			
+		}
+
+
+		/*
 		if(num_verts == 4)
 		{
 			fptr = (float*)iptr;
@@ -1150,12 +1203,12 @@ void S_OutputPolyList_HW()
 			draw_verts_count = 3;
 
 		}
-
+		*/
 		if(draw_verts_count > 0)
 		{
 			
-			//hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, FALSE);
-			hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, TRUE);
+			hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, FALSE);
+			//hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, TRUE);
 			if (FAILED(hr)) return;
 
 			hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
@@ -1462,12 +1515,12 @@ void PrintRooms(int16_t room_number)
 	phd_PushMatrix();
 	phd_TranslateAbs(r->x, r->y, r->z);
 
-	/*
+
 	g_PhdLeft = r->left;
 	g_PhdRight = r->right;
 	g_PhdTop = r->top;
 	g_PhdBottom = r->bottom;
-	*/
+
 
 	DrawRoom(r->data);
 
@@ -1512,12 +1565,12 @@ void PrintRooms(int16_t room_number)
 
 	phd_PopMatrix();
 
-	/*
+
 	r->left = Screen_GetResWidth() - 1;
 	r->bottom = 0;
 	r->right = 0;
 	r->top = Screen_GetResHeight() - 1;
-	*/
+
 }
 
 void DrawRoom(int16_t *obj_ptr)

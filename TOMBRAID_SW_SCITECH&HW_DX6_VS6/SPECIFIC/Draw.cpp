@@ -4241,7 +4241,8 @@ void TEX_VERT_BUFF_TO_DX_BUFFER(TEXTUREBUCKET_OPAQUE &OUT_BUCKET, VBUF IN_VERTIC
 {                                                               
     OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;
     OUT_BUCKET.Vertex[OUT_BUCKET.count].sy = IN_VERTICES.y;
-    OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(IN_VERTICES.z);
+//    OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(IN_VERTICES.z);
+OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(1.0f / IN_VERTICES.w);
     OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = IN_VERTICES.w;
     OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;
     OUT_BUCKET.Vertex[OUT_BUCKET.count].tu = IN_VERTICES.u / IN_VERTICES.w;
@@ -4260,6 +4261,8 @@ void COLOR_VERT_BUFF_TO_DX_BUFFER(COLOREDBUCKET &OUT_BUCKET, VBUF2 IN_VERTICES, 
     OUT_BUCKET.count++;
 }
 
+/*
+
 #define COLOR_VERT_BUFF_TO_DX_BUFFER2(OUT_BUCKET, IN_VERTICES, DEPTH, IN_COLOR)  \
 do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;       \
@@ -4269,8 +4272,19 @@ do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;         \
     OUT_BUCKET.count++;                                             \
 } while(0)
+*/
 
+void COLOR_VERT_BUFF_TO_DX_BUFFER2(COLOREDBUCKET& OUT_BUCKET, VBUF2 IN_VERTICES, float DEPTH, DWORD IN_COLOR)
+{
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sy = IN_VERTICES.y;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(DEPTH);
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = 1.0f;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;
+	OUT_BUCKET.count++;
+}
 
+/*
 #define TRANSP_VERT_BUFF_TO_DX_BUFFER2(OUT_BUCKET, IN_VERTICES, IN_COLOR)  \
 do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;       \
@@ -4280,6 +4294,20 @@ do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;         \
     OUT_BUCKET.count++;                                             \
 } while(0)
+*/
+
+
+void TRANSP_VERT_BUFF_TO_DX_BUFFER2(TRANSQUADBUCKET& OUT_BUCKET, VBUF2 IN_VERTICES, DWORD IN_COLOR)
+{
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sx = IN_VERTICES.x;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sy = IN_VERTICES.y;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].sz = TransformZ(IN_VERTICES.z);
+	//OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = IN_VERTICES.w;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].rhw = 1.0f;
+	OUT_BUCKET.Vertex[OUT_BUCKET.count].color = IN_COLOR;
+	OUT_BUCKET.count++;
+}
+
 
 void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* tex1, PHD_UV* tex2, PHD_UV* tex3, int draw_type, int tpage)
 {
@@ -4475,7 +4503,7 @@ void Draw_Textured_Triangle(PHD_VBUF * v1, PHD_VBUF *v2, PHD_VBUF *v3, PHD_UV* t
 								*(float*)& info[4] = vertices[indx].g;
 
 								//*(float*)& info[6] = vertices[indx].z;
-								*(float*)& info[6] = TransformZ(vertices[indx].w);
+								*(float*)& info[6] = TransformZ(1.0f / vertices[indx].w);
 								*(float*)& info[8] = vertices[indx].w;
 								*(float*)& info[10] = vertices[indx].u / vertices[indx].w;
 								*(float*)& info[12] = vertices[indx].v / vertices[indx].w;
@@ -4829,7 +4857,7 @@ void S_Output_DrawShadow_HW(PHD_VBUF* vbufs, int clip, int vertex_count)
 
 	DWORD color = (a << 24) | (r << 16) | (g << 8) | b;
 
-	for (int i = 1; i < vertex_count - 1; i++)
+	for (i = 1; i < vertex_count - 1; i++)
 	{
 
 		//vert 1
@@ -5150,7 +5178,7 @@ void S_Output_DrawSprite_HW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int 
 void S_Output_DrawScreenFBox_HW(int32_t sx, int32_t sy, int32_t w, int32_t h)
 {
 
-	VBUF vertices[4];
+	VBUF2 vertices[4];
 
 	//40 << W2V_SHIFT значит немного дальше чем
 	//ближняя плоскость отсечения значение Z_NEAR 20

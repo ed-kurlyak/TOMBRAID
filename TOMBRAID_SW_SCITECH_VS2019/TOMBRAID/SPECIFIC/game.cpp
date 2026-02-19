@@ -1031,12 +1031,10 @@ void PrintRooms(int16_t room_number)
 	phd_PushMatrix();
 	phd_TranslateAbs(r->x, r->y, r->z);
 
-	/*
 	g_PhdLeft = r->left;
 	g_PhdRight = r->right;
 	g_PhdTop = r->top;
 	g_PhdBottom = r->bottom;
-	*/
 
 	DrawRoom(r->data);
 
@@ -1079,12 +1077,10 @@ void PrintRooms(int16_t room_number)
 
 	phd_PopMatrix();
 
-	/*
 	r->left = Screen_GetResWidth() - 1;
 	r->bottom = 0;
 	r->right = 0;
 	r->top = Screen_GetResHeight() - 1;
-	*/
 }
 
 void DrawRoom(int16_t *obj_ptr)

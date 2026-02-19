@@ -1044,7 +1044,9 @@ void S_OutputPolyList_HW()
 
 		int num_verts = *(iptr++); //num verts
 
-		VERTEX_COLOR_TEX Vertex[8];
+		//VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
+		//может поместитьс€ 10 треугольников по 3 вершины
+		VERTEX_COLOR_TEX Vertex[10 * 3];
 
 		float* fptr;
 
@@ -1052,6 +1054,55 @@ void S_OutputPolyList_HW()
 		DWORD color;
 
 		int draw_verts_count = 0;
+
+		fptr = (float*)iptr;
+
+		int f_indx = 0;
+
+		for (int i = 1; i < num_verts - 1; i++)
+		{
+			f_indx = i * 7;
+
+			Vertex[draw_verts_count].x = fptr[0];
+			Vertex[draw_verts_count].y = fptr[1];
+			diffuse = (BYTE)CLAMP255(fptr[2]);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[draw_verts_count].diffuse = color;
+			Vertex[draw_verts_count].z = fptr[3];
+			Vertex[draw_verts_count].w = fptr[4];
+			Vertex[draw_verts_count].tu = fptr[5];
+			Vertex[draw_verts_count].tv = fptr[6];
+
+			draw_verts_count++;
+
+			Vertex[draw_verts_count].x = fptr[f_indx + 0];
+			Vertex[draw_verts_count].y = fptr[f_indx + 1];
+			diffuse = (BYTE)CLAMP255(fptr[f_indx + 2]);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[draw_verts_count].diffuse = color;
+			Vertex[draw_verts_count].z = fptr[f_indx + 3];
+			Vertex[draw_verts_count].w = fptr[f_indx + 4];
+			Vertex[draw_verts_count].tu = fptr[f_indx + 5];
+			Vertex[draw_verts_count].tv = fptr[f_indx + 6];
+
+			draw_verts_count++;
+
+			Vertex[draw_verts_count].x = fptr[f_indx + 7 + 0];
+			Vertex[draw_verts_count].y = fptr[f_indx + 7 + 1];
+			diffuse = (BYTE)CLAMP255(fptr[f_indx + 7 + 2]);
+			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
+			Vertex[draw_verts_count].diffuse = color;
+			Vertex[draw_verts_count].z = fptr[f_indx + 7 + 3];
+			Vertex[draw_verts_count].w = fptr[f_indx + 7 + 4];
+			Vertex[draw_verts_count].tu = fptr[f_indx + 7 + 5];
+			Vertex[draw_verts_count].tv = fptr[f_indx + 7 + 6];
+
+			draw_verts_count++;
+
+
+		}
+
+		/*
 
 		if(num_verts == 4)
 		{
@@ -1215,6 +1266,7 @@ void S_OutputPolyList_HW()
 			draw_verts_count = 3;
 
 		}
+		*/
 
 		if(draw_verts_count > 0)
 		{

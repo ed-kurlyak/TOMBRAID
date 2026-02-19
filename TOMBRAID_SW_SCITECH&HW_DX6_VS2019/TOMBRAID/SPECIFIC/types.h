@@ -86,8 +86,9 @@ struct VERTEX_COLOR
 };
 
 #define VERTSPERBUCKET (6 * 1024 + 32)
+//#define VERTSPERBUCKET (15 * 1024 + 32)
 
-struct TEXTUREBUCKET_OPAQUE
+struct TEXTUREBUCKET
 {
 	DWORD tpage;
 	//LPDIRECT3DTEXTURE2 lp_tpage;

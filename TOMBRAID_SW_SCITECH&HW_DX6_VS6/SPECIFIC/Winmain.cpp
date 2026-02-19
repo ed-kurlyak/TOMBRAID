@@ -1087,7 +1087,9 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	bool intro_played = false;
 	bool loop_continue = true;
 
-	int32_t gf_option = LoadTitle();
+	//int32_t gf_option = LoadTitle();
+
+	int32_t gf_option = 8;
 
 	phd_AlterFOV(80 * PHD_DEGREE);
 

@@ -29,33 +29,41 @@
 
 int Hardware = 1;
 
-int Fullscreen = 0;
+int Fullscreen = 1;
 
 int DXNearestTexture = 0;
 
 //---------------------------
-// SETUP PART #4 WIDESCREEN/NO
+// SETUP PART #2 WIDESCREEN/NO
 // учет аспекта в matrix.cpp phd_GenerateW2V()
 int Widescreen = 0;
 
 //---------------------------
-// SETUP PART #5 GAME TYPE - TR1/GOLD
+// SETUP PART #2 GAME TYPE - TR1/GOLD
 int GameType = VER_TR1;
 //int GameType = VER_TR1_GOLD;
 
 //---------------------------
-// SETUP PART #6 SCREEN RESOLUTION
+// SETUP PART #4 SCREEN RESOLUTION
+
 
 /*
 int SCREEN_WIDTH = 1600;
 int SCREEN_HEIGHT = 900;
 */
 
-
+/*
 int SCREEN_WIDTH = 1280;
 int SCREEN_HEIGHT = 720;
+*/
 
+int SCREEN_WIDTH = 1280;
+int SCREEN_HEIGHT = 800;
 
+/*
+int SCREEN_WIDTH = 1440;
+int SCREEN_HEIGHT = 900;
+*/
 
 /*
 int SCREEN_WIDTH = 800;
@@ -70,14 +78,14 @@ int SCREEN_HEIGHT = 480;
 
 
 //---------------------------
-// SETUP PART #7 LARA DIST
+// SETUP PART #5 LARA DIST
 // false is original TR1 Lara dist
 //влияет на g_PhdPersp
 int lara_dist = false;
 
 //---------------------------
 
-// SETUP PART #8 CHEATS MODE
+// SETUP PART #6 CHEATS MODE
 // full ammo/medi/health
 int CheatsMode = 1;
 
@@ -911,7 +919,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		S_Output_DrawScreenFlatQuad = S_Output_DrawScreenFlatQuad_HW;
 		S_Output_DrawTriangle = S_Output_DrawTriangle_HW;
 		S_Output_DrawLine = S_Output_DrawLine_HW;
-		//S_InitialisePolyList = S_InitialisePolyList_HW;
+		S_InitialisePolyList = S_InitialisePolyList_HW;
 		S_OutputPolyList = S_OutputPolyList_HW;
 	}
 	else
@@ -926,7 +934,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		S_Output_DrawScreenFlatQuad = S_Output_DrawScreenFlatQuad_SW;
 		S_Output_DrawTriangle = S_Output_DrawTriangle_SW;
 		S_Output_DrawLine = S_Output_DrawLine_SW;
-		//S_InitialisePolyList = S_InitialisePolyList_SW;
+		S_InitialisePolyList = S_InitialisePolyList_SW;
 		S_OutputPolyList = S_OutputPolyList_SW;
 		
 	}
@@ -1085,7 +1093,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	bool loop_continue = true;
 
 	int32_t gf_option = LoadTitle();
-
+	
 	phd_AlterFOV(80 * PHD_DEGREE);
 
 	while (loop_continue)

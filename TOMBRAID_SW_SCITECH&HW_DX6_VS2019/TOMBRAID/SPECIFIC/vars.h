@@ -72,7 +72,7 @@ extern D3DXHANDLE g_hTechTexColor;
 //отсортированных по текстурам
 #define MAXBUCKETS 30
 
-extern TEXTUREBUCKET_OPAQUE Bucket_Tex_Color_Opaque[MAXBUCKETS];
+extern TEXTUREBUCKET Bucket_Tex_Color_Opaque[MAXBUCKETS];
 extern COLOREDBUCKET Bucket_Colored;
 extern LINESBUCKET Bucket_Lines;
 extern TRANSQUADBUCKET Bucket_TransQuad;

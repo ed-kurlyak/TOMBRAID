@@ -31,7 +31,12 @@ void DrawAnimatingItem(ITEM_INFO *item)
 
 	int16_t *frmptr[2];
 	int32_t rate;
+
+	//frac текущий шаг интерпол€ции 0,1,2,3 если interpolation 4
+	//interpolation 4 значит один фрейм анимации длитьс€ 4 экранных кадра
+	//rate сколько всего шагов интерпол€ции одного фрейма, например 4
 	int32_t frac = GetFrames(item, frmptr, &rate);
+
 	OBJECT_INFO *object = &g_Objects[item->object_number];
 
 	if (object->shadow_size)
@@ -42,6 +47,7 @@ void DrawAnimatingItem(ITEM_INFO *item)
 	phd_PushMatrix();
 	phd_TranslateAbs(item->pos.x, item->pos.y, item->pos.z);
 	phd_RotYXZ(item->pos.y_rot, item->pos.x_rot, item->pos.z_rot);
+
 	int32_t clip = S_GetObjectBounds(frmptr[0]);
 
 	if (!clip)
@@ -55,6 +61,7 @@ void DrawAnimatingItem(ITEM_INFO *item)
 	int16_t *extra_rotation = (int16_t *)(item->data ? item->data : &null_rotation);
 
 	int32_t bit = 1;
+
 	int16_t **meshpp = &g_Meshes[object->mesh_index];
 	int32_t *bone = &g_AnimBones[object->bone_index];
 
@@ -74,6 +81,7 @@ void DrawAnimatingItem(ITEM_INFO *item)
 		for (int i = 1; i < object->nmeshes; i++)
 		{
 			int32_t bone_extra_flags = *bone;
+
 			if (bone_extra_flags & BEB_POP)
 			{
 				phd_PopMatrix();
@@ -101,6 +109,7 @@ void DrawAnimatingItem(ITEM_INFO *item)
 			}
 
 			bit <<= 1;
+
 			if (item->mesh_bits & bit)
 			{
 				Output_DrawPolygons(*meshpp, clip);
@@ -113,11 +122,14 @@ void DrawAnimatingItem(ITEM_INFO *item)
 	else
 	{
 		InitInterpolate(frac, rate);
+
 		phd_TranslateRel_ID(frmptr[0][FRAME_POS_X], frmptr[0][FRAME_POS_Y],
 							frmptr[0][FRAME_POS_Z], frmptr[1][FRAME_POS_X],
 							frmptr[1][FRAME_POS_Y], frmptr[1][FRAME_POS_Z]);
+
 		int32_t *packed_rotation1 = (int32_t *)(frmptr[0] + FRAME_ROT);
 		int32_t *packed_rotation2 = (int32_t *)(frmptr[1] + FRAME_ROT);
+
 		phd_RotYXZpack_I(*packed_rotation1++, *packed_rotation2++);
 
 		if (item->mesh_bits & bit)
@@ -128,6 +140,7 @@ void DrawAnimatingItem(ITEM_INFO *item)
 		for (int i = 1; i < object->nmeshes; i++)
 		{
 			int32_t bone_extra_flags = *bone;
+
 			if (bone_extra_flags & BEB_POP)
 			{
 				phd_PopMatrix_I();
@@ -155,6 +168,7 @@ void DrawAnimatingItem(ITEM_INFO *item)
 			}
 
 			bit <<= 1;
+
 			if (item->mesh_bits & bit)
 			{
 				Output_DrawPolygons_I(*meshpp, clip);
@@ -494,8 +508,11 @@ void Output_DrawPolygons(int16_t *obj_ptr, int clip)
 void Output_DrawPolygons_I(int16_t *obj_ptr, int32_t clip)
 {
 	phd_PushMatrix();
+
 	InterpolateMatrix();
+
 	Output_DrawPolygons(obj_ptr, clip);
+
 	phd_PopMatrix();
 }
 
@@ -3434,6 +3451,7 @@ void DrawLara(ITEM_INFO *item)
 	saved_matrix = *g_PhdMatrixPtr;
 
 	Output_DrawShadow(object->shadow_size, frame, item);
+
 	phd_PushMatrix();
 	phd_TranslateAbs(item->pos.x, item->pos.y, item->pos.z);
 	phd_RotYXZ(item->pos.y_rot, item->pos.x_rot, item->pos.z_rot);
@@ -3869,6 +3887,7 @@ void DrawLaraInt(ITEM_INFO *item, int16_t *frame1, int16_t *frame2,
 	saved_matrix = *g_PhdMatrixPtr;
 
 	Output_DrawShadow(object->shadow_size, bounds, item);
+
 	phd_PushMatrix();
 	phd_TranslateAbs(item->pos.x, item->pos.y, item->pos.z);
 	phd_RotYXZ(item->pos.y_rot, item->pos.x_rot, item->pos.z_rot);
@@ -4439,18 +4458,15 @@ void Output_DrawSprite(int32_t x, int32_t y, int32_t z, int16_t sprnum,
 		return;
 	}
 
-	int32_t zv =
-		g_W2VMatrix._20 * x + g_W2VMatrix._21 * y + g_W2VMatrix._22 * z;
+	int32_t zv = g_W2VMatrix._20 * x + g_W2VMatrix._21 * y + g_W2VMatrix._22 * z;
 
 	if (zv < Z_NEAR || zv > (DRAW_DIST_MAX << W2V_SHIFT))
 	{
 		return;
 	}
 
-	int32_t xv =
-		g_W2VMatrix._00 * x + g_W2VMatrix._01 * y + g_W2VMatrix._02 * z;
-	int32_t yv =
-		g_W2VMatrix._10 * x + g_W2VMatrix._11 * y + g_W2VMatrix._12 * z;
+	int32_t xv = g_W2VMatrix._00 * x + g_W2VMatrix._01 * y + g_W2VMatrix._02 * z;
+	int32_t yv = g_W2VMatrix._10 * x + g_W2VMatrix._11 * y + g_W2VMatrix._12 * z;
 	int32_t zp = zv / g_PhdPersp;
 
 	// PHD_SPRITE *sprite = &g_PhdSpriteInfo[sprnum];

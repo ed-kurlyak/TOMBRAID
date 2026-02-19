@@ -222,6 +222,7 @@ void ItemNewRoom(int16_t item_num, int16_t room_num)
 	ROOM_INFO *r = &g_RoomInfo[item->room_number];
 
 	int16_t linknum = r->item_number;
+
 	if (linknum == item_num)
 	{
 		r->item_number = item->next_item;

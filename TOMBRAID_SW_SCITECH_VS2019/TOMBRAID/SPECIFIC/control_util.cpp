@@ -42,7 +42,12 @@ FLOOR_INFO *GetFloor(int32_t x, int32_t y, int32_t z, int16_t *room_num)
 {
 	int16_t data;
 	FLOOR_INFO *floor;
+
 	ROOM_INFO *r = &g_RoomInfo[*room_num];
+
+	//для горизонтальных переходов между комнатами этот цикл
+	//номер комнаты для перехода получаем из GetDoor()
+	//для таких секторов pit sky room = 255
 	do
 	{
 		int32_t x_floor = (z - r->z) >> WALL_SHIFT;
@@ -82,12 +87,14 @@ FLOOR_INFO *GetFloor(int32_t x, int32_t y, int32_t z, int16_t *room_num)
 		}
 
 		floor = &r->floor[x_floor + y_floor * r->x_size];
+
 		if (!floor->index)
 		{
 			break;
 		}
 
 		data = GetDoor(floor);
+
 		if (data != NO_ROOM)
 		{
 			*room_num = data;
@@ -95,6 +102,10 @@ FLOOR_INFO *GetFloor(int32_t x, int32_t y, int32_t z, int16_t *room_num)
 		}
 	} while (data != NO_ROOM);
 
+
+	//для вертикальных переходов между комнатами
+	//номер комнаты для перехода получаем из pit sky room
+	//функция GetDoor() для такого сектора вернет 255
 	if (y >= ((int32_t)floor->floor << 8))
 	{
 		do
@@ -107,9 +118,12 @@ FLOOR_INFO *GetFloor(int32_t x, int32_t y, int32_t z, int16_t *room_num)
 			*room_num = floor->pit_room;
 
 			r = &g_RoomInfo[floor->pit_room];
+			
 			int32_t x_floor = (z - r->z) >> WALL_SHIFT;
 			int32_t y_floor = (x - r->x) >> WALL_SHIFT;
+			
 			floor = &r->floor[x_floor + y_floor * r->x_size];
+
 		} while (y >= ((int32_t)floor->floor << 8));
 	}
 	else if (y < ((int32_t)floor->ceiling << 8))
@@ -124,9 +138,12 @@ FLOOR_INFO *GetFloor(int32_t x, int32_t y, int32_t z, int16_t *room_num)
 			*room_num = floor->sky_room;
 
 			r = &g_RoomInfo[floor->sky_room];
+
 			int32_t x_floor = (z - r->z) >> WALL_SHIFT;
 			int32_t y_floor = (x - r->x) >> WALL_SHIFT;
+			
 			floor = &r->floor[x_floor + y_floor * r->x_size];
+
 		} while (y < ((int32_t)floor->ceiling << 8));
 	}
 
@@ -316,9 +333,6 @@ int16_t GetHeight(FLOOR_INFO *floor, int32_t x, int32_t y, int32_t z)
 				}
 				else
 				{
-					//при загрузке уровня LEVEL4.PHD
-					//выдает ошибку исполнения GetHeight() GetCeiling()
-
 					ITEM_INFO *item = &g_Items[trigger & VALUE_BITS];
 					OBJECT_INFO *object = &g_Objects[item->object_number];
 					if (object->floor)
@@ -437,9 +451,6 @@ int16_t GetCeiling(FLOOR_INFO *floor, int32_t x, int32_t y, int32_t z)
 				}
 				else
 				{
-					//при загрузке уровня LEVEL4.PHD
-					//выдает ошибку исполнения GetHeight() GetCeiling()
-
 					ITEM_INFO *item = &g_Items[trigger & VALUE_BITS];
 					OBJECT_INFO *object = &g_Objects[item->object_number];
 					if (object->ceiling)

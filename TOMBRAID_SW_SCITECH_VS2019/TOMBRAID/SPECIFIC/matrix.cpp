@@ -329,7 +329,9 @@ void InitInterpolate(int32_t frac, int32_t rate)
 {
 	m_IMFrac = frac;
 	m_IMRate = rate;
+
 	m_IMMatrixPtr = &m_IMMatrixStack[0];
+
 	m_IMMatrixPtr->_00 = g_PhdMatrixPtr->_00;
 	m_IMMatrixPtr->_01 = g_PhdMatrixPtr->_01;
 	m_IMMatrixPtr->_02 = g_PhdMatrixPtr->_02;
@@ -455,9 +457,12 @@ void phd_TranslateRel_ID(int32_t x, int32_t y, int32_t z, int32_t x2,
 						 int32_t y2, int32_t z2)
 {
 	phd_TranslateRel(x, y, z);
+
 	PHD_MATRIX *old_matrix = g_PhdMatrixPtr;
 	g_PhdMatrixPtr = m_IMMatrixPtr;
+
 	phd_TranslateRel(x2, y2, z2);
+	
 	g_PhdMatrixPtr = old_matrix;
 }
 

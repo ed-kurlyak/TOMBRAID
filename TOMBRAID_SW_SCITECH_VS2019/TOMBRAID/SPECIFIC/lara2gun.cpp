@@ -8,6 +8,7 @@
 void DrawPistols(int32_t weapon_type)
 {
 	int16_t ani = g_Lara.left_arm.frame_number;
+
 	ani++;
 
 	if (ani < AF_G_DRAW1 || ani > AF_G_DRAW2_L)

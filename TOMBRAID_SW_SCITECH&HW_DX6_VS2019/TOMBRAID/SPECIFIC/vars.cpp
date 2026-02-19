@@ -33,7 +33,8 @@ RECT                 g_RcViewportRect;
 
 
 
-TEXTUREBUCKET_OPAQUE Bucket_Tex_Color_Opaque[MAXBUCKETS];
+TEXTUREBUCKET Bucket_Tex_Color_Opaque[MAXBUCKETS];
+//TEXTUREBUCKET Bucket_Sprites[MAXBUCKETS];
 COLOREDBUCKET Bucket_Colored;
 LINESBUCKET Bucket_Lines;
 TRANSQUADBUCKET Bucket_TransQuad;

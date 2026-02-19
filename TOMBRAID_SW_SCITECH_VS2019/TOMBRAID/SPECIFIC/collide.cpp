@@ -682,14 +682,18 @@ void EffectSpaz(ITEM_INFO *lara_item, COLL_INFO *coll)
 {
 	int32_t x = g_Lara.spaz_effect->pos.x - lara_item->pos.x;
 	int32_t z = g_Lara.spaz_effect->pos.z - lara_item->pos.z;
+
 	PHD_ANGLE hitang = lara_item->pos.y_rot - (PHD_180 + phd_atan(z, x));
+	
 	g_Lara.hit_direction = (hitang + PHD_45) / PHD_90;
+
 	if (!g_Lara.hit_frame)
 	{
 		Sound_Effect(SFX_LARA_BODYSL, &lara_item->pos, SPM_NORMAL);
 	}
 
 	g_Lara.hit_frame++;
+
 	if (g_Lara.hit_frame > 34)
 	{
 		g_Lara.hit_frame = 34;
@@ -892,6 +896,7 @@ int32_t TestBoundsCollide(ITEM_INFO *item, ITEM_INFO *lara_item, int32_t radius)
 {
 	int16_t *bounds = GetBestFrame(item);
 	int16_t *larabounds = GetBestFrame(lara_item);
+
 	if (item->pos.y + bounds[FRAME_BOUND_MAX_Y] <=
 			lara_item->pos.y + larabounds[FRAME_BOUND_MIN_Y] ||
 		item->pos.y + bounds[FRAME_BOUND_MIN_Y] >=
@@ -910,6 +915,7 @@ int32_t TestBoundsCollide(ITEM_INFO *item, ITEM_INFO *lara_item, int32_t radius)
 	int32_t maxx = bounds[FRAME_BOUND_MAX_X] + radius;
 	int32_t minz = bounds[FRAME_BOUND_MIN_Z] - radius;
 	int32_t maxz = bounds[FRAME_BOUND_MAX_Z] + radius;
+
 	if (rx >= minx && rx <= maxx && rz >= minz && rz <= maxz)
 	{
 		return 1;

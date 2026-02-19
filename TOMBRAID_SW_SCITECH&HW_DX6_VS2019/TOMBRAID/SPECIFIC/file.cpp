@@ -270,6 +270,15 @@ void Create_DX_Textures()
 		IDirectDrawSurface* pSurf;
 		hr = g_pDD2->CreateSurface(&ddsd, &pSurf , NULL);
 
+		/*
+		//после создания текстуры:
+		DDCOLORKEY colorKey;
+		colorKey.dwColorSpaceLowValue = 0x000000; //чёрный
+		colorKey.dwColorSpaceHighValue = 0x000000;
+
+		pSurf->SetColorKey(DDCKEY_SRCBLT, &colorKey);
+		*/
+
 		IDirectDrawSurface* pSurf3;
 		pSurf->QueryInterface(IID_IDirectDrawSurface3, (void**)& pSurf3);
 
@@ -403,15 +412,21 @@ bool Load_Rooms(FILE *fp)
 		//читаем двери
 		fread(&NumDoors, sizeof(uint16_t), 1, fp);
 
-		if (NumDoors)
+		if (!NumDoors)
+		{
+			g_RoomInfo[i].doors = NULL;
+		}
+		else
 		{
 			// 2 байта размер сколько дверей + сам массив дверей
 			// sizeof(DOOR_INFO) * NumDoors g_RoomInfo[i].doors = (DOOR_INFOS
 			// *)Game_Alloc(sizeof(uint16_t) + sizeof(DOOR_INFO *) * NumDoors,
 			// GBUF_ROOM_DOOR); выделяем место под двери - число дверей +
 			//указатель на массив дверей
-			g_RoomInfo[i].doors = (DOOR_INFOS *)Game_Alloc(
-				sizeof(uint16_t) + sizeof(DOOR_INFO *), GBUF_ROOM_DOOR);
+			//g_RoomInfo[i].doors = (DOOR_INFOS *)Game_Alloc(
+				//sizeof(uint16_t) + sizeof(DOOR_INFO) * NumDoors, GBUF_ROOM_DOOR);
+
+			g_RoomInfo[i].doors = (DOOR_INFOS*)Game_Alloc(sizeof(DOOR_INFOS), GBUF_ROOM_DOOR);
 
 			g_RoomInfo[i].doors->count = NumDoors;
 
@@ -421,10 +436,8 @@ bool Load_Rooms(FILE *fp)
 
 			fread(g_RoomInfo[i].doors->door, sizeof(DOOR_INFO), NumDoors, fp);
 		}
-		else
-		{
-			g_RoomInfo[i].doors = NULL;
-		}
+		
+		
 
 		//читаем пол комнаты
 		fread(&g_RoomInfo[i].x_size, sizeof(uint16_t), 1, fp);
