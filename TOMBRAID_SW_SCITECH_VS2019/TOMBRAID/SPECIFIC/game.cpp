@@ -770,14 +770,11 @@ void S_OutputPolyList()
 int32_t S_DumpScreen()
 {
 
-	int nframes;
-
-	nframes = Sync();
+	int nframes = Sync();
 
 	while (nframes < 2)
 	{
-		while (!Sync())
-			;
+		while (!Sync()) {};
 		nframes++;
 	}
 
@@ -858,7 +855,8 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 		{
 			// if (zv > (g_DrawDistMax << W2V_SHIFT ))
 			// if (zv > (DRAW_DIST_MAX << W2V_SHIFT ))
-			if (zv > (DRAW_DIST_FADE << W2V_SHIFT))
+			//if (zv > (DRAW_DIST_FADE << W2V_SHIFT))
+			if (zv > (DRAW_DIST_MAX << W2V_SHIFT))
 			{
 				z_toofar++;
 			}

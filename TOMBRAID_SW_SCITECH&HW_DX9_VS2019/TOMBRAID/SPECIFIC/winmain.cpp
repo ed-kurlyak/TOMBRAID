@@ -29,7 +29,7 @@
 
 int Hardware = 1;
 
-int Fullscreen = 1;
+int Fullscreen = 0;
 
 //---------------------------
 // SETUP PART #4 WIDESCREEN/NO

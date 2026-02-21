@@ -1,11 +1,6 @@
 #include "overlay.h"
-
-//#include "config.h"
-//#include "game/clock.h"
-//#include "game/output.h"
 #include "screen.h"
 #include "text.h"
-#//include "game/viewport.h"
 #include "backbuffer.h"
 #include "const.h"
 #include "draw.h"
@@ -18,7 +13,6 @@
 #define MAX_PICKUP_COLUMNS 4
 #define MAX_PICKUPS 16
 
-// static TEXTSTRING *m_AmmoText = NULL;
 TEXTSTRING *m_AmmoText = NULL;
 TEXTSTRING *m_FPSText = NULL;
 static int16_t m_BarOffsetY[6] = {0};
@@ -26,7 +20,11 @@ static DISPLAYPU m_Pickups[MAX_PICKUPS] = {0};
 
 static RGB888 m_ColorBarMap[][COLOR_STEPS] = {
 	// gold
-	{{112, 92, 44}, {164, 120, 72}, {112, 92, 44}, {88, 68, 0}, {80, 48, 20}},
+	{{112, 92, 44},
+	{164, 120, 72},
+	{112, 92, 44},
+	{88, 68, 0},
+	{80, 48, 20}},
 	// blue
 	{{100, 116, 100},
 	 {92, 160, 156},
@@ -34,9 +32,17 @@ static RGB888 m_ColorBarMap[][COLOR_STEPS] = {
 	 {76, 80, 76},
 	 {48, 48, 48}},
 	// grey
-	{{88, 100, 88}, {116, 132, 116}, {88, 100, 88}, {76, 80, 76}, {48, 48, 48}},
+	{{88, 100, 88},
+	{116, 132, 116},
+	{88, 100, 88},
+	{76, 80, 76},
+	{48, 48, 48}},
 	// red
-	{{160, 40, 28}, {184, 44, 32}, {160, 40, 28}, {124, 32, 32}, {84, 20, 32}},
+	{{160, 40, 28},
+	{184, 44, 32},
+	{160, 40, 28},
+	{124, 32, 32},
+	{84, 20, 32}},
 	// silver
 	{{150, 150, 150},
 	 {230, 230, 230},
@@ -50,9 +56,17 @@ static RGB888 m_ColorBarMap[][COLOR_STEPS] = {
 	 {90, 150, 15},
 	 {80, 110, 10}},
 	// gold2
-	{{220, 170, 0}, {255, 200, 0}, {220, 170, 0}, {185, 140, 0}, {150, 100, 0}},
+	{{220, 170, 0},
+	{255, 200, 0},
+	{220, 170, 0},
+	{185, 140, 0},
+	{150, 100, 0}},
 	// blue2
-	{{0, 170, 220}, {0, 200, 255}, {0, 170, 220}, {0, 140, 185}, {0, 100, 150}},
+	{{0, 170, 220},
+	{0, 200, 255},
+	{0, 170, 220},
+	{0, 140, 185},
+	{0, 100, 150}},
 	// pink
 	{{220, 140, 170},
 	 {255, 150, 200},
@@ -60,11 +74,8 @@ static RGB888 m_ColorBarMap[][COLOR_STEPS] = {
 	 {165, 100, 120},
 	 {120, 60, 70}},
 };
-/*
-static void Overlay_GetBarLocation(
-	int8_t bar_location, int32_t width, int32_t height, int32_t *x, int32_t *y);
 
-	*/
+static void Overlay_GetBarLocation(int8_t bar_location, int32_t width, int32_t height, int32_t *x, int32_t *y);
 static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type);
 
 /*

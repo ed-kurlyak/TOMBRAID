@@ -4,6 +4,20 @@
 #include "phd_math.h"
 #include "vars.h"
 
+/*
+в Tomb Raider используется fixed point math
+sin, cos имеют диапазон от 0 до 16384 (от 0 до 1) 14 бит
+но углы имеют диапазон от 0 до 65536 (от 0 до 360) 16 бит
+rots хранит значение int то есть 32 бита
+первые 10 бит хранят поворот Z (диапазон от 0 до 1023)
+вторые 10 бит хранят поворот Y (диапазон от 0 до 1023)
+третьи 10 бит хранят поворот X (диапазон от 0 до 1023)
+последние 2 бита не используются
+в сжатом виде храняться узлы в фреймах анимации только 10 бит
+поэтому извлеченный угол надо сдвинуть еще на 6 бит влево
+что бы получилось 16 бит угол в Tomb Raider
+число 0x3FF это 1023 в десятичной
+*/
 #define EXTRACT_ROT_Y(rots) (((rots >> 10) & 0x3FF) << 6)
 #define EXTRACT_ROT_X(rots) (((rots >> 20) & 0x3FF) << 6)
 #define EXTRACT_ROT_Z(rots) ((rots & 0x3FF) << 6)
@@ -14,7 +28,10 @@ static int32_t m_IMFrac = 0;
 static PHD_MATRIX *m_IMMatrixPtr = NULL;
 static PHD_MATRIX m_IMMatrixStack[MAX_NESTED_MATRICES] = {0};
 
-void phd_ResetMatrixStack() { g_PhdMatrixPtr = &m_MatrixStack[0]; }
+void phd_ResetMatrixStack()
+{ 
+	g_PhdMatrixPtr = &m_MatrixStack[0];
+}
 
 void phd_GenerateW2V(PHD_3DPOS *viewpos)
 {
@@ -65,6 +82,7 @@ void phd_PushMatrix()
 void phd_PushUnitMatrix()
 {
 	PHD_MATRIX *mptr = ++g_PhdMatrixPtr;
+
 	mptr->_00 = W2V_SCALE;
 	mptr->_01 = 0;
 	mptr->_02 = 0;
@@ -76,7 +94,10 @@ void phd_PushUnitMatrix()
 	mptr->_22 = W2V_SCALE;
 }
 
-void phd_PopMatrix() { g_PhdMatrixPtr--; }
+void phd_PopMatrix()
+{ 
+	g_PhdMatrixPtr--;
+}
 
 void phd_RotX(PHD_ANGLE rx)
 {
@@ -86,22 +107,27 @@ void phd_RotX(PHD_ANGLE rx)
 	}
 
 	PHD_MATRIX *mptr = g_PhdMatrixPtr;
+
 	int32_t sx = phd_sin(rx);
 	int32_t cx = phd_cos(rx);
 
 	int32_t r0, r1;
+
 	r0 = mptr->_01 * cx + mptr->_02 * sx;
 	r1 = mptr->_02 * cx - mptr->_01 * sx;
+	
 	mptr->_01 = r0 >> W2V_SHIFT;
 	mptr->_02 = r1 >> W2V_SHIFT;
 
 	r0 = mptr->_11 * cx + mptr->_12 * sx;
 	r1 = mptr->_12 * cx - mptr->_11 * sx;
+
 	mptr->_11 = r0 >> W2V_SHIFT;
 	mptr->_12 = r1 >> W2V_SHIFT;
 
 	r0 = mptr->_21 * cx + mptr->_22 * sx;
 	r1 = mptr->_22 * cx - mptr->_21 * sx;
+
 	mptr->_21 = r0 >> W2V_SHIFT;
 	mptr->_22 = r1 >> W2V_SHIFT;
 }
@@ -114,22 +140,27 @@ void phd_RotY(PHD_ANGLE ry)
 	}
 
 	PHD_MATRIX *mptr = g_PhdMatrixPtr;
+
 	int32_t sy = phd_sin(ry);
 	int32_t cy = phd_cos(ry);
 
 	int32_t r0, r1;
+
 	r0 = mptr->_00 * cy - mptr->_02 * sy;
 	r1 = mptr->_02 * cy + mptr->_00 * sy;
+	
 	mptr->_00 = r0 >> W2V_SHIFT;
 	mptr->_02 = r1 >> W2V_SHIFT;
 
 	r0 = mptr->_10 * cy - mptr->_12 * sy;
 	r1 = mptr->_12 * cy + mptr->_10 * sy;
+
 	mptr->_10 = r0 >> W2V_SHIFT;
 	mptr->_12 = r1 >> W2V_SHIFT;
 
 	r0 = mptr->_20 * cy - mptr->_22 * sy;
 	r1 = mptr->_22 * cy + mptr->_20 * sy;
+
 	mptr->_20 = r0 >> W2V_SHIFT;
 	mptr->_22 = r1 >> W2V_SHIFT;
 }
@@ -142,22 +173,27 @@ void phd_RotZ(PHD_ANGLE rz)
 	}
 
 	PHD_MATRIX *mptr = g_PhdMatrixPtr;
+
 	int32_t sz = phd_sin(rz);
 	int32_t cz = phd_cos(rz);
 
 	int32_t r0, r1;
+
 	r0 = mptr->_00 * cz + mptr->_01 * sz;
 	r1 = mptr->_01 * cz - mptr->_00 * sz;
+	
 	mptr->_00 = r0 >> W2V_SHIFT;
 	mptr->_01 = r1 >> W2V_SHIFT;
 
 	r0 = mptr->_10 * cz + mptr->_11 * sz;
 	r1 = mptr->_11 * cz - mptr->_10 * sz;
+
 	mptr->_10 = r0 >> W2V_SHIFT;
 	mptr->_11 = r1 >> W2V_SHIFT;
 
 	r0 = mptr->_20 * cz + mptr->_21 * sz;
 	r1 = mptr->_21 * cz - mptr->_20 * sz;
+	
 	mptr->_20 = r0 >> W2V_SHIFT;
 	mptr->_21 = r1 >> W2V_SHIFT;
 }
@@ -165,6 +201,7 @@ void phd_RotZ(PHD_ANGLE rz)
 void phd_RotYXZ(PHD_ANGLE ry, PHD_ANGLE rx, PHD_ANGLE rz)
 {
 	PHD_MATRIX *mptr = g_PhdMatrixPtr;
+
 	int32_t r0, r1;
 
 	if (ry)
@@ -174,16 +211,19 @@ void phd_RotYXZ(PHD_ANGLE ry, PHD_ANGLE rx, PHD_ANGLE rz)
 
 		r0 = mptr->_00 * cy - mptr->_02 * sy;
 		r1 = mptr->_02 * cy + mptr->_00 * sy;
+
 		mptr->_00 = r0 >> W2V_SHIFT;
 		mptr->_02 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_10 * cy - mptr->_12 * sy;
 		r1 = mptr->_12 * cy + mptr->_10 * sy;
+
 		mptr->_10 = r0 >> W2V_SHIFT;
 		mptr->_12 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_20 * cy - mptr->_22 * sy;
 		r1 = mptr->_22 * cy + mptr->_20 * sy;
+
 		mptr->_20 = r0 >> W2V_SHIFT;
 		mptr->_22 = r1 >> W2V_SHIFT;
 	}
@@ -195,16 +235,19 @@ void phd_RotYXZ(PHD_ANGLE ry, PHD_ANGLE rx, PHD_ANGLE rz)
 
 		r0 = mptr->_01 * cx + mptr->_02 * sx;
 		r1 = mptr->_02 * cx - mptr->_01 * sx;
+
 		mptr->_01 = r0 >> W2V_SHIFT;
 		mptr->_02 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_11 * cx + mptr->_12 * sx;
 		r1 = mptr->_12 * cx - mptr->_11 * sx;
+
 		mptr->_11 = r0 >> W2V_SHIFT;
 		mptr->_12 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_21 * cx + mptr->_22 * sx;
 		r1 = mptr->_22 * cx - mptr->_21 * sx;
+
 		mptr->_21 = r0 >> W2V_SHIFT;
 		mptr->_22 = r1 >> W2V_SHIFT;
 	}
@@ -216,16 +259,19 @@ void phd_RotYXZ(PHD_ANGLE ry, PHD_ANGLE rx, PHD_ANGLE rz)
 
 		r0 = mptr->_00 * cz + mptr->_01 * sz;
 		r1 = mptr->_01 * cz - mptr->_00 * sz;
+
 		mptr->_00 = r0 >> W2V_SHIFT;
 		mptr->_01 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_10 * cz + mptr->_11 * sz;
 		r1 = mptr->_11 * cz - mptr->_10 * sz;
+
 		mptr->_10 = r0 >> W2V_SHIFT;
 		mptr->_11 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_20 * cz + mptr->_21 * sz;
 		r1 = mptr->_21 * cz - mptr->_20 * sz;
+
 		mptr->_20 = r0 >> W2V_SHIFT;
 		mptr->_21 = r1 >> W2V_SHIFT;
 	}
@@ -245,16 +291,19 @@ void phd_RotYXZpack(int32_t rots)
 
 		r0 = mptr->_00 * cy - mptr->_02 * sy;
 		r1 = mptr->_02 * cy + mptr->_00 * sy;
+
 		mptr->_00 = r0 >> W2V_SHIFT;
 		mptr->_02 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_10 * cy - mptr->_12 * sy;
 		r1 = mptr->_12 * cy + mptr->_10 * sy;
+
 		mptr->_10 = r0 >> W2V_SHIFT;
 		mptr->_12 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_20 * cy - mptr->_22 * sy;
 		r1 = mptr->_22 * cy + mptr->_20 * sy;
+
 		mptr->_20 = r0 >> W2V_SHIFT;
 		mptr->_22 = r1 >> W2V_SHIFT;
 	}
@@ -268,16 +317,19 @@ void phd_RotYXZpack(int32_t rots)
 
 		r0 = mptr->_01 * cx + mptr->_02 * sx;
 		r1 = mptr->_02 * cx - mptr->_01 * sx;
+
 		mptr->_01 = r0 >> W2V_SHIFT;
 		mptr->_02 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_11 * cx + mptr->_12 * sx;
 		r1 = mptr->_12 * cx - mptr->_11 * sx;
+
 		mptr->_11 = r0 >> W2V_SHIFT;
 		mptr->_12 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_21 * cx + mptr->_22 * sx;
 		r1 = mptr->_22 * cx - mptr->_21 * sx;
+
 		mptr->_21 = r0 >> W2V_SHIFT;
 		mptr->_22 = r1 >> W2V_SHIFT;
 	}
@@ -291,16 +343,19 @@ void phd_RotYXZpack(int32_t rots)
 
 		r0 = mptr->_00 * cz + mptr->_01 * sz;
 		r1 = mptr->_01 * cz - mptr->_00 * sz;
+
 		mptr->_00 = r0 >> W2V_SHIFT;
 		mptr->_01 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_10 * cz + mptr->_11 * sz;
 		r1 = mptr->_11 * cz - mptr->_10 * sz;
+
 		mptr->_10 = r0 >> W2V_SHIFT;
 		mptr->_11 = r1 >> W2V_SHIFT;
 
 		r0 = mptr->_20 * cz + mptr->_21 * sz;
 		r1 = mptr->_21 * cz - mptr->_20 * sz;
+
 		mptr->_20 = r0 >> W2V_SHIFT;
 		mptr->_21 = r1 >> W2V_SHIFT;
 	}
@@ -317,9 +372,11 @@ void phd_TranslateRel(int32_t x, int32_t y, int32_t z)
 void phd_TranslateAbs(int32_t x, int32_t y, int32_t z)
 {
 	PHD_MATRIX *mptr = g_PhdMatrixPtr;
+
 	x -= g_W2VMatrix._03;
 	y -= g_W2VMatrix._13;
 	z -= g_W2VMatrix._23;
+
 	mptr->_03 = mptr->_00 * x + mptr->_01 * y + mptr->_02 * z;
 	mptr->_13 = mptr->_10 * x + mptr->_11 * y + mptr->_12 * z;
 	mptr->_23 = mptr->_20 * x + mptr->_21 * y + mptr->_22 * z;
@@ -447,9 +504,13 @@ void phd_PopMatrix_I()
 void phd_TranslateRel_I(int32_t x, int32_t y, int32_t z)
 {
 	phd_TranslateRel(x, y, z);
+
 	PHD_MATRIX *old_matrix = g_PhdMatrixPtr;
+	
 	g_PhdMatrixPtr = m_IMMatrixPtr;
+	
 	phd_TranslateRel(x, y, z);
+	
 	g_PhdMatrixPtr = old_matrix;
 }
 
@@ -469,44 +530,64 @@ void phd_TranslateRel_ID(int32_t x, int32_t y, int32_t z, int32_t x2,
 void phd_RotY_I(PHD_ANGLE ang)
 {
 	phd_RotY(ang);
+
 	PHD_MATRIX *old_matrix = g_PhdMatrixPtr;
+	
 	g_PhdMatrixPtr = m_IMMatrixPtr;
+	
 	phd_RotY(ang);
+	
 	g_PhdMatrixPtr = old_matrix;
 }
 
 void phd_RotX_I(PHD_ANGLE ang)
 {
 	phd_RotX(ang);
+
 	PHD_MATRIX *old_matrix = g_PhdMatrixPtr;
+	
 	g_PhdMatrixPtr = m_IMMatrixPtr;
+	
 	phd_RotX(ang);
+	
 	g_PhdMatrixPtr = old_matrix;
 }
 
 void phd_RotZ_I(PHD_ANGLE ang)
 {
 	phd_RotZ(ang);
+	
 	PHD_MATRIX *old_matrix = g_PhdMatrixPtr;
+	
 	g_PhdMatrixPtr = m_IMMatrixPtr;
+	
 	phd_RotZ(ang);
+	
 	g_PhdMatrixPtr = old_matrix;
 }
 
 void phd_RotYXZ_I(PHD_ANGLE y, PHD_ANGLE x, PHD_ANGLE z)
 {
 	phd_RotYXZ(y, x, z);
+
 	PHD_MATRIX *old_matrix = g_PhdMatrixPtr;
+	
 	g_PhdMatrixPtr = m_IMMatrixPtr;
+	
 	phd_RotYXZ(y, x, z);
+	
 	g_PhdMatrixPtr = old_matrix;
 }
 
 void phd_RotYXZpack_I(int32_t r1, int32_t r2)
 {
 	phd_RotYXZpack(r1);
+	
 	PHD_MATRIX *old_matrix = g_PhdMatrixPtr;
+	
 	g_PhdMatrixPtr = m_IMMatrixPtr;
+	
 	phd_RotYXZpack(r2);
+	
 	g_PhdMatrixPtr = old_matrix;
 }
