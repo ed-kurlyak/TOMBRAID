@@ -4188,7 +4188,7 @@ int16_t* DrawRoomSprites(int16_t* obj_ptr, int32_t number)
 do {                                                                \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].x = IN_VERTICES.x;       \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].y = IN_VERTICES.y;       \
-    OUT_BUCKET.Vertex[OUT_BUCKET.count].z = IN_VERTICES.z;       \
+    OUT_BUCKET.Vertex[OUT_BUCKET.count].z = 1.0f/IN_VERTICES.w;       \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].w = IN_VERTICES.w;       \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].diffuse = IN_COLOR;         \
     OUT_BUCKET.Vertex[OUT_BUCKET.count].tu = IN_VERTICES.u;      \
