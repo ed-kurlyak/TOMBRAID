@@ -20,7 +20,7 @@ int32_t Screen_GetResHeightDownscaled();
 // int32_t Screen_GetPendingResHeight();
 
 int32_t Screen_GetRenderScale(int32_t unit);
-// int32_t Screen_GetRenderScaleGLRage(int32_t unit);
+int32_t Screen_GetRenderScaleGLRage(int32_t unit);
 
 // void Screen_ApplyResolution();
 

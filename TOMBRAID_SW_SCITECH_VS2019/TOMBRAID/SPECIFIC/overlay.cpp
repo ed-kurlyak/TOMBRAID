@@ -99,6 +99,8 @@ static void Overlay_GetBarLocation(int8_t bar_location, int32_t width,
 	else if (bar_location == T1M_BL_TOP_RIGHT ||
 			 bar_location == T1M_BL_BOTTOM_RIGHT)
 	{
+		int a = Screen_GetResWidthDownscaled();
+
 		*x = Screen_GetResWidthDownscaled() -
 			 (int)(width * g_Config.ui.bar_scale) - screen_margin_h;
 	}
@@ -129,62 +131,61 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
 	static int32_t blink_counter = 0;
 	const int32_t percent_max = 100;
 
+	//если hit points < 0
 	if (value < 0)
 	{
 		value = 0;
 	}
+	//если hit points > 1000
 	else if (value > value_max)
 	{
 		value = value_max;
 	}
+
+	//переводим значение в диапазон от 0 до 100
+	//так как 100 это ширина полоски в пикселях
 	int32_t percent = value * 100 / value_max;
 
 	const RGB888 rgb_bgnd = {0, 0, 0};
 	const RGB888 rgb_border_light = {128, 128, 128};
 	const RGB888 rgb_border_dark = {64, 64, 64};
 
+	//ширина полоски в пикселях
 	int32_t width = 100;
+	//высота полоски в пикселях
 	int32_t height = 5;
+	//цвет полоски
 	int16_t bar_color = bar_type;
 
+	//позиция полоски по x,y в экранных координатах
+	//левый верхний угол полоски
 	int32_t x = 0;
 	int32_t y = 0;
+
 	if (bar_type == BT_LARA_HEALTH)
 	{
-		// g_Config.healthbar_location = 0
-		Overlay_GetBarLocation(g_Config.healthbar_location, width, height, &x,
-							   &y);
+		Overlay_GetBarLocation(g_Config.healthbar_location, width, height, &x, &y);
 		bar_color = g_Config.healthbar_color;
-		// bar_color = 3;
 	}
 	else if (bar_type == BT_LARA_AIR)
 	{
-		// g_Config.airbar_location = 2
 		Overlay_GetBarLocation(g_Config.airbar_location, width, height, &x, &y);
 		bar_color = g_Config.airbar_color;
-		// bar_color = 1;
 	}
 	else if (bar_type == BT_ENEMY_HEALTH)
 	{
-		// Overlay_GetBarLocation(g_Config.enemy_healthbar_location, width,
-		// height, &x, &y);
-		Overlay_GetBarLocation(g_Config.enemy_healthbar_location, width, height,
-							   &x, &y);
-		// bar_color = g_Config.enemy_healthbar_color;
-		// bar_color = 2;
+		Overlay_GetBarLocation(g_Config.enemy_healthbar_location, width, height, &x, &y);
+		bar_color = g_Config.enemy_healthbar_color;
 	}
 
 	int32_t padding = Screen_GetResWidth() <= 800 ? 1 : 2;
+
 	int32_t border = 1;
+	
 	int32_t sx = Screen_GetRenderScale(x) - padding;
 	int32_t sy = Screen_GetRenderScale(y) - padding;
-	int32_t sw = (int)(Screen_GetRenderScale(width) * g_Config.ui.bar_scale) +
-				 padding * 2;
-	int32_t sh = (int)(Screen_GetRenderScale(height) * g_Config.ui.bar_scale) +
-				 padding * 2;
-
-	// int32_t sw = 191;
-	// int32_t sh = 13;
+	int32_t sw = (int)(Screen_GetRenderScale(width) * g_Config.ui.bar_scale) + padding * 2;
+	int32_t sh = (int)(Screen_GetRenderScale(height) * g_Config.ui.bar_scale) + padding * 2;
 
 	// border
 	S_Output_DrawScreenFlatQuad(sx - border, sy - border, sw + border,
@@ -198,8 +199,7 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
 	const int32_t blink_interval = 20;
 	const int32_t blink_threshold = bar_type == BT_ENEMY_HEALTH ? 0 : 20;
 	int32_t blink_time = blink_counter++ % blink_interval;
-	int32_t blink =
-		percent <= blink_threshold && blink_time > blink_interval / 2;
+	int32_t blink = percent <= blink_threshold && blink_time > blink_interval / 2;
 
 	if (percent && !blink)
 	{
@@ -209,32 +209,14 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
 		sy = Screen_GetRenderScale(y);
 		sw = (int)(Screen_GetRenderScale(width) * g_Config.ui.bar_scale);
 		sh = (int)(Screen_GetRenderScale(height) * g_Config.ui.bar_scale);
-		/*
-		if (g_Config.enable_smooth_bars) {
-			for (int i = 0; i < COLOR_STEPS - 1; i++) {
-				RGB888 c1 = m_ColorBarMap[bar_color][i];
-				RGB888 c2 = m_ColorBarMap[bar_color][i + 1];
-				int32_t lsy = sy + i * sh / (COLOR_STEPS - 1);
-				int32_t lsh = sy + (i + 1) * sh / (COLOR_STEPS - 1) - lsy;
-				Output_DrawScreenGradientQuad(sx, lsy, sw, lsh, c1, c1, c2, c2);
-			}
-		} else
-
+		
+		for (int i = 0; i < COLOR_STEPS; i++)
 		{
-			for (int i = 0; i < COLOR_STEPS; i++)
-			{
-				RGB888 color = m_ColorBarMap[bar_color][i];
-				int32_t lsy = sy + i * sh / COLOR_STEPS;
-				int32_t lsh = sy + (i + 1) * sh / COLOR_STEPS - lsy;
-				S_Output_DrawScreenFlatQuad(sx, lsy, sw, lsh, color);
-			}
+			RGB888 color = m_ColorBarMap[bar_color][i];
+			int32_t lsy = sy + i * sh / COLOR_STEPS;
+			int32_t lsh = sy + (i + 1) * sh / COLOR_STEPS - lsy;
+			S_Output_DrawScreenFlatQuad(sx, lsy, sw, lsh, color, 180);
 		}
-		*/
-
-		// red
-		// RGB888 color = { 160, 40, 28 };
-		RGB888 color = m_ColorBarMap[bar_color][0];
-		S_Output_DrawScreenFlatQuad(sx, sy, sw, sh, color, 180);
 	}
 }
 
@@ -268,6 +250,7 @@ void Overlay_DrawHealthBar()
 	}
 
 	int hit_points = g_LaraItem->hit_points;
+	
 	if (hit_points < 0)
 	{
 		hit_points = 0;
@@ -477,6 +460,7 @@ void Overlay_DrawPickups()
 	}
 }
 
+/*
 int32_t Screen_GetRenderScaleGLRage(int32_t unit)
 {
 	// GLRage-style UI scaler
@@ -494,6 +478,7 @@ int32_t Screen_GetRenderScaleGLRage(int32_t unit)
 
 	return round;
 }
+*/
 
 void Overlay_DrawFPSInfo()
 {

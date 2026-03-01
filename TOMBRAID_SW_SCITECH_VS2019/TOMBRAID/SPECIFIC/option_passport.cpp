@@ -37,6 +37,7 @@ static REQUEST_INFO m_NewGameRequester = {
 };
 
 static char m_LoadSaveGameStrings[MAX_SAVE_SLOTS][MAX_LEVEL_NAME_LENGTH] = {0};
+
 REQUEST_INFO g_LoadSaveGameRequester = {
 	1,							  //.items =
 	0,							  //.requested =

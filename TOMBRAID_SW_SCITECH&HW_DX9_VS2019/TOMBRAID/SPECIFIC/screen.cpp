@@ -92,7 +92,7 @@ int32_t Screen_GetRenderScale(int32_t unit)
 	return MIN(scale_x, scale_y);
 }
 
-/*
+
 int32_t Screen_GetRenderScaleGLRage(int32_t unit)
 {
 	// GLRage-style UI scaler
@@ -105,9 +105,13 @@ int32_t Screen_GetRenderScaleGLRage(int32_t unit)
 		result = unit;
 	}
 
-	return round(result);
-}
+	int32_t round = (int)result;
 
+	return round;
+
+	//return round(result);
+}
+/*
 void Screen_ApplyResolution()
 {
 	m_ResolutionIdx = m_PendingResolutionIdx;

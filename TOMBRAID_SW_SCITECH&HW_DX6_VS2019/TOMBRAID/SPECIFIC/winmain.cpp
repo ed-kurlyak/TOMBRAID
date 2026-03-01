@@ -29,7 +29,7 @@
 
 int Hardware = 1;
 
-int Fullscreen = 1;
+int Fullscreen = 0;
 
 int DXNearestTexture = 0;
 
@@ -1048,7 +1048,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	g_Config.ui.bar_scale = 1.0f;
 	g_Config.ui.text_scale = 1.0f;
 	g_Config.healthbar_location = T1M_BL_TOP_LEFT;
-	g_Config.healthbar_color = 3;
+	g_Config.healthbar_color = 0;
 	g_Config.airbar_location = T1M_BL_TOP_RIGHT;
 	g_Config.airbar_color = 1;
 

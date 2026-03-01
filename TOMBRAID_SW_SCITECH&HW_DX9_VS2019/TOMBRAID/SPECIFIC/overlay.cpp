@@ -202,22 +202,22 @@ static void Overlay_DrawBar(int32_t value, int32_t value_max, int32_t bar_type)
 				Output_DrawScreenGradientQuad(sx, lsy, sw, lsh, c1, c1, c2, c2);
 			}
 		} else
-
+		*/
 		{
 			for (int i = 0; i < COLOR_STEPS; i++)
 			{
 				RGB888 color = m_ColorBarMap[bar_color][i];
 				int32_t lsy = sy + i * sh / COLOR_STEPS;
 				int32_t lsh = sy + (i + 1) * sh / COLOR_STEPS - lsy;
-				S_Output_DrawScreenFlatQuad(sx, lsy, sw, lsh, color);
+				S_Output_DrawScreenFlatQuad(sx, lsy, sw, lsh, color, 180);
 			}
 		}
-		*/
+		
 
 		// red
 		// RGB888 color = { 160, 40, 28 };
-		RGB888 color = m_ColorBarMap[bar_color][0];
-		S_Output_DrawScreenFlatQuad(sx, sy, sw, sh, color, 180);
+		//RGB888 color = m_ColorBarMap[bar_color][0];
+		//S_Output_DrawScreenFlatQuad(sx, sy, sw, sh, color, 180);
 	}
 }
 
@@ -459,7 +459,7 @@ void Overlay_DrawPickups()
 		}
 	}
 }
-
+/*
 int32_t Screen_GetRenderScaleGLRage(int32_t unit)
 {
 	// GLRage-style UI scaler
@@ -477,6 +477,7 @@ int32_t Screen_GetRenderScaleGLRage(int32_t unit)
 
 	return round;
 }
+*/
 
 void Overlay_DrawFPSInfo()
 {

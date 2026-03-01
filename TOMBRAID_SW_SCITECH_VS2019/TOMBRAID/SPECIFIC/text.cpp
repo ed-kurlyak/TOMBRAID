@@ -406,8 +406,7 @@ static void Text_DrawText(TEXTSTRING *textstring)
 	}
 
 	int32_t bxpos = textstring->bgnd_off.x + x - TEXT_BOX_OFFSET;
-	int32_t bypos =
-		textstring->bgnd_off.y + y - TEXT_BOX_OFFSET * 2 - TEXT_HEIGHT;
+	int32_t bypos = textstring->bgnd_off.y + y - TEXT_BOX_OFFSET * 2 - TEXT_HEIGHT;
 
 	int32_t letter = '\0';
 
@@ -458,8 +457,7 @@ static void Text_DrawText(TEXTSTRING *textstring)
 			continue;
 		}
 
-		x +=
-			(((int32_t)textstring->letter_spacing + m_TextSpacing[sprite_num]) *
+		x += (((int32_t)textstring->letter_spacing + m_TextSpacing[sprite_num]) *
 			 textstring->scale.h) /
 			PHD_ONE;
 	}
@@ -506,6 +504,7 @@ static void Text_DrawText(TEXTSTRING *textstring)
 		sy = Screen_GetRenderScale(bypos);
 		sh = Screen_GetRenderScale(bwidth);
 		sv = Screen_GetRenderScale(bheight);
+
 		Output_DrawScreenBox(sx, sy, sh, sv);
 	}
 }

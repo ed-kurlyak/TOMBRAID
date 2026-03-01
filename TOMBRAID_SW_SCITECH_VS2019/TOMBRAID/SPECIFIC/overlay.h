@@ -9,7 +9,7 @@ extern TEXTSTRING *m_FPSText;
 
 void Overlay_Init();
 
-int32_t Screen_GetRenderScaleGLRage(int32_t unit);
+//int32_t Screen_GetRenderScaleGLRage(int32_t unit);
 
 void Overlay_DrawHealthBar();
 void Overlay_DrawAirBar();
