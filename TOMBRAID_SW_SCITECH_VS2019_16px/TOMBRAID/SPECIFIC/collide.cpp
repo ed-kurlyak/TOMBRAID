@@ -569,8 +569,10 @@ void UpdateLaraRoom(ITEM_INFO *item, int32_t height)
 	int32_t y = item->pos.y + height;
 	int32_t z = item->pos.z;
 	int16_t room_num = item->room_number;
+
 	FLOOR_INFO *floor = GetFloor(x, y, z, &room_num);
 	item->floor = GetHeight(floor, x, y, z);
+	
 	if (item->room_number != room_num)
 	{
 		ItemNewRoom(g_Lara.item_number, room_num);

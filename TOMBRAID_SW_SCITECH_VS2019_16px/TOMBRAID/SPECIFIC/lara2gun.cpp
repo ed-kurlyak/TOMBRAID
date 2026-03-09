@@ -5,21 +5,29 @@
 #include "types.h"
 #include "vars.h"
 
+//когда Лара достает пистолеты LGS_DRAW
 void DrawPistols(int32_t weapon_type)
 {
 	int16_t ani = g_Lara.left_arm.frame_number;
 
+	//увеличиваем номер кадра
 	ani++;
 
+	//руки из обычной позиции к кобуре кадры 5-12
 	if (ani < AF_G_DRAW1 || ani > AF_G_DRAW2_L)
 	{
 		ani = AF_G_DRAW1;
 	}
+	//руки от кобуры в позицию ready кадры 13-23
 	else if (ani == AF_G_DRAW2)
 	{
+		//рисует меши оружия в руках (подстановка мешей)
 		DrawPistolMeshes(weapon_type);
 		Sound_Effect(SFX_LARA_DRAW, &g_LaraItem->pos, SPM_NORMAL);
 	}
+	//кадр 23 позиция ready
+	//меняет lara gun status = ready
+	//и руки наготове анимация кадр 0 = AF_G_AIM
 	else if (ani == AF_G_DRAW2_L)
 	{
 		ReadyPistols();
@@ -238,6 +246,7 @@ void AnimatePistols(int32_t weapon_type)
 	WEAPON_INFO *winfo = &g_Weapons[weapon_type];
 
 	int16_t anir = g_Lara.right_arm.frame_number;
+
 	if (g_Lara.right_arm.lock || (g_Input.action && !g_Lara.target))
 	{
 		if (anir >= AF_G_AIM && anir < AF_G_AIM_L)
@@ -250,6 +259,7 @@ void AnimatePistols(int32_t weapon_type)
 			//стрельба, отдача
 			angles[0] = g_Lara.right_arm.y_rot + g_LaraItem->pos.y_rot;
 			angles[1] = g_Lara.right_arm.x_rot;
+
 			if (FireWeapon(weapon_type, g_Lara.target, g_LaraItem, angles))
 			{
 				g_Lara.right_arm.flash_gun = winfo->flash_time;
@@ -277,9 +287,11 @@ void AnimatePistols(int32_t weapon_type)
 		//опускаем руку
 		anir--;
 	}
+
 	g_Lara.right_arm.frame_number = anir;
 
 	int16_t anil = g_Lara.left_arm.frame_number;
+
 	if (g_Lara.left_arm.lock || (g_Input.action && !g_Lara.target))
 	{
 		if (anil >= AF_G_AIM && anil < AF_G_AIM_L)
@@ -290,6 +302,7 @@ void AnimatePistols(int32_t weapon_type)
 		{
 			angles[0] = g_Lara.left_arm.y_rot + g_LaraItem->pos.y_rot;
 			angles[1] = g_Lara.left_arm.x_rot;
+
 			if (FireWeapon(weapon_type, g_Lara.target, g_LaraItem, angles))
 			{
 				g_Lara.left_arm.flash_gun = winfo->flash_time;
@@ -314,5 +327,6 @@ void AnimatePistols(int32_t weapon_type)
 	{
 		anil--;
 	}
+
 	g_Lara.left_arm.frame_number = anil;
 }

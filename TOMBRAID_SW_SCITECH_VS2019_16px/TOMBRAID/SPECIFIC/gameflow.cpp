@@ -74,10 +74,10 @@ void Init_GameFlow()
 	sprintf(&g_GameFlow.strings[GS_KEYMAP_LOOK][0], "%s", "Look");
 	sprintf(&g_GameFlow.strings[GS_KEYMAP_ROLL][0], "%s", "Roll");
 	sprintf(&g_GameFlow.strings[GS_KEYMAP_INVENTORY][0], "%s", "Inventory");
-	sprintf(&g_GameFlow.strings[GS_KEYMAP_PAUSE][0], "%s", "Pause");
-	sprintf(&g_GameFlow.strings[GS_KEYMAP_FLY_CHEAT][0], "%s", "Fly cheat");
-	sprintf(&g_GameFlow.strings[GS_KEYMAP_ITEM_CHEAT][0], "%s", "Item cheat");
-	sprintf(&g_GameFlow.strings[GS_KEYMAP_LEVEL_SKIP_CHEAT][0], "%s", "Level skip");
+	//sprintf(&g_GameFlow.strings[GS_KEYMAP_PAUSE][0], "%s", "Pause");
+	//sprintf(&g_GameFlow.strings[GS_KEYMAP_FLY_CHEAT][0], "%s", "Fly cheat");
+	//sprintf(&g_GameFlow.strings[GS_KEYMAP_ITEM_CHEAT][0], "%s", "Item cheat");
+	//sprintf(&g_GameFlow.strings[GS_KEYMAP_LEVEL_SKIP_CHEAT][0], "%s", "Level skip");
 	sprintf(&g_GameFlow.strings[GS_KEYMAP_CAMERA_UP][0], "%s", "Camera Up");
 	sprintf(&g_GameFlow.strings[GS_KEYMAP_CAMERA_DOWN][0], "%s", "Camera Down");
 	sprintf(&g_GameFlow.strings[GS_KEYMAP_CAMERA_LEFT][0], "%s", "Camera Left");

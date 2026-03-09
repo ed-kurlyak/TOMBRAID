@@ -38,8 +38,8 @@ int Widescreen = 0;
 
 //---------------------------
 // SETUP PART #5 GAME TYPE - TR1/GOLD
-int GameType = VER_TR1;
-//int GameType = VER_TR1_GOLD;
+//int GameType = VER_TR1;
+int GameType = VER_TR1_GOLD;
 
 //---------------------------
 // SETUP PART #6 SCREEN RESOLUTION

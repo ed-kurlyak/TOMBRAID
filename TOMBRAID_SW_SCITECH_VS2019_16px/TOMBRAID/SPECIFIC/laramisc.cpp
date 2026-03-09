@@ -39,13 +39,13 @@ void LaraControl(int16_t item_num)
 		g_LevelComplete = true;
 	}
 	*/
-
+	/*
 	if (g_Input.health_cheat)
 	{
-		item->hit_points +=
-			(g_Input.slow ? -2 : 2) * LARA_HITPOINTS / 100; // change by 2%
+		item->hit_points += (g_Input.slow ? -2 : 2) * LARA_HITPOINTS / 100; // change by 2%
 		CLAMP(item->hit_points, 0, LARA_HITPOINTS);
 	}
+	*/
 
 	/*
 if (g_InputDB.item_cheat)
@@ -53,7 +53,7 @@ if (g_InputDB.item_cheat)
 	LaraCheatGetStuff();
 }
 	*/
-
+	/*
 	if (g_Lara.water_status != LWS_CHEAT && g_Input.fly_cheat)
 	{
 		if (g_Lara.water_status != LWS_UNDERWATER || item->hit_points <= 0)
@@ -81,7 +81,7 @@ if (g_InputDB.item_cheat)
 		g_Lara.mesh_effects = 0;
 		LaraInitialiseMeshes(g_CurrentLevel);
 	}
-
+	*/
 	if (g_Lara.water_status == LWS_ABOVEWATER && room_submerged)
 	{
 		g_Lara.water_status = LWS_UNDERWATER;

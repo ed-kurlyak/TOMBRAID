@@ -27,7 +27,7 @@
 // SETUP PART #1
 //HARDWARE or SOFTWARE
 
-int Hardware = 1;
+int Hardware = 0;
 
 int Fullscreen = 0;
 
@@ -52,13 +52,15 @@ int SCREEN_WIDTH = 1600;
 int SCREEN_HEIGHT = 900;
 */
 
-/*
-int SCREEN_WIDTH = 1280;
-int SCREEN_HEIGHT = 720;
-*/
 
 int SCREEN_WIDTH = 1280;
+int SCREEN_HEIGHT = 720;
+
+
+/*
+int SCREEN_WIDTH = 1200;
 int SCREEN_HEIGHT = 800;
+*/
 
 /*
 int SCREEN_WIDTH = 1440;

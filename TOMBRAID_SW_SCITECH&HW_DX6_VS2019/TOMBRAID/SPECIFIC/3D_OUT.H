@@ -84,6 +84,7 @@ int xgen_xg(short int *iptr);
 int xgen_xguv(short int *iptr);
 int xgen_xguvpersp_fp(short int *iptr);
 void gtmap_persp32_fp(int ymin, int ymax, unsigned char *tptr);
+void gtmap_persp16_fp(int ymin, int ymax, unsigned char* tptr);
 void wgtmap_persp16_fp(int ymin, int ymax, char *tptr);
 void draw_poly_gtmap_persp(short int *iptr);
 void draw_poly_wgtmap_persp(short int *iptr);

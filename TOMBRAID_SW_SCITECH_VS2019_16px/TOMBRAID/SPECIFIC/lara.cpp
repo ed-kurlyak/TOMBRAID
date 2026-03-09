@@ -435,7 +435,9 @@ void LaraAsForwardJump(ITEM_INFO *item, COLL_INFO *coll)
 	}
 }
 
-void LaraAsPose(ITEM_INFO *item, COLL_INFO *coll) {}
+void LaraAsPose(ITEM_INFO *item, COLL_INFO *coll)
+{
+}
 
 void LaraAsFastBack(ITEM_INFO *item, COLL_INFO *coll)
 {
@@ -1299,7 +1301,10 @@ void LaraColForwardJump(ITEM_INFO *item, COLL_INFO *coll)
 	}
 }
 
-void LaraColPose(ITEM_INFO *item, COLL_INFO *coll) { LaraColStop(item, coll); }
+void LaraColPose(ITEM_INFO *item, COLL_INFO *coll)
+{
+	LaraColStop(item, coll);
+}
 
 void LaraColFastBack(ITEM_INFO *item, COLL_INFO *coll)
 {

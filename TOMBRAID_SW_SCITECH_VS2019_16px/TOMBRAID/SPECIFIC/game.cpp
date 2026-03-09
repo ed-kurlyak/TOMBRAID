@@ -676,8 +676,10 @@ int Draw_Phase_Game()
 	//обнуляет массив вершин
 	S_InitialisePolyList();
 
+	//рисует комнаты, Лару и все содержимое комнат
 	DrawRooms(g_Camera.pos.room_number);
 
+	//отображает health bar, др, патроны узи прочее
 	Overlay_DrawGameInfo();
 
 	//выводит массив вершин (картинку) в бак буфер
@@ -686,6 +688,8 @@ int Draw_Phase_Game()
 	//выводит бак буфер на экран present backbuffer
 	g_Camera.number_frames = S_DumpScreen();
 
+	//если в уровне есть анимированные текстуры анимирует
+	//их движение (например водопад, поверхность воды)
 	S_AnimateTextures(g_Camera.number_frames);
 
 	return g_Camera.number_frames;
@@ -705,6 +709,7 @@ void DrawRooms(int16_t current_room)
 {
 	ROOM_INFO *r;
 
+	//g_Camera.pos.room_number это current_room
 	CurrentRoom = current_room;
 
 	r = &g_RoomInfo[current_room];
@@ -727,9 +732,10 @@ void DrawRooms(int16_t current_room)
 
 	g_RoomsToDraw[g_RoomsToDrawCount++] = current_room;
 
+	//получаем список комнат которые видны из
+	//текущей комнаты через двери (порталы)
+	//это будет список комнат для отрисовки
 	GetRoomBounds(current_room);
-
-	//Clear_BackBuffer();
 
 	if (g_CameraUnderwater)
 	{
@@ -999,16 +1005,16 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 void SetupAboveWater(int underwater)
 {
 
-	g_IsWaterEffect = false;
-	g_IsWibbleEffect = underwater;
-	g_IsShadeEffect = underwater;
+	g_IsWaterEffect = false; //тень на стенах под водой
+	g_IsWibbleEffect = underwater; //волнистые полигоны под/над водой
+	g_IsShadeEffect = underwater; //не используется в коде
 }
 
 void SetupBelowWater(int underwater)
 {
-	g_IsWaterEffect = true;
-	g_IsWibbleEffect = !underwater;
-	g_IsShadeEffect = true;
+	g_IsWaterEffect = true; //тень на стенах под водой
+	g_IsWibbleEffect = !underwater; //волнистые полигоны под/над водой
+	g_IsShadeEffect = true; //не используется в коде
 }
 
 void PrintRooms(int16_t room_number)

@@ -165,13 +165,15 @@ void LaraGun()
 			&& (g_Lara.request_gun_type != g_Lara.gun_type
 				|| g_Lara.gun_status == LGS_ARMLESS))
 		{
-			if (g_Lara.gun_status == LGS_ARMLESS) {
+			if (g_Lara.gun_status == LGS_ARMLESS)
+			{
 				g_Lara.gun_type = g_Lara.request_gun_type;
 				InitialiseNewWeapon();
 				draw = 1;
 				g_Lara.request_gun_type = LGT_UNARMED;
 			}
-			else if (g_Lara.gun_status == LGS_READY) {
+			else if (g_Lara.gun_status == LGS_READY)
+			{
 				draw = 1;
 			}
 		}
@@ -186,7 +188,8 @@ void LaraGun()
 			g_Lara.request_gun_type = LGT_UNARMED;
 		}
 	}
-	else if (g_Lara.gun_status == LGS_READY) {
+	else if (g_Lara.gun_status == LGS_READY)
+	{
 		draw = 1;
 	}
 
@@ -250,8 +253,9 @@ void LaraGun()
 		break;
 
 	case LGS_UNDRAW:
-		g_Lara.mesh_ptrs[LM_HEAD] =
-			g_Meshes[g_Objects[O_LARA].mesh_index + LM_HEAD];
+		
+		g_Lara.mesh_ptrs[LM_HEAD] = g_Meshes[g_Objects[O_LARA].mesh_index + LM_HEAD];
+		
 		switch (g_Lara.gun_type)
 		{
 		case LGT_PISTOLS:
@@ -267,28 +271,29 @@ void LaraGun()
 		break;
 
 	case LGS_READY:
-		g_Lara.mesh_ptrs[LM_HEAD] =
-			g_Meshes[g_Objects[O_LARA].mesh_index + LM_HEAD];
+		
+		g_Lara.mesh_ptrs[LM_HEAD] = g_Meshes[g_Objects[O_LARA].mesh_index + LM_HEAD];
+		
 		switch (g_Lara.gun_type)
 		{
 		case LGT_PISTOLS:
 			if (g_Lara.pistols.ammo && g_Input.action)
 			{
-				g_Lara.mesh_ptrs[LM_HEAD] =
-					g_Meshes[g_Objects[O_UZI].mesh_index + LM_HEAD];
+				g_Lara.mesh_ptrs[LM_HEAD] =	g_Meshes[g_Objects[O_UZI].mesh_index + LM_HEAD];
 			}
 			if (g_Camera.type != CAM_CINEMATIC && g_Camera.type != CAM_LOOK)
 			{
 				g_Camera.type = CAM_COMBAT;
 			}
+
 			PistolHandler(g_Lara.gun_type);
+
 			break;
 
 		case LGT_MAGNUMS:
 			if (g_Lara.magnums.ammo && g_Input.action)
 			{
-				g_Lara.mesh_ptrs[LM_HEAD] =
-					g_Meshes[g_Objects[O_UZI].mesh_index + LM_HEAD];
+				g_Lara.mesh_ptrs[LM_HEAD] =	g_Meshes[g_Objects[O_UZI].mesh_index + LM_HEAD];
 			}
 			if (g_Camera.type != CAM_CINEMATIC && g_Camera.type != CAM_LOOK)
 			{
@@ -300,27 +305,29 @@ void LaraGun()
 		case LGT_UZIS:
 			if (g_Lara.uzis.ammo && g_Input.action)
 			{
-				g_Lara.mesh_ptrs[LM_HEAD] =
-					g_Meshes[g_Objects[O_UZI].mesh_index + LM_HEAD];
+				g_Lara.mesh_ptrs[LM_HEAD] =	g_Meshes[g_Objects[O_UZI].mesh_index + LM_HEAD];
 			}
 			if (g_Camera.type != CAM_CINEMATIC && g_Camera.type != CAM_LOOK)
 			{
 				g_Camera.type = CAM_COMBAT;
 			}
+			
 			PistolHandler(g_Lara.gun_type);
+			
 			break;
 
 		case LGT_SHOTGUN:
 			if (g_Lara.shotgun.ammo && g_Input.action)
 			{
-				g_Lara.mesh_ptrs[LM_HEAD] =
-					g_Meshes[g_Objects[O_UZI].mesh_index + LM_HEAD];
+				g_Lara.mesh_ptrs[LM_HEAD] = g_Meshes[g_Objects[O_UZI].mesh_index + LM_HEAD];
 			}
 			if (g_Camera.type != CAM_CINEMATIC && g_Camera.type != CAM_LOOK)
 			{
 				g_Camera.type = CAM_COMBAT;
 			}
+			
 			RifleHandler(LGT_SHOTGUN);
+			
 			break;
 		}
 		break;
@@ -354,7 +361,7 @@ void InitialiseNewWeapon()
 		//анимация номер 160 первые 5 кадров от 0 до 4 кадров руки из ready в прицеливание,
 		//анимация 161 следующие 8 кадров от 5 до 12 прикладывает руки к кобуре,
 		//анимация 162 следующие 11 от 13 до 23 ставит руки от кобуры в позицию ready
-		//анимация 163 следующие от 24 кадры 9 отдача
+		//анимация 163 следующие от 24 кадра 9 кадров отдача
 		//кадр 0 тоже как и 23 руки в позиции ready
 		g_Lara.right_arm.frame_base = g_Objects[O_PISTOLS].frame_base;
 		g_Lara.left_arm.frame_base = g_Objects[O_PISTOLS].frame_base;
@@ -394,6 +401,7 @@ void LaraTargetInfo(WEAPON_INFO *winfo)
 
 	GAME_VECTOR src;
 	GAME_VECTOR target;
+
 	src.x = g_LaraItem->pos.x;
 	src.y = g_LaraItem->pos.y - 650;
 	src.z = g_LaraItem->pos.z;
@@ -461,6 +469,7 @@ void LaraGetNewTarget(WEAPON_INFO *winfo)
 		 item_num = item->next_active)
 	{
 		item = &g_Items[item_num];
+
 		if (item->hit_points <= 0)
 		{
 			continue;
@@ -469,6 +478,7 @@ void LaraGetNewTarget(WEAPON_INFO *winfo)
 		int32_t x = item->pos.x - src.x;
 		int32_t y = item->pos.y - src.y;
 		int32_t z = item->pos.z - src.z;
+
 		if (ABS(x) > maxdist || ABS(y) > maxdist || ABS(z) > maxdist)
 		{
 			continue;

@@ -135,6 +135,7 @@ void CreateStartInfo(int level_num)
 	start->costume = 0;
 
 	start->pistol_ammo = 1000;
+
 	if (Inv_RequestItem(O_GUN_ITEM))
 	{
 		start->got_pistols = 1;

@@ -1220,9 +1220,9 @@ typedef enum GAME_STRING_ID
 	GS_KEYMAP_LOOK,
 	GS_KEYMAP_ROLL,
 	GS_KEYMAP_INVENTORY,
-	GS_KEYMAP_FLY_CHEAT,
-	GS_KEYMAP_ITEM_CHEAT,
-	GS_KEYMAP_LEVEL_SKIP_CHEAT,
+	//GS_KEYMAP_FLY_CHEAT,
+	//GS_KEYMAP_ITEM_CHEAT,
+	//GS_KEYMAP_LEVEL_SKIP_CHEAT,
 	GS_KEYMAP_PAUSE,
 	GS_KEYMAP_CAMERA_UP,
 	GS_KEYMAP_CAMERA_DOWN,
@@ -2176,8 +2176,8 @@ typedef union INPUT_STATE {
 		uint32_t load : 1;
 		uint32_t fly_cheat : 1;
 		uint32_t item_cheat : 1;
-		uint32_t level_skip_cheat : 1;
-		uint32_t health_cheat : 1;
+		//uint32_t level_skip_cheat : 1;
+		//uint32_t health_cheat : 1;
 		uint32_t camera_up : 1;
 		uint32_t camera_down : 1;
 		uint32_t camera_left : 1;

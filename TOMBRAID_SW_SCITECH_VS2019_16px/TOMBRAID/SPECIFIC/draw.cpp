@@ -216,7 +216,6 @@ void Output_DrawShadow(int16_t size, int16_t *bptr, ITEM_INFO *item)
 {
 	int i;
 
-	// g_ShadowInfo.vertex_count = g_Config.enable_round_shadow ? 32 : 8;
 	g_ShadowInfo.vertex_count = 8;
 
 	int32_t x0 = bptr[FRAME_BOUND_MIN_X];
@@ -494,12 +493,8 @@ void Output_DrawPolygons(int16_t *obj_ptr, int clip)
 	if (obj_ptr)
 	{
 		obj_ptr = Output_CalcVerticeLight(obj_ptr);
-		// obj_ptr = Output_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
-		// obj_ptr = Output_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
 		obj_ptr = S_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
 		obj_ptr = S_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
-		// obj_ptr = Output_DrawObjectG4(obj_ptr + 1, *obj_ptr);
-		// obj_ptr = Output_DrawObjectG3(obj_ptr + 1, *obj_ptr);
 		obj_ptr = S_DrawObjectG4(obj_ptr + 1, *obj_ptr);
 		obj_ptr = S_DrawObjectG3(obj_ptr + 1, *obj_ptr);
 	}
@@ -661,47 +656,8 @@ int16_t *S_DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 	POINT_INFO points[4];
 	PHD_TEXTURE *tex;
 	int32_t vert_count = 4;
-	// int32_t vert_count = 0;
 
 	int num_TexturedQuad = number;
-
-	//перед вызовом S_DrawObjectGT4
-	// obj_ptr + 0 количество GT4 = index 1 - 2 байта
-	// obj_ptr + 1 vert #1 = index 2 - 2 байта
-	// obj_ptr + 2 vert #2 = index 3 - 2 байта
-	// obj_ptr + 3 vert #3 = index 4 - 2 байта
-	// obj_ptr + 4 vert #4 = index 5 - 2 байта
-	// obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
-
-	//внутри S_DrawObjectGT4 eax = obj_ptr = пропускаетс€ количество GT4
-	// obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
-	// obj_ptr + 1 vert #2 in 2 bytes + 2 bytes
-	// obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
-	// obj_ptr + 3 vert #4 in 2 bytes + 6 bytes
-	// obj_ptr + 4 g_PhdTextureInfo in 2 bytes
-
-	//вычисление текстуры
-	// start memory obj_ptr = byte4(1122) byte4(3344) texinfo byte4(5500)
-	//вычисление текстуры eax = obj_ptr
-	// mov eax, [eax + 6] => start memory obj = byte4(11 22) byte4(33 => eax =
-	// 00 00 55 44 sar eax >> 16 => eax = 55
-
-	// sizeof(PHD_TEXTURE) = 20 bytes
-	// sizeof(PHD_VBUF) = 32 bytes
-	// sizeof(obj) = 12 bytes
-
-	//------------------
-	// vert buff VERT m_VBuf -> sizeof(PHD_VBUF) = 32
-	// x	+0
-	// y	+4
-	// z	+8
-	// xs	+12
-	// yx	+16
-	// dist	+20
-	// clip	+22
-	// g	+24
-	// tu	+26
-	// tv	+28
 
 	if (number > 0)
 	{
@@ -715,60 +671,8 @@ int16_t *S_DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 
 			tex = &g_PhdTextureInfo[*obj_ptr++];
 
-			/*
-			//результат if ноль инвертируем
-			//все вершины с разных сторон (зритель близко к полигону)
-			int clip_flags1 = 1;
-			int clip_flags2 = 2;
-			int clip_flags3 = 4;
-			int clip_flags4 = 8;
-
-			//нету вобще отсечени€
-			int clip_flags1 = 0;
-			int clip_flags2 = 0;
-			int clip_flags3 = 0;
-			int clip_flags4 = 0;
-			*/
-
-			/*
-			результат if 1 инвертируем
-
-			//все вершины с одной стороны экрана - полигон не видим
-			int clip_flags1 = 1;
-			int clip_flags2 = 1;
-			int clip_flags3 = 1;
-			int clip_flags4 = 1;
-			*/
-
-			//вариант 1 - все вершины с разных сторон (зритель близко к
-			//полигону) вариант 2 - нету вобще отсечени€ (в пределах экрана)
-			//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
-
-			/*
-			//вариант 1 - все вершины с разных сторон (зритель близко к
-			полигону) int clip_flags1 = 1; int clip_flags2 = 2; int clip_flags3
-			= 4; int clip_flags4 = 8;
-
-			//вариант 2 - нету вобще отсечени€ (в пределах экрана)
-			int clip_flags1 = 0;
-			int clip_flags2 = 0;
-			int clip_flags3 = 0;
-			int clip_flags4 = 0;
-			
-
-
-
-			//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
-			int clip_flags1 = 1;
-			int clip_flags2 = 1;
-			int clip_flags3 = 1;
-			int clip_flags4 = 1;
-			*/
-
-			//если вариант 1 и 2
 			if (!(vns[0]->clip & vns[1]->clip & vns[2]->clip & vns[3]->clip))
 			{
-				//если вариант 1 и 2
 				if (vns[0]->clip >= 0 && vns[1]->clip >= 0 &&
 					vns[2]->clip >= 0 && vns[3]->clip >= 0)
 				{
@@ -848,25 +752,9 @@ int16_t *S_DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 
 							sort3dptr += 2;
 
-							// info3dptr 2 bytes - 16 бит
-							// 0 draw routine
-							// 1 texture page
-							// 2 num coords ie vert count
-							// 3 vert1
-							// 4 vert2
-							// 5 vert3
-
-							// info3dptr[0] = tex->drawtype;
-							// info3dptr[1] = tex->tpage;
-							// info3dptr[2] = vert_count;
-
 							/*
 							if(depth > perspective_distance)
 							{
-									
-
-
-
 									info[0] = tex->drawtype;
 									//info[1] = tex->tpage;
 									info[2] = vert_count;
@@ -930,10 +818,8 @@ int16_t *S_DrawObjectGT4(int16_t *obj_ptr, int32_t number)
 
 									do
 									{
-										info[0] =
-											(short int)vertices[indx].x; // edx
-										info[1] = (short int)vertices[indx]
-													  .y; // edx + 4
+										info[0] = (short int)vertices[indx].x;
+										info[1] = (short int)vertices[indx].y;
 										info[2] = (short int)vertices[indx].g;
 
 										*(float *)&info[3] = vertices[indx].z;
@@ -3145,6 +3031,7 @@ void TestTriggers(int16_t *data, int32_t heavy)
 
 	ITEM_INFO *camera_item = NULL;
 	int16_t trigger;
+
 	do
 	{
 		trigger = *data++;
@@ -3406,6 +3293,10 @@ void DrawLara(ITEM_INFO *item)
 
 	if (g_Lara.hit_direction < 0)
 	{
+		//frac текуща€ часть интерпол€ции 0,1,2,3
+		//если frac равно 0 то значит ключевой кадр (без интерпол€ции)
+		//rate на сколько частей делитьс€ один фрейм анимации обычно 4
+		//frmptr[0] текущий фрейм анимации, frmptr[1] сл.фрейм анимации
 		int32_t rate;
 		int32_t frac = GetFrames(item, frmptr, &rate);
 		if (frac)
@@ -3457,6 +3348,7 @@ void DrawLara(ITEM_INFO *item)
 	phd_RotYXZ(item->pos.y_rot, item->pos.x_rot, item->pos.z_rot);
 
 	int32_t clip = S_GetObjectBounds(frame);
+
 	if (!clip)
 	{
 		phd_PopMatrix();
@@ -3526,11 +3418,16 @@ void DrawLara(ITEM_INFO *item)
 
 	int32_t fire_arms = 0;
 
+	//gun type какое сейчас оружие выбрано у Ћары - пистолет, узи, т.п.
+	//gun status состо€ние рук Ћары - с текущим оружием, без, достает т.п.
 	if (g_Lara.gun_status == LGS_READY || g_Lara.gun_status == LGS_DRAW ||
 		g_Lara.gun_status == LGS_UNDRAW)
 	{
 		fire_arms = g_Lara.gun_type;
 	}
+
+	//если lgs armless (не держит оружие) то fire_arms будет 0 тоже
+	//даже если gun type пистолеты но они не вынуты у Ћары
 
 	switch (fire_arms)
 	{
@@ -3709,6 +3606,7 @@ void DrawLara(ITEM_INFO *item)
 
 	phd_PopMatrix();
 	phd_PopMatrix();
+	
 	g_PhdLeft = left;
 	g_PhdRight = right;
 	g_PhdTop = top;
@@ -3893,6 +3791,7 @@ void DrawLaraInt(ITEM_INFO *item, int16_t *frame1, int16_t *frame2,
 	phd_RotYXZ(item->pos.y_rot, item->pos.x_rot, item->pos.z_rot);
 
 	int32_t clip = S_GetObjectBounds(frame1);
+
 	if (!clip)
 	{
 		phd_PopMatrix();
