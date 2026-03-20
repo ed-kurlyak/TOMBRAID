@@ -500,17 +500,18 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	g_Config.input.layout = INPUT_LAYOUT_DEFAULT;
 	g_GameFlow.gym_level_num = 0;
 	g_GameFlow.first_level_num = 1;
-	g_GameFlow.last_level_num = 15;
-
+	
 	if (GameType == VER_TR1)
 	{
 		g_GameFlow.title_level_num = 20;
 		g_GameFlow.level_count = 22;
+		g_GameFlow.last_level_num = 15;
 	}
 	else if (GameType == VER_TR1_GOLD)
 	{
 		g_GameFlow.title_level_num = 5;
 		g_GameFlow.level_count = 4;
+		g_GameFlow.last_level_num = 4;
 	}
 
 	g_Config.render_flags.fps_counter = 1;

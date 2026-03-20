@@ -2818,6 +2818,7 @@ void AnimateItem(ITEM_INFO *item)
 		if (GetChange(item, anim))
 		{
 			anim = &g_Anims[item->anim_number];
+
 			item->current_anim_state = anim->current_anim_state;
 
 			if (item->required_anim_state == item->current_anim_state)
@@ -2865,6 +2866,7 @@ void AnimateItem(ITEM_INFO *item)
 		item->frame_number = anim->jump_frame_num;
 
 		anim = &g_Anims[item->anim_number];
+
 		item->current_anim_state = anim->current_anim_state;
 		item->goal_anim_state = item->current_anim_state;
 
