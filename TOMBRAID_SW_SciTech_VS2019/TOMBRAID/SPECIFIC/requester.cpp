@@ -64,8 +64,7 @@ int32_t DisplayRequester(REQUEST_INFO *req)
 
 	if (!req->heading)
 	{
-		req->heading =
-			Text_Create(req->x, line_one_off - req->line_height - BOX_PADDING,
+		req->heading = Text_Create(req->x, line_one_off - req->line_height - BOX_PADDING,
 						req->heading_text);
 		Text_CentreH(req->heading, 1);
 		Text_AlignBottom(req->heading, 1);
@@ -87,8 +86,7 @@ int32_t DisplayRequester(REQUEST_INFO *req)
 	{
 		if (!req->moreup)
 		{
-			req->moreup =
-				Text_Create(req->x, line_one_off - req->line_height + 2, "[");
+			req->moreup = Text_Create(req->x, line_one_off - req->line_height + 2, "[");
 			Text_SetScale(req->moreup, PHD_ONE * 2 / 3, PHD_ONE * 2 / 3);
 			Text_CentreH(req->moreup, 1);
 			Text_AlignBottom(req->moreup, 1);
@@ -120,8 +118,7 @@ int32_t DisplayRequester(REQUEST_INFO *req)
 	{
 		if (!req->texts[i])
 		{
-			req->texts[i] = Text_Create(
-				0, line_one_off + req->line_height * i,
+			req->texts[i] = Text_Create( 0, line_one_off + req->line_height * i,
 				&req->item_texts[req->item_text_len * (req->line_offset + i)]);
 			Text_CentreH(req->texts[i], 1);
 			Text_AlignBottom(req->texts[i], 1);
@@ -148,8 +145,7 @@ int32_t DisplayRequester(REQUEST_INFO *req)
 			if (req->texts[i])
 			{
 				Text_ChangeText(req->texts[i],
-								&req->item_texts[req->item_text_len *
-												 (req->line_offset + i)]);
+					&req->item_texts[req->item_text_len * (req->line_offset + i)]);
 			}
 		}
 	}

@@ -3,17 +3,6 @@
 #include "windows.h"
 #include "const.h"
 
-
-#include <math.h>
-
-#include <ddraw.h>
-#include <d3d.h>
-#include <d3dtypes.h>
-#include <d3dcaps.h>
-
-#pragma comment (lib, "ddraw.lib")
-#pragma comment (lib, "dxguid.lib")
-
 #define MAXIMUM_LEVELS		22
 
 #define ROOM_TRANSPARENCY  0xff
@@ -50,83 +39,6 @@ typedef enum
 	VOLE_ATTACK = 2,
 	VOLE_DEATH = 3,
 } VOLE_ANIM;
-
-struct VERTEX_TRANS_QUAD
-{
-	float x, y, z, w;
-	DWORD diffuse;
-};
-
-struct VERTEX_COLOR_LINE
-{
-	float x, y, z, w;
-	DWORD diffuse;
-};
-
-struct VERTEX_COLOR_TEX
-{
-	//D3DXVECTOR4 p;
-	float x, y, z, w;
-	//D3DXVECTOR2 t;
-	
-	D3DCOLOR diffuse;    // diffuse цвет
-	D3DCOLOR specular; // specular цвет
-
-	float tu, tv;
-
-
-};
-
-struct VERTEX_COLOR
-{
-	//D3DXVECTOR4 p;
-	float x, y, z, w;
-	//D3DXVECTOR2 t;
-	//float tu, tv;
-	DWORD diffuse;
-
-};
-
-#define VERTSPERBUCKET (6 * 1024 + 32)
-//#define VERTSPERBUCKET (15 * 1024 + 32)
-
-struct TEXTUREBUCKET
-{
-	DWORD tpage;
-	//LPDIRECT3DTEXTURE2 lp_tpage;
-	DWORD lp_tpage;
-	int count;
-	//VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
-	D3DTLVERTEX Vertex[VERTSPERBUCKET];
-	//LPDIRECT3DVERTEXBUFFER9 VertBuff;
-};
-
-struct TRANSQUADBUCKET
-{
-	int count;
-	//VERTEX_TRANS_QUAD Vertex[VERTSPERBUCKET];
-	//VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
-	D3DTLVERTEX Vertex[VERTSPERBUCKET];
-	//LPDIRECT3DVERTEXBUFFER9 VertBuff;
-};
-
-struct LINESBUCKET
-{
-	int count;
-	//VERTEX_COLOR_LINE Vertex[VERTSPERBUCKET];
-	VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
-	//LPDIRECT3DVERTEXBUFFER9 VertBuff;
-};
-
-struct COLOREDBUCKET
-{
-	int count;
-	//VERTEX_COLOR
-	//VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
-	D3DTLVERTEX Vertex[VERTSPERBUCKET];
-
-	//LPDIRECT3DVERTEXBUFFER9 VertBuff;
-};
 
 #define uint32_t unsigned int
 #define int32_t int
@@ -204,7 +116,7 @@ typedef struct VBUF
 typedef struct VBUF2
 {
 	// float x, y, z, g;
-	float x, y, z, g, w;
+	float x, y, z, g;
 } VBUF2;
 
 typedef struct
@@ -224,6 +136,18 @@ typedef struct
 		*/
 } SOUND_SAMPLE_INFO;
 
+typedef struct phdspritestruct
+{
+	uint16_t tpage;
+	uint16_t offset;
+	uint16_t width;
+	uint16_t height;
+	int16_t x1;
+	int16_t y1;
+	int16_t x2;
+	int16_t y2;
+} PHDSPRITESTRUCT;
+/*
 typedef struct PHD_SPRITE
 {
 	uint16_t tpage;
@@ -235,7 +159,7 @@ typedef struct PHD_SPRITE
 	int16_t x2;
 	int16_t y2;
 } PHD_SPRITE;
-
+*/
 typedef enum GAME_BUFFER
 {
 	GBUF_TEXTURE_PAGES,
@@ -1300,9 +1224,9 @@ typedef enum GAME_STRING_ID
 	GS_KEYMAP_LOOK,
 	GS_KEYMAP_ROLL,
 	GS_KEYMAP_INVENTORY,
-	GS_KEYMAP_FLY_CHEAT,
-	GS_KEYMAP_ITEM_CHEAT,
-	GS_KEYMAP_LEVEL_SKIP_CHEAT,
+	//GS_KEYMAP_FLY_CHEAT,
+	//GS_KEYMAP_ITEM_CHEAT,
+	//GS_KEYMAP_LEVEL_SKIP_CHEAT,
 	GS_KEYMAP_PAUSE,
 	GS_KEYMAP_CAMERA_UP,
 	GS_KEYMAP_CAMERA_DOWN,
@@ -1512,25 +1436,11 @@ typedef struct POINT_INFO
 
 typedef struct PHD_VBUF
 {
-	/*
 	int32_t xv;
 	int32_t yv;
 	int32_t zv;
 	int32_t xs;
 	int32_t ys;
-	int32_t dist;
-	int16_t clip;
-	int16_t g;
-	uint16_t u;
-	uint16_t v;
-	*/
-
-	float xv;
-	float yv;
-	float zv;
-	float ooz;
-	float xs;
-	float ys;
 	int32_t dist;
 	int16_t clip;
 	int16_t g;
@@ -1799,7 +1709,7 @@ typedef struct START_INFO
 
 typedef struct SAVEGAME_INFO
 {
-	START_INFO start[22];
+	START_INFO start[22] = { 0 };
 	uint32_t timer;
 	uint32_t kills;
 	uint16_t secrets;
@@ -2270,8 +2180,8 @@ typedef union INPUT_STATE {
 		uint32_t load : 1;
 		uint32_t fly_cheat : 1;
 		uint32_t item_cheat : 1;
-		uint32_t level_skip_cheat : 1;
-		uint32_t health_cheat : 1;
+		//uint32_t level_skip_cheat : 1;
+		//uint32_t health_cheat : 1;
 		uint32_t camera_up : 1;
 		uint32_t camera_down : 1;
 		uint32_t camera_left : 1;

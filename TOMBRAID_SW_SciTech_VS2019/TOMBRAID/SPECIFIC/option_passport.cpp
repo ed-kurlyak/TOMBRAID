@@ -37,6 +37,7 @@ static REQUEST_INFO m_NewGameRequester = {
 };
 
 static char m_LoadSaveGameStrings[MAX_SAVE_SLOTS][MAX_LEVEL_NAME_LENGTH] = {0};
+
 REQUEST_INFO g_LoadSaveGameRequester = {
 	1,							  //.items =
 	0,							  //.requested =
@@ -54,7 +55,6 @@ REQUEST_INFO g_LoadSaveGameRequester = {
 	MAX_LEVEL_NAME_LENGTH,		  //.item_text_len =
 	//0,
 };
-
 
 static void InitNewGameRequester()
 {
@@ -75,7 +75,7 @@ static void InitLoadSaveGameRequester()
 {
 	REQUEST_INFO *req = &g_LoadSaveGameRequester;
 	InitRequester(req);
-	// GetSavedGamesList(req);
+	//GetSavedGamesList(req);
 	SetRequesterHeading(req, g_GameFlow.strings[GS_PASSPORT_SELECT_LEVEL]);
 
 	if (Screen_GetResHeightDownscaled() <= 240)

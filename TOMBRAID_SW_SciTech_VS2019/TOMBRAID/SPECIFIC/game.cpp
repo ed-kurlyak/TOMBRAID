@@ -1,6 +1,5 @@
 #include <windows.h>
 
-#include "util.h"
 #include "input.h"
 #include "text.h"
 #include "draw.h"
@@ -28,8 +27,6 @@
 #include "savegame.h"
 #include "game.h"
 #include "gameflow.h"
-
-#include "drawprimitive.h"
 
 static int32_t m_MedipackCoolDown = 0;
 
@@ -272,35 +269,30 @@ int Print_Final_Stats(int32_t level_num)
 
 	// wait till action key release
 	// while (g_Input.select || g_Input.deselect)
-	
 	while (g_Input.select || g_Input.deselect)
 	{
 		Input_Update();
 	}
+
 	
 	while (!g_Input.select && !g_Input.deselect)
 	{
 		Input_Update();
 		S_InitialisePolyList();
-
-		/*
-		if (!Hardware)
-			Clear_BackBuffer();
-			*/
-		
-		// CopyBufferToScreen(); draw picture
+		//Clear_BackBuffer();
+		// Output_CopyBufferToScreen(); draw picture
 		Text_Draw();
 
 		S_OutputPolyList();
 		S_DumpScreen();
 	}
-
 	//добавил я что бы не вылетало LoadTitle
 	//после финальной статистики
 	while (g_Input.select || g_Input.deselect)
 	{
 		Input_Update();
 	}
+
 
 	if (level_num == g_GameFlow.last_level_num)
 	{
@@ -574,7 +566,6 @@ int Get_Key_State(int key)
 
 void Input_Update()
 {
-
 	if (Get_Key_State(VK_L))
 		g_LevelComplete = true;
 
@@ -594,8 +585,9 @@ void Input_Update()
 	g_Input.select = Get_Key_State(VK_CONTROL) || Get_Key_State(VK_RETURN);
 
 	g_Input.deselect = S_Input_Key(INPUT_KEY_OPTION);
-	g_Input.option =
-		S_Input_Key(INPUT_KEY_OPTION) && g_Camera.type != CAM_CINEMATIC;
+	g_Input.option = S_Input_Key(INPUT_KEY_OPTION) && g_Camera.type != CAM_CINEMATIC;
+	// g_Input.option = Get_Key_State(VK_ESCAPE) && g_Camera.type !=
+	// CAM_CINEMATIC;
 
 	if (m_MedipackCoolDown)
 	{
@@ -639,6 +631,8 @@ void Input_Update()
 	}
 
 	// g_InputDB = Input_GetDebounced(g_Input);
+
+	// SpinMessageLoop();
 }
 
 INPUT_STATE Input_GetDebounced(INPUT_STATE input)
@@ -653,6 +647,7 @@ int32_t DrawPhaseCinematic()
 {
 	S_InitialisePolyList();
 	//Output_ClearScreen();
+	//добавить clear backbuffer
 	g_CameraUnderwater = false;
 	for (int i = 0; i < g_RoomsToDrawCount; i++)
 	{
@@ -669,6 +664,7 @@ int32_t DrawPhaseCinematic()
 
 	g_Camera.number_frames = S_DumpScreen();
 	S_AnimateTextures(g_Camera.number_frames);
+
 	return g_Camera.number_frames;
 }
 
@@ -677,64 +673,43 @@ int Draw_Phase_Game()
 {
 	int result = 0;
 
+	//обнуляет массив вершин
 	S_InitialisePolyList();
 
+	//рисует комнаты, Лару и все содержимое комнат
 	DrawRooms(g_Camera.pos.room_number);
 
+	//отображает health bar, др, патроны узи прочее
 	Overlay_DrawGameInfo();
 
+	//выводит массив вершин (картинку) в бак буфер
 	S_OutputPolyList();
 
+	//выводит бак буфер на экран present backbuffer
 	g_Camera.number_frames = S_DumpScreen();
 
+	//если в уровне есть анимированные текстуры анимирует
+	//их движение (например водопад, поверхность воды)
 	S_AnimateTextures(g_Camera.number_frames);
 
 	return g_Camera.number_frames;
 }
 
-
-void S_InitialisePolyList_SW()
+void S_InitialisePolyList()
 {
-	sort3dptr = (int32_t*)sort3d_buffer;
-	info3dptr = (int16_t*)info3d_buffer;
+	sort3dptr = (int32_t *)sort3d_buffer;
+	info3dptr = (int16_t *)info3d_buffer;
 
 	surfacenum = 0;
 
 	Clear_BackBuffer();
 }
 
-
-void S_InitialisePolyList_HW()
-//void S_InitialisePolyList()
-{
-	/*
-	if (!Hardware)
-	{
-		sort3dptr = (int32_t*)sort3d_buffer;
-		info3dptr = (int16_t*)info3d_buffer;
-
-		surfacenum = 0;
-
-		Clear_BackBuffer();
-	}
-	else
-	{
-		InitBuckets();
-	}
-	*/
-
-	sort3dptr = (int32_t*)sort3d_buffer;
-	info3dptr = (int16_t*)info3d_buffer;
-
-	surfacenum = 0;
-
-	InitBuckets();
-}
-
 void DrawRooms(int16_t current_room)
 {
-	ROOM_INFO* r;
+	ROOM_INFO *r;
 
+	//g_Camera.pos.room_number это current_room
 	CurrentRoom = current_room;
 
 	r = &g_RoomInfo[current_room];
@@ -757,18 +732,19 @@ void DrawRooms(int16_t current_room)
 
 	g_RoomsToDraw[g_RoomsToDrawCount++] = current_room;
 
+	//получаем список комнат которые видны из
+	//текущей комнаты через двери (порталы)
+	//это будет список комнат для отрисовки
 	GetRoomBounds(current_room);
 
 	if (g_CameraUnderwater)
 	{
-		if (!Hardware)
-			Create_Water_Palette();
+		Create_Water_Palette();
 	}
 
 	if (!g_CameraUnderwater)
 	{
-		if (!Hardware)
-			Create_Normal_Palette();
+		Create_Normal_Palette();
 	}
 
 	if (g_Objects[O_LARA].loaded)
@@ -781,523 +757,37 @@ void DrawRooms(int16_t current_room)
 		{
 			SetupAboveWater(g_CameraUnderwater);
 		}
+
 		DrawLara(g_LaraItem);
 	}
-	
+
 	for (int i = 0; i < g_RoomsToDrawCount; i++)
 	{
 		PrintRooms(g_RoomsToDraw[i]);
 	}
 }
 
-void S_OutputPolyList_SW()
+void S_OutputPolyList()
 {
 	phd_SortPolyList(surfacenum, sort3d_buffer);
 	phd_PrintPolyList(dibdc->surface);
 }
 
-void S_OutputPolyList_HW()
-{
-	HRESULT hr;
-
-	D3DMATERIALHANDLE g_hMtrl;
-
-	LPDIRECT3DMATERIAL2 pMtrlObjectMtrl;
-
-	g_pD3D->CreateMaterial(&pMtrlObjectMtrl, NULL);
-		
-
-	// Set properties for ambient reflectance.
-	D3DMATERIAL       Mtrl;
-	ZeroMemory(&Mtrl, sizeof(D3DMATERIAL));
-
-	// Always set the structure size!
-	Mtrl.dwSize = sizeof(D3DMATERIAL);
-	Mtrl.dwRampSize = 1;
-
-	/*
-	//белый цвет
-	Mtrl.dcvDiffuse.r = 1.0f;
-	Mtrl.dcvDiffuse.g = 1.0f;
-	Mtrl.dcvDiffuse.b = 1.0f;
-	*/
-	Mtrl.dcvDiffuse.r = 0.0f;
-	Mtrl.dcvDiffuse.g = 0.0f;
-	Mtrl.dcvDiffuse.b = 0.0f;
-	// Commit the properties to the material.
-	pMtrlObjectMtrl->SetMaterial(&Mtrl);
-		
-
-	pMtrlObjectMtrl->GetHandle(g_pD3dDevice, &g_hMtrl);
-		
-	g_pViewport->SetBackground(g_hMtrl);
-
-
-	//hr = g_pD3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 60, 100, 150), 1.0f, 0);
-	hr = g_pViewport->Clear(1UL, (D3DRECT*)& g_RcViewportRect, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER);
-		//HRESULT hr = g_pViewport->Clear2( 1UL, (D3DRECT*)&g_RcViewportRect, D3DCLEAR_TARGET,
-		//0x00ffffff, 1.0f, 0L);
-
-
-	// Begin the scene
-	if (FAILED(g_pD3dDevice->BeginScene()))
-	{
-		// Don't return an error, unless we want the app to exit
-
-	}
-
-	
-	// включаем отсечение и задаем режим CW (по часовой стрелке)
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_CCW);
-
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_FILLMODE, D3DFILL_SOLID);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_SHADEMODE, D3DSHADE_GOURAUD);
-
-
-	if(DXNearestTexture)
-	{
-		//отображение без сглаживания
-		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAG, D3DFILTER_NEAREST);
-		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMIN, D3DFILTER_NEAREST);
-	}
-	else
-	{
-		//отображение с билинейным сглаживанием
-		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAG, D3DFILTER_LINEAR);
-		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMIN, D3DFILTER_LINEAR);
-	}
-
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREPERSPECTIVE, true);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREADDRESS, D3DTADDRESS_CLAMP);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAPBLEND, D3DTBLEND_MODULATE);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_CCW);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND, D3DBLEND_SRCALPHA);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE, false);
-
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAPBLEND, D3DTBLEND_MODULATE);
-
-
-
-	
-
-
-
-	hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, TRUE);
-	if (FAILED(hr)) return;
-
-	hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
-	if (FAILED(hr)) return;
-
-	hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZFUNC, D3DCMP_LESSEQUAL);
-	if (FAILED(hr)) return;
-	
-	
-	/*
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, TRUE);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND, D3DBLEND_SRCALPHA);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	*/
-	
-	/*
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHATESTENABLE, TRUE);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHAREF, 0);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHAFUNC, D3DCMP_GREATER);
-	*/
-
-	//g_pD3dDevice->SetRenderState(D3DRENDERSTATE_COLORKEYENABLE, TRUE);
-	//g_pD3dDevice->SetRenderState(D3DRENDERSTATE_COLORKEYENABLE, FALSE);
-
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAPBLEND, D3DTBLEND_MODULATE);
-	
-
-	for (int n = 0; n < MAXBUCKETS; n++)
-	{
-		if (Bucket_Tex_Color_Opaque[n].count != 0)
-		{
-			g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREHANDLE, m_pLevelTile[Bucket_Tex_Color_Opaque[n].tpage]);
-
-			//нарисуем примитивы
-			hr = g_pD3dDevice->DrawPrimitive(
-				D3DPT_TRIANGLELIST,             //тип примитива
-				D3DVT_TLVERTEX,//D3DPT_TRIANGLEFAN,
-				&Bucket_Tex_Color_Opaque[n].Vertex[0],
-				Bucket_Tex_Color_Opaque[n].count,
-				D3DDP_DONOTCLIP | D3DDP_DONOTUPDATEEXTENTS);
-
-		}
-	}
-
-	//g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, FALSE);
-
-	
-
-	if(Bucket_Colored.count > 0)
-	{
-		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREHANDLE, 0);
-
-
-		hr = g_pD3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, D3DVT_TLVERTEX, &Bucket_Colored.Vertex[0],Bucket_Colored.count, D3DDP_DONOTCLIP | D3DDP_DONOTUPDATEEXTENTS);
-	}
-		
-
-	//draw trans quad under text titles
-
-
-	hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, FALSE);
-	if (FAILED(hr)) return;
-
-	hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
-	if (FAILED(hr)) return;
-
-	hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZFUNC, D3DCMP_LESSEQUAL);
-	if (FAILED(hr)) return;
-
-
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, TRUE);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND, D3DBLEND_SRCALPHA);
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREMAPBLEND, D3DTBLEND_MODULATE);
-
-	if (Bucket_TransQuad.count > 0)
-	{
-		g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREHANDLE, 0);
-
-
-		hr = g_pD3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, D3DVT_TLVERTEX,  &Bucket_TransQuad.Vertex[0], Bucket_TransQuad.count, D3DDP_DONOTCLIP | D3DDP_DONOTUPDATEEXTENTS);
-	}
-
-
-	g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, FALSE);
-	
-	if (Bucket_Lines.count > 0)
-	{
-
-		hr = g_pD3dDevice->DrawPrimitive(D3DPT_LINELIST, D3DVT_TLVERTEX, &Bucket_Lines.Vertex[0], Bucket_Lines.count, D3DDP_DONOTCLIP | D3DDP_DONOTUPDATEEXTENTS);
-	}
-
-	
-	
-	phd_SortPolyList(surfacenum, sort3d_buffer);
-
-	int* sptr = (int*)sort3d_buffer;
-
-	short int* iptr;
-
-	for (int i = 0; i < surfacenum; i++)
-	{
-		iptr = (short int*)(*sptr);
-		short int routine = *(iptr++);
-
-		int tex_page = *(iptr++); //tex page
-
-		int num_verts = *(iptr++); //num verts
-
-		//VERTEX_COLOR_TEX Vertex[8];
-		//VERTEX_COLOR_TEX Vertex[8];
-		D3DTLVERTEX Vertex[10 * 3];
-		//VERTEX_COLOR_TEX Vertex[VERTSPERBUCKET];
-		//может поместиться 10 треугольников по 3 вершины
-		//VERTEX_COLOR_TEX Vertex[10 * 3];
-
-		float* fptr;
-
-		BYTE diffuse;
-		DWORD color;
-
-		int draw_verts_count = 0;
-
-		fptr = (float*)iptr;
-
-		int f_indx = 0;
-
-		for (int i = 1; i < num_verts - 1; i++)
-		{
-			f_indx = i * 7;
-
-			Vertex[draw_verts_count].sx = fptr[0];
-			Vertex[draw_verts_count].sy = fptr[1];
-			diffuse = (BYTE)CLAMP255(fptr[2]);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[draw_verts_count].color = color;
-			Vertex[draw_verts_count].sz = fptr[3];
-			Vertex[draw_verts_count].rhw = fptr[4];
-			Vertex[draw_verts_count].tu = fptr[5];
-			Vertex[draw_verts_count].tv = fptr[6];
-
-			draw_verts_count++;
-
-			Vertex[draw_verts_count].sx = fptr[f_indx + 0];
-			Vertex[draw_verts_count].sy = fptr[f_indx + 1];
-			diffuse = (BYTE)CLAMP255(fptr[f_indx + 2]);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[draw_verts_count].color = color;
-			Vertex[draw_verts_count].sz = fptr[f_indx + 3];
-			Vertex[draw_verts_count].rhw = fptr[f_indx + 4];
-			Vertex[draw_verts_count].tu = fptr[f_indx + 5];
-			Vertex[draw_verts_count].tv = fptr[f_indx + 6];
-
-			draw_verts_count++;
-
-			Vertex[draw_verts_count].sx = fptr[f_indx + 7 + 0];
-			Vertex[draw_verts_count].sy = fptr[f_indx + 7 + 1];
-			diffuse = (BYTE)CLAMP255(fptr[f_indx + 7 + 2]);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[draw_verts_count].color = color;
-			Vertex[draw_verts_count].sz = fptr[f_indx + 7 + 3];
-			Vertex[draw_verts_count].rhw = fptr[f_indx + 7 + 4];
-			Vertex[draw_verts_count].tu = fptr[f_indx + 7 + 5];
-			Vertex[draw_verts_count].tv = fptr[f_indx + 7 + 6];
-
-			draw_verts_count++;
-
-			
-		}
-		/*
-		if(num_verts == 4)
-		{
-			fptr = (float*)iptr;
-
-			float x1 = fptr[0];
-			float y1 = fptr[1];
-			float g1 = fptr[2];
-			float z1 = fptr[3];
-			float w1 = fptr[4];
-			float tu1 = fptr[5];
-			float tv1 = fptr[6];
-
-			float x2 = fptr[7];
-			float y2 = fptr[8];
-			float g2 = fptr[9];
-			float z2 = fptr[10];
-			float w2 = fptr[11];
-			float tu2 = fptr[12];
-			float tv2 = fptr[13];
-
-			float x3 = fptr[14];
-			float y3 = fptr[15];
-			float g3 = fptr[16];
-			float z3 = fptr[17];
-			float w3 = fptr[18];
-			float tu3 = fptr[19];
-			float tv3 = fptr[20];
-
-			float x4 = fptr[21];
-			float y4 = fptr[22];
-			float g4 = fptr[23];
-			float z4 = fptr[24];
-			float w4 = fptr[25];
-			float tu4 = fptr[26];
-			float tv4 = fptr[27];
-
-			Vertex[0].sx = x1;
-			Vertex[0].sy = y1;
-			Vertex[0].rhw = w1;
-			Vertex[0].tu = tu1;
-			Vertex[0].tv = tv1;
-			Vertex[0].sz = z1;
-			diffuse = (BYTE)CLAMP255(g1);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[0].color = color;
-
-			Vertex[1].sx = x2;
-			Vertex[1].sy = y2;
-			Vertex[1].rhw = w2;
-			Vertex[1].tu = tu2;
-			Vertex[1].tv = tv2;
-			Vertex[1].sz = z2;
-			diffuse = (BYTE)CLAMP255(g2);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[1].color = color;
-
-			Vertex[2].sx = x3;
-			Vertex[2].sy = y3;
-			Vertex[2].rhw = w3;
-			Vertex[2].tu = tu3;
-			Vertex[2].tv = tv3;
-			Vertex[2].sz = z3;
-			diffuse = (BYTE)CLAMP255(g3);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[2].color = color;
-
-			//second tri
-
-			Vertex[3].sx = x1;
-			Vertex[3].sy = y1;
-			Vertex[3].rhw = w1;
-			Vertex[3].tu = tu1;
-			Vertex[3].tv = tv1;
-			Vertex[3].sz = z1;
-			diffuse = (BYTE)CLAMP255(g1);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[3].color = color;
-
-			Vertex[4].sx = x3;
-			Vertex[4].sy = y3;
-			Vertex[4].rhw = w3;
-			Vertex[4].tu = tu3;
-			Vertex[4].tv = tv3;
-			Vertex[4].sz = z3;
-			diffuse = (BYTE)CLAMP255(g3);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[4].color = color;
-
-			Vertex[5].sx = x4;
-			Vertex[5].sy = y4;
-			Vertex[5].rhw = w4;
-			Vertex[5].tu = tu4;
-			Vertex[5].tv = tv4;
-			Vertex[5].sz = z4;
-			diffuse = (BYTE)CLAMP255(g4);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[5].color = color;
-
-			draw_verts_count = 6;
-			
-		}
-		else if (num_verts == 3)
-		{
-
-			fptr = (float*)iptr;
-
-			float x1 = fptr[0];
-			float y1 = fptr[1];
-			float g1 = fptr[2];
-			float z1 = fptr[3];
-			float w1 = fptr[4];
-			float tu1 = fptr[5];
-			float tv1 = fptr[6];
-
-			float x2 = fptr[7];
-			float y2 = fptr[8];
-			float g2 = fptr[9];
-			float z2 = fptr[10];
-			float w2 = fptr[11];
-			float tu2 = fptr[12];
-			float tv2 = fptr[13];
-
-			float x3 = fptr[14];
-			float y3 = fptr[15];
-			float g3 = fptr[16];
-			float z3 = fptr[17];
-			float w3 = fptr[18];
-			float tu3 = fptr[19];
-			float tv3 = fptr[20];
-
-			Vertex[0].sx = x1;
-			Vertex[0].sy = y1;
-			Vertex[0].rhw = w1;
-			Vertex[0].tu = tu1;
-			Vertex[0].tv = tv1;
-			Vertex[0].sz = z1;
-			diffuse = (BYTE)CLAMP255(g1);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[0].color = color;
-
-			Vertex[1].sx = x2;
-			Vertex[1].sy = y2;
-			Vertex[1].rhw = w2;
-			Vertex[1].tu = tu2;
-			Vertex[1].tv = tv2;
-			Vertex[1].sz = z2;
-			diffuse = (BYTE)CLAMP255(g2);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[1].color = color;
-
-			Vertex[2].sx = x3;
-			Vertex[2].sy = y3;
-			Vertex[2].rhw = w3;
-			Vertex[2].tu = tu3;
-			Vertex[2].tv = tv3;
-			Vertex[2].sz = z3;
-			diffuse = (BYTE)CLAMP255(g3);
-			color = (0xFF << 24) | (diffuse << 16) | (diffuse << 8) | diffuse;
-			Vertex[2].color = color;
-
-			draw_verts_count = 3;
-
-		}
-		*/
-		if(draw_verts_count > 0)
-		{
-			
-			hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, FALSE);
-			//hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, TRUE);
-			if (FAILED(hr)) return;
-
-			hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
-			if (FAILED(hr)) return;
-
-			hr = g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ZFUNC, D3DCMP_LESSEQUAL);
-			if (FAILED(hr)) return;
-			
-			g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, TRUE);
-			g_pD3dDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND, D3DBLEND_SRCALPHA);
-			g_pD3dDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND, D3DBLEND_INVSRCALPHA);
-			
-			g_pD3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREHANDLE, m_pLevelTile[tex_page]);
-		
-			//нарисуем примитивы
-			hr = g_pD3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, D3DVT_TLVERTEX, &Vertex[0], draw_verts_count, D3DDP_DONOTCLIP | D3DDP_DONOTUPDATEEXTENTS);
-
-	
-			g_pD3dDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, FALSE);
-
-
-
-		}
-
-		sptr += 2;
-	}
-
-	
-	
-	
-	hr = g_pD3dDevice->EndScene();
-	if (FAILED(hr)) return;
-
-
-	
-
-}
-
 int32_t S_DumpScreen()
 {
-	int nframes;
 
-	nframes = Sync();
+	int nframes = Sync();
 
 	while (nframes < 2)
 	{
-		while (!Sync())
-			;
+		while (!Sync()) {};
 		nframes++;
 	}
 
-	if (Hardware)
-	{
-		//HRESULT hr = g_pD3dDevice->Present(NULL, NULL, NULL, NULL);
-		//if (FAILED(hr)) return 0;
-
-		if (Fullscreen)
-		{
-			g_pDdsPrimary->Flip(NULL, DDFLIP_WAIT);
-		}
-		else
-		{
-			g_pDdsPrimary->Blt(&g_RcScreenRect, g_pDdsBackBuffer,
-			&g_RcViewportRect, DDBLT_WAIT, NULL);
-		}
-	}
-	else
-	{
-		// ScreenPartialDump()
-		Present_BackBuffer();
-	}
+	Present_BackBuffer();
 
 	SpinMessageLoop();
+
 	g_FPSCounter++;
 
 	return nframes;
@@ -1309,23 +799,28 @@ void GetRoomBounds(int16_t room_num)
 
 	phd_PushMatrix();
 	phd_TranslateAbs(r->x, r->y, r->z);
-	
+
 	if (r->doors)
 	{
 		for (int i = 0; i < r->doors->count; i++)
 		{
 			DOOR_INFO *door = &r->doors->door[i];
+
 			if (SetRoomBounds(&door->x, door->room_num, r))
 			{
 				GetRoomBounds(door->room_num);
 			}
 		}
 	}
+
 	phd_PopMatrix();
 }
 
 int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 {
+	// XXX: the way the game passes the objptr is dangerous and relies on
+	// layout of DOOR_INFO
+
 	if ((objptr[0] * (parent->x + objptr[3] - g_W2VMatrix._03)) +
 			(objptr[1] * (parent->y + objptr[4] - g_W2VMatrix._13)) +
 			(objptr[2] * (parent->z + objptr[5] - g_W2VMatrix._23)) >=
@@ -1335,12 +830,14 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 	}
 
 	DOOR_VBUF door_vbuf[4];
+
 	int32_t left = parent->right;
 	int32_t right = parent->left;
 	int32_t top = parent->bottom;
 	int32_t bottom = parent->top;
 
 	objptr += 3;
+
 	int32_t z_toofar = 0;
 	int32_t z_behind = 0;
 
@@ -1353,13 +850,18 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 					 mptr->_12 * objptr[2] + mptr->_13;
 		int32_t zv = mptr->_20 * objptr[0] + mptr->_21 * objptr[1] +
 					 mptr->_22 * objptr[2] + mptr->_23;
+
 		door_vbuf[i].xv = xv;
 		door_vbuf[i].yv = yv;
 		door_vbuf[i].zv = zv;
+
 		objptr += 3;
 
 		if (zv > 0)
 		{
+			// if (zv > (g_DrawDistMax << W2V_SHIFT ))
+			// if (zv > (DRAW_DIST_MAX << W2V_SHIFT ))
+			//if (zv > (DRAW_DIST_FADE << W2V_SHIFT))
 			if (zv > (DRAW_DIST_MAX << W2V_SHIFT))
 			{
 				z_toofar++;
@@ -1503,16 +1005,16 @@ int32_t SetRoomBounds(int16_t *objptr, int16_t room_num, ROOM_INFO *parent)
 void SetupAboveWater(int underwater)
 {
 
-	g_IsWaterEffect = false;
-	g_IsWibbleEffect = underwater;
-	g_IsShadeEffect = underwater;
+	g_IsWaterEffect = false; //тень на стенах под водой
+	g_IsWibbleEffect = underwater; //волнистые полигоны под/над водой
+	g_IsShadeEffect = underwater; //не используется в коде
 }
 
 void SetupBelowWater(int underwater)
 {
-	g_IsWaterEffect = true;
-	g_IsWibbleEffect = !underwater;
-	g_IsShadeEffect = true;
+	g_IsWaterEffect = true; //тень на стенах под водой
+	g_IsWibbleEffect = !underwater; //волнистые полигоны под/над водой
+	g_IsShadeEffect = true; //не используется в коде
 }
 
 void PrintRooms(int16_t room_number)
@@ -1587,12 +1089,15 @@ void PrintRooms(int16_t room_number)
 
 void DrawRoom(int16_t *obj_ptr)
 {
+	// obj_ptr + 1 its data itself
+	//*obj_ptr its count of data
 
 	obj_ptr = CalcRoomVertices(obj_ptr);
+	
 	obj_ptr = S_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
 	obj_ptr = S_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
-	obj_ptr = DrawRoomSprites(obj_ptr + 1, *obj_ptr);
 	
+	obj_ptr = DrawRoomSprites(obj_ptr + 1, *obj_ptr);
 }
 
 int32_t CalcFogShade(int32_t depth)
@@ -1616,6 +1121,7 @@ int32_t S_SaveGame(SAVEGAME_INFO *save, int32_t slot)
 {
 	char filename[80];
 	sprintf(filename, g_GameFlow.save_game_fmt, slot);
+	// LOG_DEBUG("%s", filename);
 
 	FILE *fp = fopen(filename, "wb");
 
@@ -1632,14 +1138,13 @@ int32_t S_SaveGame(SAVEGAME_INFO *save, int32_t slot)
 		}
 	}
 
-	sprintf(filename, "%s",
-			g_GameFlow.levels[g_SaveGame.current_level].level_title);
+	sprintf(filename, "%s",	g_GameFlow.levels[g_SaveGame.current_level].level_title);
 	fwrite(filename, sizeof(char), 75, fp);
 	fwrite(&g_SaveCounter, sizeof(int32_t), 1, fp);
 
 	if (!save->start)
 	{
-		// ExitSystem("null save->start");
+		// Shell_ExitSystem("null save->start");
 		return 0;
 	}
 	fwrite(&save->start[0], sizeof(START_INFO), g_GameFlow.level_count, fp);
@@ -1692,7 +1197,7 @@ int32_t S_LoadGame(SAVEGAME_INFO *save, int32_t slot)
 
 	if (!save->start)
 	{
-		// ExitSystem("null save->start");
+		// Shell_ExitSystem("null save->start");
 		return 0;
 	}
 
@@ -1717,6 +1222,18 @@ int32_t S_LoadGame(SAVEGAME_INFO *save, int32_t slot)
 	fread(&save->challenge_failed, sizeof(uint8_t), 1, fp);
 	fread(&save->buffer[0], sizeof(char), MAX_SAVEGAME_BUFFER, fp);
 	fclose(fp);
+
+	/*
+	for (int i = 0; i < g_GameFlow.level_count; i++)
+	{
+		if (g_GameFlow.levels[i].level_type == GFL_CURRENT)
+		{
+			save->start[save->current_level] = save->start[i];
+		}
+	}
+	*/
+
+	// save->start[save->current_level] = save->start[21];
 
 	return 1;
 }
@@ -1766,11 +1283,14 @@ int32_t S_FrontEndCheck()
 		sprintf(filename, g_GameFlow.save_game_fmt, i);
 
 		FILE *fp = fopen(filename, "rb");
+
 		if (fp)
 		{
 			fread(filename, sizeof(char), 75, fp);
+			
 			int32_t counter = 0;
 			fread(&counter, sizeof(int32_t), 1, fp);
+			
 			fclose(fp);
 
 			//req->item_flags[req->items] &= ~RIF_BLOCKED;
@@ -1786,6 +1306,7 @@ int32_t S_FrontEndCheck()
 
 			saved_levels[i] = 1;
 			g_SavedGamesCount++;
+			
 		}
 		else
 		{

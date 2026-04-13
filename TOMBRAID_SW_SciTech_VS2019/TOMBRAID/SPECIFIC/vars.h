@@ -20,70 +20,13 @@
 #include "types.h"
 #include "winmain.h"
 
-#include <math.h>
-
-#include <windows.h>
-#include <math.h>
-
-#include <ddraw.h>
-#include <d3d.h>
-#include <d3dtypes.h>
-#include <d3dcaps.h>
-
-#pragma comment (lib, "ddraw.lib")
-#pragma comment (lib, "dxguid.lib")
-
 extern int16_t saved_levels[MAXIMUM_LEVELS];
 
 extern TEXTSTRING* g_PassportText;
 
-extern float BRIGHTNESS;
+extern int32_t g_LevelNumTR;
 
-//удалить используется для теста
-//extern LPDIRECT3DTEXTURE9 g_pTexture;
-
-extern uint32_t TexturePageCount;
-
-//extern LPDIRECT3DTEXTURE2* m_pLevelTile;
-extern DWORD* m_pLevelTile;
-
-extern LPDIRECTDRAW         g_pDD1;
-extern LPDIRECTDRAW2        g_pDD2;
-extern LPDIRECTDRAWSURFACE3	 g_pDdsPrimary;
-extern LPDIRECTDRAWSURFACE3  g_pDdsBackBuffer;
-extern LPDIRECTDRAWSURFACE	 g_pDdsPrimary1;
-extern LPDIRECTDRAWSURFACE  g_pDdsBackBuffer1;
-extern LPDIRECTDRAWSURFACE  g_pDdsZBuffer1;
-extern LPDIRECTDRAWSURFACE3  g_pDdsZBuffer;
-
-
-extern LPDIRECT3D2          g_pD3D;
-extern LPDIRECT3DDEVICE2    g_pD3dDevice;
-extern LPDIRECT3DVIEWPORT2  g_pViewport;
-extern RECT                 g_RcScreenRect;
-extern RECT                 g_RcViewportRect;
-
-/*
-extern LPDIRECT3DDEVICE9 g_pD3dDevice;
-extern LPDIRECT3D9 g_d3d;
-extern IDirect3DVertexDeclaration9* g_pVertDeclTexColor;
-extern IDirect3DVertexDeclaration9* g_pVertDeclColor;
-extern IDirect3DVertexDeclaration9* g_pVertDeclLines;
-extern ID3DXEffect* pEffectTexColor;
-extern D3DXHANDLE g_hTechTexColor;
-*/
-//массив непрозрачных полигонов
-//отсортированных по текстурам
-#define MAXBUCKETS 30
-
-extern TEXTUREBUCKET Bucket_Tex_Color_Opaque[MAXBUCKETS];
-extern COLOREDBUCKET Bucket_Colored;
-extern LINESBUCKET Bucket_Lines;
-extern TRANSQUADBUCKET Bucket_TransQuad;
-
-extern int g_LevelNumTR;
-
-extern int Game_Finished;
+extern int32_t Game_Finished;
 
 extern GAMEFLOW g_GameFlow;
 
@@ -146,11 +89,10 @@ extern "C" char *phd_winptr;
 extern "C" char depthq_table[32][256];
 extern "C" char gouraud_table[256][32];
 
-extern RGB888 GamePalette[256];
 extern RGB888 GameNormalPalette[256];
 extern RGB888 GameWaterPalette[256];
 
-// extern PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES];
+// extern PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
 
 extern int8_t *TexturePagePtrs[MAX_TEXTPAGES];
 
@@ -166,7 +108,7 @@ extern int32_t g_PhdLeft;
 extern int32_t g_PhdBottom;
 extern int32_t g_PhdRight;
 extern int32_t g_PhdTop;
-extern PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES];
+extern PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
 extern PHD_TEXTURE g_PhdTextureInfo[MAX_TEXTURES];
 extern PHD_MATRIX *g_PhdMatrixPtr;
 extern PHD_MATRIX g_W2VMatrix;

@@ -10,42 +10,9 @@ int16_t saved_levels[MAXIMUM_LEVELS] = { -1 };
 
 TEXTSTRING* g_PassportText = NULL;
 
-float BRIGHTNESS = 1.0f;
+int32_t g_LevelNumTR;
 
-//LPDIRECT3DTEXTURE9 g_pTexture;
-
-uint32_t TexturePageCount;
-
-DWORD* m_pLevelTile = NULL;
-
-LPDIRECTDRAW         g_pDD1 = NULL;
-LPDIRECTDRAW2        g_pDD2 = NULL;
-LPDIRECTDRAWSURFACE3	 g_pDdsPrimary = NULL;
-LPDIRECTDRAWSURFACE3  g_pDdsBackBuffer = NULL;
-LPDIRECTDRAWSURFACE	 g_pDdsPrimary1 = NULL;
-LPDIRECTDRAWSURFACE  g_pDdsBackBuffer1 = NULL;
-LPDIRECTDRAWSURFACE  g_pDdsZBuffer1 = NULL;
-LPDIRECTDRAWSURFACE3  g_pDdsZBuffer = NULL;
-
-
-LPDIRECT3D2          g_pD3D = NULL;
-LPDIRECT3DDEVICE2    g_pD3dDevice = NULL;
-LPDIRECT3DVIEWPORT2  g_pViewport = NULL;
-RECT                 g_RcScreenRect;
-RECT                 g_RcViewportRect;
-
-
-
-
-TEXTUREBUCKET Bucket_Tex_Color_Opaque[MAXBUCKETS];
-//TEXTUREBUCKET Bucket_Sprites[MAXBUCKETS];
-COLOREDBUCKET Bucket_Colored;
-LINESBUCKET Bucket_Lines;
-TRANSQUADBUCKET Bucket_TransQuad;
-
-int g_LevelNumTR;
-
-int Game_Finished = 0;
+int32_t Game_Finished = 0;
 
 //#include "inv.h"
 
@@ -186,11 +153,10 @@ char *phd_winptr = NULL;
 char depthq_table[32][256] = {0};  // depth cueing tables..
 char gouraud_table[256][32] = {0}; // Gouraud shade table..
 
-RGB888 GamePalette[256];
 RGB888 GameNormalPalette[256];
 RGB888 GameWaterPalette[256];
 
-// PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES];
+// PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES];
 
 int8_t *TexturePagePtrs[MAX_TEXTPAGES];
 
@@ -231,7 +197,7 @@ int32_t g_PhdLeft = 0;
 int32_t g_PhdBottom = 0;
 int32_t g_PhdRight = 0;
 int32_t g_PhdTop = 0;
-PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES] = {0};
+PHDSPRITESTRUCT g_PhdSpriteInfo[MAX_SPRITES] = {0};
 PHD_TEXTURE g_PhdTextureInfo[MAX_TEXTURES] = {0};
 PHD_MATRIX *g_PhdMatrixPtr = NULL;
 PHD_MATRIX g_W2VMatrix = {0};
