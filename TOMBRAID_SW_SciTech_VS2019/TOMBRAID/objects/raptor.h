@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _RAPTOR_
+#define _RAPTOR_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -33,3 +35,5 @@ typedef enum
 extern BITE_INFO g_RaptorBite;
 
 void RaptorControl(int16_t item_num);
+
+#endif

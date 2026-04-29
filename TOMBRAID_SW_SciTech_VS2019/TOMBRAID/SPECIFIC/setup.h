@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SETUP_
+#define _SETUP_
+
 
 #include "lot.h"
 #include "types.h"
@@ -13,3 +15,5 @@ int Load_Level(int32_t LevelNum);
 // void InitialiseLaraInventory(int32_t level_num);
 // int32_t InitialiseLOT(LOT_INFO *LOT);
 // void LaraInitialiseMeshes(int32_t level_num);
+
+#endif

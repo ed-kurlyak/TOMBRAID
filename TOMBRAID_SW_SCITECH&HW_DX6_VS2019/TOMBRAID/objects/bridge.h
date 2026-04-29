@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _BRIDGE_
+#define _BRIDGE_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -22,3 +24,5 @@ void BridgeTilt2Floor(ITEM_INFO *item, int32_t x, int32_t y, int32_t z,
 					  int16_t *height);
 void BridgeTilt2Ceiling(ITEM_INFO *item, int32_t x, int32_t y, int32_t z,
 						int16_t *height);
+
+#endif

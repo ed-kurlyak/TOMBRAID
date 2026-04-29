@@ -1,5 +1,3 @@
-//#pragma once
-
 #ifndef _INPUT_
 #define _INPUT_
 
@@ -29,3 +27,4 @@ void S_Input_AssignKeyCode(int16_t layout_num, INPUT_KEY key,
 						   S_INPUT_KEYCODE key_code);
 
 #endif
+

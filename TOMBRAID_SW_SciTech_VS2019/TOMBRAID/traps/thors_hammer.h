@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _THORS_HAMMER_
+#define _THORS_HAMMER_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -16,3 +18,5 @@ void ThorsHandleCollision(int16_t item_num, ITEM_INFO *lara_item,
 						  COLL_INFO *coll);
 void ThorsHeadCollision(int16_t item_num, ITEM_INFO *lara_item,
 						COLL_INFO *coll);
+
+#endif

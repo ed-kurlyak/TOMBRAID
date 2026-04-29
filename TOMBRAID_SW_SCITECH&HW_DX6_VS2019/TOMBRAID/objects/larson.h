@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _LARSON_
+#define _LARSON_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -27,3 +29,5 @@ typedef enum
 extern BITE_INFO g_LarsonGun;
 
 void LarsonControl(int16_t item_num);
+
+#endif

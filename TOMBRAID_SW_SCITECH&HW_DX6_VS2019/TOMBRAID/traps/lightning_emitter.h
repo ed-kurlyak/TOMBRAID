@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _LIGHTNING_EMITTER_
+#define _LIGHTNING_EMITTER_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -25,3 +27,5 @@ void LightningControl(int16_t item_num);
 void LightningCollision(int16_t item_num, ITEM_INFO *lara_item,
 						COLL_INFO *coll);
 void DrawLightning(ITEM_INFO *item);
+
+#endif

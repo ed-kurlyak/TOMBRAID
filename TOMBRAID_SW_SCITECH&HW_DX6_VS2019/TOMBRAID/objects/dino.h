@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _DINO_
+#define _DINO_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -31,3 +33,5 @@ typedef enum
 
 void DinoControl(int16_t item_num);
 void LaraDinoDeath(ITEM_INFO *item);
+
+#endif

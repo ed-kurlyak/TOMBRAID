@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _BAT_
+#define _BAT_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -22,3 +24,5 @@ extern BITE_INFO g_BatBite;
 
 void BatControl(int16_t item_num);
 void InitialiseBat(int16_t item_num);
+
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SCION_
+#define _SCION_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -13,3 +15,5 @@ void PickUpScionCollision(int16_t item_num, ITEM_INFO *lara_item,
 						  COLL_INFO *coll);
 void PickUpScion4Collision(int16_t item_num, ITEM_INFO *lara_item,
 						   COLL_INFO *coll);
+
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _DRAW_
+#define _DRAW_
+
 
 #include "types.h"
 #include "vars.h"
@@ -104,3 +106,5 @@ int FindBucket(DWORD tpage);
 
 
 
+
+#endif

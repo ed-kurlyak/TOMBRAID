@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _OVERLAY_
+#define _OVERLAY_
+
 
 //#include <stdint.h>
 
@@ -22,3 +24,5 @@ void Overlay_DrawGameInfo();
 void Overlay_AddPickup(int16_t object_num);
 
 void Overlay_MakeAmmoString(char *string);
+
+#endif

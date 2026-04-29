@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _CROCODILE_
+#define _CROCODILE_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -29,3 +31,5 @@ typedef enum
 extern BITE_INFO g_CrocodileBite;
 
 void CrocControl(int16_t item_num);
+
+#endif

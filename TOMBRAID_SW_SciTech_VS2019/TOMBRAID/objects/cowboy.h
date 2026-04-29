@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _COWBOY_
+#define _COWBOY_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -26,3 +28,5 @@ extern BITE_INFO g_CowboyGun1;
 extern BITE_INFO g_CowboyGun2;
 
 void CowboyControl(int16_t item_num);
+
+#endif

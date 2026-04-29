@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _CABIN_
+#define _CABIN_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -12,3 +14,5 @@ typedef enum
 } CABIN_ANIM;
 
 void CabinControl(int16_t item_num);
+
+#endif

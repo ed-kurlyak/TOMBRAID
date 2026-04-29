@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _LARA_
+#define _LARA_
+
 
 //#include "global/types.h"
 
@@ -197,3 +199,5 @@ void LookUpDown();
 void ResetLook();
 
 // void LaraCheatGetStuff();
+
+#endif

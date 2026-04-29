@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _VARS_
+#define _VARS_
+
 
 #include "../effects/bubble.h"
 #include "../effects/chain_block.h"
@@ -293,3 +295,5 @@ typedef struct
 } STRING_DEF;
 
 extern CONFIG g_Config;
+
+#endif

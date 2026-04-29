@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _CENTAUR_
+#define _CENTAUR_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -28,3 +30,5 @@ extern BITE_INFO g_CentaurRocket;
 extern BITE_INFO g_CentaurRear;
 
 void CentaurControl(int16_t item_num);
+
+#endif

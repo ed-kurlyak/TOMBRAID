@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _INV_
+#define _INV_
+
 
 #include "types.h"
 
@@ -102,3 +104,5 @@ void Inv_RingMotionCameraPos(RING_INFO *ring, int16_t target);
 void Inv_RingMotionCameraPitch(RING_INFO *ring, int16_t target);
 void Inv_RingMotionItemSelect(RING_INFO *ring, INVENTORY_ITEM *inv_item);
 void Inv_RingMotionItemDeselect(RING_INFO *ring, INVENTORY_ITEM *inv_item);
+
+#endif

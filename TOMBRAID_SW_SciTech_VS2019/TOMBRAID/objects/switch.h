@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SWITCH_
+#define _SWITCH_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -10,3 +12,5 @@ void SwitchCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll);
 void SwitchCollision2(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll);
 void SwitchControl(int16_t item_num);
 int32_t SwitchTrigger(int16_t item_num, int16_t timer);
+
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _WINMAIN_
+#define _WINMAIN_
+
 
 #include <time.h>
 #include <windows.h>
@@ -49,3 +51,5 @@ void phd_InitWindow(int x, int y, int width, int height, int nearz, int farz,
 int SpinMessageLoop();
 
 void Create_Shader_Effect();
+
+#endif

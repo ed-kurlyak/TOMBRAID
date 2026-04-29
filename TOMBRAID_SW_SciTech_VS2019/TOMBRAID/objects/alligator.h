@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _ALLIGATOR_
+#define _ALLIGATOR_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -19,3 +21,5 @@ typedef enum
 } ALLIGATOR_ANIM;
 
 void AlligatorControl(int16_t item_num);
+
+#endif

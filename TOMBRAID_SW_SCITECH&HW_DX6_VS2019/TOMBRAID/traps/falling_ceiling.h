@@ -1,7 +1,11 @@
-#pragma once
+#ifndef _FALLING_CEILING_
+#define _FALLING_CEILING_
+
 
 #include "..\\SPECIFIC\\types.h"
 
 #define FALLING_CEILING_DAMAGE 300
 
 void FallingCeilingControl(int16_t item_num);
+
+#endif

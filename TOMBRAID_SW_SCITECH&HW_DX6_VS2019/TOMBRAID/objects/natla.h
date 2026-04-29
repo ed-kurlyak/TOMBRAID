@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _NATLA_
+#define _NATLA_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -34,3 +36,5 @@ extern BITE_INFO g_NatlaGun;
 
 void NatlaControl(int16_t item_num);
 void ControlNatlaGun(int16_t fx_num);
+
+#endif

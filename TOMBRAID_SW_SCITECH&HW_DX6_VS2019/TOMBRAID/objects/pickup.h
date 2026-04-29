@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _PICKUP_
+#define _PICKUP_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -8,3 +10,5 @@ extern int16_t g_PickUpBounds[12];
 extern int16_t g_PickUpBoundsUW[12];
 
 void PickUpCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll);
+
+#endif

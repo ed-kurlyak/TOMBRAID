@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _LION_
+#define _LION_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -38,3 +40,5 @@ typedef enum
 extern BITE_INFO g_LionBite;
 
 void LionControl(int16_t item_num);
+
+#endif

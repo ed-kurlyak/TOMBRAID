@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _BOAT_
+#define _BOAT_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -11,3 +13,5 @@ typedef enum
 } BOAT_ANIM;
 
 void BoatControl(int16_t item_num);
+
+#endif

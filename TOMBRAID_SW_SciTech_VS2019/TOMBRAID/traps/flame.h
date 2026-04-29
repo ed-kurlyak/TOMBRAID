@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _FLAME_
+#define _FLAME_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -8,3 +10,5 @@
 
 void FlameEmitterControl(int16_t item_num);
 void FlameControl(int16_t fx_num);
+
+#endif

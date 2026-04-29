@@ -1,7 +1,11 @@
-#pragma once
+#ifndef _SPIKES_
+#define _SPIKES_
+
 
 #include "..\\SPECIFIC\\types.h"
 
 #define SPIKE_DAMAGE 15
 
 void SpikeCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll);
+
+#endif

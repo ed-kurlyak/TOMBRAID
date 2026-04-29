@@ -158,6 +158,7 @@
     <ClCompile Include="SPECIFIC\cinema.cpp" />
     <ClCompile Include="SPECIFIC\collide.cpp" />
     <ClCompile Include="SPECIFIC\control_util.cpp" />
+    <ClCompile Include="SPECIFIC\demo.cpp" />
     <ClCompile Include="SPECIFIC\draw.cpp" />
     <ClCompile Include="SPECIFIC\drawprimitive.cpp" />
     <ClCompile Include="SPECIFIC\file.cpp" />
@@ -284,6 +285,7 @@
     <ClInclude Include="SPECIFIC\collide.h" />
     <ClInclude Include="SPECIFIC\const.h" />
     <ClInclude Include="SPECIFIC\control_util.h" />
+    <ClInclude Include="SPECIFIC\demo.h" />
     <ClInclude Include="SPECIFIC\draw.h" />
     <ClInclude Include="SPECIFIC\drawprimitive.h" />
     <ClInclude Include="SPECIFIC\file.h" />

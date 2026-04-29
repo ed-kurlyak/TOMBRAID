@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _PIERRE_
+#define _PIERRE_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -32,3 +34,5 @@ extern BITE_INFO g_PierreGun1;
 extern BITE_INFO g_PierreGun2;
 
 void PierreControl(int16_t item_num);
+
+#endif

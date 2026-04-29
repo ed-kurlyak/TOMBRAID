@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _CAMERA_
+#define _CAMERA_
+
 
 #include "types.h"
 
@@ -25,3 +27,5 @@ void CalculateCamera();
 void CameraOffsetAdditionalAngle(int16_t delta);
 void CameraOffsetAdditionalElevation(int16_t delta);
 void CameraOffsetReset();
+
+#endif

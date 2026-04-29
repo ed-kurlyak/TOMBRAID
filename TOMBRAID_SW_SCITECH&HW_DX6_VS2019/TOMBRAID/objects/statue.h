@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _STATUE_
+#define _STATUE_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -6,3 +8,5 @@
 
 void InitialiseStatue(int16_t item_num);
 void StatueControl(int16_t item_num);
+
+#endif

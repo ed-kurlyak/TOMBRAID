@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _APE_
+#define _APE_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -42,3 +44,5 @@ extern BITE_INFO g_ApeBite;
 
 void ApeVault(int16_t item_num, int16_t angle);
 void ApeControl(int16_t item_num);
+
+#endif

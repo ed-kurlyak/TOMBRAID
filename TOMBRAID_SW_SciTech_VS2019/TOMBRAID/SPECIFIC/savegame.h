@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SAVEGAME_
+#define _SAVEGAME_
+
 
 //#include "global/types.h"
 #include "types.h"
@@ -22,3 +24,5 @@ void WriteSG(void *pointer, int size);
 void WriteSGARM(LARA_ARM *arm);
 void WriteSGLara(LARA_INFO *lara);
 void WriteSGLOT(LOT_INFO *lot);
+
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _POD_
+#define _POD_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -12,3 +14,5 @@ typedef enum
 
 void InitialisePod(int16_t item_num);
 void PodControl(int16_t item_num);
+
+#endif

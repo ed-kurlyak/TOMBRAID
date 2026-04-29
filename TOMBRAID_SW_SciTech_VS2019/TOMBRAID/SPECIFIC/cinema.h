@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _CINEMA_
+#define _CINEMA_
+
 
 //#include <stdint.h>
 #include "types.h"
@@ -15,3 +17,5 @@ void ControlCinematicPlayer4(int16_t item_num);
 void InitialisePlayer1(int16_t item_num);
 void InitialiseGenPlayer(int16_t item_num);
 void InGameCinematicCamera();
+
+#endif

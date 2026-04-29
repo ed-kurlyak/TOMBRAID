@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MUTANT_
+#define _MUTANT_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -51,3 +53,5 @@ extern BITE_INFO g_WarriorShard;
 void FlyerControl(int16_t item_num);
 
 void InitialiseWarrior2(int16_t item_num);
+
+#endif

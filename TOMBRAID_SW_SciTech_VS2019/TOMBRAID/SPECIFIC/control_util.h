@@ -1,3 +1,6 @@
+#ifndef _CONTROL_UTIL_
+#define _CONTROL_UTIL_
+
 #include "types.h"
 
 int32_t GetChange(ITEM_INFO *item, ANIM_STRUCT *anim);
@@ -16,3 +19,5 @@ void FlipMap();
 void RemoveRoomFlipItems(ROOM_INFO *r);
 void AddRoomFlipItems(ROOM_INFO *r);
 */
+
+#endif

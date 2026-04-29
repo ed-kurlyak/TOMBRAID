@@ -1,3 +1,6 @@
+#ifndef _SOUND_
+#define _SOUND_
+
 #include "types.h"
 
 #include <dsound.h>
@@ -103,3 +106,5 @@ HRESULT DS_MakeSample(int nSample, WAVEFORMATEX *pWF, unsigned char *pWaveData,
 					  int dwWaveLength);
 int DS_StartSample(SOUND_SLOT *slot, int nVolume, int nPitch, int nPan,
 				   DWORD dwFlags);
+
+#endif

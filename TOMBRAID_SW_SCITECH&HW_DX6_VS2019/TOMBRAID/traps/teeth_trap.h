@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _TEETH_TRAP_
+#define _TEETH_TRAP_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -18,3 +20,5 @@ extern BITE_INFO g_Teeth3A;
 extern BITE_INFO g_Teeth3B;
 
 void TeethTrapControl(int16_t item_num);
+
+#endif

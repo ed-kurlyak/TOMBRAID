@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _KEYHOLE_
+#define _KEYHOLE_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -11,3 +13,5 @@ extern int32_t g_PickUpZ;
 
 void KeyHoleCollision(int16_t item_num, ITEM_INFO *lara_item, COLL_INFO *coll);
 int32_t KeyTrigger(int16_t item_num);
+
+#endif

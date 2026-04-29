@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _ABORTION_
+#define _ABORTION_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -34,3 +36,5 @@ typedef enum
 } ABORTION_ANIM;
 
 void AbortionControl(int16_t item_num);
+
+#endif

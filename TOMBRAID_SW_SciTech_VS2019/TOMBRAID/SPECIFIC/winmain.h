@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _WINMAIN_
+#define _WINMAIN_
+
 
 #include <time.h>
 #include <windows.h>
@@ -41,3 +43,5 @@ void phd_InitWindow(int x, int y, int width, int height, int nearz, int farz,
 					int view_angle, int scrwidth, int scrheight,
 					unsigned char *BackBuff);
 int SpinMessageLoop();
+
+#endif

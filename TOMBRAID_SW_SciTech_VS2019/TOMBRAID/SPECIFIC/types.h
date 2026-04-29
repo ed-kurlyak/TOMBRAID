@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _TYPES_
+#define _TYPES_
+
 
 #include "windows.h"
 #include "const.h"
@@ -2319,3 +2321,5 @@ struct CONFIG
 };
 
 #pragma pack(pop, foo)
+
+#endif

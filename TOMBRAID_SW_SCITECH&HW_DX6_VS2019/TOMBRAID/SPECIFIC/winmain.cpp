@@ -20,6 +20,8 @@
 
 #include "cinema.h"
 
+#include "demo.h"
+
 //***************************
 // SETUP START
 //***************************
@@ -27,7 +29,7 @@
 // SETUP PART #1
 //HARDWARE or SOFTWARE
 
-int Hardware = 0;
+int Hardware = 1;
 
 int Fullscreen = 0;
 
@@ -1122,12 +1124,8 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			break;
 
 		case GF_START_DEMO:
-			// gf_option = StartDemo();
-			//я добавил пока нету демо что бы вместо демо выходило обратно в
-			//титлы
-			g_NoInputCount = 0;
-			g_ResetFlag = 0;
-			gf_option = GF_EXIT_TO_TITLE;
+			gf_option = StartDemo();
+			
 			break;
 
 		case GF_LEVEL_COMPLETE:

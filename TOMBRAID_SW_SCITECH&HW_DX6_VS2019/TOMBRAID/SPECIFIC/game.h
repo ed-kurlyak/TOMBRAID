@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _GAME_
+#define _GAME_
+
 
 #include "types.h"
 
@@ -30,3 +32,5 @@ int32_t S_SaveGame(SAVEGAME_INFO *save, int32_t slot);
 int32_t S_LoadGame(SAVEGAME_INFO *save, int32_t slot);
 void GetSavedGamesList(REQUEST_INFO *req);
 int32_t S_FrontEndCheck();
+
+#endif

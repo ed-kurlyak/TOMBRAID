@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _RAT_
+#define _RAT_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -28,3 +30,5 @@ typedef enum
 extern BITE_INFO g_RatBite;
 
 void RatControl(int16_t item_num);
+
+#endif

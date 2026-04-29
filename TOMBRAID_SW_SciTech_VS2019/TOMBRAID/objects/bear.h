@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _BEAR_
+#define _BEAR_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -37,3 +39,5 @@ typedef enum
 extern BITE_INFO g_BearHeadBite;
 
 void BearControl(int16_t item_num);
+
+#endif

@@ -1,5 +1,3 @@
-//#pragma once
-
 #ifndef _INPUT_
 #define _INPUT_
 

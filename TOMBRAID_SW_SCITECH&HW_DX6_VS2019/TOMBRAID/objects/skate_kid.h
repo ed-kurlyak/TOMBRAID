@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SKATE_KID_
+#define _SKATE_KID_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -31,3 +33,5 @@ extern BITE_INFO g_KidGun2;
 void InitialiseSkateKid(int16_t item_num);
 void SkateKidControl(int16_t item_num);
 void DrawSkateKid(ITEM_INFO *item);
+
+#endif

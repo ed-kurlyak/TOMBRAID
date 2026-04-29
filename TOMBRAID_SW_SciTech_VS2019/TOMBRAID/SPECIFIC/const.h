@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _CONST_
+#define _CONST_
+
 
 //#include "util.h"
 
@@ -247,4 +249,6 @@
 #if _MSC_VER > 0x500
 #define _strdup _strdup   // fixes error about POSIX function
 #define _USE_MATH_DEFINES // makes maths.h also define M_PI
+#endif
+
 #endif

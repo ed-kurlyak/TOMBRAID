@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _DRAW_
+#define _DRAW_
+
 
 #include "types.h"
 
@@ -75,3 +77,5 @@ void S_Output_DrawLine(VBUF2 *vertices, int depth);
 void Output_DrawSpriteRel(int32_t x, int32_t y, int32_t z, int16_t sprnum,
 						  int16_t shade);
 int16_t* DrawRoomSprites(int16_t* obj_ptr, int32_t number);
+
+#endif

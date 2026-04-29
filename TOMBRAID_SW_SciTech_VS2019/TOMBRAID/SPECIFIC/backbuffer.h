@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _BACKBUFFER_
+#define _BACKBUFFER_
+
 
 #include "..\scitech\INCLUDE\MGRAPH.H"
 //#pragma comment (lib, "./scitech/LIB/WIN32/VC/MGLLT.LIB")
@@ -17,3 +19,5 @@ void Create_BackBuffer();
 void Clear_BackBuffer();
 void Present_BackBuffer();
 void Delete_BackBuffer();
+
+#endif

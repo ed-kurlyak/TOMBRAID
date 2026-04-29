@@ -1,5 +1,6 @@
 #include <windows.h>
 
+#include "demo.h"
 #include "util.h"
 #include "input.h"
 #include "text.h"
@@ -349,6 +350,9 @@ int Game_Loop(int demo_mode)
 	//мой код все оружие - конец
 	//------------------------
 
+	g_NoInputCount = 0;
+	g_ResetFlag = false;
+
 	int32_t nframes = 1, game_over = false;
 	g_OverlayFlag = 1;
 
@@ -419,6 +423,19 @@ int Control_Phase(int32_t nframes, int32_t demo_mode)
 	{
 
 		Input_Update();
+
+		if (demo_mode)
+		{
+			if (g_Input.any)
+			{
+				return GF_EXIT_TO_TITLE;
+			}
+
+			if (!ProcessDemoInput())
+			{
+				return GF_EXIT_TO_TITLE;
+			}
+		}
 
 		if (g_Lara.death_count > DEATH_WAIT ||
 			(g_Lara.death_count > DEATH_WAIT_MIN && g_Input.any &&

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _OPTION_
+#define _OPTION_
+
 
 #include "types.h"
 
@@ -12,3 +14,5 @@ void Option_Sound(INVENTORY_ITEM *inv_item);
 
 void Option_FlashConflicts();
 void Option_DefaultConflict();
+
+#endif

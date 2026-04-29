@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MOVABLE_BLOCK_
+#define _MOVABLE_BLOCK_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -22,3 +24,5 @@ int32_t TestBlockPush(ITEM_INFO *item, int32_t blokhite, uint16_t quadrant);
 int32_t TestBlockPull(ITEM_INFO *item, int32_t blokhite, uint16_t quadrant);
 
 void AlterFloorHeight(ITEM_INFO *item, int32_t height);
+
+#endif

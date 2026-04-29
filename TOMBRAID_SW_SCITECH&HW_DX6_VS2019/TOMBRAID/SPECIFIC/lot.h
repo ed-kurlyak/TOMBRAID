@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _LOT_
+#define _LOT_
+
 
 #include "types.h"
 
@@ -11,3 +13,5 @@ void InitialiseSlot(int16_t item_num, int32_t slot);
 void CreateZone(ITEM_INFO *item);
 int32_t InitialiseLOT(LOT_INFO *LOT);
 void ClearLOT(LOT_INFO *LOT);
+
+#endif

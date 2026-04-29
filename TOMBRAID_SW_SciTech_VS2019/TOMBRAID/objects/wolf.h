@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _WOLF_
+#define _WOLF_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -24,3 +26,5 @@ extern BITE_INFO g_WolfJawBite;
 
 void InitialiseWolf(int16_t item_num);
 void WolfControl(int16_t item_num);
+
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _LAVA_
+#define _LAVA_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -9,3 +11,5 @@ void LavaBurn(ITEM_INFO *item);
 void LavaEmitterControl(int16_t item_num);
 void LavaControl(int16_t fx_num);
 void LavaWedgeControl(int16_t item_num);
+
+#endif

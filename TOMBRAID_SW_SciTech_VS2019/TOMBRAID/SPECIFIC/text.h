@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _TEXT_
+#define _TEXT_
+
 
 /*
 #include "global/types.h"
@@ -29,3 +31,5 @@ int32_t Text_GetWidth(TEXTSTRING *textstring);
 void Text_Remove(TEXTSTRING *textstring);
 void Text_RemoveAll();
 void Text_Draw();
+
+#endif

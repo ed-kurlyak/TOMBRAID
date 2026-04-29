@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SCREEN_
+#define _SCREEN_
+
 
 #include "types.h"
 
@@ -26,3 +28,5 @@ int32_t Screen_GetRenderScaleGLRage(int32_t unit);
 
 int32_t ViewPort_GetCenterX();
 int32_t ViewPort_GetCenterY();
+
+#endif

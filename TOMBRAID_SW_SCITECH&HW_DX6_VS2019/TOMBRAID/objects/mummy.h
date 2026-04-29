@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MUMMY_
+#define _MUMMY_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -13,3 +15,5 @@ typedef enum
 
 void InitialiseMummy(int16_t item_num);
 void MummyControl(int16_t item_num);
+
+#endif

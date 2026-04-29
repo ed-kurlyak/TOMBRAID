@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _BALDY_
+#define _BALDY_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -26,3 +28,5 @@ extern BITE_INFO g_BaldyGun;
 
 void InitialiseBaldy(int16_t item_num);
 void BaldyControl(int16_t item_num);
+
+#endif

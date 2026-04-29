@@ -1,3 +1,6 @@
+#ifndef _DRAWPRIMITIVE_
+#define _DRAWPRIMITIVE_
+
 #include "types.h"
 
 extern int16_t* (*S_DrawObjectGT4)(int16_t* obj_ptr, int32_t number);
@@ -14,3 +17,5 @@ extern void (*S_Output_DrawLine)(VBUF2* vertices, int depth);
 extern void (*S_InitialisePolyList)();
 extern void (*S_OutputPolyList)();
 
+
+#endif

@@ -15,6 +15,7 @@
 #include "sound.h"
 #include "savegame.h"
 #include "cinema.h"
+#include "demo.h"
 
 //***************************
 // SETUP START
@@ -236,7 +237,10 @@ void S_SeedRandom()
 	Random_SeedDraw(tptr->tm_sec + 43 * tptr->tm_min + 3477 * tptr->tm_hour);
 }
 
-void Random_SeedDraw(int32_t seed) { g_RandDraw = seed; }
+void Random_SeedDraw(int32_t seed)
+{ 
+	g_RandDraw = seed;
+}
 
 int32_t Random_GetDraw()
 {
@@ -244,7 +248,10 @@ int32_t Random_GetDraw()
 	return (g_RandDraw >> 10) & 0x7FFF;
 }
 
-void Random_SeedControl(int32_t seed) { g_RandControl = seed; }
+void Random_SeedControl(int32_t seed)
+{ 
+	g_RandControl = seed;
+}
 
 int32_t Random_GetControl()
 {
@@ -588,12 +595,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			break;
 
 		case GF_START_DEMO:
-			// gf_option = StartDemo();
-			//я добавил пока нету демо что бы вместо демо выходило обратно в
-			//титлы
-			g_NoInputCount = 0;
-			g_ResetFlag = 0;
-			gf_option = GF_EXIT_TO_TITLE;
+			gf_option = StartDemo();
 			break;
 
 		case GF_LEVEL_COMPLETE:

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _INIT_
+#define _INIT_
+
 
 #include "types.h"
 
@@ -11,3 +13,5 @@ extern uint32_t g_Malloc_Used;
 
 void Init_Game_Malloc();
 void *Game_Alloc(uint32_t MemSize, GAME_BUFFER BufferType);
+
+#endif

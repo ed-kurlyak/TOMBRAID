@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _TRAPDOOR_
+#define _TRAPDOOR_
+
 
 #include "..\\SPECIFIC\\types.h"
 
@@ -8,3 +10,5 @@ void TrapDoorFloor(ITEM_INFO *item, int32_t x, int32_t y, int32_t z,
 void TrapDoorCeiling(ITEM_INFO *item, int32_t x, int32_t y, int32_t z,
 					 int16_t *height);
 int32_t OnTrapDoor(ITEM_INFO *item, int32_t x, int32_t z);
+
+#endif
