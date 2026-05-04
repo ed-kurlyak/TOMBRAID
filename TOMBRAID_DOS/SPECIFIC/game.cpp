@@ -367,6 +367,8 @@ int Game_Loop(int demo_mode)
                         return GF_EXIT_GAME;
         }
 
+		Sound_StopAllSamples();
+
         return game_over;
 }
 

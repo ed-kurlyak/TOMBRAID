@@ -41,14 +41,14 @@
 #define KEY_DOWN 0x50
 #define KEY_LEFT 0x4B
 #define KEY_RIGHT 0x4D
-#define KEY_DELETE 0x53
-#define KEY_NEXT 0x51 //NEXT
+#define KEY_HOME 0x47 //Home step left
+#define KEY_PGUP 0x49 //PgUp step right
 #define KEY_SHIFT 0x2A //left shift
 #define KEY_MENU 0x38 //left alt
 #define KEY_CONTROL 0x1D //left ctrl
 #define KEY_SPACE 0x39
 #define KEY_INSERT 0x52
-#define KEY_END 0x4F
+#define KEY_NUM5 0x4C
 #define KEY_ESCAPE 1
 
 #define KEY_HOME 0x47

@@ -79,6 +79,10 @@ typedef struct SOUND_SLOT
 {
         int sound_id;
         PHD_3DPOS *pos;
+
+		int Looped; //удалить не используется
+
+		uint32_t JustLoaded;
         // PHD_3DPOS pos;
         // uint32_t loudness;
         // int16_t volume;
@@ -149,7 +153,8 @@ struct MySound
 
 // static AUDIO_SAMPLE_SOUND m_SampleSounds[MAX_ACTIVE_SAMPLES] = { 0 };
 
-SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX] = {0};
+SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX] = { 0 };
+
 static int32_t m_MasterVolume = 0;
 // static int32_t m_MasterVolumeDefault = 0;
 // static int16_t m_AmbientLookup[MAX_AMBIENT_FX] = { 0 };
@@ -161,14 +166,17 @@ void Sound_StopSample(SOUND_SLOT* slot);
 void Sound_SetMasterVolume(int8_t volume);
 void Sound_UpdateEffects();
 void Sound_ResetEffects();
-SOUND_SLOT *Sound_GetSlot(int32_t sfx_num, PHD_3DPOS *pos);
+SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos);
+SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos);
 void DS_StopSample(SOUND_SLOT *slot);
 //HRESULT DirectSound_Init();
 void Sound_Init();
 
 int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags);
 
-void Sound_MakeSample(int i, unsigned char* sample, int size);
+void Sound_MakeSample(unsigned int i, unsigned char* sample, unsigned int size);
+
+void ZeroSoundBuff();
 
 #pragma pack (push,1)
 

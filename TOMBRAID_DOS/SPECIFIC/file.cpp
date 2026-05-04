@@ -70,6 +70,7 @@
 #include <malloc.h>
 #include <memory.h>
 
+
 bool S_LoadLevel(char *szLevelName)
 {
         int32_t LevelVersion;
@@ -1771,8 +1772,9 @@ bool LoadSoundSamples(FILE *fp)
         for (i = 0; i < NumSamples; i++)
         {
                 int current_offset = SampleOffsets[i];
-                int next_offset =
-                        i + 1 >= NumSamples ? (int)File_Size(fp) : SampleOffsets[i + 1];
+                //int next_offset = i + 1 >= NumSamples ? (int)File_Size(fp) : SampleOffsets[i + 1];
+				int next_offset = i + 1 >= NumSamples ? SampleDataSize : SampleOffsets[i + 1];
+				
                 SampleSizes[i] = next_offset - current_offset;
         }
 
@@ -1802,6 +1804,8 @@ bool LoadSoundSamples(FILE *fp)
 
         unsigned int dwHeader[11], dwWaveLength;
         WAVEFORMATEX *pWF = (WAVEFORMATEX*)(&dwHeader[5]);
+
+		ZeroSoundBuff();
 
         for (i = 0; i < NumSamples; i++)
         {
@@ -1861,8 +1865,13 @@ bool LoadSoundSamples(FILE *fp)
 			Sound_Buff[i].data_size = sample_size;
 			*/
 
+
+			
+
 			Sound_MakeSample(i, (unsigned char*)SamplePointers[i], SampleSizes[i]);
         }
+
+		
 
         free(SampleOffsets);
         free(SamplePointers);
@@ -1874,10 +1883,15 @@ bool LoadSoundSamples(FILE *fp)
 size_t File_Size(FILE *fp)
 {
         size_t old = ftell(fp);
+
+		return old;
+		/*
         fseek(fp, 0, SEEK_END);
         size_t size = ftell(fp);
         fseek(fp, (long int)old, SEEK_SET);
+		
         return size;
+		*/
 }
 
 

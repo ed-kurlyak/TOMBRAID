@@ -29,14 +29,14 @@ S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF] = {
                 KEY_DOWN,        // INPUT_KEY_DOWN
                 KEY_LEFT,        // INPUT_KEY_LEFT
                 KEY_RIGHT,   // INPUT_KEY_RIGHT
-                KEY_DELETE,  // INPUT_KEY_STEP_L
-                KEY_NEXT,        // INPUT_KEY_STEP_R
+                KEY_HOME,  // INPUT_KEY_STEP_L
+				KEY_PGUP,        // INPUT_KEY_STEP_R
                 KEY_SHIFT,   // INPUT_KEY_SLOW
                 KEY_MENU,        // INPUT_KEY_JUMP
                 KEY_CONTROL, // INPUT_KEY_ACTION
                 KEY_SPACE,   // INPUT_KEY_DRAW
                 KEY_INSERT,  // INPUT_KEY_LOOK
-                KEY_END,         // INPUT_KEY_ROLL
+				KEY_NUM5,         // INPUT_KEY_ROLL
                 KEY_ESCAPE   // INPUT_KEY_OPTION
             
                // 0,0,0,0,0,0,0,0,0,0,0,0,0

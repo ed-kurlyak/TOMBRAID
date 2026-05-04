@@ -114,7 +114,8 @@ int SCREEN_HEIGHT = 480;
 // SETUP PART #4 LARA DIST
 // false is original TR1 Lara dist
 //влияет на g_PhdPersp
-int lara_dist = false;
+//int lara_dist = false;
+int lara_dist = true;
 
 // SETUP PART #5 CHEATS MODE
 // full ammo/medi

@@ -325,7 +325,10 @@ int32_t Display_Inventory(int inv_mode)
 
                 phd_PopMatrix();
 
-                Sound_UpdateEffects();
+				//когда шум водопада в lost valley 3 уровень
+				//то открываешь инвентарь и слышно шум водопада
+				//если эту функцию ниже не закоментировать
+                //Sound_UpdateEffects();
                 Overlay_DrawFPSInfo();
                 Text_Draw();
                 S_OutputPolyList();
@@ -1220,9 +1223,30 @@ void S_FadeOutInventory(int32_t fade)
         // not implemented in TombATI
 }
 
-void Sound_StopAmbientSounds() {}
+void Sound_StopAmbientSounds()
+{
+}
 
-void Sound_StopAllSamples() {}
+void Sound_StopAllSamples()
+{
+	//sosDIGIStopAllSamples(hDIGIDriver);
+
+	SOUND_SLOT* slot;
+
+	for (int i = 0; i < MAX_PLAYING_FX; i++)
+	{
+		slot = &m_SFXPlaying[i];
+
+		if (slot->flags == SOUND_FLAG_USED)
+		{
+				sosDIGIStopSample(hDIGIDriver, slot->sound_handler);
+
+				slot->flags == SOUND_FLAG_UNUSED;
+		}
+	}
+
+	
+}
 
 void S_SoundVolume(int Volume) {}
 

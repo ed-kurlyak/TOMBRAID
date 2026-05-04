@@ -26,6 +26,7 @@
 #include "items.h"
 #include "draw.h"
 #include "control_util.h"
+#include "inv.h"
 
 
 static const int32_t m_CinematicAnimationRate = 0x8000;
@@ -96,7 +97,7 @@ int32_t CinematicLoop()
 int32_t StopCinematic(int32_t level_num)
 {
     //Music_Stop();
-    //Sound_StopAllSamples();
+    Sound_StopAllSamples();
 
     g_LevelComplete = 1;
     //S_FadeInInventory(1);
