@@ -27,7 +27,7 @@ The project is based on the source code from <a href="https://github.com/LostArt
 
 - TOMBRAID_SW_SciTech&HW_DX6_VS2019 - for software mode used SciTech Mega Graphics Library, for hardware mode DX6, Visual Studio 2019
 
-- TOMBRAID_SW_SCITECH_VS2019 - software mode used SciTech Mega Graphics Library, Visual Studio 2019
+- TOMBRAID_SW_SciTech_VS2019 - software mode only, used SciTech Mega Graphics Library, Visual Studio 2019
 
 - TOMBRAID_DOS - MS-DOS dos4gw version 640x480, project used only WATCOM 10 (EXE tested on Win 10 DOSBox 0.74 and on WinME)  
 
