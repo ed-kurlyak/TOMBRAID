@@ -226,5 +226,6 @@ void SetCurrVolume(SOUND_SLOT* slot, W32 Volume);
 
 void Sound_UnInit();
 
+void Sound_StopAllSamples();
 
 #endif

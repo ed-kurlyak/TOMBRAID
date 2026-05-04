@@ -107,4 +107,6 @@ HRESULT DS_MakeSample(int nSample, WAVEFORMATEX *pWF, unsigned char *pWaveData,
 int DS_StartSample(SOUND_SLOT *slot, int nVolume, int nPitch, int nPan,
 				   DWORD dwFlags);
 
+void Sound_StopAllSamples();
+
 #endif

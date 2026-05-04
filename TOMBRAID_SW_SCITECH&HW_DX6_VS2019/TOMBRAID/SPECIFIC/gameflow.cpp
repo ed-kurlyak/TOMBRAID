@@ -147,7 +147,7 @@ void Init_GameFlow()
 
 	if (GameType == VER_TR1)
 	{
-		sprintf(g_GameFlow.save_game_fmt, "%s", "saveati.%d");
+		sprintf(g_GameFlow.save_game_fmt, "%s", "savetomb.%d");
 
 		// g_GameFlow.levels[1].level_type
 		// g_GameFlow.levels[1].music = 0;

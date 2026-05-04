@@ -62,8 +62,8 @@ extern TEXTSTRING *g_InvRingText;
 
 void S_FadeInInventory(int32_t fade);
 void S_FadeOutInventory(int32_t fade);
-void Sound_StopAmbientSounds();
-void Sound_StopAllSamples();
+//void Sound_StopAmbientSounds();
+
 void S_SoundVolume(int Volume);
 void DoInventoryPicture();
 void S_FinishInventory();

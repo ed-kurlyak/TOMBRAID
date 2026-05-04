@@ -1,4 +1,5 @@
 #include "cinema.h"
+#include "sound.h"
 
 /*
 #include "3dsystem/3d_gen.h"

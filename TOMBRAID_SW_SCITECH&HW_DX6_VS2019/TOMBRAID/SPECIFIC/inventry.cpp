@@ -85,7 +85,7 @@ int32_t Display_Inventory(int inv_mode)
 		S_FadeInInventory(0);
 	}
 
-	Sound_StopAmbientSounds();
+	//Sound_StopAmbientSounds();
 	Sound_StopAllSamples();
 
 	if (g_InvMode != INV_TITLE_MODE)
@@ -326,7 +326,7 @@ int32_t Display_Inventory(int inv_mode)
 
 		phd_PopMatrix();
 
-		Sound_UpdateEffects();
+		//Sound_UpdateEffects();
 		Overlay_DrawFPSInfo();
 		Text_Draw();
 		S_OutputPolyList();
@@ -1217,9 +1217,9 @@ void S_FadeOutInventory(int32_t fade)
 	// not implemented in TombATI
 }
 
-void Sound_StopAmbientSounds() {}
+//void Sound_StopAmbientSounds() {}
 
-void Sound_StopAllSamples() {}
+//void Sound_StopAllSamples() {}
 
 void S_SoundVolume(int Volume) {}
 

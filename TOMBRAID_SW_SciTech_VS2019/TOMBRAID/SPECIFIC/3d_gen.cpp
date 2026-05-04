@@ -111,4 +111,6 @@ void phd_AlterFOV(PHD_ANGLE fov)
 		g_PhdPersp = ((Screen_GetResWidth() / 2) * c) / s;
 	else
 		g_PhdPersp = ((Screen_GetResHeight() / 2) * c) / s;
+
+	int a = 10;
 }

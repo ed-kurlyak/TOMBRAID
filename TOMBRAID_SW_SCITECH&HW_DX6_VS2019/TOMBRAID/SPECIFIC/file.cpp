@@ -1955,8 +1955,8 @@ bool LoadSoundSamples(FILE *fp)
 	for (int i = 0; i < NumSamples; i++)
 	{
 		int current_offset = SampleOffsets[i];
-		int next_offset =
-			i + 1 >= NumSamples ? (int)File_Size(fp) : SampleOffsets[i + 1];
+		//int next_offset =i + 1 >= NumSamples ? (int)File_Size(fp) : SampleOffsets[i + 1];
+		int next_offset = i + 1 >= NumSamples ? SampleDataSize : SampleOffsets[i + 1];
 		SampleSizes[i] = next_offset - current_offset;
 	}
 

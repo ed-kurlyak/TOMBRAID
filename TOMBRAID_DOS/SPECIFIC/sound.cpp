@@ -908,3 +908,25 @@ void ZeroSoundBuff()
         
 
 }
+
+
+void Sound_StopAllSamples()
+{
+	//sosDIGIStopAllSamples(hDIGIDriver);
+
+	SOUND_SLOT* slot;
+
+	for (int i = 0; i < MAX_PLAYING_FX; i++)
+	{
+		slot = &m_SFXPlaying[i];
+
+		if (slot->flags == SOUND_FLAG_USED)
+		{
+			sosDIGIStopSample(hDIGIDriver, slot->sound_handler);
+
+			slot->flags == SOUND_FLAG_UNUSED;
+		}
+	}
+
+
+}

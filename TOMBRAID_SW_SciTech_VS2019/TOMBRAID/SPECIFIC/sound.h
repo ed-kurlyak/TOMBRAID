@@ -87,7 +87,7 @@ struct MySound
 
 // static AUDIO_SAMPLE_SOUND m_SampleSounds[MAX_ACTIVE_SAMPLES] = { 0 };
 
-static SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX] = {0};
+static SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX];
 static int32_t m_MasterVolume = 0;
 // static int32_t m_MasterVolumeDefault = 0;
 // static int16_t m_AmbientLookup[MAX_AMBIENT_FX] = { 0 };
@@ -106,5 +106,7 @@ HRESULT DS_MakeSample(int nSample, WAVEFORMATEX *pWF, unsigned char *pWaveData,
 					  int dwWaveLength);
 int DS_StartSample(SOUND_SLOT *slot, int nVolume, int nPitch, int nPan,
 				   DWORD dwFlags);
+
+void Sound_StopAllSamples();
 
 #endif

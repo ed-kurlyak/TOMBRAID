@@ -1,4 +1,5 @@
 #include "cinema.h"
+#include "sound.h"
 
 /*
 #include "3dsystem/3d_gen.h"
@@ -95,7 +96,7 @@ int32_t CinematicLoop()
 int32_t StopCinematic(int32_t level_num)
 {
     //Music_Stop();
-    //Sound_StopAllSamples();
+    Sound_StopAllSamples();
 
     g_LevelComplete = true;
     //S_FadeInInventory(1);

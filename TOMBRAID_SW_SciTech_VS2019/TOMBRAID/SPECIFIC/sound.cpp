@@ -8,6 +8,8 @@
 
 // static int bPlaying[256] = {0};
 
+//SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX] = { 0 };
+
 LPDIRECTSOUNDBUFFER g_pPrimaryBuffer = NULL;
 
 MySound activeBuffers[256];
@@ -99,12 +101,15 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 		return false;
 	}
 
+	int camera_underwater = 0;
+
 	//если камера под водой то например водопад Natla Mines не звучит
 	if (flags != SPM_ALWAYS &&
 		(flags & SPM_UNDERWATER) !=
 			(g_RoomInfo[g_Camera.pos.room_number].flags & RF_UNDERWATER))
 	{
-		return false;
+		//return false;
+		camera_underwater = 1;
 	}
 
 	SOUND_SAMPLE_INFO *sample = &g_SampleInfos[g_SampleLUT[sfx_num]];
@@ -138,13 +143,17 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 		int32_t x = pos->x - g_Camera.target.x;
 		int32_t y = pos->y - g_Camera.target.y;
 		int32_t z = pos->z - g_Camera.target.z;
-		
+		
+
+
 		if (ABS(x) > SOUND_RADIUS || ABS(y) > SOUND_RADIUS || ABS(z) >
 	SOUND_RADIUS)
 		{
 			return false;
 		}
-		
+		
+
+
 		distance = SQUARE(x) + SQUARE(y) + SQUARE(z);
 	}
 	else
@@ -152,7 +161,9 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 		distance = 0;
 	}
 
-	
+	
+
+
 	//distance = phd_sqrt(distance);
 	//int32_t volume = sample->volume - distance * SOUND_RANGE_MULT_CONSTANT;
 	// Корректировка громкости
@@ -165,7 +176,9 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 	{
 		volume -= Random_GetDraw() * SOUND_MAX_VOLUME_CHANGE >> 15;
 	}
-	
+	
+
+
 	if (volume <= 0 && mode != SOUND_MODE_AMBIENT)
 	{
 		return false;
@@ -330,6 +343,38 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 
 	//конец вариант кода из reverse engineering chatGPT
 
+
+	//SOUND_SLOT* slot;
+	int i;
+	DWORD status;
+
+	for (i = 0; i < MAX_PLAYING_FX; i++)
+	{
+		SOUND_SLOT* slot = &m_SFXPlaying[i];
+
+		if (slot->flags == SOUND_FLAG_USED)
+		{
+			slot->Buffers->GetStatus(&status);
+
+			if ((status & DSBSTATUS_PLAYING))
+			{
+
+			}
+			else
+			{
+					slot->Buffers->Stop();
+					slot->Buffers->Release();
+					slot->Buffers = NULL;
+					slot->flags = SOUND_FLAG_UNUSED;
+			}
+
+		}
+	}
+
+
+
+
+
 	//обработка разных типов звуков
 	switch (mode)
 	{
@@ -339,7 +384,11 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 	{
 		SOUND_SLOT *slot = Sound_GetSlot(sample->number, NULL);
 
-		if (!IsPlaying(slot))
+		if (IsPlaying(slot))
+		{
+			break;
+		}
+		else
 		{
 			DS_StartSample(slot, wVol, pitch, wPan, 0);
 		}
@@ -370,11 +419,20 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 	{
 		SOUND_SLOT *slot = Sound_GetSlot(sample->number, pos);
 
+		if (camera_underwater)
+		{
+			DS_StopSample(slot);
+			//SetCurrVolume(slot, 0);
+			break;
+		}
+
 		SetCurrVolume(slot, wVol);
 
-		if (!IsPlaying(slot))
+		if (IsPlaying(slot))
+			break;
+
 		{
-			DS_StartSample(slot, wVol, pitch, wPan, 0);
+			DS_StartSample(slot, wVol, pitch, wPan, DSBPLAY_LOOPING);
 		}
 
 		break;
@@ -387,6 +445,8 @@ bool Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 int DS_StartSample(SOUND_SLOT *slot, int nVolume, int nPitch, int nPan,
 				   DWORD dwFlags)
 {
+
+	slot->flags = SOUND_FLAG_USED;
 
 	slot->Buffers->SetVolume(nVolume);
 	slot->Buffers->SetFrequency(DSBFREQUENCY_ORIGINAL);
@@ -542,15 +602,16 @@ HRESULT DirectSound_Init()
 	return S_OK;
 }
 
-SOUND_SLOT *Sound_GetSlot(int32_t sfx_num, PHD_3DPOS *pos)
+SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos)
 {
 	int i = 0;
-	for (i = 0; i < MAX_PLAYING_FX; i++)
-	{
-		SOUND_SLOT *result = &m_SFXPlaying[i];
+	int j = 0;
 
-		if (pos != NULL)
+	if (pos != NULL)
+	{
+		for (i = 0; i < MAX_PLAYING_FX; i++)
 		{
+			SOUND_SLOT* result = &m_SFXPlaying[i];
 
 			if (result->sound_id == sfx_num && result->pos == pos &&
 				result->flags != SOUND_FLAG_UNUSED)
@@ -559,8 +620,37 @@ SOUND_SLOT *Sound_GetSlot(int32_t sfx_num, PHD_3DPOS *pos)
 				return result;
 			}
 		}
-		else
+
+		for (j = 0; j < MAX_PLAYING_FX; j++)
 		{
+			SOUND_SLOT* result = &m_SFXPlaying[j];
+
+				//создаем нужный слот по позиции и номеру звука
+				if (result->flags == SOUND_FLAG_UNUSED)
+				{
+					result->sound_id = sfx_num;
+					result->pos = pos;
+					result->flags = SOUND_FLAG_USED;
+
+					if (FAILED(g_DirectSound->DuplicateSoundBuffer(
+						g_DSBuffer[result->sound_id], &result->Buffers)))
+					{
+						// return 0; // Ошибка дублирования
+					}
+
+					return result;
+				}
+		}
+
+
+	}
+	else
+	{
+		for (i = 0; i < MAX_PLAYING_FX; i++)
+		{
+			SOUND_SLOT* result = &m_SFXPlaying[i];
+
+
 			if (result->sound_id == sfx_num &&
 				result->flags != SOUND_FLAG_UNUSED)
 			{
@@ -568,33 +658,11 @@ SOUND_SLOT *Sound_GetSlot(int32_t sfx_num, PHD_3DPOS *pos)
 				return result;
 			}
 		}
-	}
 
-	int j = 0;
-	for (j = 0; j < MAX_PLAYING_FX; j++)
-	{
-		SOUND_SLOT *result = &m_SFXPlaying[j];
-
-		if (pos != NULL)
+		for (i = 0; i < MAX_PLAYING_FX; i++)
 		{
-			//создаем нужный слот по позиции и номеру звука
-			if (result->flags == SOUND_FLAG_UNUSED)
-			{
-				result->sound_id = sfx_num;
-				result->pos = pos;
-				result->flags = SOUND_FLAG_USED;
+			SOUND_SLOT* result = &m_SFXPlaying[i];
 
-				if (FAILED(g_DirectSound->DuplicateSoundBuffer(
-						g_DSBuffer[result->sound_id], &result->Buffers)))
-				{
-					// return 0; // Ошибка дублирования
-				}
-
-				return result;
-			}
-		}
-		else
-		{
 			//создаем нужный слот без позиции и номеру звука
 			if (result->flags == SOUND_FLAG_UNUSED)
 			{
@@ -602,7 +670,7 @@ SOUND_SLOT *Sound_GetSlot(int32_t sfx_num, PHD_3DPOS *pos)
 				result->flags = SOUND_FLAG_USED;
 
 				if (FAILED(g_DirectSound->DuplicateSoundBuffer(
-						g_DSBuffer[result->sound_id], &result->Buffers)))
+					g_DSBuffer[result->sound_id], &result->Buffers)))
 				{
 					// return 0; // Ошибка дублирования
 				}
@@ -631,4 +699,33 @@ void Sound_SetMasterVolume(int8_t volume)
 	int8_t raw_volume = volume ? 6 * volume + 3 : 0;
 	// m_MasterVolumeDefault = raw_volume & 0x3F;
 	m_MasterVolume = raw_volume & 0x3F;
+}
+
+
+void Sound_StopAllSamples()
+{
+	int i;
+	DWORD status;
+	SOUND_SLOT* slot;
+
+	for (i = 0; i < MAX_PLAYING_FX; i++)
+	{
+		slot = &m_SFXPlaying[i];
+
+		if (slot->flags == SOUND_FLAG_USED)
+		{
+			slot->Buffers->GetStatus(&status);
+
+			if ((status & DSBSTATUS_PLAYING))
+			{
+				slot->Buffers->Stop();
+				slot->Buffers->Release();
+				slot->Buffers = NULL;
+				slot->flags = SOUND_FLAG_UNUSED;
+			}
+
+		}
+	}
+
+
 }

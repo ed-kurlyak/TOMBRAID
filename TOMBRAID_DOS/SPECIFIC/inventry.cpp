@@ -85,7 +85,7 @@ int32_t Display_Inventory(int inv_mode)
                 S_FadeInInventory(0);
         }
 
-        Sound_StopAmbientSounds();
+        //Sound_StopAmbientSounds();
         Sound_StopAllSamples();
 
         if (g_InvMode != INV_TITLE_MODE)
@@ -1222,31 +1222,12 @@ void S_FadeOutInventory(int32_t fade)
 {
         // not implemented in TombATI
 }
-
+/*
 void Sound_StopAmbientSounds()
 {
 }
+*/
 
-void Sound_StopAllSamples()
-{
-	//sosDIGIStopAllSamples(hDIGIDriver);
-
-	SOUND_SLOT* slot;
-
-	for (int i = 0; i < MAX_PLAYING_FX; i++)
-	{
-		slot = &m_SFXPlaying[i];
-
-		if (slot->flags == SOUND_FLAG_USED)
-		{
-				sosDIGIStopSample(hDIGIDriver, slot->sound_handler);
-
-				slot->flags == SOUND_FLAG_UNUSED;
-		}
-	}
-
-	
-}
 
 void S_SoundVolume(int Volume) {}
 

@@ -1769,8 +1769,8 @@ bool LoadSoundSamples(FILE *fp)
 	for (int i = 0; i < NumSamples; i++)
 	{
 		int current_offset = SampleOffsets[i];
-		int next_offset =
-			i + 1 >= NumSamples ? (int)File_Size(fp) : SampleOffsets[i + 1];
+		//int next_offset = i + 1 >= NumSamples ? (int)File_Size(fp) : SampleOffsets[i + 1];
+		int next_offset = i + 1 >= NumSamples ? SampleDataSize : SampleOffsets[i + 1];
 		SampleSizes[i] = next_offset - current_offset;
 	}
 
@@ -1778,9 +1778,10 @@ bool LoadSoundSamples(FILE *fp)
 
 	DWORD dwHeader[11], dwWaveLength;
 	WAVEFORMATEX *pWF = reinterpret_cast<WAVEFORMATEX *>(&dwHeader[5]);
-
+	
 	for (int i = 0; i < NumSamples; i++)
 	{
+		
 		memcpy(dwHeader, SamplePointers[i], sizeof(DWORD) * 11);
 
 		if (dwHeader[0] != MAKEFOURCC('R', 'I', 'F', 'F') ||
@@ -1790,8 +1791,9 @@ bool LoadSoundSamples(FILE *fp)
 		{
 			MessageBox(NULL, "Not WAVE format!", "Tomb Raider", MB_OK);
 		}
-
+		
 		pWF->cbSize = sizeof(WAVEFORMATEX);
+		
 
 		dwWaveLength = dwHeader[10];
 
