@@ -31,7 +31,7 @@ extern int GameType;
 
 extern int Widescreen;
 
-extern int g_bWindowClosed;
+//extern int g_bWindowClosed;
 
 //extern HINSTANCE g_hInst;
 //extern HWND g_hWnd;

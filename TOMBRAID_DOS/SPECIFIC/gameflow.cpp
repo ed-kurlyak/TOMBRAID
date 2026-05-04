@@ -515,7 +515,7 @@ void Init_GameFlow()
         }
         else
         {
-                sprintf(g_GameFlow.save_game_fmt, "%s", "saveuba.%d");
+                sprintf(g_GameFlow.save_game_fmt, "%s", "savetrub.%d");
 
                 // g_GameFlow.levels[1].level_type
                 // g_GameFlow.levels[1].music[0] = 0;

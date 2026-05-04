@@ -137,8 +137,8 @@ int32_t Display_Inventory(int inv_mode)
         {
 
                 //добавил я с учетом Win программирования (не MS-DOS)
-                if (g_bWindowClosed)
-                        return GF_EXIT_GAME;
+				//if (g_bWindowClosed)
+				  ////      return GF_EXIT_GAME;
 
                 Inv_RingCalcAdders(&ring, ROTATE_DURATION);
                 Input_Update();

@@ -102,7 +102,7 @@ int Widescreen = 1;
 //---------------------------
 // SETUP PART #3 GAME TYPE - TR1/GOLD
 int GameType = VER_TR1;
-// int GameType = VER_TR1_GOLD;
+//int GameType = VER_TR1_GOLD;
 
 //---------------------------
 // SETUP PART #5 SCREEN RESOLUTION
@@ -156,8 +156,8 @@ Level 4 - Hive - END2.PHD
 */
 
 
-int g_bWindowClosed = false;
-int g_bFocus = true;
+//int g_bWindowClosed = false;
+//int g_bFocus = true;
 
 int32_t g_RandControl = 0xD371F947;
 int32_t g_RandDraw = 0xD371F947;
@@ -608,7 +608,7 @@ int main(void)
         int intro_played = false;
         int loop_continue = true;
 
-		int32_t gf_option = LoadTitle();
+                int32_t gf_option = LoadTitle();
 
         //int32_t gf_option = 3;
                 

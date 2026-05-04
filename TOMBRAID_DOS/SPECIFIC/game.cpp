@@ -363,8 +363,8 @@ int Game_Loop(int demo_mode)
                 game_over = Control_Phase(nframes, demo_mode);
 
                 //добавил я с учетом Win программирования (не MS-DOS)
-                if (g_bWindowClosed)
-                        return GF_EXIT_GAME;
+                //if (g_bWindowClosed)
+                  //      return GF_EXIT_GAME;
         }
 
 		Sound_StopAllSamples();
