@@ -25,11 +25,10 @@ The project is based on the source code from <a href="https://github.com/LostArt
 
 ## Projects description:  
 
+- TOMBRAID_DOS - MS-DOS dos4gw version 640x480, project used only WATCOM 10 (EXE tested on Win 10 DOSBox 0.74 and on WinME)  
+
 - TOMBRAID_SW_SciTech&HW_DX6_VS2019 - for software mode used SciTech Mega Graphics Library, for hardware mode DX6, Visual Studio 2019
 
 - TOMBRAID_SW_SciTech_VS2019 - software mode only, used SciTech Mega Graphics Library, Visual Studio 2019
-
-- TOMBRAID_DOS - MS-DOS dos4gw version 640x480, project used only WATCOM 10 (EXE tested on Win 10 DOSBox 0.74 and on WinME)  
-
 
 <img src="https://github.com/ed-kurlyak/TOMBRAID/blob/main/pics/tomb1.png" alt="Lara Croft Tomb Raider 1 image">
