@@ -11,7 +11,7 @@ The project is based on the source code from <a href="https://github.com/LostArt
 - Optional DirectX 6 rendering mode (requires DirectX 6 SDK). 
 - Original Core Design functions used for triangle rasterization (software triangle rasterization).  
 - 8-bit backbuffer using SciTech Mega Graphics Library from Quake 1.  
-- Sound handled via DirectSound 8.  
+- Sound handled via DirectSound 8 and HMI Sound Operation System.  
 - Tested on Windows 10, Compiled with Visual Studio 2019.  
 
 ## Instructions
