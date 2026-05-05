@@ -6,6 +6,8 @@
 #include "types.h"
 #include <windows.h>
 
+int perspective_distance = ((3 * 1024) << W2V_SHIFT);
+
 int16_t saved_levels[MAXIMUM_LEVELS] = { -1 };
 
 TEXTSTRING* g_PassportText = NULL;

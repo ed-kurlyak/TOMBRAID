@@ -1934,6 +1934,65 @@ void (*poly_draw_routines[])(short int *) = {
  *   	   Sort The Polygon Draw List In Back To Front Order
  *****************************************************************************/
 
+void do_sort(int left, int right, int buffer[][2]);
+
+//from tr1 reverse engineering
+void do_sort(int left, int right, int buffer[][2])
+{
+	int i, j;
+	int pivot;
+
+	while (true)
+	{
+		i = left;
+		j = right;
+
+		// pivot = buffer[(left + right) / 2][1]
+		int mid = (left + right);
+		mid = (mid - (mid >> 31)) >> 1; // точное повторение asm (sar/sub/sar)
+		pivot = buffer[mid][1];
+
+		while (true)
+		{
+			// while (buffer[i][1] > pivot && i < right)
+			while (pivot < buffer[i][1] && i < right)
+				i++;
+
+			// while (pivot > buffer[j][1] && j > left)
+			while (pivot > buffer[j][1] && j > left)
+				j--;
+
+			if (i > j)
+				break;
+
+			// swap buffer[i][1] <-> buffer[j][1]
+			int tmp = buffer[i][1];
+			buffer[i][1] = buffer[j][1];
+			buffer[j][1] = tmp;
+
+			// swap buffer[i][0] <-> buffer[j][0]
+			tmp = buffer[i][0];
+			buffer[i][0] = buffer[j][0];
+			buffer[j][0] = tmp;
+
+			i++;
+			j--;
+		}
+
+		// рекурсия (левая часть)
+		if (j > left)
+		{
+			do_sort(left, j, buffer);
+		}
+
+		// хвостовая рекурсия превращена в цикл (как в asm)
+		if (i >= right)
+			break;
+
+		left = i;
+	}
+}
+
 // void	phd_SortPolyList( int number,int buffer[][10])
 void phd_SortPolyList(int number, int buffer[][2])
 {
@@ -1942,9 +2001,11 @@ void phd_SortPolyList(int number, int buffer[][2])
 	{
 		for (i = 0; i < number; i++) // eliminate polygon flicker
 			buffer[i][1] += i;
-
-		do_quickysorty(0, number - 1, buffer);
 	}
+
+	//do_quickysorty(0, number - 1, buffer);
+	do_sort(0, number - 1, buffer);
+
 }
 
 /******************************************************************************

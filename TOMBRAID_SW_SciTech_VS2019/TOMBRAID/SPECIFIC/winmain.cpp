@@ -42,21 +42,21 @@ int SCREEN_WIDTH = 1600;
 int SCREEN_HEIGHT = 900;
 */
 
-/*
+
 
 int SCREEN_WIDTH = 1280;
 int SCREEN_HEIGHT = 720;
-*/
+
 
 /*
 int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 600;
 */
 
-
+/*
 int SCREEN_WIDTH = 640;
 int SCREEN_HEIGHT = 480;
-
+*/
 
 //---------------------------
 // SETUP PART #4 LARA DIST

@@ -840,6 +840,6 @@ er.obj,falling_block.obj,falling_ceiling.obj,flame.obj,lava.obj,lightning_em&
 itter.obj,midas_touch.obj,movable_block.obj,pendulum.obj,rolling_ball.obj,ro&
 lling_block.obj,spikes.obj,teeth_trap.obj,thors_hammer.obj
  @%append tombraid.lk1 
- *wlink SYS dos4g op m op st=266240 libf SOSW1CR.LIB op maxe=25 op q op symf&
- @tombraid.lk1
+ *wlink SYS dos4g op m op st=266240 libp HMI libf SOSW1CR.LIB op maxe=25 op &
+q op symf @tombraid.lk1
 

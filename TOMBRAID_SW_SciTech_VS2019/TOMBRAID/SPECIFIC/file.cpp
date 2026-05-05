@@ -1801,7 +1801,7 @@ bool LoadSoundSamples(FILE *fp)
 		// id 72 = sound 108 rotate ring sound
 		// id 73 = sound 109 open item sound
 		/*
-				if(i == 57)
+				if(i == 72)
 				{
 						FILE *fp;
 

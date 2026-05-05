@@ -22,6 +22,8 @@
 #include "types.h"
 #include "winmain.h"
 
+extern int perspective_distance;
+
 extern int16_t saved_levels[MAXIMUM_LEVELS];
 
 extern TEXTSTRING* g_PassportText;

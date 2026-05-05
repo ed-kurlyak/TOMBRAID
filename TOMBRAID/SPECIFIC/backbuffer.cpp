@@ -26,7 +26,7 @@ char * video_buffer =(char*) 0xA0000L;
 
 void Wait_For_Vsync(void)
 {
-	
+        
 
     while (inp(VGA_INPUT_STATUS_1) & VGA_VSYNC_MASK)
     {
@@ -96,10 +96,10 @@ void Create_Water_Palette()
         unsigned char g = GameWaterPalette[i].g/4;
         unsigned char b = GameWaterPalette[i].b/4;
 
-		outp(PALETTE_MASK, 0xff);
+                outp(PALETTE_MASK, 0xff);
         outp(PALETTE_REGISTER_WR, i);
         outp(PALETTE_DATA, r);
-		outp(PALETTE_DATA, g);
+                outp(PALETTE_DATA, g);
         outp(PALETTE_DATA, b);
     }   
 
@@ -177,14 +177,14 @@ void Create_BackBuffer()
 
 void Clear_BackBuffer()
 {
-	memset(phd_winptr_my, 0, 307200);
+        memset(phd_winptr_my, 0, 307200);
 
         //char *phd_winptr_my = NULL;
 
         //phd_winptr_my = (char *)dibdc->surface;
 
         //очищаем m_BackBuffer (экран)
-	/*
+        /*
         for (int x = 0; x < Screen_Width; x++)
         {
                 for (int y = 0; y < Screen_Height; y++)
@@ -194,7 +194,7 @@ void Clear_BackBuffer()
                         phd_winptr_my[Index + 0] = 0;
                 }
         }
-		*/
+                */
 }
 
 /*
@@ -248,35 +248,35 @@ void set_vpage0();
     "int 10h" \
     modify [ax bx dx]
 
-	*/
+        */
 
 
-	/*
-	не правильно ax затирается
+        /*
+        не правильно ax затирается
 
 #pragma aux set_page = \
-	"mov ax, 4f05h" \
-	"mov bx, 0" \
-	"mov dx, 1" \
-	"int 10h" \
-	parm [ax] \
-	modify [ax bx dx]
-	*/
+        "mov ax, 4f05h" \
+        "mov bx, 0" \
+        "mov dx, 1" \
+        "int 10h" \
+        parm [ax] \
+        modify [ax bx dx]
+        */
 
 //обязательное предварительное обявление функции
 //без этого не работает
 void set_page(int page);
 //правильно ax НЕ затирается
 #pragma aux set_page = \
-	"mov cx, ax" \
-	"mov ax, 4f05h" \
-	"mov bx, 0" \
-	"mov dx, cx" \
-	"int 10h" \
-	parm [ax] \
-	modify [ax bx dx]
+        "mov cx, ax" \
+        "mov ax, 4f05h" \
+        "mov bx, 0" \
+        "mov dx, cx" \
+        "int 10h" \
+        parm [ax] \
+        modify [ax bx dx]
 
-//		set_page(1);
+//              set_page(1);
 
 void Present_BackBuffer()
 {
@@ -325,57 +325,57 @@ void Present_BackBuffer()
 
         */      
     
-		/*
-	не правильно ax затирается
+                /*
+        не правильно ax затирается
 
 #pragma aux set_page = \
-	"mov ax, 4f05h" \
-	"mov bx, 0" \
-	"mov dx, 1" \
-	"int 10h" \
-	parm [ax] \
-	modify [ax bx dx]
-	*/
+        "mov ax, 4f05h" \
+        "mov bx, 0" \
+        "mov dx, 1" \
+        "int 10h" \
+        parm [ax] \
+        modify [ax bx dx]
+        */
 
-	/*
-	//правильно ax НЕ затирается
+        /*
+        //правильно ax НЕ затирается
 #pragma aux set_page = \
-	"mov cx, ax" \
-	"mov ax, 4f05h" \
-	"mov bx, 0" \
-	"mov dx, ax" \
-	"int 10h" \
-	parm [ax] \
-	modify [ax bx dx]
+        "mov cx, ax" \
+        "mov ax, 4f05h" \
+        "mov bx, 0" \
+        "mov dx, ax" \
+        "int 10h" \
+        parm [ax] \
+        modify [ax bx dx]
 
-		set_page(1);
+                set_page(1);
 
-		*/
+                */
 
 
         //set_vpage0();
-		set_page(0);
+                set_page(0);
 
         memcpy((unsigned char*)video_buffer, phd_winptr_my, 65536);
         //set_vpage1();
-		set_page(1);
+                set_page(1);
 
         memcpy((unsigned char*)video_buffer, phd_winptr_my + 1 * 65536, 65536);
 
 
         //set_vpage2();
-		set_page(2);
+                set_page(2);
 
         memcpy((unsigned char*)video_buffer, phd_winptr_my + 2 * 65536, 65536);
 
 
         //set_vpage3();
-		set_page(3);
+                set_page(3);
 
         memcpy((unsigned char*)video_buffer, phd_winptr_my + 3 * 65536, 65536);
 
         //set_vpage4();
-		set_page(4);
+                set_page(4);
 
         memcpy((unsigned char*)video_buffer, phd_winptr_my + 4 * 65536, 45056);
 

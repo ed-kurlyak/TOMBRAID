@@ -35,6 +35,8 @@
 #pragma comment (lib, "ddraw.lib")
 #pragma comment (lib, "dxguid.lib")
 
+extern int perspective_distance;
+
 extern int16_t saved_levels[MAXIMUM_LEVELS];
 
 extern TEXTSTRING* g_PassportText;

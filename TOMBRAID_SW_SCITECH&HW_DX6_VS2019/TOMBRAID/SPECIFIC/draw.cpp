@@ -634,16 +634,17 @@ int16_t *Output_CalcVerticeLight(int16_t *obj_ptr)
 
 int16_t* S_DrawObjectGT4_SW(int16_t* obj_ptr, int32_t number)
 {
-	PHD_VBUF *vns[4];
+	PHD_VBUF* vns[4];
 	VBUF vertices[8];
 	POINT_INFO points[4];
-	PHD_TEXTURE *tex;
+	PHD_TEXTURE* tex;
 	int32_t vert_count = 4;
 
 	int num_TexturedQuad = number;
 
 	if (number > 0)
 	{
+
 		do
 		{
 			vns[0] = &m_VBuf[*obj_ptr++];
@@ -661,8 +662,8 @@ int16_t* S_DrawObjectGT4_SW(int16_t* obj_ptr, int32_t number)
 					//псевдоскалярное косое умножение векторов
 					//выясняем куда смотрит полигон - от зрителя или к зрителю
 					if ((vns[0]->ys - vns[1]->ys) * (vns[2]->xs - vns[1]->xs) -
-							(vns[2]->ys - vns[1]->ys) *
-								(vns[0]->xs - vns[1]->xs) >
+						(vns[2]->ys - vns[1]->ys) *
+						(vns[0]->xs - vns[1]->xs) >
 						0)
 					{
 						//полигон смотрит к зрителю
@@ -726,53 +727,86 @@ int16_t* S_DrawObjectGT4_SW(int16_t* obj_ptr, int32_t number)
 								depth = vns[3]->zv;
 							}
 
-							int32_t *sort = sort3dptr;
-							int16_t *info = info3dptr;
+							int32_t* sort = sort3dptr;
+							int16_t* info = info3dptr;
 
 							sort[0] = (int32_t)info;
 							sort[1] = depth;
 
 							sort3dptr += 2;
 
-							// info3dptr 2 bytes - 16 бит
-							// 0 draw routine
-							// 1 texture page
-							// 2 num coords ie vert count
-							// 3 vert1
-							// 4 vert2
-							// 5 vert3
-
-							info[0] = tex->drawtype + 2;
-							info[1] = tex->tpage;
-							info[2] = vert_count;
-
-							info += 3;
-
-							int32_t indx = 0;
-
-							if (vert_count > 0)
+							if (depth < perspective_distance)
 							{
 
-								do
+								info[0] = tex->drawtype + 2;
+								info[1] = tex->tpage;
+								info[2] = vert_count;
+
+								info += 3;
+
+								int32_t indx = 0;
+
+								if (vert_count > 0)
 								{
-									info[0] = (short int)vertices[indx].x;
-									info[1] = (short int)vertices[indx].y;
-									info[2] = (short int)vertices[indx].g;
 
-									*(float *)&info[3] = vertices[indx].z;
-									*(float *)&info[5] = vertices[indx].u;
-									*(float *)&info[7] = vertices[indx].v;
+									do
+									{
+										info[0] = (short int)vertices[indx].x;
+										info[1] = (short int)vertices[indx].y;
+										info[2] = (short int)vertices[indx].g;
 
-									info += 9;
-									indx++;
+										*(float*)& info[3] = vertices[indx].z;
+										*(float*)& info[5] = vertices[indx].u;
+										*(float*)& info[7] = vertices[indx].v;
 
-								} while (indx < vert_count);
+										info += 9;
+										indx++;
 
-								info3dptr = info;
+									} while (indx < vert_count);
 
-							} // if(vert_count > 0)
+									info3dptr = info;
 
-							surfacenum++;
+								} // if(vert_count > 0)
+
+								surfacenum++;
+
+							} // if(depth > perspective_distance)
+							else
+							{
+								info[0] = tex->drawtype;
+								info[1] = tex->tpage;
+								info[2] = vert_count;
+
+								info += 3;
+
+								int32_t indx = 0;
+
+								if (vert_count > 0)
+								{
+
+									do
+									{
+										info[0] = (short int)vertices[indx].x;
+										info[1] = (short int)vertices[indx].y;
+										info[2] = (short int)vertices[indx].g;
+
+										info[3] = (unsigned short int)(vertices[indx].u / vertices[indx].z);
+										info[4] = (unsigned short int)(vertices[indx].v / vertices[indx].z);
+
+										info += 5;
+										indx++;
+
+									} while (indx < vert_count);
+
+									info3dptr = info;
+
+								} // if(vert_count > 0)
+
+								surfacenum++;
+
+							}
+
+							// surfacenum++;
 
 						} // if(vert_count)
 
@@ -823,12 +857,13 @@ int16_t* S_DrawObjectGT4_SW(int16_t* obj_ptr, int32_t number)
 						points[3].v = tex->uv[3].v1;
 						points[3].g = vns[3]->g;
 
-						vert_count = 4;
+						// vert_count = 4;
 
-						vert_count = ZedClipper(vert_count, &points[0], &vertices[0]);
+						vert_count = ZedClipper(4, &points[0], &vertices[0]);
 
 						if (vert_count)
 						{
+							// v27 = &vertices[0];
 							goto ClipVerts;
 						}
 
@@ -850,15 +885,54 @@ int16_t* S_DrawObjectGT4_SW(int16_t* obj_ptr, int32_t number)
 	return obj_ptr;
 }
 
-int16_t *S_DrawObjectGT3_SW(int16_t *obj_ptr, int32_t number)
+int16_t* S_DrawObjectGT3_SW(int16_t* obj_ptr, int32_t number)
 {
-	PHD_VBUF *vns[3];
+	PHD_VBUF* vns[3];
 	VBUF vertices[8];
 	POINT_INFO points[3];
-	PHD_TEXTURE *tex;
-	int32_t vert_count = 3;
+	PHD_TEXTURE* tex;
+	// int32_t vert_count = 3;
+	int32_t vert_count = 0;
 
 	int num_TexturedTri = number;
+
+	//перед вызовом S_DrawObjectGT4
+	// obj_ptr + 0 количество GT4 = index 1 - 2 байта
+	// obj_ptr + 1 vert #1 = index 2 - 2 байта
+	// obj_ptr + 2 vert #2 = index 3 - 2 байта
+	// obj_ptr + 3 vert #3 = index 4 - 2 байта
+	// obj_ptr + 4 vert #4 = index 5 - 2 байта
+	// obj_ptr + 5 = g_PhdTextureInfo = index 6 - 2 байта
+
+	//внутри S_DrawObjectGT4 eax = obj_ptr = пропускается количество GT4
+	// obj_ptr + 0 vert #1 in 2 bytes + 0 bytes
+	// obj_ptr + 1 vert #2 in 2 bytes + 2 bytes
+	// obj_ptr + 2 vert #3 in 2 bytes + 4 bytes
+	// obj_ptr + 3 vert #4 in 2 bytes + 6 bytes
+	// obj_ptr + 4 g_PhdTextureInfo in 2 bytes
+
+	//вычисление текстуры
+	// start memory obj_ptr = byte4(1122) byte4(3344) texinfo byte4(5500)
+	//вычисление текстуры eax = obj_ptr
+	// mov eax, [eax + 6] => start memory obj = byte4(11 22) byte4(33 => eax =
+	// 00 00 55 44 sar eax >> 16 => eax = 55
+
+	// sizeof(PHD_TEXTURE) = 20 bytes
+	// sizeof(PHD_VBUF) = 32 bytes
+	// sizeof(obj) = 12 bytes
+
+	//------------------
+	// vert buff VERT m_VBuf -> sizeof(PHD_VBUF) = 32
+	// x    +0
+	// y    +4
+	// z    +8
+	// xs   +12
+	// yx   +16
+	// dist +20
+	// clip +22
+	// g    +24
+	// tu   +26
+	// tv   +28
 
 	if (number > 0)
 	{
@@ -868,19 +942,75 @@ int16_t *S_DrawObjectGT3_SW(int16_t *obj_ptr, int32_t number)
 			vns[0] = &m_VBuf[*obj_ptr++];
 			vns[1] = &m_VBuf[*obj_ptr++];
 			vns[2] = &m_VBuf[*obj_ptr++];
+			// vns[3] = &m_VBuf[*obj_ptr++];
 
 			tex = &g_PhdTextureInfo[*obj_ptr++];
 
+			/*
+			//результат if ноль инвертируем
+			//все вершины с разных сторон (зритель близко к полигону)
+			int clip_flags1 = 1;
+			int clip_flags2 = 2;
+			int clip_flags3 = 4;
+			int clip_flags4 = 8;
+
+			//нету вобще отсечения
+			int clip_flags1 = 0;
+			int clip_flags2 = 0;
+			int clip_flags3 = 0;
+			int clip_flags4 = 0;
+			*/
+
+			/*
+			результат if 1 инвертируем
+
+			//все вершины с одной стороны экрана - полигон не видим
+			int clip_flags1 = 1;
+			int clip_flags2 = 1;
+			int clip_flags3 = 1;
+			int clip_flags4 = 1;
+			*/
+
+			//вариант 1 - все вершины с разных сторон (зритель близко к
+			//полигону) вариант 2 - нету вобще отсечения (в пределах экрана)
+			//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+
+			/*
+			//вариант 1 - все вершины с разных сторон (зритель близко к
+			полигону) int clip_flags1 = 1; int clip_flags2 = 2; int clip_flags3
+			= 4; int clip_flags4 = 8;
+
+			//вариант 2 - нету вобще отсечения (в пределах экрана)
+			int clip_flags1 = 0;
+			int clip_flags2 = 0;
+			int clip_flags3 = 0;
+			int clip_flags4 = 0;
+
+
+
+
+			//вариант 3 - все вершины с одной стороны экрана (полигон не видим)
+			int clip_flags1 = 1;
+			int clip_flags2 = 1;
+			int clip_flags3 = 1;
+			int clip_flags4 = 1;
+			*/
+
+			//если вариант 1 и 2
+			// if ( !(vns[0]->clip & vns[1]->clip & vns[2]->clip & vns[3]->clip)
+			// )
 			if (!(vns[0]->clip & vns[1]->clip & vns[2]->clip))
 			{
+				//если вариант 1 и 2
+				// if (vns[0]->clip >= 0 && vns[1]->clip >= 0 && vns[2]->clip >=
+				// 0 && vns[3]->clip >= 0)
 				if (vns[0]->clip >= 0 && vns[1]->clip >= 0 && vns[2]->clip >= 0)
 				{
 					//псевдоскалярное косое умножение векторов
 					//выясняем куда смотрит полигон - от зрителя или к зрителю
 					if ((vns[0]->ys - vns[1]->ys) * (vns[2]->xs - vns[1]->xs) -
-							(vns[2]->ys - vns[1]->ys) *
-								(vns[0]->xs - vns[1]->xs) >
-						0)
+						(vns[2]->ys - vns[1]->ys) *
+						(vns[0]->xs - vns[1]->xs) > 0)
 					{
 						//полигон смотрит к зрителю
 
@@ -905,9 +1035,20 @@ int16_t *S_DrawObjectGT3_SW(int16_t *obj_ptr, int32_t number)
 						vertices[2].v = vertices[2].z * tex->uv[2].v1;
 						vertices[2].g = vns[2]->g;
 
+						/*
+						vertices[3].x = (float) vns[3]->xs;
+						vertices[3].y = (float) vns[3]->ys;
+						vertices[3].z = 8589934592.0f / vns[3]->zv;
+						vertices[3].u = vertices[3].z * tex->uv[3].u1;
+						vertices[3].v = vertices[3].z * tex->uv[3].v1;
+						vertices[3].g = vns[3]->g;
+						*/
+
 						vert_count = 3;
 
 						//если необходимо отсечение по границе экрана
+						// if (vns[0]->clip || vns[1]->clip || vns[2]->clip ||
+						// vns[3]->clip)
 						if (vns[0]->clip || vns[1]->clip || vns[2]->clip)
 						{
 
@@ -931,8 +1072,15 @@ int16_t *S_DrawObjectGT3_SW(int16_t *obj_ptr, int32_t number)
 								depth = vns[2]->zv;
 							}
 
-							int32_t *sort = sort3dptr;
-							int16_t *info = info3dptr;
+							/*
+							if(depth < vns[3]->zv)
+							{
+											depth = vns[3]->zv;
+							}
+							*/
+
+							int32_t* sort = sort3dptr;
+							int16_t* info = info3dptr;
 
 							sort[0] = (int32_t)info;
 							sort[1] = depth;
@@ -947,39 +1095,85 @@ int16_t *S_DrawObjectGT3_SW(int16_t *obj_ptr, int32_t number)
 							// 4 vert2
 							// 5 vert3
 
-							info[0] = tex->drawtype + 2;
-							info[1] = tex->tpage;
-							info[2] = vert_count;
+							// info3dptr[0] = tex->drawtype;
+							// info3dptr[1] = tex->tpage;
+							// info3dptr[2] = vert_count;
 
-							info += 3;
-
-							int32_t indx = 0;
-
-							if (vert_count > 0)
+							if (depth < perspective_distance)
 							{
+								info[0] = tex->drawtype + 2;
+								info[1] = tex->tpage;
+								info[2] = vert_count;
 
-								do
+								info += 3;
+
+								int32_t indx = 0;
+
+								if (vert_count > 0)
 								{
-									info[0] =
-										(short int)vertices[indx].x; // edx
-									info[1] = (short int)vertices[indx]
-													.y; // edx + 4
-									info[2] = (short int)vertices[indx].g;
 
-									*(float *)&info[3] = vertices[indx].z;
-									*(float *)&info[5] = vertices[indx].u;
-									*(float *)&info[7] = vertices[indx].v;
+									do
+									{
+										info[0] =
+											(short int)vertices[indx].x; // edx
+										info[1] = (short int)vertices[indx]
+											.y; // edx + 4
+										info[2] = (short int)vertices[indx].g;
 
-									info += 9;
-									indx++;
+										*(float*)& info[3] = vertices[indx].z;
+										*(float*)& info[5] = vertices[indx].u;
+										*(float*)& info[7] = vertices[indx].v;
 
-								} while (indx < vert_count);
+										info += 9;
+										indx++;
 
-								info3dptr = info;
+									} while (indx < vert_count);
 
-							} // if(vert_count > 0)
+									info3dptr = info;
 
-							surfacenum++;
+								} // if(vert_count > 0)
+
+								surfacenum++;
+
+							} // if(depth > perspective_distance)
+							else
+							{
+								info[0] = tex->drawtype;
+								info[1] = tex->tpage;
+								info[2] = vert_count;
+
+								info += 3;
+
+								int32_t indx = 0;
+
+								if (vert_count > 0)
+								{
+
+									do
+									{
+										info[0] = (short int)vertices[indx].x;
+										info[1] = (short int)vertices[indx].y;
+										info[2] = (short int)vertices[indx].g;
+
+										info[3] = (unsigned short int)(vertices[indx].u / vertices[indx].z);
+										info[4] = (unsigned short int)(vertices[indx].v / vertices[indx].z);
+
+										info += 5;
+										indx++;
+
+									} while (indx < vert_count);
+
+									info3dptr = info;
+
+								} // if(vert_count > 0)
+
+								surfacenum++;
+
+							}
+
+
+
+							// surfacenum++;
 
 						} // if(vert_count)
 
@@ -1022,12 +1216,11 @@ int16_t *S_DrawObjectGT3_SW(int16_t *obj_ptr, int32_t number)
 						points[2].v = tex->uv[2].v1;
 						points[2].g = vns[2]->g;
 
-						vert_count = 3;
-
-						vert_count = ZedClipper(vert_count, &points[0], &vertices[0]);
+						vert_count = ZedClipper(3, &points[0], &vertices[0]);
 
 						if (vert_count)
 						{
+							// v27 = &vertices[0];
 							goto ClipVerts;
 						}
 
