@@ -2220,7 +2220,7 @@ typedef struct SAMPLE_INFO
         int16_t flags;
 } SAMPLE_INFO;
 
-#pragma pack(pop)
+//#pragma pack(pop)
 
 typedef struct PICTURE
 {

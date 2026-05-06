@@ -643,7 +643,7 @@ int main(void)
                         
                         //gf_option = Print_Final_Stats(g_CurrentLevel);
                         gf_option = Print_Level_Stats(gf_param);
-                        g_LevelNumTR = gf_param;
+                        g_LevelNumTR = (gf_param + 1);
 
                         break;
 

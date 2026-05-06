@@ -1,6 +1,6 @@
 WATCOM Linker Version 10.6
 Copyright by WATCOM International Corp. 1985, 1996. All rights reserved.
-Created on:       26/05/05 12:10:01
+Created on:       26/05/06 10:54:10
 Warning(1027): file bubble.obj(D:\tombraid\effects\bubble.cpp): redefinition of int unsigned near h ignored
 Warning(1027): file bubble.obj(D:\tombraid\effects\bubble.cpp): redefinition of SOUND_SLOT near m_SFXPlaying[] ignored
 Warning(1027): file bubble.obj(D:\tombraid\effects\bubble.cpp): redefinition of SoundBuffStruct near Sound_Buff[] ignored
@@ -146,7 +146,7 @@ creating a DOS/4G executable
 Group                           Address              Size
 =====                           =======              ====
 
-DGROUP                          0002:00000000        00414e40
+DGROUP                          0002:00000000        00412640
 
 
 
@@ -158,27 +158,27 @@ Segment                Class          Group          Address         Size
 =======                =====          =====          =======         ====
 
 BEGTEXT                CODE                          0001:00000000   00000010
-_TEXT                  CODE                          0001:00000010   0005d5f1
+_TEXT                  CODE                          0001:00000010   0005d5e1
 _NULL                  BEGDATA        DGROUP         0002:00000000   00000004
 _AFTERNULL             BEGDATA        DGROUP         0002:00000004   00000000
 CONST                  DATA           DGROUP         0002:00000004   000014e0
 CONST2                 DATA           DGROUP         0002:000014e4   000001d0
-_DATA                  DATA           DGROUP         0002:000016b4   00007d51
-TIB                    DATA           DGROUP         0002:00009405   00000000
-TI                     DATA           DGROUP         0002:00009405   00000000
-TIE                    DATA           DGROUP         0002:00009405   00000000
-XIB                    DATA           DGROUP         0002:00009406   00000000
-XI                     DATA           DGROUP         0002:00009406   0000002a
-XIE                    DATA           DGROUP         0002:00009430   00000000
-YIB                    DATA           DGROUP         0002:00009430   00000000
-YI                     DATA           DGROUP         0002:00009430   0000000c
-YIE                    DATA           DGROUP         0002:0000943c   00000000
-DATA                   DATA           DGROUP         0002:0000943c   00000000
-DATA32                 DATA           DGROUP         0002:0000943c   0000011c
-CONST32                CONST          DGROUP         0002:00009558   00000000
-_BSS                   BSS            DGROUP         0002:00009560   003ca8d8
-BSS32                  BSS            DGROUP         0002:003d3e38   00000000
-STACK                  STACK          DGROUP         0002:003d3e40   00041000
+_DATA                  DATA           DGROUP         0002:000016b4   00007d55
+TIB                    DATA           DGROUP         0002:00009409   00000000
+TI                     DATA           DGROUP         0002:00009409   00000000
+TIE                    DATA           DGROUP         0002:00009409   00000000
+XIB                    DATA           DGROUP         0002:0000940a   00000000
+XI                     DATA           DGROUP         0002:0000940a   0000002a
+XIE                    DATA           DGROUP         0002:00009434   00000000
+YIB                    DATA           DGROUP         0002:00009434   00000000
+YI                     DATA           DGROUP         0002:00009434   0000000c
+YIE                    DATA           DGROUP         0002:00009440   00000000
+DATA                   DATA           DGROUP         0002:00009440   00000000
+DATA32                 DATA           DGROUP         0002:00009440   0000011c
+CONST32                CONST          DGROUP         0002:0000955c   00000000
+_BSS                   BSS            DGROUP         0002:00009560   003ca8d4
+BSS32                  BSS            DGROUP         0002:003d3e34   00000000
+STACK                  STACK          DGROUP         0002:003d3e40   0003e800
 
 
                         +----------------+
@@ -951,177 +951,177 @@ Module: demo.obj(D:\tombraid\specific\demo.cpp)
 0001:000268d8+ void near LoadLaraDemoPos()
 0001:000269f4  int near ProcessDemoInput()
 Module: draw.obj(D:\tombraid\specific\draw.cpp)
-0001:00026c50  void near DrawAnimatingItem( ITEM_INFO near * )
-0001:00027014  int near GetFrames( ITEM_INFO near *, short near * near *, int near * )
-0001:00027148+ void near Output_DrawShadow( short, short near *, ITEM_INFO near * )
-0001:00027418+ void near S_Output_DrawShadow( PHD_VBUF near *, int, int )
-0001:0002761c  int near S_GetObjectBounds( short near * )
-0001:0002799c  void near CalculateObjectLighting( ITEM_INFO near *, short near * )
-0001:00027adc  void near Output_DrawPolygons( short near *, int )
-0001:00027b68+ void near Output_DrawPolygons_I( short near *, int )
-0001:00027ba0+ short near * near Output_CalcObjectVertices( short near * )
-0001:00027e3c+ short near * near Output_CalcVerticeLight( short near * )
-0001:000280a0  short near * near S_DrawObjectGT4( short near *, int )
-0001:000289e0  short near * near S_DrawObjectGT3( short near *, int )
-0001:000291d4+ short near * near S_DrawObjectG4( short near *, int )
-0001:0002956c+ short near * near S_DrawObjectG3( short near *, int )
-0001:000298a4+ int near ZedClipper( int, POINT_INFO near *, VBUF near * )
-0001:00029bdc+ int near ClipVertices( int, VBUF near * )
-0001:0002a620+ int near ClipVertices2( int, VBUF2 near * )
-0001:0002acec  void near Output_CalculateStaticLight( short )
-0001:0002ad48+ void near Output_CalculateLight( int, int, int, short )
-0001:0002af30  void near DrawDummyItem( ITEM_INFO near * )
-0001:0002af4c  void near InitialiseEvilLara( short )
-0001:0002af88  void near ControlEvilLara( short )
-0001:0002b28c  void near DrawEvilLara( ITEM_INFO near * )
-0001:0002b32c  void near AnimateItem( ITEM_INFO near * )
-0001:0002b740  void near TestTriggers( short near *, int )
-0001:0002beb0  void near DrawLara( ITEM_INFO near * )
-0001:0002ca64+ void near RefreshCamera( short, short near * )
-0001:0002cbb0  void near FlipMap()
-0001:0002ccb0+ void near DrawHair()
-0001:0002cd6c+ void near DrawGunFlash( int, int )
-0001:0002ce58  void near TranslateItem( ITEM_INFO near *, int, int, int )
-0001:0002ced4+ void near DrawLaraInt( ITEM_INFO near *, short near *, short near *, int, int )
-0001:0002d88c+ void near RemoveRoomFlipItems( ROOM_INFO near * )
-0001:0002d938+ void near AddRoomFlipItems( ROOM_INFO near * )
-0001:0002d9e4  short near * near GetBoundsAccurate( ITEM_INFO near * )
-0001:0002da84  short near * near GetBestFrame( ITEM_INFO near * )
-0001:0002dad4  short near * near CalcRoomVertices( short near * )
-0001:0002deac  int near TriggerActive( ITEM_INFO near * )
-0001:0002df80  void near DrawUnclippedItem( ITEM_INFO near * )
-0001:0002e00c  void near DrawPickupItem( ITEM_INFO near * )
-0001:0002e030  void near DrawSpriteItem( ITEM_INFO near * )
-0001:0002e088  void near Output_DrawScreenSprite( int, int, int, int, int, int, short, short unsigned )
-0001:0002e194  void near Output_DrawScreenSprite2D( int, int, int, int, int, int, short, short unsigned, int )
-0001:0002e290+ void near Output_DrawSprite( int, int, int, short, short )
-0001:0002e4e4+ void near S_Output_DrawSprite( short, short, short, int, int, int, int )
-0001:0002e584  void near Output_DrawUISprite( int, int, int, short, short )
-0001:0002e694  void near Output_DrawScreenBox( int, int, int, int )
-0001:0002e7ac  void near S_Output_DrawScreenFBox( int, int, int, int )
-0001:0002e87c  void near S_Output_DrawScreenFlatQuad( int, int, int, int, RGB888, int )
-0001:0002e960  void near S_AnimateTextures( int )
-0001:0002ea64  void near Output_CalcWibbleTable()
-0001:0002eafc  void near DrawEffect( short )
-0001:0002ec64  void near Output_DrawLightningSegment( int, int, int, int, int, int, int )
-0001:0002edb4+ void near S_Output_DrawLightningSegment( int, int, int, int, int, int, int, int )
-0001:0002ef08  void near Output_DrawScreenLine( int, int, int, int, int )
-0001:0002ef6c+ void near S_Output_DrawTriangle( VBUF2 near *, int, int )
-0001:0002f054+ void near S_Output_DrawLine( VBUF2 near *, int )
-0001:0002f12c  void near Output_DrawSpriteRel( int, int, int, short, short )
-0001:0002f35c  short near * near DrawRoomSprites( short near *, int )
+0001:00026c40  void near DrawAnimatingItem( ITEM_INFO near * )
+0001:00027004  int near GetFrames( ITEM_INFO near *, short near * near *, int near * )
+0001:00027138+ void near Output_DrawShadow( short, short near *, ITEM_INFO near * )
+0001:00027408+ void near S_Output_DrawShadow( PHD_VBUF near *, int, int )
+0001:0002760c  int near S_GetObjectBounds( short near * )
+0001:0002798c  void near CalculateObjectLighting( ITEM_INFO near *, short near * )
+0001:00027acc  void near Output_DrawPolygons( short near *, int )
+0001:00027b58+ void near Output_DrawPolygons_I( short near *, int )
+0001:00027b90+ short near * near Output_CalcObjectVertices( short near * )
+0001:00027e2c+ short near * near Output_CalcVerticeLight( short near * )
+0001:00028090  short near * near S_DrawObjectGT4( short near *, int )
+0001:000289d0  short near * near S_DrawObjectGT3( short near *, int )
+0001:000291c4+ short near * near S_DrawObjectG4( short near *, int )
+0001:0002955c+ short near * near S_DrawObjectG3( short near *, int )
+0001:00029894+ int near ZedClipper( int, POINT_INFO near *, VBUF near * )
+0001:00029bcc+ int near ClipVertices( int, VBUF near * )
+0001:0002a610+ int near ClipVertices2( int, VBUF2 near * )
+0001:0002acdc  void near Output_CalculateStaticLight( short )
+0001:0002ad38+ void near Output_CalculateLight( int, int, int, short )
+0001:0002af20  void near DrawDummyItem( ITEM_INFO near * )
+0001:0002af3c  void near InitialiseEvilLara( short )
+0001:0002af78  void near ControlEvilLara( short )
+0001:0002b27c  void near DrawEvilLara( ITEM_INFO near * )
+0001:0002b31c  void near AnimateItem( ITEM_INFO near * )
+0001:0002b730  void near TestTriggers( short near *, int )
+0001:0002bea0  void near DrawLara( ITEM_INFO near * )
+0001:0002ca54+ void near RefreshCamera( short, short near * )
+0001:0002cba0  void near FlipMap()
+0001:0002cca0+ void near DrawHair()
+0001:0002cd5c+ void near DrawGunFlash( int, int )
+0001:0002ce48  void near TranslateItem( ITEM_INFO near *, int, int, int )
+0001:0002cec4+ void near DrawLaraInt( ITEM_INFO near *, short near *, short near *, int, int )
+0001:0002d87c+ void near RemoveRoomFlipItems( ROOM_INFO near * )
+0001:0002d928+ void near AddRoomFlipItems( ROOM_INFO near * )
+0001:0002d9d4  short near * near GetBoundsAccurate( ITEM_INFO near * )
+0001:0002da74  short near * near GetBestFrame( ITEM_INFO near * )
+0001:0002dac4  short near * near CalcRoomVertices( short near * )
+0001:0002de9c  int near TriggerActive( ITEM_INFO near * )
+0001:0002df70  void near DrawUnclippedItem( ITEM_INFO near * )
+0001:0002dffc  void near DrawPickupItem( ITEM_INFO near * )
+0001:0002e020  void near DrawSpriteItem( ITEM_INFO near * )
+0001:0002e078  void near Output_DrawScreenSprite( int, int, int, int, int, int, short, short unsigned )
+0001:0002e184  void near Output_DrawScreenSprite2D( int, int, int, int, int, int, short, short unsigned, int )
+0001:0002e280+ void near Output_DrawSprite( int, int, int, short, short )
+0001:0002e4d4+ void near S_Output_DrawSprite( short, short, short, int, int, int, int )
+0001:0002e574  void near Output_DrawUISprite( int, int, int, short, short )
+0001:0002e684  void near Output_DrawScreenBox( int, int, int, int )
+0001:0002e79c  void near S_Output_DrawScreenFBox( int, int, int, int )
+0001:0002e86c  void near S_Output_DrawScreenFlatQuad( int, int, int, int, RGB888, int )
+0001:0002e950  void near S_AnimateTextures( int )
+0001:0002ea54  void near Output_CalcWibbleTable()
+0001:0002eaec  void near DrawEffect( short )
+0001:0002ec54  void near Output_DrawLightningSegment( int, int, int, int, int, int, int )
+0001:0002eda4+ void near S_Output_DrawLightningSegment( int, int, int, int, int, int, int, int )
+0001:0002eef8  void near Output_DrawScreenLine( int, int, int, int, int )
+0001:0002ef5c+ void near S_Output_DrawTriangle( VBUF2 near *, int, int )
+0001:0002f044+ void near S_Output_DrawLine( VBUF2 near *, int )
+0001:0002f11c  void near Output_DrawSpriteRel( int, int, int, short, short )
+0001:0002f34c  short near * near DrawRoomSprites( short near *, int )
 Module: file.obj(D:\tombraid\specific\file.cpp)
-0001:0002f500  int near S_LoadLevel( char near * )
-0001:0002f6f8+ int near Load_Texture_Pages( __iobuf near * )
-0001:0002f784+ int near Load_Rooms( __iobuf near * )
-0001:0002fccc+ int near Load_Objects( __iobuf near * )
-0001:0003019c+ void near Initialise_Objects()
-0001:000302a4+ void near BaddyObjects()
-0001:000310fc+ void near TrapObjects()
-0001:000314c8+ void near ObjectObjects()
-0001:00031cfc+ int near LoadSprites( __iobuf near * )
-0001:00031e24+ int near LoadCameras( __iobuf near * )
-0001:00031ea0+ int near LoadSoundEffects( __iobuf near * )
-0001:00031f30+ int near LoadBoxes( __iobuf near * )
-0001:00032168+ int near LoadAnimatedTextures( __iobuf near * )
-0001:000321cc+ int near LoadItems( __iobuf near * )
-0001:000323c8+ int near LoadDepthQ( __iobuf near * )
-0001:0003247c+ int near LoadPalette( __iobuf near * )
-0001:000325d0+ int near LoadCinematic( __iobuf near * )
-0001:00032654+ int near LoadDemo( __iobuf near * )
-0001:000326d0+ int near LoadSoundSamples( __iobuf near * )
-0001:00032974* int unsigned near File_Size( __iobuf near * )
+0001:0002f4f0  int near S_LoadLevel( char near * )
+0001:0002f6e8+ int near Load_Texture_Pages( __iobuf near * )
+0001:0002f774+ int near Load_Rooms( __iobuf near * )
+0001:0002fcbc+ int near Load_Objects( __iobuf near * )
+0001:0003018c+ void near Initialise_Objects()
+0001:00030294+ void near BaddyObjects()
+0001:000310ec+ void near TrapObjects()
+0001:000314b8+ void near ObjectObjects()
+0001:00031cec+ int near LoadSprites( __iobuf near * )
+0001:00031e14+ int near LoadCameras( __iobuf near * )
+0001:00031e90+ int near LoadSoundEffects( __iobuf near * )
+0001:00031f20+ int near LoadBoxes( __iobuf near * )
+0001:00032158+ int near LoadAnimatedTextures( __iobuf near * )
+0001:000321bc+ int near LoadItems( __iobuf near * )
+0001:000323b8+ int near LoadDepthQ( __iobuf near * )
+0001:0003246c+ int near LoadPalette( __iobuf near * )
+0001:000325c0+ int near LoadCinematic( __iobuf near * )
+0001:00032644+ int near LoadDemo( __iobuf near * )
+0001:000326c0+ int near LoadSoundSamples( __iobuf near * )
+0001:00032964* int unsigned near File_Size( __iobuf near * )
 Module: game.obj(D:\tombraid\specific\game.cpp)
-0001:000329b0  int near Print_Level_Stats( int )
-0001:00032c08+ int near Print_Final_Stats( int )
-0001:00032f98  int near Game_Loop( int )
-0001:000330a8+ void near Initialise_Camera()
-0001:0003318c+ int near Control_Phase( int, int )
-0001:000334a0+ int near Get_Key_State( int )
-0001:0003350c  void near Input_Update()
-0001:000337a8+ void near ReadJoystick()
-0001:000337c0* INPUT_STATE near Input_GetDebounced( INPUT_STATE )
-0001:000337fc  int near DrawPhaseCinematic()
-0001:000338d4+ int near Draw_Phase_Game()
-0001:00033930  void near S_InitialisePolyList()
-0001:00033968+ void near DrawRooms( short )
-0001:00033ae4  void near S_OutputPolyList()
-0001:00033b14  int near S_DumpScreen()
-0001:00033b9c+ void near GetRoomBounds( short )
-0001:00033c50+ int near SetRoomBounds( short near *, short, ROOM_INFO near * )
-0001:000341c4  void near SetupAboveWater( int )
-0001:000341f8+ void near SetupBelowWater( int )
-0001:00034244+ void near PrintRooms( short )
-0001:000344b0+ void near DrawRoom( short near * )
-0001:00034514  int near CalcFogShade( int )
-0001:00034580+ int near S_SaveGame( SAVEGAME_INFO near *, int )
-0001:000348f4  int near S_LoadGame( SAVEGAME_INFO near *, int )
-0001:00034b9c* void near GetSavedGamesList( REQUEST_INFO near * )
-0001:00034c50  int near S_FrontEndCheck()
+0001:000329a0  int near Print_Level_Stats( int )
+0001:00032bf8+ int near Print_Final_Stats( int )
+0001:00032f88  int near Game_Loop( int )
+0001:00033098+ void near Initialise_Camera()
+0001:0003317c+ int near Control_Phase( int, int )
+0001:00033490+ int near Get_Key_State( int )
+0001:000334fc  void near Input_Update()
+0001:00033798+ void near ReadJoystick()
+0001:000337b0* INPUT_STATE near Input_GetDebounced( INPUT_STATE )
+0001:000337ec  int near DrawPhaseCinematic()
+0001:000338c4+ int near Draw_Phase_Game()
+0001:00033920  void near S_InitialisePolyList()
+0001:00033958+ void near DrawRooms( short )
+0001:00033ad4  void near S_OutputPolyList()
+0001:00033b04  int near S_DumpScreen()
+0001:00033b8c+ void near GetRoomBounds( short )
+0001:00033c40+ int near SetRoomBounds( short near *, short, ROOM_INFO near * )
+0001:000341b4  void near SetupAboveWater( int )
+0001:000341e8+ void near SetupBelowWater( int )
+0001:00034234+ void near PrintRooms( short )
+0001:000344a0+ void near DrawRoom( short near * )
+0001:00034504  int near CalcFogShade( int )
+0001:00034570+ int near S_SaveGame( SAVEGAME_INFO near *, int )
+0001:000348e4  int near S_LoadGame( SAVEGAME_INFO near *, int )
+0001:00034b8c* void near GetSavedGamesList( REQUEST_INFO near * )
+0001:00034c40  int near S_FrontEndCheck()
 Module: gameflow.obj(D:\tombraid\specific\gameflow.cpp)
-0001:00034de0+ void near Play_FMV( int, int )
-0001:00034dfc  void near Play_FMV_Init_Malloc( int, int )
-0001:00034e60  void near Init_GameFlow()
-0001:00036884  int near Start_New_Game( int )
+0001:00034dd0+ void near Play_FMV( int, int )
+0001:00034dec  void near Play_FMV_Init_Malloc( int, int )
+0001:00034e50  void near Init_GameFlow()
+0001:00036874  int near Start_New_Game( int )
 0002:001f6148+ int near g_LevelLoaded
 Module: init.obj(D:\tombraid\specific\init.cpp)
-0001:00036a70  void near Init_Game_Malloc()
-0001:00036aa4  void near * near Game_Alloc( int unsigned, GAME_BUFFER )
+0001:00036a60  void near Init_Game_Malloc()
+0001:00036a94  void near * near Game_Alloc( int unsigned, GAME_BUFFER )
 0002:0000628c  int unsigned near g_Malloc_Size
 0002:001f614c  char signed near * near g_GameMemory
 0002:001f6150+ char signed near * near g_Malloc_Ptr
 0002:001f6154+ int unsigned near g_Malloc_Free
 0002:001f6158+ int unsigned near g_Malloc_Used
 Module: input.obj(D:\tombraid\specific\input.cpp)
-0001:00036b50* int near S_Input_Key( INPUT_KEY )
-0001:00036bb4  int near S_Input_ReadKeyCode()
-0001:00036bf0  char const near * near S_Input_GetKeyCodeName( int )
-0001:00036c14+ int near S_Input_IsKeyConflicted( INPUT_KEY )
-0001:00036c44  void near S_Input_SetKeyAsConflicted( INPUT_KEY, int )
-0001:00036c74  int near S_Input_GetAssignedKeyCode( short, INPUT_KEY )
-0001:00036cac  void near S_Input_AssignKeyCode( short, INPUT_KEY, int )
+0001:00036b40* int near S_Input_Key( INPUT_KEY )
+0001:00036ba4  int near S_Input_ReadKeyCode()
+0001:00036be0  char const near * near S_Input_GetKeyCodeName( int )
+0001:00036c04+ int near S_Input_IsKeyConflicted( INPUT_KEY )
+0001:00036c34  void near S_Input_SetKeyAsConflicted( INPUT_KEY, int )
+0001:00036c64  int near S_Input_GetAssignedKeyCode( short, INPUT_KEY )
+0001:00036c9c  void near S_Input_AssignKeyCode( short, INPUT_KEY, int )
 0002:00006290  int near m_Layout[][13]
 0002:001f615c+ int near m_KeyConflict[]
 Module: inventry.obj(D:\tombraid\specific\inventry.cpp)
-0001:00036cf0  int near Display_Inventory( int )
-0001:00038358+ void near Construct_Inventory()
-0001:00038538+ int near AnimateInventoryItem( INVENTORY_ITEM near * )
-0001:000385f0+ void near SelectMeshes( INVENTORY_ITEM near * )
-0001:0003870c+ void near DrawInventoryItem( INVENTORY_ITEM near * )
-0001:00038b4c+ void near S_FadeInInventory( int )
-0001:00038b74+ void near S_FadeOutInventory( int )
-0001:00038b90+ void near S_SoundVolume( int )
-0001:00038bac+ void near DoInventoryPicture()
-0001:00038bc4+ void near S_FinishInventory()
+0001:00036ce0  int near Display_Inventory( int )
+0001:00038348+ void near Construct_Inventory()
+0001:00038528+ int near AnimateInventoryItem( INVENTORY_ITEM near * )
+0001:000385e0+ void near SelectMeshes( INVENTORY_ITEM near * )
+0001:000386fc+ void near DrawInventoryItem( INVENTORY_ITEM near * )
+0001:00038b3c+ void near S_FadeInInventory( int )
+0001:00038b64+ void near S_FadeOutInventory( int )
+0001:00038b80+ void near S_SoundVolume( int )
+0001:00038b9c+ void near DoInventoryPicture()
+0001:00038bb4+ void near S_FinishInventory()
 Module: invfunc.obj(D:\tombraid\specific\invfunc.cpp)
-0001:00038bf0  void near RingIsOpen( RING_INFO near * )
-0001:00038dfc  void near RingIsNotOpen( RING_INFO near * )
-0001:00038e9c  void near RingNotActive( INVENTORY_ITEM near * )
-0001:00039698  void near RingActive()
-0001:000396e8  int near Inv_AddItem( int )
-0001:00039bdc+ void near Inv_InsertItem( INVENTORY_ITEM near * )
-0001:00039de0  int near Inv_RequestItem( int )
-0001:00039ea0  void near Inv_RemoveAllItems()
-0001:00039edc  int near Inv_RemoveItem( int )
-0001:0003a110+ int near Inv_GetItemOption( int )
-0001:0003a3b8  void near RemoveInventoryText()
-0001:0003a418  void near Inv_RingInit( RING_INFO near *, short, INVENTORY_ITEM near * near *, short, short, IMOTION_INFO near * )
-0001:0003a5d0  void near Inv_RingGetView( RING_INFO near *, PHD_3DPOS near * )
-0001:0003a664  void near Inv_RingLight( RING_INFO near * )
-0001:0003a6b0  void near Inv_RingCalcAdders( RING_INFO near *, short )
-0001:0003a718  void near Inv_RingDoMotions( RING_INFO near * )
-0001:0003a958  void near Inv_RingRotateLeft( RING_INFO near * )
-0001:0003a9c0  void near Inv_RingRotateRight( RING_INFO near * )
-0001:0003aa24+ void near Inv_RingMotionInit( RING_INFO near *, short, short, short )
-0001:0003ab38  void near Inv_RingMotionSetup( RING_INFO near *, short, short, short )
-0001:0003ab90  void near Inv_RingMotionRadius( RING_INFO near *, short )
-0001:0003abe4  void near Inv_RingMotionRotation( RING_INFO near *, short, short )
-0001:0003ac2c  void near Inv_RingMotionCameraPos( RING_INFO near *, short )
-0001:0003ac7c  void near Inv_RingMotionCameraPitch( RING_INFO near *, short )
-0001:0003acc4  void near Inv_RingMotionItemSelect( RING_INFO near *, INVENTORY_ITEM near * )
+0001:00038be0  void near RingIsOpen( RING_INFO near * )
+0001:00038dec  void near RingIsNotOpen( RING_INFO near * )
+0001:00038e8c  void near RingNotActive( INVENTORY_ITEM near * )
+0001:00039688  void near RingActive()
+0001:000396d8  int near Inv_AddItem( int )
+0001:00039bcc+ void near Inv_InsertItem( INVENTORY_ITEM near * )
+0001:00039dd0  int near Inv_RequestItem( int )
+0001:00039e90  void near Inv_RemoveAllItems()
+0001:00039ecc  int near Inv_RemoveItem( int )
+0001:0003a100+ int near Inv_GetItemOption( int )
+0001:0003a3a8  void near RemoveInventoryText()
+0001:0003a408  void near Inv_RingInit( RING_INFO near *, short, INVENTORY_ITEM near * near *, short, short, IMOTION_INFO near * )
+0001:0003a5c0  void near Inv_RingGetView( RING_INFO near *, PHD_3DPOS near * )
+0001:0003a654  void near Inv_RingLight( RING_INFO near * )
+0001:0003a6a0  void near Inv_RingCalcAdders( RING_INFO near *, short )
+0001:0003a708  void near Inv_RingDoMotions( RING_INFO near * )
+0001:0003a948  void near Inv_RingRotateLeft( RING_INFO near * )
+0001:0003a9b0  void near Inv_RingRotateRight( RING_INFO near * )
+0001:0003aa14+ void near Inv_RingMotionInit( RING_INFO near *, short, short, short )
+0001:0003ab28  void near Inv_RingMotionSetup( RING_INFO near *, short, short, short )
+0001:0003ab80  void near Inv_RingMotionRadius( RING_INFO near *, short )
+0001:0003abd4  void near Inv_RingMotionRotation( RING_INFO near *, short, short )
+0001:0003ac1c  void near Inv_RingMotionCameraPos( RING_INFO near *, short )
+0001:0003ac6c  void near Inv_RingMotionCameraPitch( RING_INFO near *, short )
+0001:0003acb4  void near Inv_RingMotionItemSelect( RING_INFO near *, INVENTORY_ITEM near * )
 0002:00207e94  TEXTSTRING near * near g_InvItemText[]
 0002:00207e9c  TEXTSTRING near * near g_InvRingText
-0001:0003ad8c  void near Inv_RingMotionItemDeselect( RING_INFO near *, INVENTORY_ITEM near * )
+0001:0003ad7c  void near Inv_RingMotionItemDeselect( RING_INFO near *, INVENTORY_ITEM near * )
 Module: invvars.obj(D:\tombraid\specific\invvars.cpp)
 0002:00006300  short near g_InvKeysQtys[]
 0002:00006330+ INVENTORY_ITEM near g_InvItemCompass
@@ -1164,360 +1164,360 @@ Module: invvars.obj(D:\tombraid\specific\invvars.cpp)
 0002:00207eb4  short near g_InvMainCurrent
 0002:00207eb6  short near g_InvOptionCurrent
 Module: items.obj(D:\tombraid\specific\items.cpp)
-0001:0003ae50  void near InitialiseItemArray( int )
-0001:0003aec4  void near KillItem( short )
-0001:0003b03c  short near CreateItem()
-0001:0003b09c  void near InitialiseItem( short )
-0001:0003b2b8  void near RemoveActiveItem( short )
-0001:0003b38c  void near RemoveDrawnItem( short )
-0001:0003b44c  void near AddActiveItem( short )
-0001:0003b4bc  void near ItemNewRoom( short, short )
-0001:0003b5b0  short near SpawnItem( ITEM_INFO near *, short )
-0001:0003b63c  int near GlobalItemReplace( int, int )
-0001:0003b700  void near InitialiseFXArray()
-0001:0003b764  short near CreateEffect( short )
-0001:0003b80c  void near KillEffect( short )
-0001:0003b95c  void near EffectNewRoom( short, short )
+0001:0003ae40  void near InitialiseItemArray( int )
+0001:0003aeb4  void near KillItem( short )
+0001:0003b02c  short near CreateItem()
+0001:0003b08c  void near InitialiseItem( short )
+0001:0003b2a8  void near RemoveActiveItem( short )
+0001:0003b37c  void near RemoveDrawnItem( short )
+0001:0003b43c  void near AddActiveItem( short )
+0001:0003b4ac  void near ItemNewRoom( short, short )
+0001:0003b5a0  short near SpawnItem( ITEM_INFO near *, short )
+0001:0003b62c  int near GlobalItemReplace( int, int )
+0001:0003b6f0  void near InitialiseFXArray()
+0001:0003b754  short near CreateEffect( short )
+0001:0003b7fc  void near KillEffect( short )
+0001:0003b94c  void near EffectNewRoom( short, short )
 Module: lara.obj(D:\tombraid\specific\lara.cpp)
-0001:0003ba50* void near LookLeftRight()
-0001:0003badc* void near LookUpDown()
-0001:0003bb68* void near ResetLook()
-0001:0003bc44  void near LaraAboveWater( ITEM_INFO near *, COLL_INFO near * )
-0001:0003be98  void near LaraAsWalk( ITEM_INFO near *, COLL_INFO near * )
-0001:0003bf58  void near LaraAsRun( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c0ac  void near LaraAsStop( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c2a8  void near LaraAsForwardJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c3b8  void near LaraAsPose( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c3d4  void near LaraAsFastBack( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c450  void near LaraAsTurnR( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c510  void near LaraAsTurnL( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c5d0  void near LaraAsDeath( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c5fc  void near LaraAsFastFall( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c658  void near LaraAsHang( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c6cc  void near LaraAsReach( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c70c  void near LaraAsSplat( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c728  void near LaraAsLand( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c744  void near LaraAsCompress( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c89c  void near LaraAsBack( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c954  void near LaraAsFastTurn( ITEM_INFO near *, COLL_INFO near * )
-0001:0003c9cc  void near LaraAsStepRight( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ca6c  void near LaraAsStepLeft( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cb0c  void near LaraAsSlide( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cb4c  void near LaraAsBackJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cb8c  void near LaraAsRightJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cbc0  void near LaraAsLeftJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cbf4  void near LaraAsUpJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cc28  void near LaraAsFallBack( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cc7c  void near LaraAsHangLeft( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ccd4  void near LaraAsHangRight( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cd2c  void near LaraAsSlideBack( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cd5c  void near LaraAsPushBlock( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cda4  void near LaraAsPullBlock( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cdec  void near LaraAsPPReady( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ce30  void near LaraAsPickup( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ce78  void near LaraAsSwitchOn( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cec0  void near LaraAsSwitchOff( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cf08  void near LaraAsUseKey( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cf50  void near LaraAsUsePuzzle( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cf98  void near LaraAsRoll( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cfb4  void near LaraAsRoll2( ITEM_INFO near *, COLL_INFO near * )
-0001:0003cfd0  void near LaraAsSpecial( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d008  void near LaraAsUseMidas( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d040  void near LaraAsDieMidas( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d3e8  void near LaraAsSwanDive( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d42c  void near LaraAsFastDive( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d474  void near LaraAsNull( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d4a0  void near LaraAsGymnast( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d4cc  void near LaraAsWaterOut( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d500  void near LaraColWalk( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d718  void near LaraColRun( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d8e8  void near LaraColStop( ITEM_INFO near *, COLL_INFO near * )
-0001:0003d9cc  void near LaraColForwardJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003dab0  void near LaraColPose( ITEM_INFO near *, COLL_INFO near * )
-0001:0003dad8  void near LaraColFastBack( ITEM_INFO near *, COLL_INFO near * )
-0001:0003dbc8  void near LaraColTurnR( ITEM_INFO near *, COLL_INFO near * )
-0001:0003dc90  void near LaraColTurnL( ITEM_INFO near *, COLL_INFO near * )
-0001:0003dcb8  void near LaraColDeath( ITEM_INFO near *, COLL_INFO near * )
-0001:0003dd3c  void near LaraColFastFall( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ddf4  void near LaraColHang( ITEM_INFO near *, COLL_INFO near * )
-0001:0003deb0  void near LaraColReach( ITEM_INFO near *, COLL_INFO near * )
-0001:0003df78  void near LaraColSplat( ITEM_INFO near *, COLL_INFO near * )
-0001:0003dfe4  void near LaraColLand( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e00c  void near LaraColCompress( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e0cc  void near LaraColBack( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e1ec  void near LaraColNull( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e214  void near LaraColFastTurn( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e23c  void near LaraColStepRight( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e2f8  void near LaraColStepLeft( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e3b8  void near LaraColSlide( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e3ec  void near LaraColBackJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e424  void near LaraColRightJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e45c  void near LaraColLeftJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e498  void near LaraColUpJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e584  void near LaraColFallBack( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e638  void near LaraColHangLeft( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e684  void near LaraColHangRight( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e6cc  void near LaraColSlideBack( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e704+ void near LaraColDefault( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e764  void near LaraColPushBlock( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e78c  void near LaraColPullBlock( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e7b4  void near LaraColPPReady( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e7dc  void near LaraColPickup( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e804  void near LaraColSwitchOn( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e82c  void near LaraColSwitchOff( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e854  void near LaraColUseKey( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e87c  void near LaraColUsePuzzle( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e8a4  void near LaraColRoll( ITEM_INFO near *, COLL_INFO near * )
-0001:0003e984  void near LaraColRoll2( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ea64  void near LaraColSpecial( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ea80  void near LaraColUseMidas( ITEM_INFO near *, COLL_INFO near * )
-0001:0003eaa8  void near LaraColDieMidas( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ead0  void near LaraColSwanDive( ITEM_INFO near *, COLL_INFO near * )
-0001:0003eb68  void near LaraColFastDive( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ec1c  void near LaraColGymnast( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ec44  void near LaraColWaterOut( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ec6c+ void near LaraColJumper( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ed10+ void near GetLaraCollisionInfo( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ed64+ int near LaraFallen( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ede8+ void near LaraSlideSlope( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ef44+ int near LaraHitCeiling( ITEM_INFO near *, COLL_INFO near * )
-0001:0003eff4+ void near LaraHangTest( ITEM_INFO near *, COLL_INFO near * )
-0001:0003f30c+ int near LaraDeflectEdge( ITEM_INFO near *, COLL_INFO near * )
-0001:0003f3cc+ void near LaraDeflectEdgeJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003f568+ void near LaraSlideEdgeJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003f694+ int near TestLaraVault( ITEM_INFO near *, COLL_INFO near * )
-0001:0003f9b4+ int near LaraTestHangJump( ITEM_INFO near *, COLL_INFO near * )
-0001:0003fc10+ int near TestHangSwingIn( ITEM_INFO near *, short )
-0001:0003fd30+ int near LaraTestHangJumpUp( ITEM_INFO near *, COLL_INFO near * )
-0001:0003ff68+ int near TestLaraSlide( ITEM_INFO near *, COLL_INFO near * )
-0001:000401bc+ short near LaraFloorFront( ITEM_INFO near *, short, int )
-0001:0004026c+ int near LaraLandedBad( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ba40* void near LookLeftRight()
+0001:0003bacc* void near LookUpDown()
+0001:0003bb58* void near ResetLook()
+0001:0003bc34  void near LaraAboveWater( ITEM_INFO near *, COLL_INFO near * )
+0001:0003be88  void near LaraAsWalk( ITEM_INFO near *, COLL_INFO near * )
+0001:0003bf48  void near LaraAsRun( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c09c  void near LaraAsStop( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c298  void near LaraAsForwardJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c3a8  void near LaraAsPose( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c3c4  void near LaraAsFastBack( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c440  void near LaraAsTurnR( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c500  void near LaraAsTurnL( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c5c0  void near LaraAsDeath( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c5ec  void near LaraAsFastFall( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c648  void near LaraAsHang( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c6bc  void near LaraAsReach( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c6fc  void near LaraAsSplat( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c718  void near LaraAsLand( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c734  void near LaraAsCompress( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c88c  void near LaraAsBack( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c944  void near LaraAsFastTurn( ITEM_INFO near *, COLL_INFO near * )
+0001:0003c9bc  void near LaraAsStepRight( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ca5c  void near LaraAsStepLeft( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cafc  void near LaraAsSlide( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cb3c  void near LaraAsBackJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cb7c  void near LaraAsRightJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cbb0  void near LaraAsLeftJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cbe4  void near LaraAsUpJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cc18  void near LaraAsFallBack( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cc6c  void near LaraAsHangLeft( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ccc4  void near LaraAsHangRight( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cd1c  void near LaraAsSlideBack( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cd4c  void near LaraAsPushBlock( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cd94  void near LaraAsPullBlock( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cddc  void near LaraAsPPReady( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ce20  void near LaraAsPickup( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ce68  void near LaraAsSwitchOn( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ceb0  void near LaraAsSwitchOff( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cef8  void near LaraAsUseKey( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cf40  void near LaraAsUsePuzzle( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cf88  void near LaraAsRoll( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cfa4  void near LaraAsRoll2( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cfc0  void near LaraAsSpecial( ITEM_INFO near *, COLL_INFO near * )
+0001:0003cff8  void near LaraAsUseMidas( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d030  void near LaraAsDieMidas( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d3d8  void near LaraAsSwanDive( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d41c  void near LaraAsFastDive( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d464  void near LaraAsNull( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d490  void near LaraAsGymnast( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d4bc  void near LaraAsWaterOut( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d4f0  void near LaraColWalk( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d708  void near LaraColRun( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d8d8  void near LaraColStop( ITEM_INFO near *, COLL_INFO near * )
+0001:0003d9bc  void near LaraColForwardJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003daa0  void near LaraColPose( ITEM_INFO near *, COLL_INFO near * )
+0001:0003dac8  void near LaraColFastBack( ITEM_INFO near *, COLL_INFO near * )
+0001:0003dbb8  void near LaraColTurnR( ITEM_INFO near *, COLL_INFO near * )
+0001:0003dc80  void near LaraColTurnL( ITEM_INFO near *, COLL_INFO near * )
+0001:0003dca8  void near LaraColDeath( ITEM_INFO near *, COLL_INFO near * )
+0001:0003dd2c  void near LaraColFastFall( ITEM_INFO near *, COLL_INFO near * )
+0001:0003dde4  void near LaraColHang( ITEM_INFO near *, COLL_INFO near * )
+0001:0003dea0  void near LaraColReach( ITEM_INFO near *, COLL_INFO near * )
+0001:0003df68  void near LaraColSplat( ITEM_INFO near *, COLL_INFO near * )
+0001:0003dfd4  void near LaraColLand( ITEM_INFO near *, COLL_INFO near * )
+0001:0003dffc  void near LaraColCompress( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e0bc  void near LaraColBack( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e1dc  void near LaraColNull( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e204  void near LaraColFastTurn( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e22c  void near LaraColStepRight( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e2e8  void near LaraColStepLeft( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e3a8  void near LaraColSlide( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e3dc  void near LaraColBackJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e414  void near LaraColRightJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e44c  void near LaraColLeftJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e488  void near LaraColUpJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e574  void near LaraColFallBack( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e628  void near LaraColHangLeft( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e674  void near LaraColHangRight( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e6bc  void near LaraColSlideBack( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e6f4+ void near LaraColDefault( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e754  void near LaraColPushBlock( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e77c  void near LaraColPullBlock( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e7a4  void near LaraColPPReady( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e7cc  void near LaraColPickup( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e7f4  void near LaraColSwitchOn( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e81c  void near LaraColSwitchOff( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e844  void near LaraColUseKey( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e86c  void near LaraColUsePuzzle( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e894  void near LaraColRoll( ITEM_INFO near *, COLL_INFO near * )
+0001:0003e974  void near LaraColRoll2( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ea54  void near LaraColSpecial( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ea70  void near LaraColUseMidas( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ea98  void near LaraColDieMidas( ITEM_INFO near *, COLL_INFO near * )
+0001:0003eac0  void near LaraColSwanDive( ITEM_INFO near *, COLL_INFO near * )
+0001:0003eb58  void near LaraColFastDive( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ec0c  void near LaraColGymnast( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ec34  void near LaraColWaterOut( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ec5c+ void near LaraColJumper( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ed00+ void near GetLaraCollisionInfo( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ed54+ int near LaraFallen( ITEM_INFO near *, COLL_INFO near * )
+0001:0003edd8+ void near LaraSlideSlope( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ef34+ int near LaraHitCeiling( ITEM_INFO near *, COLL_INFO near * )
+0001:0003efe4+ void near LaraHangTest( ITEM_INFO near *, COLL_INFO near * )
+0001:0003f2fc+ int near LaraDeflectEdge( ITEM_INFO near *, COLL_INFO near * )
+0001:0003f3bc+ void near LaraDeflectEdgeJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003f558+ void near LaraSlideEdgeJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003f684+ int near TestLaraVault( ITEM_INFO near *, COLL_INFO near * )
+0001:0003f9a4+ int near LaraTestHangJump( ITEM_INFO near *, COLL_INFO near * )
+0001:0003fc00+ int near TestHangSwingIn( ITEM_INFO near *, short )
+0001:0003fd20+ int near LaraTestHangJumpUp( ITEM_INFO near *, COLL_INFO near * )
+0001:0003ff58+ int near TestLaraSlide( ITEM_INFO near *, COLL_INFO near * )
+0001:000401ac+ short near LaraFloorFront( ITEM_INFO near *, short, int )
+0001:0004025c+ int near LaraLandedBad( ITEM_INFO near *, COLL_INFO near * )
 Module: lara1gun.obj(D:\tombraid\specific\lara1gun.cpp)
-0001:00040380  void near DrawShotgun()
-0001:00040410  void near UndrawShotgun()
-0001:000405e0  void near DrawShotgunMeshes()
-0001:00040648+ void near UndrawShotgunMeshes()
-0001:000406b0+ void near ReadyShotgun()
-0001:00040758  void near RifleHandler( int )
-0001:00040808+ void near AnimateShotgun()
-0001:00040a28+ void near FireShotgun()
+0001:00040370  void near DrawShotgun()
+0001:00040400  void near UndrawShotgun()
+0001:000405d0  void near DrawShotgunMeshes()
+0001:00040638+ void near UndrawShotgunMeshes()
+0001:000406a0+ void near ReadyShotgun()
+0001:00040748  void near RifleHandler( int )
+0001:000407f8+ void near AnimateShotgun()
+0001:00040a18+ void near FireShotgun()
 Module: lara2gun.obj(D:\tombraid\specific\lara2gun.cpp)
-0001:00040af0  void near DrawPistols( int )
-0001:00040b84  void near UndrawPistols( int )
-0001:00040e38+ void near ReadyPistols()
-0001:00040ee0  void near DrawPistolMeshes( int )
-0001:00040f9c+ void near UndrawPistolMeshLeft( int )
-0001:0004102c+ void near UndrawPistolMeshRight( int )
-0001:000410bc+ void near PistolHandler( int )
-0001:000412dc+ void near AnimatePistols( int )
+0001:00040ae0  void near DrawPistols( int )
+0001:00040b74  void near UndrawPistols( int )
+0001:00040e28+ void near ReadyPistols()
+0001:00040ed0  void near DrawPistolMeshes( int )
+0001:00040f8c+ void near UndrawPistolMeshLeft( int )
+0001:0004101c+ void near UndrawPistolMeshRight( int )
+0001:000410ac+ void near PistolHandler( int )
+0001:000412cc+ void near AnimatePistols( int )
 Module: larafire.obj(D:\tombraid\specific\larafire.cpp)
-0001:00041550  void near LaraGun()
-0001:00041a54  void near InitialiseNewWeapon()
-0001:00041b78  void near LaraTargetInfo( WEAPON_INFO near * )
-0001:00041d54  void near LaraGetNewTarget( WEAPON_INFO near * )
-0001:00041fa0+ void near find_target_point( ITEM_INFO near *, GAME_VECTOR near * )
-0001:000420b4  void near AimWeapon( WEAPON_INFO near *, LARA_ARM near * )
-0001:000421c0  int near FireWeapon( int, ITEM_INFO near *, ITEM_INFO near *, short near * )
-0001:000425ec+ void near HitTarget( ITEM_INFO near *, GAME_VECTOR near *, int )
+0001:00041540  void near LaraGun()
+0001:00041a44  void near InitialiseNewWeapon()
+0001:00041b68  void near LaraTargetInfo( WEAPON_INFO near * )
+0001:00041d44  void near LaraGetNewTarget( WEAPON_INFO near * )
+0001:00041f90+ void near find_target_point( ITEM_INFO near *, GAME_VECTOR near * )
+0001:000420a4  void near AimWeapon( WEAPON_INFO near *, LARA_ARM near * )
+0001:000421b0  int near FireWeapon( int, ITEM_INFO near *, ITEM_INFO near *, short near * )
+0001:000425dc+ void near HitTarget( ITEM_INFO near *, GAME_VECTOR near *, int )
 0002:00006b88  WEAPON_INFO near g_Weapons[]
 Module: laramisc.obj(D:\tombraid\specific\laramisc.cpp)
-0001:00042770  void near LaraControl( short )
-0001:00042df0  void near LaraSwapMeshExtra()
-0001:00042e4c  void near AnimateLara( ITEM_INFO near * )
-0001:00043260  void near AnimateLaraUntil( ITEM_INFO near *, int )
-0001:0004329c  void near UseItem( short )
-0001:00043534  void near ControlLaraExtra( short )
-0001:00043564  void near InitialiseLaraLoad( short )
-0001:0004359c  void near InitialiseLara()
-0001:00043764  void near InitialiseLaraInventory( int )
-0001:000439e0+ void near LaraInitialiseMeshes( int )
+0001:00042760  void near LaraControl( short )
+0001:00042de0  void near LaraSwapMeshExtra()
+0001:00042e3c  void near AnimateLara( ITEM_INFO near * )
+0001:00043250  void near AnimateLaraUntil( ITEM_INFO near *, int )
+0001:0004328c  void near UseItem( short )
+0001:00043524  void near ControlLaraExtra( short )
+0001:00043554  void near InitialiseLaraLoad( short )
+0001:0004358c  void near InitialiseLara()
+0001:00043754  void near InitialiseLaraInventory( int )
+0001:000439d0+ void near LaraInitialiseMeshes( int )
 0002:00006c74  void (near * near g_LaraControlRoutines[])( ITEM_INFO near *, COLL_INFO near * )
 0002:00006d54  void (near * near g_LaraCollisionRoutines[])( ITEM_INFO near *, COLL_INFO near * )
 Module: larasurf.obj(D:\tombraid\specific\larasurf.cpp)
-0001:00043bf0  void near LaraSurface( ITEM_INFO near *, COLL_INFO near * )
-0001:00043e84  void near LaraAsSurfSwim( ITEM_INFO near *, COLL_INFO near * )
-0001:00043f2c  void near LaraAsSurfBack( ITEM_INFO near *, COLL_INFO near * )
-0001:00043f9c  void near LaraAsSurfLeft( ITEM_INFO near *, COLL_INFO near * )
-0001:00044030  void near LaraAsSurfRight( ITEM_INFO near *, COLL_INFO near * )
-0001:000440c4  void near LaraAsSurfTread( ITEM_INFO near *, COLL_INFO near * )
-0001:000442d4  void near LaraColSurfSwim( ITEM_INFO near *, COLL_INFO near * )
-0001:00044308  void near LaraColSurfTread( ITEM_INFO near *, COLL_INFO near * )
-0001:0004433c  void near LaraColSurfBack( ITEM_INFO near *, COLL_INFO near * )
-0001:00044374  void near LaraColSurfLeft( ITEM_INFO near *, COLL_INFO near * )
-0001:000443b0  void near LaraColSurfRight( ITEM_INFO near *, COLL_INFO near * )
-0001:000443e8+ void near LaraSurfaceCollision( ITEM_INFO near *, COLL_INFO near * )
-0001:0004453c+ int near LaraTestWaterClimbOut( ITEM_INFO near *, COLL_INFO near * )
+0001:00043be0  void near LaraSurface( ITEM_INFO near *, COLL_INFO near * )
+0001:00043e74  void near LaraAsSurfSwim( ITEM_INFO near *, COLL_INFO near * )
+0001:00043f1c  void near LaraAsSurfBack( ITEM_INFO near *, COLL_INFO near * )
+0001:00043f8c  void near LaraAsSurfLeft( ITEM_INFO near *, COLL_INFO near * )
+0001:00044020  void near LaraAsSurfRight( ITEM_INFO near *, COLL_INFO near * )
+0001:000440b4  void near LaraAsSurfTread( ITEM_INFO near *, COLL_INFO near * )
+0001:000442c4  void near LaraColSurfSwim( ITEM_INFO near *, COLL_INFO near * )
+0001:000442f8  void near LaraColSurfTread( ITEM_INFO near *, COLL_INFO near * )
+0001:0004432c  void near LaraColSurfBack( ITEM_INFO near *, COLL_INFO near * )
+0001:00044364  void near LaraColSurfLeft( ITEM_INFO near *, COLL_INFO near * )
+0001:000443a0  void near LaraColSurfRight( ITEM_INFO near *, COLL_INFO near * )
+0001:000443d8+ void near LaraSurfaceCollision( ITEM_INFO near *, COLL_INFO near * )
+0001:0004452c+ int near LaraTestWaterClimbOut( ITEM_INFO near *, COLL_INFO near * )
 Module: laraswim.obj(D:\tombraid\specific\laraswim.cpp)
-0001:00044800  void near LaraUnderWater( ITEM_INFO near *, COLL_INFO near * )
-0001:00044aac  void near LaraAsSwim( ITEM_INFO near *, COLL_INFO near * )
-0001:00044b9c  void near LaraAsGlide( ITEM_INFO near *, COLL_INFO near * )
-0001:00044c7c  void near LaraAsTread( ITEM_INFO near *, COLL_INFO near * )
-0001:00044d40  void near LaraAsDive( ITEM_INFO near *, COLL_INFO near * )
-0001:00044d70  void near LaraAsUWDeath( ITEM_INFO near *, COLL_INFO near * )
-0001:00044df8  void near LaraColSwim( ITEM_INFO near *, COLL_INFO near * )
-0001:00044e20  void near LaraColGlide( ITEM_INFO near *, COLL_INFO near * )
-0001:00044e48  void near LaraColTread( ITEM_INFO near *, COLL_INFO near * )
-0001:00044e70  void near LaraColDive( ITEM_INFO near *, COLL_INFO near * )
-0001:00044e98  void near LaraColUWDeath( ITEM_INFO near *, COLL_INFO near * )
-0001:00044f24+ void near LaraSwimCollision( ITEM_INFO near *, COLL_INFO near * )
-0001:000450f8  void near LaraWaterCurrent( COLL_INFO near * )
+0001:000447f0  void near LaraUnderWater( ITEM_INFO near *, COLL_INFO near * )
+0001:00044a9c  void near LaraAsSwim( ITEM_INFO near *, COLL_INFO near * )
+0001:00044b8c  void near LaraAsGlide( ITEM_INFO near *, COLL_INFO near * )
+0001:00044c6c  void near LaraAsTread( ITEM_INFO near *, COLL_INFO near * )
+0001:00044d30  void near LaraAsDive( ITEM_INFO near *, COLL_INFO near * )
+0001:00044d60  void near LaraAsUWDeath( ITEM_INFO near *, COLL_INFO near * )
+0001:00044de8  void near LaraColSwim( ITEM_INFO near *, COLL_INFO near * )
+0001:00044e10  void near LaraColGlide( ITEM_INFO near *, COLL_INFO near * )
+0001:00044e38  void near LaraColTread( ITEM_INFO near *, COLL_INFO near * )
+0001:00044e60  void near LaraColDive( ITEM_INFO near *, COLL_INFO near * )
+0001:00044e88  void near LaraColUWDeath( ITEM_INFO near *, COLL_INFO near * )
+0001:00044f14+ void near LaraSwimCollision( ITEM_INFO near *, COLL_INFO near * )
+0001:000450e8  void near LaraWaterCurrent( COLL_INFO near * )
 Module: lot.obj(D:\tombraid\specific\lot.cpp)
-0001:000453f0  void near InitialiseLOTArray()
-0001:0004546c  void near DisableBaddieAI( short )
-0001:000454c0  int near EnableBaddieAI( short, int )
-0001:000456d0+ void near InitialiseSlot( short, int )
-0001:00045870+ void near CreateZone( ITEM_INFO near * )
-0001:000459d8  int near InitialiseLOT( LOT_INFO near * )
-0001:00045a1c+ void near ClearLOT( LOT_INFO near * )
+0001:000453e0  void near InitialiseLOTArray()
+0001:0004545c  void near DisableBaddieAI( short )
+0001:000454b0  int near EnableBaddieAI( short, int )
+0001:000456c0+ void near InitialiseSlot( short, int )
+0001:00045860+ void near CreateZone( ITEM_INFO near * )
+0001:000459c8  int near InitialiseLOT( LOT_INFO near * )
+0001:00045a0c+ void near ClearLOT( LOT_INFO near * )
 Module: matrix.obj(D:\tombraid\specific\matrix.cpp)
-0001:00045ab0* void near phd_ResetMatrixStack()
-0001:00045ad0  void near phd_GenerateW2V( PHD_3DPOS near * )
-0001:00045cb8  void near phd_PushMatrix()
-0001:00045cec  void near phd_PushUnitMatrix()
-0001:00045d6c  void near phd_PopMatrix()
-0001:00045d88  void near phd_RotX( short )
-0001:00045eac  void near phd_RotY( short )
-0001:00045fcc  void near phd_RotZ( short )
-0001:000460ec  void near phd_RotYXZ( short, short, short )
-0001:00046410  void near phd_RotYXZpack( int )
-0001:00046760  void near phd_TranslateRel( int, int, int )
-0001:000467fc  void near phd_TranslateAbs( int, int, int )
-0001:000468b4  void near InitInterpolate( int, int )
-0001:000469b4  void near InterpolateMatrix()
-0001:00046ce4  void near InterpolateArmMatrix()
-0001:00046eb0  void near phd_PushMatrix_I()
-0001:00046f9c  void near phd_PopMatrix_I()
-0001:00046fc0  void near phd_TranslateRel_I( int, int, int )
-0001:00047014  void near phd_TranslateRel_ID( int, int, int, int, int, int )
-0001:0004706c  void near phd_RotY_I( short )
-0001:000470b4  void near phd_RotX_I( short )
-0001:000470fc  void near phd_RotZ_I( short )
-0001:00047144  void near phd_RotYXZ_I( short, short, short )
-0001:0004719c  void near phd_RotYXZpack_I( int, int )
+0001:00045aa0* void near phd_ResetMatrixStack()
+0001:00045ac0  void near phd_GenerateW2V( PHD_3DPOS near * )
+0001:00045ca8  void near phd_PushMatrix()
+0001:00045cdc  void near phd_PushUnitMatrix()
+0001:00045d5c  void near phd_PopMatrix()
+0001:00045d78  void near phd_RotX( short )
+0001:00045e9c  void near phd_RotY( short )
+0001:00045fbc  void near phd_RotZ( short )
+0001:000460dc  void near phd_RotYXZ( short, short, short )
+0001:00046400  void near phd_RotYXZpack( int )
+0001:00046750  void near phd_TranslateRel( int, int, int )
+0001:000467ec  void near phd_TranslateAbs( int, int, int )
+0001:000468a4  void near InitInterpolate( int, int )
+0001:000469a4  void near InterpolateMatrix()
+0001:00046cd4  void near InterpolateArmMatrix()
+0001:00046ea0  void near phd_PushMatrix_I()
+0001:00046f8c  void near phd_PopMatrix_I()
+0001:00046fb0  void near phd_TranslateRel_I( int, int, int )
+0001:00047004  void near phd_TranslateRel_ID( int, int, int, int, int, int )
+0001:0004705c  void near phd_RotY_I( short )
+0001:000470a4  void near phd_RotX_I( short )
+0001:000470ec  void near phd_RotZ_I( short )
+0001:00047134  void near phd_RotYXZ_I( short, short, short )
+0001:0004718c  void near phd_RotYXZpack_I( int, int )
 Module: option.obj(D:\tombraid\specific\option.cpp)
-0001:000471f0  void near Option_DoInventory( INVENTORY_ITEM near * )
+0001:000471e0  void near Option_DoInventory( INVENTORY_ITEM near * )
 Module: option_compass.obj(D:\tombraid\specific\option_compass.cpp)
-0001:00047570  void near Option_Compass( INVENTORY_ITEM near * )
+0001:00047560  void near Option_Compass( INVENTORY_ITEM near * )
 Module: option_control.obj(D:\tombraid\specific\option_control.cpp)
-0001:00047bec+ void near Option_FlashConflicts()
-0001:00047d0c+ void near Option_DefaultConflict()
-0001:00047d90  void near Option_Control( INVENTORY_ITEM near * )
+0001:00047bdc+ void near Option_FlashConflicts()
+0001:00047cfc+ void near Option_DefaultConflict()
+0001:00047d80  void near Option_Control( INVENTORY_ITEM near * )
 Module: option_graphics.obj(D:\tombraid\specific\option_graphics.cpp)
-0001:00048630  void near Option_Graphics( INVENTORY_ITEM near * )
+0001:00048620  void near Option_Graphics( INVENTORY_ITEM near * )
 Module: option_passport.obj(D:\tombraid\specific\option_passport.cpp)
 0002:00006f28  REQUEST_INFO near g_LoadSaveGameRequester
-0001:000487b0  void near Option_Passport( INVENTORY_ITEM near * )
+0001:000487a0  void near Option_Passport( INVENTORY_ITEM near * )
 Module: option_sound.obj(D:\tombraid\specific\option_sound.cpp)
-0001:000490a8  void near Option_Sound( INVENTORY_ITEM near * )
+0001:00049098  void near Option_Sound( INVENTORY_ITEM near * )
 Module: overlay.obj(D:\tombraid\specific\overlay.cpp)
-0001:000498a0  void near Overlay_Init()
-0001:000498e0+ void near Overlay_DrawHealthBar()
-0001:000499e0+ void near Overlay_DrawAirBar()
-0001:00049a94+ void near Overlay_DrawEnemyBar()
-0001:00049aec+ void near Overlay_DrawAmmoInfo()
-0001:00049cc8+ void near Overlay_DrawPickups()
-0001:00049e34  void near Overlay_DrawFPSInfo()
+0001:00049890  void near Overlay_Init()
+0001:000498d0+ void near Overlay_DrawHealthBar()
+0001:000499d0+ void near Overlay_DrawAirBar()
+0001:00049a84+ void near Overlay_DrawEnemyBar()
+0001:00049adc+ void near Overlay_DrawAmmoInfo()
+0001:00049cb8+ void near Overlay_DrawPickups()
+0001:00049e24  void near Overlay_DrawFPSInfo()
 0002:00285bd0  TEXTSTRING near * near m_AmmoText
 0002:00285bd4  TEXTSTRING near * near m_FPSText
-0001:00049f00  void near Overlay_DrawGameInfo()
-0001:00049f44  void near Overlay_AddPickup( short )
-0001:00049fb4  void near Overlay_MakeAmmoString( char near * )
+0001:00049ef0  void near Overlay_DrawGameInfo()
+0001:00049f34  void near Overlay_AddPickup( short )
+0001:00049fa4  void near Overlay_MakeAmmoString( char near * )
 Module: people.obj(D:\tombraid\specific\people.cpp)
-0001:0004a020  int near Targetable( ITEM_INFO near *, AI_INFO near * )
-0001:0004a0bc  void near ControlGunShot( short )
-0001:0004a110  short near GunShot( int, int, int, short, short, short )
-0001:0004a1c4+ short near GunHit( int, int, int, short, short, short )
-0001:0004a288+ short near GunMiss( int, int, int, short, short, short )
-0001:0004a33c  int near ShotLara( ITEM_INFO near *, int, BITE_INFO near *, short )
+0001:0004a010  int near Targetable( ITEM_INFO near *, AI_INFO near * )
+0001:0004a0ac  void near ControlGunShot( short )
+0001:0004a100  short near GunShot( int, int, int, short, short, short )
+0001:0004a1b4+ short near GunHit( int, int, int, short, short, short )
+0001:0004a278+ short near GunMiss( int, int, int, short, short, short )
+0001:0004a32c  int near ShotLara( ITEM_INFO near *, int, BITE_INFO near *, short )
 Module: phd_math.obj(D:\tombraid\specific\phd_math.cpp)
-0001:0004a400  int near phd_cos( int )
-0001:0004a430  int near phd_sin( int )
-0001:0004a49c  int near phd_atan( int, int )
-0001:0004a54c  int unsigned near phd_sqrt( int unsigned )
+0001:0004a3f0  int near phd_cos( int )
+0001:0004a420  int near phd_sin( int )
+0001:0004a48c  int near phd_atan( int, int )
+0001:0004a53c  int unsigned near phd_sqrt( int unsigned )
 Module: requester.obj(D:\tombraid\specific\requester.cpp)
-0001:0004a5c0  void near InitRequester( REQUEST_INFO near * )
-0001:0004a634+ void near RemoveRequester( REQUEST_INFO near * )
-0001:0004a6dc  int near DisplayRequester( REQUEST_INFO near * )
-0001:0004acbc  void near SetRequesterHeading( REQUEST_INFO near *, char const near * )
-0001:0004ad08* void near ChangeRequesterItem( REQUEST_INFO near *, int, char const near *, short unsigned )
-0001:0004ad4c* void near AddRequesterItem( REQUEST_INFO near *, char const near *, short unsigned )
-0001:0004ad9c* void near SetRequesterSize( REQUEST_INFO near *, int, short )
+0001:0004a5b0  void near InitRequester( REQUEST_INFO near * )
+0001:0004a624+ void near RemoveRequester( REQUEST_INFO near * )
+0001:0004a6cc  int near DisplayRequester( REQUEST_INFO near * )
+0001:0004acac  void near SetRequesterHeading( REQUEST_INFO near *, char const near * )
+0001:0004acf8* void near ChangeRequesterItem( REQUEST_INFO near *, int, char const near *, short unsigned )
+0001:0004ad3c* void near AddRequesterItem( REQUEST_INFO near *, char const near *, short unsigned )
+0001:0004ad8c* void near SetRequesterSize( REQUEST_INFO near *, int, short )
 Module: savegame.obj(D:\tombraid\specific\savegame.cpp)
-0001:0004ae10  void near InitialiseStartInfo()
-0001:0004ae74  void near ModifyStartInfo( int )
-0001:0004b034  void near CreateStartInfo( int )
-0001:0004b180  void near CreateSaveGameInfo()
-0001:0004b52c  void near ExtractSaveGameInfo()
-0001:0004bd08+ void near ResetSG()
-0001:0004bd34+ void near SkipSG( int )
-0001:0004bd60+ void near WriteSG( void near *, int )
-0001:0004bdcc+ void near WriteSGLara( LARA_INFO near * )
-0001:0004c05c+ void near WriteSGARM( LARA_ARM near * )
-0001:0004c0f4+ void near WriteSGLOT( LOT_INFO near * )
-0001:0004c1cc+ void near ReadSG( void near *, int )
-0001:0004c224+ void near ReadSGLara( LARA_INFO near * )
-0001:0004c4a0+ void near ReadSGARM( LARA_ARM near * )
-0001:0004c534+ void near ReadSGLOT( LOT_INFO near * )
+0001:0004ae00  void near InitialiseStartInfo()
+0001:0004ae64  void near ModifyStartInfo( int )
+0001:0004b024  void near CreateStartInfo( int )
+0001:0004b170  void near CreateSaveGameInfo()
+0001:0004b51c  void near ExtractSaveGameInfo()
+0001:0004bcf8+ void near ResetSG()
+0001:0004bd24+ void near SkipSG( int )
+0001:0004bd50+ void near WriteSG( void near *, int )
+0001:0004bdbc+ void near WriteSGLara( LARA_INFO near * )
+0001:0004c04c+ void near WriteSGARM( LARA_ARM near * )
+0001:0004c0e4+ void near WriteSGLOT( LOT_INFO near * )
+0001:0004c1bc+ void near ReadSG( void near *, int )
+0001:0004c214+ void near ReadSGLara( LARA_INFO near * )
+0001:0004c490+ void near ReadSGARM( LARA_ARM near * )
+0001:0004c524+ void near ReadSGLOT( LOT_INFO near * )
 Module: scalespr.obj(D:\tombraid\specific\scalespr.cpp)
-0001:0004c620  void near draw_scaled_spriteC( short near * )
+0001:0004c610  void near draw_scaled_spriteC( short near * )
 Module: screen.obj(D:\tombraid\specific\screen.cpp)
-0001:0004c900  int near Screen_GetResWidth()
-0001:0004c924  int near Screen_GetResHeight()
-0001:0004c948  int near Screen_GetResWidthDownscaled()
-0001:0004c984  int near Screen_GetResHeightDownscaled()
-0001:0004c9c0  int near Screen_GetRenderScale( int )
-0001:0004caa8  int near Screen_GetRenderScaleGLRage( int )
-0001:0004cb0c  int near ViewPort_GetCenterX()
-0001:0004cb40  int near ViewPort_GetCenterY()
+0001:0004c8f0  int near Screen_GetResWidth()
+0001:0004c914  int near Screen_GetResHeight()
+0001:0004c938  int near Screen_GetResWidthDownscaled()
+0001:0004c974  int near Screen_GetResHeightDownscaled()
+0001:0004c9b0  int near Screen_GetRenderScale( int )
+0001:0004ca98  int near Screen_GetRenderScaleGLRage( int )
+0001:0004cafc  int near ViewPort_GetCenterX()
+0001:0004cb30  int near ViewPort_GetCenterY()
 Module: setup.obj(D:\tombraid\specific\setup.cpp)
-0001:0004cb80  int near Initialise_Level_Flags()
-0001:0004cbcc  int near Compose_Colour( int, int, int )
-0001:0004cccc+ void near Init_Colours()
-0001:0004cd10  int near Initialise_Level( int )
-0001:0004cdf4+ void near Initialise_Game_Flags()
-0001:0004cea4+ int near Load_Level( int )
+0001:0004cb70  int near Initialise_Level_Flags()
+0001:0004cbbc  int near Compose_Colour( int, int, int )
+0001:0004ccbc+ void near Init_Colours()
+0001:0004cd00  int near Initialise_Level( int )
+0001:0004cde4+ void near Initialise_Game_Flags()
+0001:0004ce94+ int near Load_Level( int )
 Module: sound.obj(D:\tombraid\specific\sound.cpp)
-0001:0004cf30+ void near SetCurrVolume( SOUND_SLOT near *, int unsigned )
-0001:0004cf60+ int near IsPlaying( SOUND_SLOT near * )
-0001:0004cfc0  void near Sound_UpdateEffects()
-0001:0004d074  int near Sound_Effect( int, PHD_3DPOS near *, int unsigned )
-0001:0004d418+ void near Sound_StopSample( SOUND_SLOT near * )
-0001:0004d444+ int near Sound_StartSample( SOUND_SLOT near *, int unsigned, int, int, int unsigned )
-0001:0004d528  void near Sound_UnInit()
-0001:0004d544* void near Sound_ResetEffects()
-0001:0004d55c  void near Sound_Init()
-0001:0004d5e8+ SOUND_SLOT near * near Sound_GetSlot( int, PHD_3DPOS near * )
-0001:0004d858* void near DS_StopSample( SOUND_SLOT near * )
-0001:0004d874  void near Sound_SetMasterVolume( char signed )
-0001:0004d8c0  void near Sound_MakeSample( int unsigned, char unsigned near *, int unsigned )
-0001:0004d918+ void near TickerInc()
-0001:0004d934  void near ZeroSoundBuff()
-0001:0004d9a0  void near Sound_StopAllSamples()
+0001:0004cf20+ void near SetCurrVolume( SOUND_SLOT near *, int unsigned )
+0001:0004cf50+ int near IsPlaying( SOUND_SLOT near * )
+0001:0004cfb0  void near Sound_UpdateEffects()
+0001:0004d064  int near Sound_Effect( int, PHD_3DPOS near *, int unsigned )
+0001:0004d408+ void near Sound_StopSample( SOUND_SLOT near * )
+0001:0004d434+ int near Sound_StartSample( SOUND_SLOT near *, int unsigned, int, int, int unsigned )
+0001:0004d518  void near Sound_UnInit()
+0001:0004d534* void near Sound_ResetEffects()
+0001:0004d54c  void near Sound_Init()
+0001:0004d5d8+ SOUND_SLOT near * near Sound_GetSlot( int, PHD_3DPOS near * )
+0001:0004d848* void near DS_StopSample( SOUND_SLOT near * )
+0001:0004d864  void near Sound_SetMasterVolume( char signed )
+0001:0004d8b0  void near Sound_MakeSample( int unsigned, char unsigned near *, int unsigned )
+0001:0004d908+ void near TickerInc()
+0001:0004d924  void near ZeroSoundBuff()
+0001:0004d990  void near Sound_StopAllSamples()
 0002:002bb32c+ MySound near activeBuffers[]
 Module: sphere.obj(D:\tombraid\specific\sphere.cpp)
-0001:0004da10  int near TestCollision( ITEM_INFO near *, ITEM_INFO near * )
-0001:0004dbc8  int near GetSpheres( ITEM_INFO near *, SPHERE near *, int )
-0001:0004df10  void near GetJointAbsPosition( ITEM_INFO near *, PHD_VECTOR near *, int )
+0001:0004da00  int near TestCollision( ITEM_INFO near *, ITEM_INFO near * )
+0001:0004dbb8  int near GetSpheres( ITEM_INFO near *, SPHERE near *, int )
+0001:0004df00  void near GetJointAbsPosition( ITEM_INFO near *, PHD_VECTOR near *, int )
 Module: text.obj(D:\tombraid\specific\text.cpp)
-0001:0004e110  void near Text_Init()
-0001:0004e160  TEXTSTRING near * near Text_Create( short, short, char const near * )
-0001:0004e280  void near Text_ChangeText( TEXTSTRING near *, char const near * )
-0001:0004e2e4  void near Text_SetScale( TEXTSTRING near *, int, int )
-0001:0004e318  void near Text_Flash( TEXTSTRING near *, int, short )
-0001:0004e364  void near Text_AddBackground( TEXTSTRING near *, short, short, short, short )
-0001:0004e3b8  void near Text_RemoveBackground( TEXTSTRING near * )
-0001:0004e3e0  void near Text_AddOutline( TEXTSTRING near *, int )
-0001:0004e408  void near Text_RemoveOutline( TEXTSTRING near * )
-0001:0004e430  void near Text_CentreH( TEXTSTRING near *, int )
-0001:0004e468  void near Text_CentreV( TEXTSTRING near *, int )
-0001:0004e4a0  void near Text_AlignRight( TEXTSTRING near *, int )
-0001:0004e4d8  void near Text_AlignBottom( TEXTSTRING near *, int )
-0001:0004e510+ int near Text_GetWidth( TEXTSTRING near * )
-0001:0004e640  void near Text_Remove( TEXTSTRING near * )
-0001:0004e678  void near Text_Draw()
+0001:0004e100  void near Text_Init()
+0001:0004e150  TEXTSTRING near * near Text_Create( short, short, char const near * )
+0001:0004e270  void near Text_ChangeText( TEXTSTRING near *, char const near * )
+0001:0004e2d4  void near Text_SetScale( TEXTSTRING near *, int, int )
+0001:0004e308  void near Text_Flash( TEXTSTRING near *, int, short )
+0001:0004e354  void near Text_AddBackground( TEXTSTRING near *, short, short, short, short )
+0001:0004e3a8  void near Text_RemoveBackground( TEXTSTRING near * )
+0001:0004e3d0  void near Text_AddOutline( TEXTSTRING near *, int )
+0001:0004e3f8  void near Text_RemoveOutline( TEXTSTRING near * )
+0001:0004e420  void near Text_CentreH( TEXTSTRING near *, int )
+0001:0004e458  void near Text_CentreV( TEXTSTRING near *, int )
+0001:0004e490  void near Text_AlignRight( TEXTSTRING near *, int )
+0001:0004e4c8  void near Text_AlignBottom( TEXTSTRING near *, int )
+0001:0004e500+ int near Text_GetWidth( TEXTSTRING near * )
+0001:0004e630  void near Text_Remove( TEXTSTRING near * )
+0001:0004e668  void near Text_Draw()
 Module: timer.obj(D:\tombraid\specific\timer.cpp)
-0001:0004ea40* void near Init_Timer()
-0001:0004ea58* int near Sync()
+0001:0004ea30* void near Init_Timer()
+0001:0004ea48* int near Sync()
 0002:002bdd48+ double near LdFreq
 Module: vars.obj(D:\tombraid\specific\vars.cpp)
 0002:002bdd50  int near joy_x
@@ -1661,589 +1661,589 @@ Module: vars.obj(D:\tombraid\specific\vars.cpp)
 0002:00356d08  SHADOW_INFO near g_ShadowInfo
 0002:00356dd4  CONFIG near g_Config
 Module: winmain.obj(D:\tombraid\specific\winmain.cpp)
-0001:0004ea80  int near Settings_Write()
-0001:0004eb48+ int near Settings_Read()
-0001:0004ec10+ void near S_SeedRandom()
-0001:0004ec78  void near Random_SeedDraw( int )
-0001:0004ec9c  int near Random_GetDraw()
-0001:0004ecdc  void near Random_SeedControl( int )
-0001:0004ed00  int near Random_GetControl()
+0001:0004ea70  int near Settings_Write()
+0001:0004eb38+ int near Settings_Read()
+0001:0004ec00+ void near S_SeedRandom()
+0001:0004ec68  void near Random_SeedDraw( int )
+0001:0004ec8c  int near Random_GetDraw()
+0001:0004eccc  void near Random_SeedControl( int )
+0001:0004ecf0  int near Random_GetControl()
 0002:00368b08+ int near Fullscreen
-0002:00368b0c  int near GameType
-0001:0004ed40+ void near phd_InitWindow( int, int, int, int, int, int, int, int, int, char unsigned near * )
-0001:0004ede0+ int near LoadTitle()
-0001:0004eeec+ void far New_Key_Int()
-0001:0004f05c  main_
+0001:0004ed30+ void near phd_InitWindow( int, int, int, int, int, int, int, int, int, char unsigned near * )
+0001:0004edd0+ int near LoadTitle()
+0001:0004eedc+ void far New_Key_Int()
+0001:0004f04c  main_
 0002:00008bb4  int near Widescreen
-0002:00008bc0  int near lara_dist
-0002:00008bc4  int near CheatsMode
-0002:00008bc8+ int near g_RandControl
-0002:00008bcc+ int near g_RandDraw
-0002:00368b20+ void (far * near Old_Key_Isr)()
+0002:00008bb8  int near GameType
+0002:00008bc4  int near lara_dist
+0002:00008bc8  int near CheatsMode
+0002:00008bcc+ int near g_RandControl
+0002:00008bd0+ int near g_RandDraw
+0002:00368b1c+ void (far * near Old_Key_Isr)()
 Module: damocles_sword.obj(D:\tombraid\traps\damocles_sword.cpp)
-0001:0004f350  void near InitialiseDamoclesSword( short )
-0001:0004f3b0  void near DamoclesSwordControl( short )
-0001:0004f58c  void near DamoclesSwordCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:0004f340  void near InitialiseDamoclesSword( short )
+0001:0004f3a0  void near DamoclesSwordControl( short )
+0001:0004f57c  void near DamoclesSwordCollision( short, ITEM_INFO near *, COLL_INFO near * )
 Module: dart.obj(D:\tombraid\traps\dart.cpp)
-0001:0004f6c0  void near DartsControl( short )
-0001:0004f838  void near DartEffectControl( short )
+0001:0004f6b0  void near DartsControl( short )
+0001:0004f828  void near DartEffectControl( short )
 Module: dart_emitter.obj(D:\tombraid\traps\dart_emitter.cpp)
-0001:0004f8b0  void near DartEmitterControl( short )
+0001:0004f8a0  void near DartEmitterControl( short )
 Module: falling_block.obj(D:\tombraid\traps\falling_block.cpp)
-0001:0004faf0  void near FallingBlockControl( short )
-0001:0004fc7c  void near FallingBlockFloor( ITEM_INFO near *, int, int, int, short near * )
-0001:0004fce0  void near FallingBlockCeiling( ITEM_INFO near *, int, int, int, short near * )
+0001:0004fae0  void near FallingBlockControl( short )
+0001:0004fc6c  void near FallingBlockFloor( ITEM_INFO near *, int, int, int, short near * )
+0001:0004fcd0  void near FallingBlockCeiling( ITEM_INFO near *, int, int, int, short near * )
 Module: falling_ceiling.obj(D:\tombraid\traps\falling_ceiling.cpp)
-0001:0004fd50  void near FallingCeilingControl( short )
+0001:0004fd40  void near FallingCeilingControl( short )
 Module: flame.obj(D:\tombraid\traps\flame.cpp)
-0001:0004fe40  void near FlameEmitterControl( short )
-0001:0004ff20  void near FlameControl( short )
+0001:0004fe30  void near FlameEmitterControl( short )
+0001:0004ff10  void near FlameControl( short )
 Module: lava.obj(D:\tombraid\traps\lava.cpp)
-0001:00050160  void near LavaBurn( ITEM_INFO near * )
-0001:00050294  void near LavaEmitterControl( short )
-0001:0005038c  void near LavaControl( short )
-0001:000504d8  void near LavaWedgeControl( short )
+0001:00050150  void near LavaBurn( ITEM_INFO near * )
+0001:00050284  void near LavaEmitterControl( short )
+0001:0005037c  void near LavaControl( short )
+0001:000504c8  void near LavaWedgeControl( short )
 Module: lightning_emitter.obj(D:\tombraid\traps\lightning_emitter.cpp)
-0001:00050690  void near InitialiseLightning( short )
-0001:00050740  void near LightningControl( short )
-0001:00050ae8  void near LightningCollision( short, ITEM_INFO near *, COLL_INFO near * )
-0001:00050b60  void near DrawLightning( ITEM_INFO near * )
+0001:00050680  void near InitialiseLightning( short )
+0001:00050730  void near LightningControl( short )
+0001:00050ad8  void near LightningCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:00050b50  void near DrawLightning( ITEM_INFO near * )
 Module: midas_touch.obj(D:\tombraid\traps\midas_touch.cpp)
-0001:000510b0  void near MidasCollision( short, ITEM_INFO near *, COLL_INFO near * )
-0002:00008be4+ short near g_MidasBounds[]
+0001:000510a0  void near MidasCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0002:00008be8+ short near g_MidasBounds[]
 Module: movable_block.obj(D:\tombraid\traps\movable_block.cpp)
-0001:00051350  void near InitialiseMovableBlock( short )
-0001:000513a4  void near MovableBlockControl( short )
-0001:0005153c  void near MovableBlockCollision( short, ITEM_INFO near *, COLL_INFO near * )
-0001:00051824  void near DrawMovableBlock( ITEM_INFO near * )
-0001:00051868+ int near TestBlockMovable( ITEM_INFO near *, int )
-0001:000518f0+ int near TestBlockPush( ITEM_INFO near *, int, short unsigned )
-0001:00051a54+ int near TestBlockPull( ITEM_INFO near *, int, short unsigned )
-0001:00051ce4  void near AlterFloorHeight( ITEM_INFO near *, int )
+0001:00051340  void near InitialiseMovableBlock( short )
+0001:00051394  void near MovableBlockControl( short )
+0001:0005152c  void near MovableBlockCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:00051814  void near DrawMovableBlock( ITEM_INFO near * )
+0001:00051858+ int near TestBlockMovable( ITEM_INFO near *, int )
+0001:000518e0+ int near TestBlockPush( ITEM_INFO near *, int, short unsigned )
+0001:00051a44+ int near TestBlockPull( ITEM_INFO near *, int, short unsigned )
+0001:00051cd4  void near AlterFloorHeight( ITEM_INFO near *, int )
 Module: pendulum.obj(D:\tombraid\traps\pendulum.cpp)
-0001:00051e10  void near PendulumControl( short )
+0001:00051e00  void near PendulumControl( short )
 Module: rolling_ball.obj(D:\tombraid\traps\rolling_ball.cpp)
-0001:00051fb0  void near InitialiseRollingBall( short )
-0001:00052028  void near RollingBallControl( short )
-0001:00052364  void near RollingBallCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:00051fa0  void near InitialiseRollingBall( short )
+0001:00052018  void near RollingBallControl( short )
+0001:00052354  void near RollingBallCollision( short, ITEM_INFO near *, COLL_INFO near * )
 Module: rolling_block.obj(D:\tombraid\traps\rolling_block.cpp)
-0001:000526d0  void near InitialiseRollingBlock( short )
-0001:0005270c  void near RollingBlockControl( short )
-0002:00008c00  short near g_MovingBlockBounds[]
+0001:000526c0  void near InitialiseRollingBlock( short )
+0001:000526fc  void near RollingBlockControl( short )
+0002:00008c04  short near g_MovingBlockBounds[]
 Module: spikes.obj(D:\tombraid\traps\spikes.cpp)
-0001:00052830  void near SpikeCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:00052820  void near SpikeCollision( short, ITEM_INFO near *, COLL_INFO near * )
 Module: teeth_trap.obj(D:\tombraid\traps\teeth_trap.cpp)
-0001:00052a54  void near TeethTrapControl( short )
-0002:00008c18+ BITE_INFO near g_Teeth1A
-0002:00008c28+ BITE_INFO near g_Teeth1B
-0002:00008c38+ BITE_INFO near g_Teeth2A
-0002:00008c48+ BITE_INFO near g_Teeth2B
-0002:00008c58+ BITE_INFO near g_Teeth3A
-0002:00008c68+ BITE_INFO near g_Teeth3B
+0001:00052a44  void near TeethTrapControl( short )
+0002:00008c1c+ BITE_INFO near g_Teeth1A
+0002:00008c2c+ BITE_INFO near g_Teeth1B
+0002:00008c3c+ BITE_INFO near g_Teeth2A
+0002:00008c4c+ BITE_INFO near g_Teeth2B
+0002:00008c5c+ BITE_INFO near g_Teeth3A
+0002:00008c6c+ BITE_INFO near g_Teeth3B
 Module: thors_hammer.obj(D:\tombraid\traps\thors_hammer.cpp)
-0001:00052b30  void near InitialiseThorsHandle( short )
-0001:00052bc8  void near ThorsHandleControl( short )
-0001:00052fac  void near ThorsHandleCollision( short, ITEM_INFO near *, COLL_INFO near * )
-0001:0005300c  void near ThorsHeadCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:00052b20  void near InitialiseThorsHandle( short )
+0001:00052bb8  void near ThorsHandleControl( short )
+0001:00052f9c  void near ThorsHandleCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:00052ffc  void near ThorsHeadCollision( short, ITEM_INFO near *, COLL_INFO near * )
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strcpy)
-0001:0005307a  strcpy_
+0001:0005306a  strcpy_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strcat)
-0001:00053099  strcat_
+0001:00053089  strcat_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(open)
-0001:000530cc  open_
-0001:000530f0  sopen_
-0001:000532d9* __set_binary_
+0001:000530bc  open_
+0001:000530e0  sopen_
+0001:000532c9* __set_binary_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(read)
-0001:0005333e  read_
+0001:0005332e  read_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(io386)
-0001:0005343a  _dos_read_
-0001:00053464* _dos_write_
+0001:0005342a  _dos_read_
+0001:00053454* _dos_write_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(lseek)
-0001:0005346b  lseek_
-0001:0005346b* _lseek_
+0001:0005345b  lseek_
+0001:0005345b* _lseek_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(close)
-0001:000534ae  close_
+0001:0005349e  close_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(cmp386)
-0001:000534d0  strcmp_
+0001:000534c0  strcmp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(memcpy)
-0001:00053571  memcpy_
+0001:00053561  memcpy_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(set386)
-0001:000535a0  memset_
+0001:00053590  memset_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(nmalloc)
-0001:000535b8  _nmalloc_
-0001:000535b8  malloc_
-0002:00008c78  ___nheapbeg
-0002:00008c7c  ___MiniHeapRover
-0002:00008c80  ___LargestSizeB4MiniHeapRover
+0001:000535a8  _nmalloc_
+0001:000535a8  malloc_
+0002:00008c7c  ___nheapbeg
+0002:00008c80  ___MiniHeapRover
+0002:00008c84  ___LargestSizeB4MiniHeapRover
 Module: C:\WATCOM\lib386\dos\clib3r.lib(nfree)
-0001:0005369b  _nfree_
-0001:0005369b  free_
-0002:003d3910  ___MiniHeapFreeRover
+0001:0005368b  _nfree_
+0001:0005368b  free_
+0002:003d390c  ___MiniHeapFreeRover
 Module: C:\WATCOM\lib386\dos\clib3r.lib(getenv)
-0001:0005371d  getenv_
+0001:0005370d  getenv_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fmemcpy)
-0001:0005377e  _fmemcpy_
+0001:0005376e  _fmemcpy_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(cstrt386)
 0001:00000003* ___begtext
 0002:00000000* __nullarea
-0002:00008c84  __GDAptr
-0002:00008c88  __D16Infoseg
-0002:00008c8a  __x386_zero_base_selector
-0001:000537a8  _cstart_
-0001:00053a37  __exit_
-0001:00053a39  __do_exit_with_msg__
-0001:00053a74  __GETDS
-0001:00053a74  ___GETDSStart_
-0001:00053a7f  ___GETDSEnd_
+0002:00008c88  __GDAptr
+0002:00008c8c  __D16Infoseg
+0002:00008c8e  __x386_zero_base_selector
+0001:00053798  _cstart_
+0001:00053a27  __exit_
+0001:00053a29  __do_exit_with_msg__
+0001:00053a64  __GETDS
+0001:00053a64  ___GETDSStart_
+0001:00053a6f  ___GETDSEnd_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(write)
-0001:00053a7f  write_
+0001:00053a6f  write_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(atoi)
-0001:00053c54  atoi_
+0001:00053c44  atoi_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(itoa)
-0001:00053ce6+ utoa_
-0001:00053d30  itoa_
-0001:00053d30* _itoa_
+0001:00053cd6+ utoa_
+0001:00053d20  itoa_
+0001:00053d20* _itoa_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strlen)
-0001:00053d4b  strlen_
+0001:00053d3b  strlen_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(memmove)
-0001:00053d64  memmove_
+0001:00053d54  memmove_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(stricmp)
-0001:00053db1* stricmp_
-0001:00053db1* _stricmp_
-0001:00053db1  strcmpi_
+0001:00053da1* stricmp_
+0001:00053da1* _stricmp_
+0001:00053da1  strcmpi_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(toupper)
-0001:00053df8  toupper_
-0001:00053df8* _toupper_
+0001:00053de8  toupper_
+0001:00053de8* _toupper_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strncmp)
-0001:00053e06  strncmp_
+0001:00053df6  strncmp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fltused)
 0000:00000000  _fltused_
 Module: C:\WATCOM\lib386\dos\emu387.lib(386inite)
-0001:00053e35* __fini_387_emulator
-0001:00053e30  __init_387_emulator
+0001:00053e25* __fini_387_emulator
+0001:00053e20  __init_387_emulator
 Module: C:\WATCOM\lib386\dos\clib3r.lib(_8087386)
-0002:00008c8c  __8087
-0002:00008c8d  __real87
+0002:00008c90  __8087
+0002:00008c91  __real87
 Module: C:\WATCOM\lib386\math387r.lib(fchop)
-0001:00053e3a  __CHP
+0001:00053e2a  __CHP
 Module: C:\WATCOM\lib386\dos\clib3r.lib(inp)
-0001:00053e57  inp_
+0001:00053e47  inp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(outp)
-0001:00053e5f  outp_
+0001:00053e4f  outp_
 Module: C:\WATCOM\lib386\plib3r.lib(opnewarr)
-0001:00053e6c  void near * near operator new []( int unsigned )
+0001:00053e5c  void near * near operator new []( int unsigned )
 Module: C:\WATCOM\lib386\plib3r.lib(opdelarr)
-0001:00053e74  void near operator delete []( void near * )
+0001:00053e64  void near operator delete []( void near * )
 Module: C:\WATCOM\lib386\plib3r.lib(undefed)
-0001:00053e7c  __wcpp_2_undefed_cdtor__
+0001:00053e6c  __wcpp_2_undefed_cdtor__
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fopen)
-0001:00053e8e+ __open_flags_
-0001:00054023+ _fsopen_
-0001:0005405c  fopen_
-0001:000540ce* freopen_
+0001:00053e7e+ __open_flags_
+0001:00054013+ _fsopen_
+0001:0005404c  fopen_
+0001:000540be* freopen_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(printf)
-0001:00054110  printf_
+0001:00054100  printf_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fread)
-0001:00054132  fread_
+0001:00054122  fread_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fclose)
-0001:0005430d  fclose_
-0001:0005433a  __shutdown_stream_
-0001:0005435b+ __MkTmpFile_
-0001:000543c0  __doclose_
+0001:000542fd  fclose_
+0001:0005432a  __shutdown_stream_
+0001:0005434b+ __MkTmpFile_
+0001:000543b0  __doclose_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fseek)
-0001:00054492  fseek_
+0001:00054482  fseek_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ftell)
-0001:0005458e  ftell_
+0001:0005457e  ftell_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(sprintf)
-0001:000545e3  sprintf_
+0001:000545d3  sprintf_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fwrite)
-0001:00054613  fwrite_
+0001:00054603  fwrite_
 Module: C:\WATCOM\lib386\math387r.lib(pow387)
-0001:0005492a* pow_
-0001:000547d4  IF@DPOW
-0001:000547d4* IF@POW
+0001:0005491a* pow_
+0001:000547c4  IF@DPOW
+0001:000547c4* IF@POW
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strncpy)
-0001:0005493a  strncpy_
+0001:0005492a  strncpy_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(time)
-0001:0005495f  time_
+0001:0005494f  time_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(localtim)
-0001:0005498e+ _localtime_
-0001:000549df  localtime_
+0001:0005497e+ _localtime_
+0001:000549cf  localtime_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(d_getvec)
-0001:000549ec  _dos_getvect_
+0001:000549dc  _dos_getvect_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(d_setvec)
-0001:00054a1e  _dos_setvect_
+0001:00054a0e  _dos_setvect_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(isatt)
-0001:00054a4b  isatty_
+0001:00054a3b  isatty_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(seterrno)
-0001:00054a72  __set_EDOM_
-0001:00054a77  __set_errno_
-0001:00054a83  __set_ERANGE_
-0001:00054a8a* __set_EINVAL_
-0001:00054a9a+ __set_doserrno_
+0001:00054a62  __set_EDOM_
+0001:00054a67  __set_errno_
+0001:00054a73  __set_ERANGE_
+0001:00054a7a* __set_EINVAL_
+0001:00054a8a+ __set_doserrno_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(dosret)
-0001:00054aa6* _dosret0_
-0001:00054aad* _dosretax_
-0001:00054ab1  __set_errno_dos_
+0001:00054a96* _dosret0_
+0001:00054a9d* _dosretax_
+0001:00054aa1  __set_errno_dos_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(umaskval)
-0002:00008ca4  ___umaskval
+0002:00008ca8  ___umaskval
 Module: C:\WATCOM\lib386\dos\clib3r.lib(iomode)
-0001:00054b22  __IOMode_
-0001:00054b77  __SetIOMode_
-0002:00008ca8  ___NFiles
-0002:00008cac+ ___init_mode
-0002:00008cfc+ __iomode
+0001:00054b12  __IOMode_
+0001:00054b67  __SetIOMode_
+0002:00008cac  ___NFiles
+0002:00008cb0+ ___init_mode
+0002:00008d00+ __iomode
 Module: C:\WATCOM\lib386\dos\clib3r.lib(iob)
-0002:00008d00  ___iob
-0002:00008f08* ___tmpfnext
-0002:00008f09  __fmode
-0002:003d3938  ___ClosedStreams
+0002:00008d04  ___iob
+0002:00008f0c* ___tmpfnext
+0002:00008f0d  __fmode
+0002:003d3934  ___ClosedStreams
 Module: C:\WATCOM\lib386\dos\clib3r.lib(error386)
-0001:00054b8c  __doserror_
+0001:00054b7c  __doserror_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(_clse)
-0001:00054b9f  __close_
+0001:00054b8f  __close_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(__stos)
-0001:00054be0  __STOSB
-0001:00054c17* __STOSD
+0001:00054bd0  __STOSB
+0001:00054c07* __STOSD
 Module: C:\WATCOM\lib386\dos\clib3r.lib(memalloc)
-0001:00054c84  __MemAllocator
-0001:00054d2c  __MemFree
+0001:00054c74  __MemAllocator
+0001:00054d1c  __MemFree
 Module: C:\WATCOM\lib386\dos\clib3r.lib(grownear)
-0001:00054e88+ __FreeDPMIBlocks_
-0001:00054ee4* __ReAllocDPMIBlock_
-0001:00055057+ __LastFree_
-0001:00055228  __ExpandDGROUP_
+0001:00054e78+ __FreeDPMIBlocks_
+0001:00054ed4* __ReAllocDPMIBlock_
+0001:00055047+ __LastFree_
+0001:00055218  __ExpandDGROUP_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(nmemneed)
-0001:000553f1  __nmemneed_
+0001:000553e1  __nmemneed_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(heapmod)
-0002:003d393c  ___nheap_clean
-0002:003d393d* ___fheap_clean
+0002:003d3938  ___nheap_clean
+0002:003d3939* ___fheap_clean
 Module: C:\WATCOM\lib386\dos\clib3r.lib(environ)
-0002:00008f14  _environ
-0002:00008f18  ___env_mask
+0002:00008f18  _environ
+0002:00008f1c  ___env_mask
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strnicmp)
-0001:000553f4  strnicmp_
-0001:000553f4* _strnicmp_
+0001:000553e4  strnicmp_
+0001:000553e4* _strnicmp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(cmain386)
-0001:00055447  __CMain
+0001:00055437  __CMain
 Module: C:\WATCOM\lib386\dos\clib3r.lib(inirt386)
-0001:00055496  __InitRtns
-0001:000554e1  __FiniRtns
+0001:00055486  __InitRtns
+0001:000554d1  __FiniRtns
 Module: C:\WATCOM\lib386\dos\clib3r.lib(seg386)
 0000:00001234  __DOSseg__
 Module: C:\WATCOM\lib386\dos\clib3r.lib(crwd386)
-0002:00008f2c  __psp
-0002:00008f57  __osmajor
-0002:00008f58  __osminor
-0002:00008f4e  __Extender
-0002:00008f4f  __ExtenderSubtype
-0002:00008f50  __X32VM
-0002:00008f30* __x386_stacklow
-0002:00008f24  __LpCmdLine
-0002:00008f28  __LpPgmName
-0002:00008f1c  __dynend
-0002:00008f20  __curbrk
-0002:00008f30  __STACKLOW
-0002:00008f34  __STACKTOP
-0002:00008f38  __ASTACKSIZ
-0002:00008f3c  __ASTACKPTR
-0002:00008f40  __cbyte
-0002:00008f44* __cbyte2
-0002:00008f48  __child
-0002:00008f51  __Envptr
-0002:00008f55  __Envseg
-0002:00008f4c  __no87
-0002:00008f59  __FPE_handler
-0002:00008f59  ___FPE_handler
+0002:00008f30  __psp
+0002:00008f5b  __osmajor
+0002:00008f5c  __osminor
+0002:00008f52  __Extender
+0002:00008f53  __ExtenderSubtype
+0002:00008f54  __X32VM
+0002:00008f34* __x386_stacklow
+0002:00008f28  __LpCmdLine
+0002:00008f2c  __LpPgmName
+0002:00008f20  __dynend
+0002:00008f24  __curbrk
+0002:00008f34  __STACKLOW
+0002:00008f38  __STACKTOP
+0002:00008f3c  __ASTACKSIZ
+0002:00008f40  __ASTACKPTR
+0002:00008f44  __cbyte
+0002:00008f48* __cbyte2
+0002:00008f4c  __child
+0002:00008f55  __Envptr
+0002:00008f59  __Envseg
+0002:00008f50  __no87
+0002:00008f5d  __FPE_handler
+0002:00008f5d  ___FPE_handler
 Module: C:\WATCOM\lib386\dos\clib3r.lib(stack386)
-0001:00055531  stackavail_
+0001:00055521  stackavail_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(stk386)
-0001:00055555* __STK
-0001:00055542* __CHK
-0001:00055552* __GRO
-0001:00055573  __STKOVERFLOW_
+0001:00055545* __STK
+0001:00055532* __CHK
+0001:00055542* __GRO
+0001:00055563  __STKOVERFLOW_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(istable)
 0002:000014e8  __IsTable
 Module: C:\WATCOM\lib386\dos\clib3r.lib(setefg)
-0001:00055582  __setEFGfmt_
+0001:00055572  __setEFGfmt_
 Module: C:\WATCOM\lib386\math387r.lib(dosinite)
-0001:0005559e  __sys_init_387_emulator
-0001:00055723  __sys_fini_387_emulator
+0001:0005558e  __sys_init_387_emulator
+0001:00055713  __sys_fini_387_emulator
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chk8087)
-0001:00055802+ __init_8087_
-0001:00055833* _fpreset_
-0001:0005583d  __chk8087_
+0001:000557f2+ __init_8087_
+0001:00055823* _fpreset_
+0001:0005582d  __chk8087_
 Module: C:\WATCOM\lib386\plib3r.lib(opnew)
-0001:00055888  void near * near operator new( int unsigned )
+0001:00055878  void near * near operator new( int unsigned )
 Module: C:\WATCOM\lib386\plib3r.lib(opdel)
-0001:000558d4  void near operator delete( void near * )
+0001:000558c4  void near operator delete( void near * )
 Module: C:\WATCOM\lib386\plib3r.lib(fatalerr)
-0001:000558e0  __wcpp_2_fatal_runtime_error__
+0001:000558d0  __wcpp_2_fatal_runtime_error__
 Module: C:\WATCOM\lib386\dos\clib3r.lib(tolower)
-0001:000558fd  tolower_
-0001:000558fd* _tolower_
+0001:000558ed  tolower_
+0001:000558ed* _tolower_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(allocfp)
-0001:0005590b  __allocfp_
-0001:000559b1  __freefp_
-0001:000559ea  __purgefp_
+0001:000558fb  __allocfp_
+0001:000559a1  __freefp_
+0001:000559da  __purgefp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chktty)
-0001:00055a08  __chktty_
+0001:000559f8  __chktty_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(stinit)
-0002:003d3940  ___OpenStreams
+0002:003d393c  ___OpenStreams
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fprtf)
-0001:00055a4b  __fprtf_
+0001:00055a3b  __fprtf_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ioalloc)
-0001:00055aca  __ioalloc_
+0001:00055aba  __ioalloc_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(qread)
-0001:00055b41  __qread_
+0001:00055b31  __qread_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fgetc)
-0001:00055b60* fgetc_
-0001:00055be9+ __filbuf_
-0001:00055c18  __fill_buffer_
+0001:00055b50* fgetc_
+0001:00055bd9+ __filbuf_
+0001:00055c08  __fill_buffer_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(gtpid)
-0001:00055cc4  getpid_
+0001:00055cb4  getpid_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(flush)
-0001:00055cca  __flush_
+0001:00055cba  __flush_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(remove)
-0001:00055da3  remove_
+0001:00055d93  remove_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(tell)
-0001:00055da8  tell_
+0001:00055d98  tell_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fflush)
-0001:00055db9  fflush_
+0001:00055da9  fflush_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(prtf)
-0001:00055dc9  __prtf_
+0001:00055db9  __prtf_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(qwrit)
-0001:000569a7  __qwrite_
+0001:00056997  __qwrite_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(errno)
-0001:00056a1b  __get_errno_ptr_
-0001:00056a21  __get_doserrno_ptr_
-0002:003d3944+ _errno
-0002:003d3948+ __doserrno
+0001:00056a0b  __get_errno_ptr_
+0001:00056a11  __get_doserrno_ptr_
+0002:003d3940+ _errno
+0002:003d3944+ __doserrno
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fputc)
-0001:00056a27  fputc_
+0001:00056a17  fputc_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chipvar)
-0002:00008fc0  ___chipbug
-0002:00008fc0  __chipbug
+0002:00008fc4  ___chipbug
+0002:00008fc4  __chipbug
 Module: C:\WATCOM\lib386\math387r.lib(pow87e)
-0001:00056acc  __pow87_err_
+0001:00056abc  __pow87_err_
 Module: C:\WATCOM\lib386\math387r.lib(exp387)
-0001:00056bc0* exp_
-0001:00056b56* __@DEXP1
-0001:00056b5e* IF@EXP
-0001:00056b5e* IF@DEXP
-0001:00056b60  __@DEXP
+0001:00056bb0* exp_
+0001:00056b46* __@DEXP1
+0001:00056b4e* IF@EXP
+0001:00056b4e* IF@DEXP
+0001:00056b50  __@DEXP
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chipd32)
-0001:00056ce3  __fdiv_fpr
-0001:000571a5* __fdiv_chk
-0001:000571b8* __fdiv_m32
-0001:00057204  __fdiv_m64
-0001:00057250* __fdiv_m32r
-0001:0005729c* __fdiv_m64r
+0001:00056cd3  __fdiv_fpr
+0001:00057195* __fdiv_chk
+0001:000571a8* __fdiv_m32
+0001:000571f4  __fdiv_m64
+0001:00057240* __fdiv_m32r
+0001:0005728c* __fdiv_m64r
 Module: C:\WATCOM\lib386\dos\clib3r.lib(gtctm)
-0001:000572e8  __getctime_
+0001:000572d8  __getctime_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(mktime)
-0001:000573ab  mktime_
+0001:0005739b  mktime_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(tzset)
-0002:00008fd4  ___start_dst
-0002:00008ff8  ___end_dst
-0002:0000901c  _timezone
-0002:00009020  ___dst_adjust
-0002:00009024+ _daylight
-0002:00009066  _tzname
-0001:000574ff* __CacheOSTZ_
-0001:0005756b  tzset_
-0001:00057579* __parse_tz_
+0002:00008fd8  ___start_dst
+0002:00008ffc  ___end_dst
+0002:00009020  _timezone
+0002:00009024  ___dst_adjust
+0002:00009028+ _daylight
+0002:0000906a  _tzname
+0001:000574ef* __CacheOSTZ_
+0001:0005755b  tzset_
+0001:00057569* __parse_tz_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(gmtime)
-0001:000578cf  __brktime_
-0001:000579e4+ _gmtime_
-0001:00057a02* gmtime_
+0001:000578bf  __brktime_
+0001:000579d4+ _gmtime_
+0001:000579f2* gmtime_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(timeutil)
-0001:00057a0f  __leapyear_
-0001:00057b63  __isindst_
+0001:000579ff  __leapyear_
+0001:00057b53  __isindst_
 0002:000015ec  ___diyr
 0002:00001606  ___dilyr
 Module: C:\WATCOM\lib386\dos\clib3r.lib(minreal)
-0002:003d3970  ___minreal
+0002:003d396c  ___minreal
 Module: C:\WATCOM\lib386\dos\clib3r.lib(heapen)
-0001:00057e56* _heapenable_
-0002:00009074  ___heap_enabled
+0001:00057e46* _heapenable_
+0002:00009078  ___heap_enabled
 Module: C:\WATCOM\lib386\dos\clib3r.lib(sbrk386)
-0001:00057e66* sbrk_
-0001:00057f2e  __brk_
+0001:00057e56* sbrk_
+0001:00057f1e  __brk_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(amblksiz)
-0002:00009078  __amblksiz
+0002:0000907c  __amblksiz
 Module: C:\WATCOM\lib386\dos\clib3r.lib(setenvp)
-0001:00057ff9  __setenvp_
+0001:00057fe9  __setenvp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(cinit)
-0001:000580cd  __CommonInit_
+0001:000580bd  __CommonInit_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(___argc)
-0002:003d3974  ____Argc
-0002:003d3978  ____Argv
+0002:003d3970  ____Argc
+0002:003d3974  ____Argv
 Module: C:\WATCOM\lib386\dos\clib3r.lib(exit)
-0001:00058136  __null_int23_exit_
-0001:00058137  exit_
-0001:0005814f+ _exit_
-0002:0000907c+ ___atexit
-0002:00009080  ___int23_exit
-0002:00009084  ___FPE_handler_exit
+0001:00058126  __null_int23_exit_
+0001:00058127  exit_
+0001:0005813f+ _exit_
+0002:00009080+ ___atexit
+0002:00009084  ___int23_exit
+0002:00009088  ___FPE_handler_exit
 Module: C:\WATCOM\lib386\dos\clib3r.lib(xmsg)
-0001:00058165  __exit_with_msg_
-0001:0005816a  __fatal_runtime_error_
+0001:00058155  __exit_with_msg_
+0001:0005815a  __fatal_runtime_error_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(efgfmt)
-0001:00058187  _EFG_Format_
+0001:00058177  _EFG_Format_
 Module: C:\WATCOM\lib386\math387r.lib(cnvs2d)
-0001:000582d0  __cnvs2d_
+0001:000582c0  __cnvs2d_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(noefgfmt)
-0002:00009088  ___EFG_printf
-0002:0000908c  ___EFG_scanf
+0002:0000908c  ___EFG_printf
+0002:00009090  ___EFG_scanf
 Module: C:\WATCOM\lib386\dos\emu387.lib(emu387)
-0001:0005868c* __int7_X32VM
-0001:000586d8  __int7
-0001:00058668  __int7_pl3
+0001:0005867c* __int7_X32VM
+0001:000586c8  __int7
+0001:00058658  __int7_pl3
 Module: C:\WATCOM\lib386\dos\clib3r.lib(hook387)
-0001:0005b516  __hook387
-0001:0005b5ea  __unhook387
+0001:0005b506  __hook387
+0001:0005b5da  __unhook387
 Module: C:\WATCOM\lib386\dos\clib3r.lib(8087cw)
-0002:00009110  __8087cw
+0002:00009114  __8087cw
 Module: C:\WATCOM\lib386\dos\clib3r.lib(save8087)
-0002:00009114  ___Save8087
-0002:00009118  ___Rest8087
+0002:00009118  ___Save8087
+0002:0000911c  ___Rest8087
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ini87386)
-0001:0005b644  __init_80x87
+0001:0005b634  __init_80x87
 Module: C:\WATCOM\lib386\plib3r.lib(cppdata)
-0002:003d39fc  __wint_thread_data
-0002:003d3a1c* ___wcpp_2_data_catch_completed_
-0002:003d3a20* ___wcpp_2_data_dtreg_vfptrs_
-0002:003d3a34* __compiled_under_generic
+0002:003d39f8  __wint_thread_data
+0002:003d3a18* ___wcpp_2_data_catch_completed_
+0002:003d3a1c* ___wcpp_2_data_dtreg_vfptrs_
+0002:003d3a30* __compiled_under_generic
 Module: C:\WATCOM\lib386\dos\clib3r.lib(enterdb)
-0001:0005b66c  __EnterWVIDEO_
-0002:0000911c+ ___WD_Present
+0001:0005b65c  __EnterWVIDEO_
+0002:00009120+ ___WD_Present
 Module: C:\WATCOM\lib386\dos\clib3r.lib(initfile)
-0001:0005b692  __InitFiles_
+0001:0005b682  __InitFiles_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ioexit)
-0001:0005b709  __full_io_exit_
-0001:0005b715* fcloseall_
+0001:0005b6f9  __full_io_exit_
+0001:0005b705* fcloseall_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(flushall)
-0001:0005b772  flushall_
-0001:0005b777  __flushall_
+0001:0005b762  flushall_
+0001:0005b767  __flushall_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(gtche)
-0001:0005b7a6  getche_
+0001:0005b796  getche_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(unlnk)
-0001:0005b7c3  unlink_
+0001:0005b7b3  unlink_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ltoa)
-0001:0005b809  ultoa_
-0001:0005b853  ltoa_
-0001:0005b853* _ltoa_
+0001:0005b7f9  ultoa_
+0001:0005b843  ltoa_
+0001:0005b843* _ltoa_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chipbug)
-0001:0005b86e  verify_pentium_fdiv_bug_
+0001:0005b85e  verify_pentium_fdiv_bug_
 Module: C:\WATCOM\lib386\math387r.lib(math2err)
-0001:0005b8c3  __math1err_
-0001:0005b8cd  __math2err_
+0001:0005b8b3  __math1err_
+0001:0005b8bd  __math2err_
 Module: C:\WATCOM\lib386\math387r.lib(math87e)
-0001:0005b9a8  __math87_err_
+0001:0005b998  __math87_err_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(sigsy)
-0001:0005bb30  __DPMI_hosted_
-0001:0005bbc4  __restore_int23_
-0001:0005bd7a  __restore_int_ctrl_break_
-0001:0005bdb2  __grab_int23_
-0001:0005becd  __grab_int_ctrl_break_
+0001:0005bb20  __DPMI_hosted_
+0001:0005bbb4  __restore_int23_
+0001:0005bd6a  __restore_int_ctrl_break_
+0001:0005bda2  __grab_int23_
+0001:0005bebd  __grab_int_ctrl_break_
 Module: C:\WATCOM\lib386\math387r.lib(ftos)
-0001:0005bfe8* _SetMaxPrec_
-0001:0005c165  _FtoS_
+0001:0005bfd8* _SetMaxPrec_
+0001:0005c155  _FtoS_
 Module: C:\WATCOM\lib386\math387r.lib(strtod)
-0001:0005c39f  strtod_
+0001:0005c38f  strtod_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(hugeval)
 0002:00001620  __HugeValue
 Module: C:\WATCOM\lib386\math387r.lib(_matherr)
-0001:0005c592* _set_matherr_
-0001:0005c598+ __rterrmsg_
-0001:0005c5e0  _matherr_
-0002:0000919c+ __RWD_matherr
+0001:0005c582* _set_matherr_
+0001:0005c588+ __rterrmsg_
+0001:0005c5d0  _matherr_
+0002:000091a0+ __RWD_matherr
 Module: C:\WATCOM\lib386\dos\clib3r.lib(signl)
-0001:0005c60f+ __sigabort_
-0001:0005c619  __sigfpe_handler_
-0001:0005c64e* signal_
-0001:0005c703  raise_
+0001:0005c5ff+ __sigabort_
+0001:0005c609  __sigfpe_handler_
+0001:0005c63e* signal_
+0001:0005c6f3  raise_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chint386)
-0001:0005c7c6  _chain_intr_
+0001:0005c7b6  _chain_intr_
 Module: C:\WATCOM\lib386\math387r.lib(nan_inf)
-0001:0005c7df  __Nan_Inf_
+0001:0005c7cf  __Nan_Inf_
 Module: C:\WATCOM\lib386\math387r.lib(log387)
-0001:0005c8bd* log_
-0001:0005c8d5* log2_
-0001:0005c8c9* log10_
-0001:0005c872* IF@LOG
-0001:0005c872* IF@DLOG
-0001:0005c8b5* IF@LOG2
-0001:0005c8b5* IF@DLOG2
-0001:0005c8b9* IF@LOG10
-0001:0005c8b9  IF@DLOG10
+0001:0005c8ad* log_
+0001:0005c8c5* log2_
+0001:0005c8b9* log10_
+0001:0005c862* IF@LOG
+0001:0005c862* IF@DLOG
+0001:0005c8a5* IF@LOG2
+0001:0005c8a5* IF@DLOG2
+0001:0005c8a9* IF@LOG10
+0001:0005c8a9  IF@DLOG10
 Module: C:\WATCOM\lib386\math387r.lib(floor)
-0001:0005c8e1  floor_
+0001:0005c8d1  floor_
 Module: C:\WATCOM\lib386\math387r.lib(scale)
-0001:0005c91d+ _Scale_
-0001:0005c95e  _Scale10V_
+0001:0005c90d+ _Scale_
+0001:0005c94e  _Scale10V_
 Module: C:\WATCOM\lib386\math387r.lib(cvt)
-0001:0005ca7b  __cvt_
+0001:0005ca6b  __cvt_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(amodf386)
-0001:0005cc58* __ModF
-0001:0005cce8  __ZBuf2F
+0001:0005cc48* __ModF
+0001:0005ccd8  __ZBuf2F
 Module: C:\WATCOM\lib386\math387r.lib(__mtherr)
-0001:0005cd84  __matherr
+0001:0005cd74  __matherr
 Module: C:\WATCOM\lib386\dos\clib3r.lib(iobaddr)
-0001:0005cd89  __get_std_stream_
+0001:0005cd79  __get_std_stream_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fputs)
-0001:0005cda8  fputs_
+0001:0005cd98  fputs_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(abort)
-0001:0005ce23* abort_
-0001:0005ce29  __terminate_
-0002:000091d4  ___abort
+0001:0005ce13* abort_
+0001:0005ce19  __terminate_
+0002:000091d8  ___abort
 Module: C:\WATCOM\lib386\math387r.lib(grabfpe)
-0001:0005ce3b  __grab_fpe_
+0001:0005ce2b  __grab_fpe_
 Module: C:\WATCOM\lib386\math387r.lib(log87e)
-0001:0005ce40  __log87_err_
+0001:0005ce30  __log87_err_
 Module: C:\WATCOM\lib386\math387r.lib(modf387)
-0001:0005ce7c  modf_
+0001:0005ce6c  modf_
 Module: C:\WATCOM\lib386\math387r.lib(i64ts386)
-0001:0005ce96  __CmpBigInt
-0001:0005ced0  __Rnd2Int
-0001:0005cf3b  __Bin2String
+0001:0005ce86  __CmpBigInt
+0001:0005cec0  __Rnd2Int
+0001:0005cf2b  __Bin2String
 Module: C:\WATCOM\lib386\math387r.lib(fpow10)
 0002:00001664  __BigPow10Table
 Module: C:\WATCOM\lib386\math387r.lib(frexp)
-0001:0005d05c  frexp_
+0001:0005d04c  frexp_
 Module: C:\WATCOM\lib386\math387r.lib(matherr)
-0001:0005d0cb  matherr_
+0001:0005d0bb  matherr_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(grabfp87)
-0001:0005d0ce+ __GrabFP87_
+0001:0005d0be+ __GrabFP87_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpe387)
-0002:000091d8  ___PMSeg
-0002:000091da  ___PMAddr
-0002:000091de  ___RMAddr
-0001:0005d100  __Init_FPE_handler_
-0001:0005d15d  __Fini_FPE_handler_
+0002:000091dc  ___PMSeg
+0002:000091de  ___PMAddr
+0002:000091e2  ___RMAddr
+0001:0005d0f0  __Init_FPE_handler_
+0001:0005d14d  __Fini_FPE_handler_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpeinth)
-0001:0005d1ba  __Enable_FPE_
-0001:0005d1cf  __FPEHandler_
-0001:0005d1dc  __FPE2Handler_
+0001:0005d1aa  __Enable_FPE_
+0001:0005d1bf  __FPEHandler_
+0001:0005d1cc  __FPE2Handler_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpephar)
-0001:0005d41a  __Phar_hook_init_
-0001:0005d4dd  __Phar_hook_fini_
+0001:0005d40a  __Phar_hook_init_
+0001:0005d4cd  __Phar_hook_fini_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpedos4g)
-0001:0005d50a  __DOS4G_hook_init_
-0001:0005d537  __DOS4G_hook_fini_
+0001:0005d4fa  __DOS4G_hook_init_
+0001:0005d527  __DOS4G_hook_fini_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpeergo)
-0001:0005d550  __Ergo_hook_init_
-0001:0005d58e  __Ergo_hook_fini_
+0001:0005d540  __Ergo_hook_init_
+0001:0005d57e  __Ergo_hook_fini_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpeintel)
-0001:0005d5a8  __Intel_hook_init_
-0001:0005d600  __Intel_hook_fini_
+0001:0005d598  __Intel_hook_init_
+0001:0005d5f0  __Intel_hook_fini_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpeint)
-0002:00009400  ___FPE_int
-0002:00009401  ___IRQ_num
-0002:00009402+ ___IRQ_int
-0002:00009403  ___MST_pic
-0002:00009404* ___SLV_pic
+0002:00009404  ___FPE_int
+0002:00009405  ___IRQ_num
+0002:00009406+ ___IRQ_int
+0002:00009407  ___MST_pic
+0002:00009408* ___SLV_pic
 
 
                         +----------------------+
@@ -2269,7 +2269,7 @@ C:\WATCOM\lib386\plib3r.lib
                         |   Linker Statistics   |
                         +-----------------------+
 
-Stack size:  00041000 (266240.)
-Memory size:  00472441 (4662337.)
-Entry point address: 0001:000537a8
-Link time: 00:00.25
+Stack size:  0003e800 (256000.)
+Memory size:  0046fc31 (4652081.)
+Entry point address: 0001:00053798
+Link time: 00:00.30

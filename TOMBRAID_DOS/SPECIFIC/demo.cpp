@@ -120,7 +120,7 @@ bool ProcessDemoInput()
     }
 
     // Translate demo inputs (that use TombATI key values) to T1M inputs.
-        
+        /*
         g_Input.any = 0;
         g_Input.forward = (bool)(*m_DemoPtr & (1 << 0));
         g_Input.back = (bool)(*m_DemoPtr & (1 << 1));
@@ -139,6 +139,18 @@ bool ProcessDemoInput()
         g_Input.deselect = (bool)(*m_DemoPtr & (1 << 21));
         g_Input.save = (bool)(*m_DemoPtr & (1 << 22));
         g_Input.load = (bool)(*m_DemoPtr & (1 << 23));
+		*/
+
+		g_Input.any = 0;
+		g_Input.forward = ((*m_DemoPtr & 1) != 0);
+		g_Input.back = ((*m_DemoPtr & 2) != 0);
+		g_Input.left = ((*m_DemoPtr & 4) != 0);
+		g_Input.right = ((*m_DemoPtr & 8) != 0);
+		g_Input.jump = ((*m_DemoPtr & 16) != 0);
+		g_Input.draw = ((*m_DemoPtr & 32) != 0);
+		g_Input.action = ((*m_DemoPtr & 64) != 0);
+		g_Input.roll = ((*m_DemoPtr & 4096) != 0);
+
     
     m_DemoPtr++;
     return true;

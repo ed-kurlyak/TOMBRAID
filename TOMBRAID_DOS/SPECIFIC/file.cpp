@@ -1708,7 +1708,7 @@ bool LoadDemo(FILE *fp)
         }
 
         g_DemoData = (uint32_t *)Game_Alloc(sizeof(uint32_t) * DEMO_COUNT_MAX,
-                                                                                GBUF_LOADDEMO_BUFFER);
+			GBUF_LOADDEMO_BUFFER);
 
         fread(g_DemoData, 1, size, fp);
 
