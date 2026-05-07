@@ -1,0 +1,821 @@
+!define BLANK ""
+d:\tombraid\3d_xouta.obj : d:\tombraid\specific\3d_xouta.asm .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wasm specific\3d_xouta.asm -i=C:\WATCOM\h -mf -5r -w4 -e25 -zq
+
+d:\tombraid\profile.obj : d:\tombraid\hmi\profile.c .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wcc386 hmi\profile.c -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos -&
+mf
+
+d:\tombraid\sosez.obj : d:\tombraid\hmi\sosez.c .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wcc386 hmi\sosez.c -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos -mf
+
+d:\tombraid\bod_part.obj : d:\tombraid\effects\bod_part.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\bod_part.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\bubble.obj : d:\tombraid\effects\bubble.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\bubble.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\cha_blok.obj : d:\tombraid\effects\cha_blok.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\cha_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\din_stom.obj : d:\tombraid\effects\din_stom.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\din_stom.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\earthquk.obj : d:\tombraid\effects\earthquk.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\earthquk.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\explosio.obj : d:\tombraid\effects\explosio.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\explosio.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\fin_levl.obj : d:\tombraid\effects\fin_levl.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\fin_levl.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\flicker.obj : d:\tombraid\effects\flicker.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\flicker.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\flipmap.obj : d:\tombraid\effects\flipmap.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\flipmap.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\flood.obj : d:\tombraid\effects\flood.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\flood.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\lara_eff.obj : d:\tombraid\effects\lara_eff.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\lara_eff.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\missile.obj : d:\tombraid\effects\missile.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\missile.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\powerup.obj : d:\tombraid\effects\powerup.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\powerup.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\rai_blok.obj : d:\tombraid\effects\rai_blok.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\rai_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\ricochet.obj : d:\tombraid\effects\ricochet.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\ricochet.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\sand.obj : d:\tombraid\effects\sand.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\sand.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\splash.obj : d:\tombraid\effects\splash.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\splash.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\sta2slop.obj : d:\tombraid\effects\sta2slop.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\sta2slop.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\turn_180.obj : d:\tombraid\effects\turn_180.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\turn_180.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\twinkle.obj : d:\tombraid\effects\twinkle.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\twinkle.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\watrfall.obj : d:\tombraid\effects\watrfall.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 effects\watrfall.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\abortion.obj : d:\tombraid\objects\abortion.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\abortion.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\alligatr.obj : d:\tombraid\objects\alligatr.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\alligatr.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\ape.obj : d:\tombraid\objects\ape.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\ape.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
+ -mf
+
+d:\tombraid\baldy.obj : d:\tombraid\objects\baldy.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\baldy.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\bat.obj : d:\tombraid\objects\bat.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\bat.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
+ -mf
+
+d:\tombraid\bear.obj : d:\tombraid\objects\bear.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\bear.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\blood.obj : d:\tombraid\objects\blood.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\blood.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\boat.obj : d:\tombraid\objects\boat.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\boat.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\bridge.obj : d:\tombraid\objects\bridge.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\bridge.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\cabin.obj : d:\tombraid\objects\cabin.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\cabin.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\centaur.obj : d:\tombraid\objects\centaur.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\centaur.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\cog.obj : d:\tombraid\objects\cog.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\cog.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
+ -mf
+
+d:\tombraid\cowboy.obj : d:\tombraid\objects\cowboy.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\cowboy.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\crocodle.obj : d:\tombraid\objects\crocodle.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\crocodle.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\dino.obj : d:\tombraid\objects\dino.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\dino.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\door.obj : d:\tombraid\objects\door.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\door.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\gunshot.obj : d:\tombraid\objects\gunshot.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\gunshot.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\keyhole.obj : d:\tombraid\objects\keyhole.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\keyhole.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\larson.obj : d:\tombraid\objects\larson.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\larson.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\lion.obj : d:\tombraid\objects\lion.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\lion.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\misc.obj : d:\tombraid\objects\misc.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\misc.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\mummy.obj : d:\tombraid\objects\mummy.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\mummy.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\mutant.obj : d:\tombraid\objects\mutant.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\mutant.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\natla.obj : d:\tombraid\objects\natla.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\natla.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\pickup.obj : d:\tombraid\objects\pickup.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\pickup.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\pierre.obj : d:\tombraid\objects\pierre.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\pierre.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\pod.obj : d:\tombraid\objects\pod.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\pod.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
+ -mf
+
+d:\tombraid\puzz_hol.obj : d:\tombraid\objects\puzz_hol.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\puzz_hol.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\raptor.obj : d:\tombraid\objects\raptor.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\raptor.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\rat.obj : d:\tombraid\objects\rat.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\rat.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
+ -mf
+
+d:\tombraid\scion.obj : d:\tombraid\objects\scion.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\scion.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\skatekid.obj : d:\tombraid\objects\skatekid.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\skatekid.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\statue.obj : d:\tombraid\objects\statue.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\statue.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\switch.obj : d:\tombraid\objects\switch.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\switch.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\trapdoor.obj : d:\tombraid\objects\trapdoor.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\trapdoor.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\vole.obj : d:\tombraid\objects\vole.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\vole.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\wolf.obj : d:\tombraid\objects\wolf.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 objects\wolf.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\3d_gen.obj : d:\tombraid\specific\3d_gen.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\3d_gen.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\3d_line.obj : d:\tombraid\specific\3d_line.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\3d_line.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\3d_out.obj : d:\tombraid\specific\3d_out.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\3d_out.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\bbuffer.obj : d:\tombraid\specific\bbuffer.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\bbuffer.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\box.obj : d:\tombraid\specific\box.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\box.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\camera.obj : d:\tombraid\specific\camera.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\camera.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\cinema.obj : d:\tombraid\specific\cinema.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\cinema.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\collide.obj : d:\tombraid\specific\collide.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\collide.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\ctr_util.obj : d:\tombraid\specific\ctr_util.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\ctr_util.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\demo.obj : d:\tombraid\specific\demo.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\demo.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\draw.obj : d:\tombraid\specific\draw.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\draw.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\file.obj : d:\tombraid\specific\file.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\file.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\game.obj : d:\tombraid\specific\game.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\game.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\gameflow.obj : d:\tombraid\specific\gameflow.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\gameflow.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\init.obj : d:\tombraid\specific\init.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\init.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\input.obj : d:\tombraid\specific\input.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\input.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\inventry.obj : d:\tombraid\specific\inventry.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\inventry.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\invfunc.obj : d:\tombraid\specific\invfunc.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\invfunc.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\invvars.obj : d:\tombraid\specific\invvars.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\invvars.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\items.obj : d:\tombraid\specific\items.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\items.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\lara.obj : d:\tombraid\specific\lara.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\lara.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\lara1gun.obj : d:\tombraid\specific\lara1gun.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\lara1gun.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\lara2gun.obj : d:\tombraid\specific\lara2gun.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\lara2gun.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\larafire.obj : d:\tombraid\specific\larafire.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\larafire.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\laramisc.obj : d:\tombraid\specific\laramisc.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\laramisc.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\larasurf.obj : d:\tombraid\specific\larasurf.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\larasurf.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\laraswim.obj : d:\tombraid\specific\laraswim.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\laraswim.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\lot.obj : d:\tombraid\specific\lot.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\lot.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\main.obj : d:\tombraid\specific\main.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\main.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\matrix.obj : d:\tombraid\specific\matrix.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\matrix.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\o_comp.obj : d:\tombraid\specific\o_comp.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\o_comp.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\o_contrl.obj : d:\tombraid\specific\o_contrl.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\o_contrl.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\o_graph.obj : d:\tombraid\specific\o_graph.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\o_graph.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\o_passp.obj : d:\tombraid\specific\o_passp.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\o_passp.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\o_sound.obj : d:\tombraid\specific\o_sound.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\o_sound.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\option.obj : d:\tombraid\specific\option.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\option.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\overlay.obj : d:\tombraid\specific\overlay.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\overlay.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\people.obj : d:\tombraid\specific\people.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\people.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\phd_math.obj : d:\tombraid\specific\phd_math.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\phd_math.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\reqster.obj : d:\tombraid\specific\reqster.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\reqster.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
+t=dos -mf
+
+d:\tombraid\savegame.obj : d:\tombraid\specific\savegame.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\savegame.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\scalespr.obj : d:\tombraid\specific\scalespr.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\scalespr.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
+bt=dos -mf
+
+d:\tombraid\screen.obj : d:\tombraid\specific\screen.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\screen.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\setup.obj : d:\tombraid\specific\setup.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\setup.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\sound.obj : d:\tombraid\specific\sound.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\sound.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\sphere.obj : d:\tombraid\specific\sphere.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\sphere.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
+=dos -mf
+
+d:\tombraid\text.obj : d:\tombraid\specific\text.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\text.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\timer.obj : d:\tombraid\specific\timer.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\timer.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\vars.obj : d:\tombraid\specific\vars.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 specific\vars.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
+os -mf
+
+d:\tombraid\da_sword.obj : d:\tombraid\traps\da_sword.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\da_sword.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\dart.obj : d:\tombraid\traps\dart.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\dart.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos &
+-mf
+
+d:\tombraid\dart_emi.obj : d:\tombraid\traps\dart_emi.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\dart_emi.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\fal_blok.obj : d:\tombraid\traps\fal_blok.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\fal_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\fal_ceil.obj : d:\tombraid\traps\fal_ceil.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\fal_ceil.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\flame.obj : d:\tombraid\traps\flame.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\flame.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
+ -mf
+
+d:\tombraid\lava.obj : d:\tombraid\traps\lava.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\lava.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos &
+-mf
+
+d:\tombraid\ligh_emi.obj : d:\tombraid\traps\ligh_emi.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\ligh_emi.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\mid_touc.obj : d:\tombraid\traps\mid_touc.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\mid_touc.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\mov_blok.obj : d:\tombraid\traps\mov_blok.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\mov_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\pendul.obj : d:\tombraid\traps\pendul.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\pendul.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\rol_ball.obj : d:\tombraid\traps\rol_ball.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\rol_ball.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\rol_blok.obj : d:\tombraid\traps\rol_blok.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\rol_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\spikes.obj : d:\tombraid\traps\spikes.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\spikes.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
+s -mf
+
+d:\tombraid\tee_trap.obj : d:\tombraid\traps\tee_trap.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\tee_trap.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\tor_hamm.obj : d:\tombraid\traps\tor_hamm.cpp .AUTODEPEND
+ @d:
+ cd d:\tombraid
+ *wpp386 traps\tor_hamm.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
+dos -mf
+
+d:\tombraid\tombraid.exe : d:\tombraid\3d_xouta.obj d:\tombraid\profile.obj &
+d:\tombraid\sosez.obj d:\tombraid\bod_part.obj d:\tombraid\bubble.obj d:\tom&
+braid\cha_blok.obj d:\tombraid\din_stom.obj d:\tombraid\earthquk.obj d:\tomb&
+raid\explosio.obj d:\tombraid\fin_levl.obj d:\tombraid\flicker.obj d:\tombra&
+id\flipmap.obj d:\tombraid\flood.obj d:\tombraid\lara_eff.obj d:\tombraid\mi&
+ssile.obj d:\tombraid\powerup.obj d:\tombraid\rai_blok.obj d:\tombraid\ricoc&
+het.obj d:\tombraid\sand.obj d:\tombraid\splash.obj d:\tombraid\sta2slop.obj&
+ d:\tombraid\turn_180.obj d:\tombraid\twinkle.obj d:\tombraid\watrfall.obj d&
+:\tombraid\abortion.obj d:\tombraid\alligatr.obj d:\tombraid\ape.obj d:\tomb&
+raid\baldy.obj d:\tombraid\bat.obj d:\tombraid\bear.obj d:\tombraid\blood.ob&
+j d:\tombraid\boat.obj d:\tombraid\bridge.obj d:\tombraid\cabin.obj d:\tombr&
+aid\centaur.obj d:\tombraid\cog.obj d:\tombraid\cowboy.obj d:\tombraid\croco&
+dle.obj d:\tombraid\dino.obj d:\tombraid\door.obj d:\tombraid\gunshot.obj d:&
+\tombraid\keyhole.obj d:\tombraid\larson.obj d:\tombraid\lion.obj d:\tombrai&
+d\misc.obj d:\tombraid\mummy.obj d:\tombraid\mutant.obj d:\tombraid\natla.ob&
+j d:\tombraid\pickup.obj d:\tombraid\pierre.obj d:\tombraid\pod.obj d:\tombr&
+aid\puzz_hol.obj d:\tombraid\raptor.obj d:\tombraid\rat.obj d:\tombraid\scio&
+n.obj d:\tombraid\skatekid.obj d:\tombraid\statue.obj d:\tombraid\switch.obj&
+ d:\tombraid\trapdoor.obj d:\tombraid\vole.obj d:\tombraid\wolf.obj d:\tombr&
+aid\3d_gen.obj d:\tombraid\3d_line.obj d:\tombraid\3d_out.obj d:\tombraid\bb&
+uffer.obj d:\tombraid\box.obj d:\tombraid\camera.obj d:\tombraid\cinema.obj &
+d:\tombraid\collide.obj d:\tombraid\ctr_util.obj d:\tombraid\demo.obj d:\tom&
+braid\draw.obj d:\tombraid\file.obj d:\tombraid\game.obj d:\tombraid\gameflo&
+w.obj d:\tombraid\init.obj d:\tombraid\input.obj d:\tombraid\inventry.obj d:&
+\tombraid\invfunc.obj d:\tombraid\invvars.obj d:\tombraid\items.obj d:\tombr&
+aid\lara.obj d:\tombraid\lara1gun.obj d:\tombraid\lara2gun.obj d:\tombraid\l&
+arafire.obj d:\tombraid\laramisc.obj d:\tombraid\larasurf.obj d:\tombraid\la&
+raswim.obj d:\tombraid\lot.obj d:\tombraid\main.obj d:\tombraid\matrix.obj d&
+:\tombraid\o_comp.obj d:\tombraid\o_contrl.obj d:\tombraid\o_graph.obj d:\to&
+mbraid\o_passp.obj d:\tombraid\o_sound.obj d:\tombraid\option.obj d:\tombrai&
+d\overlay.obj d:\tombraid\people.obj d:\tombraid\phd_math.obj d:\tombraid\re&
+qster.obj d:\tombraid\savegame.obj d:\tombraid\scalespr.obj d:\tombraid\scre&
+en.obj d:\tombraid\setup.obj d:\tombraid\sound.obj d:\tombraid\sphere.obj d:&
+\tombraid\text.obj d:\tombraid\timer.obj d:\tombraid\vars.obj d:\tombraid\da&
+_sword.obj d:\tombraid\dart.obj d:\tombraid\dart_emi.obj d:\tombraid\fal_blo&
+k.obj d:\tombraid\fal_ceil.obj d:\tombraid\flame.obj d:\tombraid\lava.obj d:&
+\tombraid\ligh_emi.obj d:\tombraid\mid_touc.obj d:\tombraid\mov_blok.obj d:\&
+tombraid\pendul.obj d:\tombraid\rol_ball.obj d:\tombraid\rol_blok.obj d:\tom&
+braid\spikes.obj d:\tombraid\tee_trap.obj d:\tombraid\tor_hamm.obj .AUTODEPE&
+ND
+ @d:
+ cd d:\tombraid
+ @%write tombraid.lk1 NAME tombraid
+ @%append tombraid.lk1 FIL 3d_xouta.obj,profile.obj,sosez.obj,bod_part.obj,b&
+ubble.obj,cha_blok.obj,din_stom.obj,earthquk.obj,explosio.obj,fin_levl.obj,f&
+licker.obj,flipmap.obj,flood.obj,lara_eff.obj,missile.obj,powerup.obj,rai_bl&
+ok.obj,ricochet.obj,sand.obj,splash.obj,sta2slop.obj,turn_180.obj,twinkle.ob&
+j,watrfall.obj,abortion.obj,alligatr.obj,ape.obj,baldy.obj,bat.obj,bear.obj,&
+blood.obj,boat.obj,bridge.obj,cabin.obj,centaur.obj,cog.obj,cowboy.obj,croco&
+dle.obj,dino.obj,door.obj,gunshot.obj,keyhole.obj,larson.obj,lion.obj,misc.o&
+bj,mummy.obj,mutant.obj,natla.obj,pickup.obj,pierre.obj,pod.obj,puzz_hol.obj&
+,raptor.obj,rat.obj,scion.obj,skatekid.obj,statue.obj,switch.obj,trapdoor.ob&
+j,vole.obj,wolf.obj,3d_gen.obj,3d_line.obj,3d_out.obj,bbuffer.obj,box.obj,ca&
+mera.obj,cinema.obj,collide.obj,ctr_util.obj,demo.obj,draw.obj,file.obj,game&
+.obj,gameflow.obj,init.obj,input.obj,inventry.obj,invfunc.obj,invvars.obj,it&
+ems.obj,lara.obj,lara1gun.obj,lara2gun.obj,larafire.obj,laramisc.obj,larasur&
+f.obj,laraswim.obj,lot.obj,main.obj,matrix.obj,o_comp.obj,o_contrl.obj,o_gra&
+ph.obj,o_passp.obj,o_sound.obj,option.obj,overlay.obj,people.obj,phd_math.ob&
+j,reqster.obj,savegame.obj,scalespr.obj,screen.obj,setup.obj,sound.obj,spher&
+e.obj,text.obj,timer.obj,vars.obj,da_sword.obj,dart.obj,dart_emi.obj,fal_blo&
+k.obj,fal_ceil.obj,flame.obj,lava.obj,ligh_emi.obj,mid_touc.obj,mov_blok.obj&
+,pendul.obj,rol_ball.obj,rol_blok.obj,spikes.obj,tee_trap.obj,tor_hamm.obj
+ @%append tombraid.lk1 
+ *wlink SYS dos4g op m op st=256000 libp HMI libf SOSW1CR.LIB op maxe=25 op &
+q op symf @tombraid.lk1
+

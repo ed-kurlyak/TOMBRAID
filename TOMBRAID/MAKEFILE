@@ -1,0 +1,510 @@
+CFLAGS=/bt=dos /ox /s
+
+OBJS = &
+    specific\main.obj &
+specific\overlay.obj &
+specific\lara1gun.obj &
+specific\draw.obj &
+specific\matrix.obj &
+specific\3d_gen.obj &
+specific\o_passp.obj &
+specific\ctr_util.obj &
+specific\file.obj &
+specific\savegame.obj &
+specific\game.obj &
+specific\box.obj &
+specific\demo.obj &
+specific\reqster.obj &
+specific\setup.obj &
+specific\people.obj &
+specific\larasurf.obj &
+specific\laraswim.obj &
+specific\larafire.obj &
+specific\laramisc.obj &
+specific\lara.obj &
+specific\collide.obj &
+specific\cinema.obj &
+specific\camera.obj &
+specific\inventry.obj &
+specific\bbuffer.obj &
+specific\3D_LINE.obj &
+specific\sound.obj &
+specific\screen.obj &
+specific\SCALESPR.obj &
+specific\o_contrl.obj &
+specific\3D_OUT.obj &
+specific\init.obj &
+specific\input.obj &
+specific\o_graph.obj &
+specific\o_sound.obj &
+specific\o_comp.obj &
+specific\option.obj &
+specific\lara2gun.obj &
+specific\vars.obj &
+specific\gameflow.obj &
+specific\timer.obj &
+specific\text.obj &
+specific\sphere.obj &
+specific\phd_math.obj &
+specific\lot.obj &
+specific\invfunc.obj &
+specific\invvars.obj &
+specific\items.obj &
+objects\alligatr.obj &
+objects\statue.obj &
+objects\pod.obj &
+objects\mutant.obj &
+objects\centaur.obj &
+objects\abortion.obj &
+objects\skatekid.obj &
+objects\puzz_hol.obj &
+objects\crocodle.obj &
+objects\vole.obj &
+objects\trapdoor.obj &
+objects\switch.obj &
+objects\scion.obj &
+objects\rat.obj &
+objects\pickup.obj &
+objects\pierre.obj &
+objects\natla.obj &
+objects\door.obj &
+objects\cog.obj &
+objects\cabin.obj &
+objects\boat.obj &
+objects\bat.obj &
+objects\wolf.obj &
+objects\raptor.obj &
+objects\lion.obj &
+objects\larson.obj &
+objects\dino.obj &
+objects\bear.obj &
+objects\ape.obj &
+objects\keyhole.obj &
+objects\misc.obj &
+objects\mummy.obj &
+objects\gunshot.obj &
+objects\cowboy.obj &
+objects\bridge.obj &
+objects\baldy.obj &
+objects\blood.obj &
+effects\watrfall.obj &
+effects\sta2slop.obj &
+effects\rai_blok.obj &
+effects\lara_eff.obj &
+effects\fin_levl.obj &
+effects\explosio.obj &
+effects\earthquk.obj &
+effects\din_stom.obj &
+effects\cha_blok.obj &
+effects\bod_part.obj &
+effects\splash.obj &
+effects\missile.obj &
+effects\flicker.obj &
+effects\bubble.obj &
+effects\twinkle.obj &
+effects\ricochet.obj &
+effects\turn_180.obj &
+effects\powerup.obj &
+effects\sand.obj &
+effects\flood.obj &
+effects\flipmap.obj &
+traps\tor_hamm.obj &
+traps\tee_trap.obj &
+traps\rol_blok.obj &
+traps\rol_ball.obj &
+traps\pendul.obj &
+traps\mov_blok.obj &
+traps\mid_touc.obj &
+traps\ligh_emi.obj &
+traps\fal_ceil.obj &
+traps\fal_blok.obj &
+traps\dart_emi.obj &
+traps\da_sword.obj &
+traps\lava.obj &
+traps\flame.obj &
+traps\dart.obj &
+traps\spikes.obj &
+specific\3d_xouta.obj &
+hmi\SOSEZ.obj &
+hmi\PROFILE.obj
+
+tombraid.exe : $(OBJS)
+    wlink @c:\tombraid\link.lnk
+
+specific\main.obj : specific\main.cpp
+    wpp386 $(CFLAGS) -fo=specific\main.obj specific\main.cpp
+
+specific\overlay.obj : specific\overlay.cpp
+    wpp386 $(CFLAGS) -fo=specific\overlay.obj specific\overlay.cpp
+
+specific\lara1gun.obj : specific\lara1gun.cpp
+    wpp386 $(CFLAGS) -fo=specific\lara1gun.obj specific\lara1gun.cpp
+
+specific\draw.obj : specific\draw.cpp
+    wpp386 $(CFLAGS) -fo=specific\draw.obj specific\draw.cpp
+
+specific\matrix.obj : specific\matrix.cpp
+    wpp386 $(CFLAGS) -fo=specific\matrix.obj specific\matrix.cpp
+
+specific\3d_gen.obj : specific\3d_gen.cpp
+    wpp386 $(CFLAGS) -fo=specific\3d_gen.obj specific\3d_gen.cpp
+
+specific\o_passp.obj : specific\o_passp.cpp
+    wpp386 $(CFLAGS) -fo=specific\o_passp.obj specific\o_passp.cpp
+
+specific\ctr_util.obj : specific\ctr_util.cpp
+    wpp386 $(CFLAGS) -fo=specific\ctr_util.obj specific\ctr_util.cpp
+
+specific\file.obj : specific\file.cpp
+    wpp386 $(CFLAGS) -fo=specific\file.obj specific\file.cpp
+
+specific\savegame.obj : specific\savegame.cpp
+    wpp386 $(CFLAGS) -fo=specific\savegame.obj specific\savegame.cpp
+
+specific\game.obj : specific\game.cpp
+    wpp386 $(CFLAGS) -fo=specific\game.obj specific\game.cpp
+
+specific\box.obj : specific\box.cpp
+    wpp386 $(CFLAGS) -fo=specific\box.obj specific\box.cpp
+
+specific\demo.obj : specific\demo.cpp
+    wpp386 $(CFLAGS) -fo=specific\demo.obj specific\demo.cpp
+
+specific\reqster.obj : specific\reqster.cpp
+    wpp386 $(CFLAGS) -fo=specific\reqster.obj specific\reqster.cpp
+
+specific\setup.obj : specific\setup.cpp
+    wpp386 $(CFLAGS) -fo=specific\setup.obj specific\setup.cpp
+
+specific\people.obj : specific\people.cpp
+    wpp386 $(CFLAGS) -fo=specific\people.obj specific\people.cpp
+
+specific\larasurf.obj : specific\larasurf.cpp
+    wpp386 $(CFLAGS) -fo=specific\larasurf.obj specific\larasurf.cpp
+
+specific\laraswim.obj : specific\laraswim.cpp
+    wpp386 $(CFLAGS) -fo=specific\laraswim.obj specific\laraswim.cpp
+
+specific\larafire.obj : specific\larafire.cpp
+    wpp386 $(CFLAGS) -fo=specific\larafire.obj specific\larafire.cpp
+
+specific\laramisc.obj : specific\laramisc.cpp
+    wpp386 $(CFLAGS) -fo=specific\laramisc.obj specific\laramisc.cpp
+
+specific\lara.obj : specific\lara.cpp
+    wpp386 $(CFLAGS) -fo=specific\lara.obj specific\lara.cpp
+
+specific\collide.obj : specific\collide.cpp
+    wpp386 $(CFLAGS) -fo=specific\collide.obj specific\collide.cpp
+
+specific\cinema.obj : specific\cinema.cpp
+    wpp386 $(CFLAGS) -fo=specific\cinema.obj specific\cinema.cpp
+
+specific\camera.obj : specific\camera.cpp
+    wpp386 $(CFLAGS) -fo=specific\camera.obj specific\camera.cpp
+
+specific\inventry.obj : specific\inventry.cpp
+    wpp386 $(CFLAGS) -fo=specific\inventry.obj specific\inventry.cpp
+
+specific\bbuffer.obj : specific\bbuffer.cpp
+    wpp386 $(CFLAGS) -fo=specific\bbuffer.obj specific\bbuffer.cpp
+
+specific\3D_LINE.obj : specific\3D_LINE.cpp
+    wpp386 $(CFLAGS) -fo=specific\3D_LINE.obj specific\3D_LINE.cpp
+
+specific\sound.obj : specific\sound.cpp
+    wpp386 $(CFLAGS) -fo=specific\sound.obj specific\sound.cpp
+
+specific\screen.obj : specific\screen.cpp
+    wpp386 $(CFLAGS) -fo=specific\screen.obj specific\screen.cpp
+
+specific\SCALESPR.obj : specific\SCALESPR.cpp
+    wpp386 $(CFLAGS) -fo=specific\SCALESPR.obj specific\SCALESPR.cpp
+
+specific\o_contrl.obj : specific\o_contrl.cpp
+    wpp386 $(CFLAGS) -fo=specific\o_contrl.obj specific\o_contrl.cpp
+
+specific\3D_OUT.obj : specific\3D_OUT.cpp
+    wpp386 $(CFLAGS) -fo=specific\3D_OUT.obj specific\3D_OUT.cpp
+
+specific\init.obj : specific\init.cpp
+    wpp386 $(CFLAGS) -fo=specific\init.obj specific\init.cpp
+
+specific\input.obj : specific\input.cpp
+    wpp386 $(CFLAGS) -fo=specific\input.obj specific\input.cpp
+
+specific\o_graph.obj : specific\o_graph.cpp
+    wpp386 $(CFLAGS) -fo=specific\o_graph.obj specific\o_graph.cpp
+
+specific\o_sound.obj : specific\o_sound.cpp
+    wpp386 $(CFLAGS) -fo=specific\o_sound.obj specific\o_sound.cpp
+
+specific\o_comp.obj : specific\o_comp.cpp
+    wpp386 $(CFLAGS) -fo=specific\o_comp.obj specific\o_comp.cpp
+
+specific\option.obj : specific\option.cpp
+    wpp386 $(CFLAGS) -fo=specific\option.obj specific\option.cpp
+
+specific\lara2gun.obj : specific\lara2gun.cpp
+    wpp386 $(CFLAGS) -fo=specific\lara2gun.obj specific\lara2gun.cpp
+
+specific\vars.obj : specific\vars.cpp
+    wpp386 $(CFLAGS) -fo=specific\vars.obj specific\vars.cpp
+
+specific\gameflow.obj : specific\gameflow.cpp
+    wpp386 $(CFLAGS) -fo=specific\gameflow.obj specific\gameflow.cpp
+
+specific\timer.obj : specific\timer.cpp
+    wpp386 $(CFLAGS) -fo=specific\timer.obj specific\timer.cpp
+
+specific\text.obj : specific\text.cpp
+    wpp386 $(CFLAGS) -fo=specific\text.obj specific\text.cpp
+
+specific\sphere.obj : specific\sphere.cpp
+    wpp386 $(CFLAGS) -fo=specific\sphere.obj specific\sphere.cpp
+
+specific\phd_math.obj : specific\phd_math.cpp
+    wpp386 $(CFLAGS) -fo=specific\phd_math.obj specific\phd_math.cpp
+
+specific\lot.obj : specific\lot.cpp
+    wpp386 $(CFLAGS) -fo=specific\lot.obj specific\lot.cpp
+
+specific\invfunc.obj : specific\invfunc.cpp
+    wpp386 $(CFLAGS) -fo=specific\invfunc.obj specific\invfunc.cpp
+
+specific\invvars.obj : specific\invvars.cpp
+    wpp386 $(CFLAGS) -fo=specific\invvars.obj specific\invvars.cpp
+
+specific\items.obj : specific\items.cpp
+    wpp386 $(CFLAGS) -fo=specific\items.obj specific\items.cpp
+
+objects\alligatr.obj : objects\alligatr.cpp
+    wpp386 $(CFLAGS) -fo=objects\alligatr.obj objects\alligatr.cpp
+
+objects\statue.obj : objects\statue.cpp
+    wpp386 $(CFLAGS) -fo=objects\statue.obj objects\statue.cpp
+
+objects\pod.obj : objects\pod.cpp
+    wpp386 $(CFLAGS) -fo=objects\pod.obj objects\pod.cpp
+
+objects\mutant.obj : objects\mutant.cpp
+    wpp386 $(CFLAGS) -fo=objects\mutant.obj objects\mutant.cpp
+
+objects\centaur.obj : objects\centaur.cpp
+    wpp386 $(CFLAGS) -fo=objects\centaur.obj objects\centaur.cpp
+
+objects\abortion.obj : objects\abortion.cpp
+    wpp386 $(CFLAGS) -fo=objects\abortion.obj objects\abortion.cpp
+
+objects\skatekid.obj : objects\skatekid.cpp
+    wpp386 $(CFLAGS) -fo=objects\skatekid.obj objects\skatekid.cpp
+
+objects\puzz_hol.obj : objects\puzz_hol.cpp
+    wpp386 $(CFLAGS) -fo=objects\puzz_hol.obj objects\puzz_hol.cpp
+
+objects\crocodle.obj : objects\crocodle.cpp
+    wpp386 $(CFLAGS) -fo=objects\crocodle.obj objects\crocodle.cpp
+
+objects\vole.obj : objects\vole.cpp
+    wpp386 $(CFLAGS) -fo=objects\vole.obj objects\vole.cpp
+
+objects\trapdoor.obj : objects\trapdoor.cpp
+    wpp386 $(CFLAGS) -fo=objects\trapdoor.obj objects\trapdoor.cpp
+
+objects\switch.obj : objects\switch.cpp
+    wpp386 $(CFLAGS) -fo=objects\switch.obj objects\switch.cpp
+
+objects\scion.obj : objects\scion.cpp
+    wpp386 $(CFLAGS) -fo=objects\scion.obj objects\scion.cpp
+
+objects\rat.obj : objects\rat.cpp
+    wpp386 $(CFLAGS) -fo=objects\rat.obj objects\rat.cpp
+
+objects\pickup.obj : objects\pickup.cpp
+    wpp386 $(CFLAGS) -fo=objects\pickup.obj objects\pickup.cpp
+
+objects\pierre.obj : objects\pierre.cpp
+    wpp386 $(CFLAGS) -fo=objects\pierre.obj objects\pierre.cpp
+
+objects\natla.obj : objects\natla.cpp
+    wpp386 $(CFLAGS) -fo=objects\natla.obj objects\natla.cpp
+
+objects\door.obj : objects\door.cpp
+    wpp386 $(CFLAGS) -fo=objects\door.obj objects\door.cpp
+
+objects\cog.obj : objects\cog.cpp
+    wpp386 $(CFLAGS) -fo=objects\cog.obj objects\cog.cpp
+
+objects\cabin.obj : objects\cabin.cpp
+    wpp386 $(CFLAGS) -fo=objects\cabin.obj objects\cabin.cpp
+
+objects\boat.obj : objects\boat.cpp
+    wpp386 $(CFLAGS) -fo=objects\boat.obj objects\boat.cpp
+
+objects\bat.obj : objects\bat.cpp
+    wpp386 $(CFLAGS) -fo=objects\bat.obj objects\bat.cpp
+
+objects\wolf.obj : objects\wolf.cpp
+    wpp386 $(CFLAGS) -fo=objects\wolf.obj objects\wolf.cpp
+
+objects\raptor.obj : objects\raptor.cpp
+    wpp386 $(CFLAGS) -fo=objects\raptor.obj objects\raptor.cpp
+
+objects\lion.obj : objects\lion.cpp
+    wpp386 $(CFLAGS) -fo=objects\lion.obj objects\lion.cpp
+
+objects\larson.obj : objects\larson.cpp
+    wpp386 $(CFLAGS) -fo=objects\larson.obj objects\larson.cpp
+
+objects\dino.obj : objects\dino.cpp
+    wpp386 $(CFLAGS) -fo=objects\dino.obj objects\dino.cpp
+
+objects\bear.obj : objects\bear.cpp
+    wpp386 $(CFLAGS) -fo=objects\bear.obj objects\bear.cpp
+
+objects\ape.obj : objects\ape.cpp
+    wpp386 $(CFLAGS) -fo=objects\ape.obj objects\ape.cpp
+
+objects\keyhole.obj : objects\keyhole.cpp
+    wpp386 $(CFLAGS) -fo=objects\keyhole.obj objects\keyhole.cpp
+
+objects\misc.obj : objects\misc.cpp
+    wpp386 $(CFLAGS) -fo=objects\misc.obj objects\misc.cpp
+
+objects\mummy.obj : objects\mummy.cpp
+    wpp386 $(CFLAGS) -fo=objects\mummy.obj objects\mummy.cpp
+
+objects\gunshot.obj : objects\gunshot.cpp
+    wpp386 $(CFLAGS) -fo=objects\gunshot.obj objects\gunshot.cpp
+
+objects\cowboy.obj : objects\cowboy.cpp
+    wpp386 $(CFLAGS) -fo=objects\cowboy.obj objects\cowboy.cpp
+
+objects\bridge.obj : objects\bridge.cpp
+    wpp386 $(CFLAGS) -fo=objects\bridge.obj objects\bridge.cpp
+
+objects\baldy.obj : objects\baldy.cpp
+    wpp386 $(CFLAGS) -fo=objects\baldy.obj objects\baldy.cpp
+
+objects\blood.obj : objects\blood.cpp
+    wpp386 $(CFLAGS) -fo=objects\blood.obj objects\blood.cpp
+
+effects\watrfall.obj : effects\watrfall.cpp
+    wpp386 $(CFLAGS) -fo=effects\watrfall.obj effects\watrfall.cpp
+
+effects\sta2slop.obj : effects\sta2slop.cpp
+    wpp386 $(CFLAGS) -fo=effects\sta2slop.obj effects\sta2slop.cpp
+
+effects\rai_blok.obj : effects\rai_blok.cpp
+    wpp386 $(CFLAGS) -fo=effects\rai_blok.obj effects\rai_blok.cpp
+
+effects\lara_eff.obj : effects\lara_eff.cpp
+    wpp386 $(CFLAGS) -fo=effects\lara_eff.obj effects\lara_eff.cpp
+
+effects\fin_levl.obj : effects\fin_levl.cpp
+    wpp386 $(CFLAGS) -fo=effects\fin_levl.obj effects\fin_levl.cpp
+
+effects\explosio.obj : effects\explosio.cpp
+    wpp386 $(CFLAGS) -fo=effects\explosio.obj effects\explosio.cpp
+
+effects\earthquk.obj : effects\earthquk.cpp
+    wpp386 $(CFLAGS) -fo=effects\earthquk.obj effects\earthquk.cpp
+
+effects\din_stom.obj : effects\din_stom.cpp
+    wpp386 $(CFLAGS) -fo=effects\din_stom.obj effects\din_stom.cpp
+
+effects\cha_blok.obj : effects\cha_blok.cpp
+    wpp386 $(CFLAGS) -fo=effects\cha_blok.obj effects\cha_blok.cpp
+
+effects\bod_part.obj : effects\bod_part.cpp
+    wpp386 $(CFLAGS) -fo=effects\bod_part.obj effects\bod_part.cpp
+
+effects\splash.obj : effects\splash.cpp
+    wpp386 $(CFLAGS) -fo=effects\splash.obj effects\splash.cpp
+
+effects\missile.obj : effects\missile.cpp
+    wpp386 $(CFLAGS) -fo=effects\missile.obj effects\missile.cpp
+
+effects\flicker.obj : effects\flicker.cpp
+    wpp386 $(CFLAGS) -fo=effects\flicker.obj effects\flicker.cpp
+
+effects\bubble.obj : effects\bubble.cpp
+    wpp386 $(CFLAGS) -fo=effects\bubble.obj effects\bubble.cpp
+
+effects\twinkle.obj : effects\twinkle.cpp
+    wpp386 $(CFLAGS) -fo=effects\twinkle.obj effects\twinkle.cpp
+
+effects\ricochet.obj : effects\ricochet.cpp
+    wpp386 $(CFLAGS) -fo=effects\ricochet.obj effects\ricochet.cpp
+
+effects\turn_180.obj : effects\turn_180.cpp
+    wpp386 $(CFLAGS) -fo=effects\turn_180.obj effects\turn_180.cpp
+
+effects\powerup.obj : effects\powerup.cpp
+    wpp386 $(CFLAGS) -fo=effects\powerup.obj effects\powerup.cpp
+
+effects\sand.obj : effects\sand.cpp
+    wpp386 $(CFLAGS) -fo=effects\sand.obj effects\sand.cpp
+
+effects\flood.obj : effects\flood.cpp
+    wpp386 $(CFLAGS) -fo=effects\flood.obj effects\flood.cpp
+
+effects\flipmap.obj : effects\flipmap.cpp
+    wpp386 $(CFLAGS) -fo=effects\flipmap.obj effects\flipmap.cpp
+
+traps\tor_hamm.obj : traps\tor_hamm.cpp
+    wpp386 $(CFLAGS) -fo=traps\tor_hamm.obj traps\tor_hamm.cpp
+
+traps\tee_trap.obj : traps\tee_trap.cpp
+    wpp386 $(CFLAGS) -fo=traps\tee_trap.obj traps\tee_trap.cpp
+
+traps\rol_blok.obj : traps\rol_blok.cpp
+    wpp386 $(CFLAGS) -fo=traps\rol_blok.obj traps\rol_blok.cpp
+
+traps\rol_ball.obj : traps\rol_ball.cpp
+    wpp386 $(CFLAGS) -fo=traps\rol_ball.obj traps\rol_ball.cpp
+
+traps\pendul.obj : traps\pendul.cpp
+    wpp386 $(CFLAGS) -fo=traps\pendul.obj traps\pendul.cpp
+
+traps\mov_blok.obj : traps\mov_blok.cpp
+    wpp386 $(CFLAGS) -fo=traps\mov_blok.obj traps\mov_blok.cpp
+
+traps\mid_touc.obj : traps\mid_touc.cpp
+    wpp386 $(CFLAGS) -fo=traps\mid_touc.obj traps\mid_touc.cpp
+
+traps\ligh_emi.obj : traps\ligh_emi.cpp
+    wpp386 $(CFLAGS) -fo=traps\ligh_emi.obj traps\ligh_emi.cpp
+
+traps\fal_ceil.obj : traps\fal_ceil.cpp
+    wpp386 $(CFLAGS) -fo=traps\fal_ceil.obj traps\fal_ceil.cpp
+
+traps\fal_blok.obj : traps\fal_blok.cpp
+    wpp386 $(CFLAGS) -fo=traps\fal_blok.obj traps\fal_blok.cpp
+
+traps\dart_emi.obj : traps\dart_emi.cpp
+    wpp386 $(CFLAGS) -fo=traps\dart_emi.obj traps\dart_emi.cpp
+
+traps\da_sword.obj : traps\da_sword.cpp
+    wpp386 $(CFLAGS) -fo=traps\da_sword.obj traps\da_sword.cpp
+
+traps\lava.obj : traps\lava.cpp
+    wpp386 $(CFLAGS) -fo=traps\lava.obj traps\lava.cpp
+
+traps\flame.obj : traps\flame.cpp
+    wpp386 $(CFLAGS) -fo=traps\flame.obj traps\flame.cpp
+
+traps\dart.obj : traps\dart.cpp
+    wpp386 $(CFLAGS) -fo=traps\dart.obj traps\dart.cpp
+
+traps\spikes.obj : traps\spikes.cpp
+    wpp386 $(CFLAGS) -fo=traps\spikes.obj traps\spikes.cpp
+
+specific\3d_xouta.obj : specific\3d_xouta.asm
+    wasm -fo=specific\3d_xouta.obj specific\3d_xouta.asm
+
+hmi\SOSEZ.obj : hmi\SOSEZ.c
+    wcc386 $(CFLAGS) -fo=hmi\SOSEZ.obj hmi\SOSEZ.c
+
+hmi\PROFILE.obj : hmi\PROFILE.c
+    wcc386 $(CFLAGS) -fo=hmi\PROFILE.obj hmi\PROFILE.c
