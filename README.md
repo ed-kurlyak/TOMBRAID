@@ -35,8 +35,6 @@ wmake
 
 ## Notes
 
-The project was designed specifically for the MS-DOS build environment.
-For best compatibility and correct executable behavior, use native MS-DOS tools.
-Using the Win32-hosted compiler environment is discouraged.
+Compilation for MS-DOS can also be performed in the DOSBox environment. The project was designed specifically for the MS-DOS build environment. For best compatibility and correct executable behavior, use native MS-DOS tools. Using the Win32-hosted compiler environment is discouraged.
 
 <img src="https://github.com/ed-kurlyak/TOMBRAID/blob/main/pics/tomb1.png" alt="Lara Croft Tomb Raider 1 image">
