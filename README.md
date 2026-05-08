@@ -30,5 +30,12 @@ and the `wmake` command.
 
 ```bat
 wmake
+```bat
+
+## Notes
+
+The project was designed specifically for the MS-DOS build environment.
+For best compatibility and correct executable behavior, use native MS-DOS tools.
+Using the Win32-hosted compiler environment is discouraged.
 
 <img src="https://github.com/ed-kurlyak/TOMBRAID/blob/main/pics/tomb1.png" alt="Lara Croft Tomb Raider 1 image">
