@@ -1,6 +1,8 @@
 # Tomb Raider 1 MS-DOS 640x480 Widescreen Mode  
 
-The project is based on the source code from <a href="https://github.com/LostArtefacts/TRX">https://github.com/LostArtefacts/TRX</a> The source code is as close as possible to the original Core Design tomb.exe.  
+The project is based on the source code from <a href="https://github.com/LostArtefacts/TRX">https://github.com/LostArtefacts/TRX</a>  
+
+This project source code is as close as possible to the original Core Design tomb.exe.  
 
 The project is intended only for the WATCOM 10 environment.
 
