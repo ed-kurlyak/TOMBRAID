@@ -30,7 +30,7 @@ and the `wmake` command.
 
 ```bat
 wmake
-```bat
+```
 
 ## Notes
 
