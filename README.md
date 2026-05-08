@@ -3,5 +3,32 @@
 Special thanks to LostArtefacts & Marcin Kurczewski for their previous work, this reverse engineering is partial, and the source code is as close as possible to the original Core Design EXE.  
 The project is based on the source code from <a href="https://github.com/LostArtefacts/TRX">https://github.com/LostArtefacts/TRX</a>
 
+The project is intended only for the WATCOM 10 environment.
+
+## Recommended Build Environment
+
+It is **not recommended** to use the WATCOM 10 Win32 environment to compile the `tombraid.wpj` project.
+
+### Not Recommended
+- WATCOM 10
+- Target: `MS-DOS`
+- Host: `Win32`
+
+This configuration may produce low FPS problems.
+
+## Recommended Compilation Method
+
+Compile the project in a real MS-DOS environment using the provided `MAKEFILE`
+and the `wmake` command.
+
+### Recommended
+- WATCOM 10
+- Target: `MS-DOS`
+- Host: `MS-DOS`
+
+## Build Command
+
+```bat
+wmake
 
 <img src="https://github.com/ed-kurlyak/TOMBRAID/blob/main/pics/tomb1.png" alt="Lara Croft Tomb Raider 1 image">
