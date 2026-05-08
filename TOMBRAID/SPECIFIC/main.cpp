@@ -33,9 +33,6 @@
 // SETUP START
 //***************************
 
-// SETUP PART #1 FULLSCREEN/NO
-int Fullscreen = 0;
-
 //---------------------------
 // SETUP PART #3 GAME TYPE - TR1/GOLD
 int GameType = VER_TR1;
@@ -49,7 +46,8 @@ int SCREEN_HEIGHT = 480;
 
 // SETUP PART #5 CHEATS MODE
 // full ammo/medi
-int CheatsMode = 1;
+//int CheatsMode = 1;
+int CheatsMode = 0;
 
 //***************************
 // SETUP END

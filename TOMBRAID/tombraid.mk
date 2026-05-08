@@ -1,3 +1,3 @@
-project : d:\tombraid\tombraid.exe .SYMBOLIC
+project : c:\watdos\tombraid\tombraid.exe .SYMBOLIC
 
-!include d:\tombraid\tombraid.mk1
+!include c:\watdos\tombraid\tombraid.mk1

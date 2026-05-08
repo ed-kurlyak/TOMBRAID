@@ -8,7 +8,7 @@ file specific\lara1gun.obj
 file specific\draw.obj
 file specific\matrix.obj
 file specific\3d_gen.obj
-file specific\o_passp.obj
+file specific\op_passp.obj
 file specific\ctr_util.obj
 file specific\file.obj
 file specific\savegame.obj
@@ -32,13 +32,13 @@ file specific\3D_LINE.obj
 file specific\sound.obj
 file specific\screen.obj
 file specific\SCALESPR.obj
-file specific\o_contrl.obj
+file specific\op_contrl.obj
 file specific\3D_OUT.obj
 file specific\init.obj
 file specific\input.obj
-file specific\o_graph.obj
-file specific\o_sound.obj
-file specific\o_comp.obj
+file specific\op_graph.obj
+file specific\op_sound.obj
+file specific\op_comp.obj
 file specific\option.obj
 file specific\lara2gun.obj
 file specific\vars.obj

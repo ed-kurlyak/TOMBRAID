@@ -7,7 +7,7 @@ specific\lara1gun.obj &
 specific\draw.obj &
 specific\matrix.obj &
 specific\3d_gen.obj &
-specific\o_passp.obj &
+specific\op_passp.obj &
 specific\ctr_util.obj &
 specific\file.obj &
 specific\savegame.obj &
@@ -31,13 +31,13 @@ specific\3D_LINE.obj &
 specific\sound.obj &
 specific\screen.obj &
 specific\SCALESPR.obj &
-specific\o_contrl.obj &
+specific\op_contrl.obj &
 specific\3D_OUT.obj &
 specific\init.obj &
 specific\input.obj &
-specific\o_graph.obj &
-specific\o_sound.obj &
-specific\o_comp.obj &
+specific\op_graph.obj &
+specific\op_sound.obj &
+specific\op_comp.obj &
 specific\option.obj &
 specific\lara2gun.obj &
 specific\vars.obj &
@@ -149,8 +149,8 @@ specific\matrix.obj : specific\matrix.cpp
 specific\3d_gen.obj : specific\3d_gen.cpp
     wpp386 $(CFLAGS) -fo=specific\3d_gen.obj specific\3d_gen.cpp
 
-specific\o_passp.obj : specific\o_passp.cpp
-    wpp386 $(CFLAGS) -fo=specific\o_passp.obj specific\o_passp.cpp
+specific\op_passp.obj : specific\op_passp.cpp
+    wpp386 $(CFLAGS) -fo=specific\op_passp.obj specific\op_passp.cpp
 
 specific\ctr_util.obj : specific\ctr_util.cpp
     wpp386 $(CFLAGS) -fo=specific\ctr_util.obj specific\ctr_util.cpp
@@ -221,8 +221,8 @@ specific\screen.obj : specific\screen.cpp
 specific\SCALESPR.obj : specific\SCALESPR.cpp
     wpp386 $(CFLAGS) -fo=specific\SCALESPR.obj specific\SCALESPR.cpp
 
-specific\o_contrl.obj : specific\o_contrl.cpp
-    wpp386 $(CFLAGS) -fo=specific\o_contrl.obj specific\o_contrl.cpp
+specific\op_contrl.obj : specific\op_contrl.cpp
+    wpp386 $(CFLAGS) -fo=specific\op_contrl.obj specific\op_contrl.cpp
 
 specific\3D_OUT.obj : specific\3D_OUT.cpp
     wpp386 $(CFLAGS) -fo=specific\3D_OUT.obj specific\3D_OUT.cpp
@@ -233,14 +233,14 @@ specific\init.obj : specific\init.cpp
 specific\input.obj : specific\input.cpp
     wpp386 $(CFLAGS) -fo=specific\input.obj specific\input.cpp
 
-specific\o_graph.obj : specific\o_graph.cpp
-    wpp386 $(CFLAGS) -fo=specific\o_graph.obj specific\o_graph.cpp
+specific\op_graph.obj : specific\op_graph.cpp
+    wpp386 $(CFLAGS) -fo=specific\op_graph.obj specific\op_graph.cpp
 
-specific\o_sound.obj : specific\o_sound.cpp
-    wpp386 $(CFLAGS) -fo=specific\o_sound.obj specific\o_sound.cpp
+specific\op_sound.obj : specific\op_sound.cpp
+    wpp386 $(CFLAGS) -fo=specific\op_sound.obj specific\op_sound.cpp
 
-specific\o_comp.obj : specific\o_comp.cpp
-    wpp386 $(CFLAGS) -fo=specific\o_comp.obj specific\o_comp.cpp
+specific\op_comp.obj : specific\op_comp.cpp
+    wpp386 $(CFLAGS) -fo=specific\op_comp.obj specific\op_comp.cpp
 
 specific\option.obj : specific\option.cpp
     wpp386 $(CFLAGS) -fo=specific\option.obj specific\option.cpp

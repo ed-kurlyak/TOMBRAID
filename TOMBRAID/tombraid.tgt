@@ -1845,8 +1845,8 @@ WVList
 0
 417
 MItem
-19
-specific\o_comp.cpp
+20
+specific\op_comp.cpp
 418
 WString
 6
@@ -1864,7 +1864,7 @@ WVList
 421
 MItem
 21
-specific\o_contrl.cpp
+specific\op_contr.cpp
 422
 WString
 6
@@ -1881,8 +1881,8 @@ WVList
 0
 425
 MItem
-20
-specific\o_graph.cpp
+21
+specific\op_graph.cpp
 426
 WString
 6
@@ -1899,8 +1899,8 @@ WVList
 0
 429
 MItem
-20
-specific\o_passp.cpp
+21
+specific\op_passp.cpp
 430
 WString
 6
@@ -1917,8 +1917,8 @@ WVList
 0
 433
 MItem
-20
-specific\o_sound.cpp
+21
+specific\op_sound.cpp
 434
 WString
 6

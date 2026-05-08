@@ -482,9 +482,6 @@ int32_t Screen_GetRenderScaleGLRage(int32_t unit)
 
 void Overlay_DrawFPSInfo()
 {
-
-	//return;
-
         static int32_t elapsed = 0;
 
         if (g_Config.render_flags.fps_counter)
@@ -533,7 +530,7 @@ void Overlay_DrawGameInfo()
         }
 
         Overlay_DrawAmmoInfo();
-        Overlay_DrawFPSInfo();
+        //Overlay_DrawFPSInfo();
 
         Text_Draw();
 }

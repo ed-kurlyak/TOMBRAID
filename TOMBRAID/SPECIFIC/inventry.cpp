@@ -333,7 +333,7 @@ int32_t Display_Inventory(int inv_mode)
 				//то открываешь инвентарь и слышно шум водопада
 				//если эту функцию ниже не закоментировать
                 //Sound_UpdateEffects();
-                Overlay_DrawFPSInfo();
+                //Overlay_DrawFPSInfo();
                 Text_Draw();
                 S_OutputPolyList();
                 m_InvNFrames = S_DumpScreen();
