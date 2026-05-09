@@ -207,6 +207,8 @@ int Print_Final_Stats(int32_t level_num)
         char time_str[100];
         TEXTSTRING *txt;
 
+		Create_Normal_Palette();
+
         Text_Init();
 
         // heading

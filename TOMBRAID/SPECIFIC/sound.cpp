@@ -279,11 +279,11 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 						{
 							//if (slot->Sound_Buff != 0)
 							{
-									free(slot->Sound_Buff);
-									slot->Sound_Buff = 0;
+									//free(slot->Sound_Buff);
+									//slot->Sound_Buff = 0;
 									slot->flags = SOUND_FLAG_UNUSED;
 
-									slot->Looped = 0;
+									//slot->Looped = 0;
 
 									num_done++;
 							}
@@ -804,10 +804,14 @@ SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos)
                                         result->flags = SOUND_FLAG_USED;
                                         //result->flags = result->flags | SOUND_FLAG_USED;
                                         
+										/*
                                         data_size = Sound_Buff[sfx_num].data_size;
                                         result->Sound_Buff = (unsigned char*)malloc(data_size);
                                         memcpy((void*)result->Sound_Buff, (void*)Sound_Buff[sfx_num].Buff_data, data_size);
                                         result->bufferLength = data_size;
+										*/
+
+										result->Sound_Buff = Sound_Buff[sfx_num].Buff_data;
 
                                         return result;
                                 }
@@ -845,10 +849,14 @@ SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos)
 					result->JustLoaded = 1;
 					result->Looped = 0;
 
+					/*
 					data_size = Sound_Buff[sfx_num].data_size;
 					result->Sound_Buff = (unsigned char*)malloc(data_size);
 					memcpy((void*)result->Sound_Buff, (void*)Sound_Buff[sfx_num].Buff_data, data_size);
 					result->bufferLength = data_size;
+					*/
+
+					result->Sound_Buff = Sound_Buff[sfx_num].Buff_data;
 
 					return result;
 				}

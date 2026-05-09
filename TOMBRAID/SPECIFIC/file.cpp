@@ -1780,7 +1780,7 @@ bool LoadSoundSamples(FILE *fp)
 
         //DirectSound_Init();
         //Sound_Init();
-		
+		/*
 		for (i = 0; i < 256; i++)
 		{
 			
@@ -1789,15 +1789,8 @@ bool LoadSoundSamples(FILE *fp)
 				free(Sound_Buff[i].Buff_data);
 				Sound_Buff[i].Buff_data = 0;
 			}
-			/*
-			if (Sound_Buff_data[i] != 0)
-			{
-				free(Sound_Buff_data[i]);
-				Sound_Buff_data[i] = 0;
-			}
-			*/
-			
 		}
+		*/
 
 
 

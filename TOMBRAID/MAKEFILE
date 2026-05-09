@@ -1,4 +1,4 @@
-CFLAGS=/bt=dos /ox /s
+CFLAGS=/bt=dos /ox -zp1
 
 OBJS = &
     specific\main.obj &
