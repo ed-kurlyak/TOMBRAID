@@ -42,7 +42,10 @@ double log2(double x)
 
 SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX] = { 0 };
 
-SoundBuffStruct Sound_Buff[256] = { 0 };
+//тут можно просто сделать unsigned char * Sound_Buff[256] = { 0 };
+//SoundBuffStruct Sound_Buff[256] = { 0 };
+
+unsigned char* Sound_Buff_Data[256] = { 0 };
 
 void SetCurrVolume(SOUND_SLOT* slot, W32 Volume)
 {
@@ -213,6 +216,15 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 
 		int wVol = volume & 0x7FFF;
 		//int wVol = volume;
+
+		if (wVol <= 0)
+		{
+			wVol = 0;
+		}
+		else if (wVol > 0x7FFF)
+		{
+			wVol = 0x7FFF;
+		}
 
         // int wVol = -10000;   // -> no sound
         // int wVol = 0;                        // -> max volume
@@ -811,7 +823,8 @@ SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos)
                                         result->bufferLength = data_size;
 										*/
 
-										result->Sound_Buff = Sound_Buff[sfx_num].Buff_data;
+										//result->Sound_Buff = Sound_Buff[sfx_num].Buff_data;
+										result->Sound_Buff = Sound_Buff_Data[sfx_num];
 
                                         return result;
                                 }
@@ -856,7 +869,9 @@ SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos)
 					result->bufferLength = data_size;
 					*/
 
-					result->Sound_Buff = Sound_Buff[sfx_num].Buff_data;
+					//result->Sound_Buff = Sound_Buff[sfx_num].Buff_data;
+
+					result->Sound_Buff = Sound_Buff_Data[sfx_num];
 
 					return result;
 				}
@@ -890,9 +905,14 @@ void Sound_SetMasterVolume(int8_t volume)
 
 void Sound_MakeSample(unsigned int i, unsigned char* sample, unsigned int size)
 {
+	/*
         Sound_Buff[i].Buff_data = (unsigned char*)malloc(size);
         memcpy((void*)Sound_Buff[i].Buff_data, (void*)sample, size);
         Sound_Buff[i].data_size = size;
+		*/
+
+	Sound_Buff_Data[i] = (unsigned char*)malloc(size);
+	memcpy((void*)Sound_Buff_Data[i], (void*)sample, size);
 }
 
 
@@ -901,10 +921,13 @@ VOID TickerInc(VOID)
         Frame_Counter++;
 }
 
-
+//вызвать ZeroSoundBuff() из main() в конце очистка перед return 0
 void ZeroSoundBuff()
 {
-        memset(Sound_Buff, 0, sizeof(Sound_Buff));
+	//вызвать ZeroSoundBuff() из main() в конце очистка перед return 0
+
+        //memset(Sound_Buff_Data, 0, sizeof(Sound_Buff_Data));
+		memset(Sound_Buff_Data, 0, sizeof(unsigned char) * 256);
 
         for (int i = 0; i < MAX_PLAYING_FX; i++)
         {

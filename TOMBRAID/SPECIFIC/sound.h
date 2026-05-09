@@ -180,17 +180,19 @@ void ZeroSoundBuff();
 
 #pragma pack (push,1)
 
-
+/*
 struct SoundBuffStruct
 {
 	unsigned char* Buff_data; //256 max sound samples
     unsigned int data_size;
 };
 
-extern SoundBuffStruct Sound_Buff[256];
+//тут можно просто сделать unsigned char * Sound_Buff[256] = { 0 };
+//extern SoundBuffStruct Sound_Buff[256];
+*/
 
 
-//unsigned char* Sound_Buff_data[256];
+extern unsigned char* Sound_Buff_Data[256];
 
 #pragma pack (pop)
 

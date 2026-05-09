@@ -294,15 +294,17 @@ void FireShotgun()
 			fired = 1;
 		}
 	}
-	/*
+	
 		if (fired)
 		{
+			/*
 		if (g_Config.enable_shotgun_flash)
 				{
 			g_Lara.right_arm.flash_gun = g_Weapons[LGT_SHOTGUN].flash_time;
 		}
+		*/
 		Sound_Effect(g_Weapons[LGT_SHOTGUN].sample_num, &g_LaraItem->pos,
 	SPM_NORMAL);
 	}
-		*/
+	
 }

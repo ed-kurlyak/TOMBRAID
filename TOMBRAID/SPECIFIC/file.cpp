@@ -1780,6 +1780,7 @@ bool LoadSoundSamples(FILE *fp)
 
         //DirectSound_Init();
         //Sound_Init();
+		
 		/*
 		for (i = 0; i < 256; i++)
 		{
@@ -1791,6 +1792,22 @@ bool LoadSoundSamples(FILE *fp)
 			}
 		}
 		*/
+
+		/*
+
+		//цикл не надо есть ZeroSoundBuff();
+		for (i = 0; i < 256; i++)
+		{
+
+			if (Sound_Buff_Data[i] != 0)
+			{
+				free(Sound_Buff_Data[i]);
+				Sound_Buff_Data[i] = 0;
+			}
+		}
+		*/
+		
+		
 
 
 
