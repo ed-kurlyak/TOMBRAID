@@ -85,7 +85,7 @@ typedef struct SOUND_SLOT
 		uint32_t JustLoaded;
         // PHD_3DPOS pos;
         // uint32_t loudness;
-        // int16_t volume;
+        int16_t volume;
         // int16_t pan;
         // int16_t fxnum;
         int16_t flags;
@@ -223,6 +223,9 @@ void Sound_MakeSample(int nSample, _WAVHEADER *pWF, unsigned char *pWaveData,
 //int DS_StartSample(SOUND_SLOT *slot, int nVolume, int nPitch, int nPan,
 int Sound_StartSample(SOUND_SLOT *slot, W32 nVolume, int nPitch, int nPan,
                                    unsigned int dwFlags);
+
+int Sound_StartLoopedSample(SOUND_SLOT* slot, W32 nVolume, int nPitch, int nPan,
+	unsigned int dwFlags);
 
 void SetCurrVolume(SOUND_SLOT* slot, W32 Volume);
 

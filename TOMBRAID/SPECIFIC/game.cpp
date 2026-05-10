@@ -329,9 +329,15 @@ int Game_Loop(int demo_mode)
         if(CheatsMode)
         {
                 g_Lara.pistols.ammo = 1000;
-                g_Lara.shotgun.ammo = 65535;
+                /*
+				g_Lara.shotgun.ammo = 65535;
                 g_Lara.magnums.ammo = 65535;
                 g_Lara.uzis.ammo = 65535;
+				*/
+
+				g_Lara.shotgun.ammo = 10922 * 6 - 7;	//шотган всего должно быть 10922 патрона
+				g_Lara.magnums.ammo = 65535 - 50;	//магнумы 1 клип 25 пуль
+				g_Lara.uzis.ammo = 65535 - 100;	//узи 1 клип 50 пуль
 
 				Inv_RemoveItem(O_GUN_ITEM);
                 Inv_AddItem(O_GUN_ITEM);

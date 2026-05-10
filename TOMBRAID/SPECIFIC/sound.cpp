@@ -10,9 +10,9 @@
 
 #include <math.h>
 
-//#include <stdio.h>
+#include <stdio.h>
 
-//FILE* fp;
+FILE* fp;
 
 
 /*
@@ -212,7 +212,7 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
         // int32_t m_MasterVolume = 51;
         // max = 63, min = 32, оптимально 51
         // g_Config.sound_volume
-        volume = (m_MasterVolume * volume) >> 6;
+        //volume = (m_MasterVolume * volume) >> 6;
 
 		int wVol = volume & 0x7FFF;
 		//int wVol = volume;
@@ -225,6 +225,13 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 		{
 			wVol = 0x7FFF;
 		}
+
+
+		//это добавил я иначе не убирается звук
+		//водопада далеко от водопада уровень lost walley #3
+		wVol = wVol - 200;
+		if (wVol < 0)
+			wVol = 0;
 
         // int wVol = -10000;   // -> no sound
         // int wVol = 0;                        // -> max volume
@@ -273,12 +280,8 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
                 int num_done = 0;
 				SOUND_SLOT* slot;
 				int i;
-				/*
-				fp = fopen("log.txt", "at");
-                
-				fprintf(fp, "--------------------\n");
-				*/
-
+				
+				
                 for (i = 0; i < MAX_PLAYING_FX; i++)
                 {
 					SOUND_SLOT* slot = &m_SFXPlaying[i];
@@ -293,7 +296,8 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 							{
 									//free(slot->Sound_Buff);
 									//slot->Sound_Buff = 0;
-									slot->flags = SOUND_FLAG_UNUSED;
+								slot->flags = SOUND_FLAG_UNUSED;
+								slot->sound_id = -1;
 
 									//slot->Looped = 0;
 
@@ -303,35 +307,137 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 						
 					}
                 }
-				/*
-                int num_used = 0;
-                int num_not_used = 0;
 
-                for (i = 0; i < MAX_PLAYING_FX; i++)
-                {
-                    slot = &m_SFXPlaying[i];
+				int used = 0;
 
-                    if (slot->flags == SOUND_FLAG_USED)
-                    {
-                            num_used++;
-                    }
+				for (i = 0; i < MAX_PLAYING_FX; i++)
+				{
+					SOUND_SLOT* slot = &m_SFXPlaying[i];
 
-                    if (slot->flags == SOUND_FLAG_UNUSED)
-                    {
-                            num_not_used++;
-                    }
-                }
+					if (slot->flags == SOUND_FLAG_USED)
+					{
 
-                
-                fprintf(fp, "%d num USED ----- %d num NOT used slots ----- %d num done\n", num_used, num_not_used, num_done);
-                fclose(fp);
+						used++;
+					}
+				}
 
-				*/
+				fp = fopen("log.txt", "at");
+				fprintf(fp, "used %d\n", used);
+				fclose(fp);
 
-                
-                                
-        switch (mode)
+		switch (mode)
         {
+			/*
+		case SOUND_MODE_WAIT:
+		{
+			
+
+			for (int i = 0; i < MAX_PLAYING_FX; i++)
+			{
+				SOUND_SLOT* slot = &m_SFXPlaying[i];
+
+				if (slot->sound_id == sample->number)
+				{
+					//if(slot->volume)
+					{
+						//slot->volume = wVol;
+						if (IsPlaying(slot))
+						{
+							return 1;
+						}
+			
+						else
+						{
+							slot->flags = SOUND_FLAG_UNUSED;
+							slot->sound_id = -1;
+						}
+			
+						
+
+					}
+				}
+			}
+
+			SOUND_SLOT* slot;
+			int j;
+			for (j = 0; j < MAX_PLAYING_FX; j++)
+			{
+				slot = &m_SFXPlaying[j];
+
+				//создаем нужный слот без позиции и номеру звука
+				if (slot->flags == SOUND_FLAG_UNUSED)
+				{
+					slot->flags = SOUND_FLAG_USED;
+					slot->Sound_Buff = Sound_Buff_Data[sample->number];
+					//slot->pos = pos;
+					slot->sound_id = sample->number;
+					slot->volume = wVol;
+					slot->JustLoaded = 1;
+					break;
+
+				}
+			}
+
+			if (j == MAX_PLAYING_FX)
+				return 0;
+
+
+			Sound_StartSample(slot, wVol, pitch, wPan, 0);
+
+			break;
+		}
+
+		case SOUND_MODE_RESTART:
+		{
+			
+
+			for (int i = 0; i < MAX_PLAYING_FX; i++)
+			{
+				SOUND_SLOT* slot = &m_SFXPlaying[i];
+
+				if (slot->sound_id == sample->number)
+				{
+					//if(slot->volume)
+					{
+						Sound_StopSample(slot);
+
+					}
+				}
+			}
+
+			SOUND_SLOT* slot;
+			int j;
+			for (j = 0; j < MAX_PLAYING_FX; j++)
+			{
+				slot = &m_SFXPlaying[j];
+
+				//создаем нужный слот без позиции и номеру звука
+				if (slot->flags == SOUND_FLAG_UNUSED)
+				{
+					slot->flags = SOUND_FLAG_USED;
+					slot->Sound_Buff = Sound_Buff_Data[sample->number];
+					//slot->pos = pos;
+					slot->sound_id = sample->number;
+					slot->volume = wVol;
+					slot->JustLoaded = 1;
+					break;
+
+				}
+			}
+
+			if (j == MAX_PLAYING_FX)
+				return 0;
+
+
+			Sound_StartSample(slot, wVol, pitch, wPan, 0);
+
+			break;
+		}
+		
+		
+		*/
+		
+		
                 
         //обычный звук - шаги лары, выстрелы, звук играет до
         //конца пока сам не остановится
@@ -372,15 +478,76 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
                                 
                 break;
         }
-         
-
+        
+		
         //позиционный звук с обновлением громкости
         //например шум водопада - Лара ближе громкость больше
         //дальше- громкость ниже
                 
         case SOUND_MODE_AMBIENT:
         {
+
+			//73 водопад с волками
+			//74 слева от водопада
+			/*
+			if (sample->number != 74)
+				return 0;
+				*/
+			//если звук уже есть просто корректируем громкость и выходим
+			for (int i = 0; i < MAX_PLAYING_FX; i++)
+			{
+				SOUND_SLOT* slot = &m_SFXPlaying[i];
+
+				if (slot->sound_id == sample->number &&
+					slot->pos == pos)
+				{
+					if (camera_underwater)
+					{
+						//Sound_StopSample(slot);
+						SetCurrVolume(slot, 0);
+						return 1;
+					}
+					//if(slot->volume)
+					{
+						//slot->volume = wVol;
+						SetCurrVolume(slot, wVol);
+						return 1;
+					}
+					return 0;
+				}
+			}
 			
+
+			//если звука еще нет в массиве - запускаем
+			SOUND_SLOT* slot;
+			int j;
+			for (j = 0; j < MAX_PLAYING_FX; j++)
+			{
+				slot = &m_SFXPlaying[j];
+
+				//создаем нужный слот без позиции и номеру звука
+				if (slot->flags == SOUND_FLAG_UNUSED)
+				{
+					slot->flags = SOUND_FLAG_USED;
+					slot->Sound_Buff = Sound_Buff_Data[sample->number];
+					slot->pos = pos;
+					slot->sound_id = sample->number;
+					slot->volume = wVol;
+					break;
+
+				}
+			}
+
+			if (j == MAX_PLAYING_FX)
+				return 0;
+
+			Sound_StartLoopedSample(slot, wVol, pitch, wPan, 1);
+
+			//slot->sound_id = sample->number;
+			//slot->volume = wVol;
+			
+
+			/*
 			SOUND_SLOT* slot = Sound_GetSlot(sample->number, pos);
 
 			//если камера под водой звук водопадов отключаем
@@ -402,6 +569,7 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
             {
                     Sound_StartSample(slot, wVol, pitch, wPan, 1);
             }
+			*/
             
             break;
         }
@@ -424,8 +592,59 @@ void Sound_StopSample(SOUND_SLOT* slot)
 	sosDIGIStopSample(hDIGIDriver, slot->sound_handler);
 }
 
+int Sound_StartLoopedSample(SOUND_SLOT* slot, W32 nVolume, int nPitch, int nPan,
+	unsigned int dwFlags)
+{
+	//PSOSSAMPLE s;
+//PSOSSAMPLE s = &sample;
+	_WAVHEADER* pWaveHeader;
+
+	unsigned char* curr_sound_buff = (unsigned char*)slot->Sound_Buff;
+
+	pWaveHeader = (_WAVHEADER*)curr_sound_buff;
+
+	slot->sample.pSample = (char*)(curr_sound_buff + sizeof(_WAVHEADER));
+	slot->sample.wLength = pWaveHeader->dwDataLength - sizeof(_WAVHEADER);
+	slot->sample.wFormat = _PCM_UNSIGNED;
+	slot->sample.wRate = 22050;
+	slot->sample.wBitsPerSample = pWaveHeader->wBitsPerSample;
+	slot->sample.wChannels = pWaveHeader->wChannels;
+	slot->sample.wPanPosition = _PAN_CENTER;
+	//slot->sample.wVolume = 0xFFFF;
+	slot->sample.wVolume = nVolume;
+
+
+	//s->wLoopCount = 0x7FFFFFFF;
+	//slot->sample.wLoopCount = 0;
+
+	if (dwFlags == 0)
+	{
+		slot->sample.wLoopCount = 0;
+		slot->Looped = 0;
+	}
+	else if (dwFlags == 1)
+	{
+		slot->sample.wLoopCount = 0x7FFFFFFF;
+		slot->Looped = 1;
+	}
+
+	/*
+	slot->sample.wLoopCount = 0;
+	*/
+
+
+
+	//slot->flags = SOUND_FLAG_USED;
+
+	slot->sound_handler = sosDIGIStartSample(hDIGIDriver, &slot->sample);
+
+	return 1;
+
+}
+
+
 int Sound_StartSample(SOUND_SLOT* slot, W32 nVolume, int nPitch, int nPan,
-                                   unsigned int dwFlags)
+	unsigned int dwFlags)
 {
 
                 //PSOSSAMPLE s;
@@ -479,7 +698,7 @@ int Sound_StartSample(SOUND_SLOT* slot, W32 nVolume, int nPitch, int nPan,
                 */
                 
 
-                return 1;
+								return 1;
 }
 
 void Sound_UnInit()
@@ -769,71 +988,8 @@ SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos)
         int i = 0;
         int j = 0;
 
-        if (pos != NULL)
-        {
-                for (i = 0; i < MAX_PLAYING_FX; i++)
-                {
-                        result = &m_SFXPlaying[i];
-						/*
-                        if (result->sound_id == sfx_num &&
-                                result->pos->x == pos->x &&
-                                result->pos->y == pos->y &&
-                                result->pos->z == pos->z &&
-                               result->flags != SOUND_FLAG_UNUSED)
-							   */
-						if (result->sound_id == sfx_num &&
-							result->pos == pos &&
-							result->flags != SOUND_FLAG_UNUSED)
-                        {
-                                //находим нужный слот по позиции и номеру звука
 
-
-                                return result;
-                        }
-                }
-                
-                
-                for (j = 0; j < MAX_PLAYING_FX; j++)
-                {
-                        result = &m_SFXPlaying[j];
-
-                                //создаем нужный слот по позиции и номеру звука
-                                if (result->flags == SOUND_FLAG_UNUSED)
-                                {
-                                        result->sound_id = sfx_num;
-                                        
-                                        /*
-                                        result->pos->x = pos->x;
-                                        result->pos->y = pos->y;
-                                        result->pos->z = pos->z;
-										*/
-
-										result->Looped = 0;
-
-										result->JustLoaded = 1;
-
-                                        result->pos = pos;
-                                        result->flags = SOUND_FLAG_USED;
-                                        //result->flags = result->flags | SOUND_FLAG_USED;
-                                        
-										/*
-                                        data_size = Sound_Buff[sfx_num].data_size;
-                                        result->Sound_Buff = (unsigned char*)malloc(data_size);
-                                        memcpy((void*)result->Sound_Buff, (void*)Sound_Buff[sfx_num].Buff_data, data_size);
-                                        result->bufferLength = data_size;
-										*/
-
-										//result->Sound_Buff = Sound_Buff[sfx_num].Buff_data;
-										result->Sound_Buff = Sound_Buff_Data[sfx_num];
-
-                                        return result;
-                                }
-                        }
-
-        }
-
-
-		if (pos == 0)
+		//if (pos == 0)
 		{
 			for (i = 0; i < MAX_PLAYING_FX; i++)
 			{
@@ -860,7 +1016,7 @@ SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos)
 					result->flags = SOUND_FLAG_USED;
 					
 					result->JustLoaded = 1;
-					result->Looped = 0;
+					//result->Looped = 0;
 
 					/*
 					data_size = Sound_Buff[sfx_num].data_size;
@@ -933,8 +1089,10 @@ void ZeroSoundBuff()
         {
                 SOUND_SLOT* result = &m_SFXPlaying[i];
                 memset(result, 0, sizeof(SOUND_SLOT));
-                result->flags = SOUND_FLAG_UNUSED;
+				result->flags = SOUND_FLAG_UNUSED;
                 //result->Sound_Buff = NULL;
+				result->sound_id = -1;
+				result->volume = 0;
 
         }
 
