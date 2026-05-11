@@ -464,7 +464,7 @@ finish:
 
 int main(void)
 {
-                S_SeedRandom();
+		S_SeedRandom();
 
         Sound_Init();
 
@@ -538,10 +538,8 @@ int main(void)
         int intro_played = false;
         int loop_continue = true;
 
-                int32_t gf_option = LoadTitle();
+        int32_t gf_option = LoadTitle();
 
-        //int32_t gf_option = 3;
-                
         while (loop_continue)
         {
                 int32_t gf_direction = gf_option & ~((1 << 6) - 1);

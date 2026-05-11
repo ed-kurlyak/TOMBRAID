@@ -924,6 +924,14 @@ typedef enum LARA_MESH
         LM_NUMBER_OF = 15,
 } LARA_MESH;
 
+/*
+// если так то глючит крокодил и все остальные
+разные размеры стурктур
+
+
+fprintf(fp, "sizeof(MOOD_TYPE) = %d\n", sizeof(MOOD_TYPE));
+fprintf(fp, "sizeof CREATURE_INFO = %d\n", sizeof(CREATURE_INFO));
+
 typedef enum MOOD_TYPE
 {
         MOOD_BORED = 0,
@@ -931,6 +939,17 @@ typedef enum MOOD_TYPE
         MOOD_ESCAPE = 2,
         MOOD_STALK = 3,
 } MOOD_TYPE;
+*/
+
+typedef int32_t MOOD_TYPE;
+
+enum
+{
+	MOOD_BORED = 0,
+	MOOD_ATTACK = 1,
+	MOOD_ESCAPE = 2,
+	MOOD_STALK = 3,
+};
 
 typedef enum TARGET_TYPE
 {

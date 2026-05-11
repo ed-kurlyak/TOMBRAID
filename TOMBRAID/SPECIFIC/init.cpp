@@ -8,7 +8,7 @@ int8_t *g_Malloc_Ptr = 0;
 
 //uint32_t g_Malloc_Size = 0x380000; //1024 * 1024 * 7 / 2 = 3.5 Megs
 //uint32_t g_Malloc_Size = 1024 * 1024 * 7 / 2; // = 3.5 Megs
-uint32_t g_Malloc_Size = 1024 * 1024 * 5; // 7 Megs
+uint32_t g_Malloc_Size = 1024 * 1024 * 7; // 7 Megs
 uint32_t g_Malloc_Free;
 uint32_t g_Malloc_Used;
 

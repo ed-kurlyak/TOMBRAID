@@ -1,5 +1,5 @@
-system dos4g
-option stack=524288
+system dos4gw
+option stack=262144
 name tombraid.exe
 
 file specific\main.obj

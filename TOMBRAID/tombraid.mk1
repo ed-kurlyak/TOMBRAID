@@ -21,853 +21,853 @@ c:\watdos\tombraid\bod_part.obj : c:\watdos\tombraid\effects\bod_part.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\bod_part.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\bod_part.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\bubble.obj : c:\watdos\tombraid\effects\bubble.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\bubble.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 effects\bubble.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\cha_blok.obj : c:\watdos\tombraid\effects\cha_blok.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\cha_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\cha_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\din_stom.obj : c:\watdos\tombraid\effects\din_stom.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\din_stom.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\din_stom.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\earthquk.obj : c:\watdos\tombraid\effects\earthquk.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\earthquk.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\earthquk.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\explosio.obj : c:\watdos\tombraid\effects\explosio.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\explosio.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\explosio.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\fin_levl.obj : c:\watdos\tombraid\effects\fin_levl.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\fin_levl.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\fin_levl.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\flicker.obj : c:\watdos\tombraid\effects\flicker.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\flicker.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 effects\flicker.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\flipmap.obj : c:\watdos\tombraid\effects\flipmap.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\flipmap.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 effects\flipmap.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\flood.obj : c:\watdos\tombraid\effects\flood.cpp .AUTODEP&
 END
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\flood.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 effects\flood.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\lara_eff.obj : c:\watdos\tombraid\effects\lara_eff.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\lara_eff.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\lara_eff.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\missile.obj : c:\watdos\tombraid\effects\missile.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\missile.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 effects\missile.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\powerup.obj : c:\watdos\tombraid\effects\powerup.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\powerup.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 effects\powerup.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\rai_blok.obj : c:\watdos\tombraid\effects\rai_blok.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\rai_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\rai_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\ricochet.obj : c:\watdos\tombraid\effects\ricochet.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\ricochet.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\ricochet.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\sand.obj : c:\watdos\tombraid\effects\sand.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\sand.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 effects\sand.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\splash.obj : c:\watdos\tombraid\effects\splash.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\splash.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 effects\splash.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\sta2slop.obj : c:\watdos\tombraid\effects\sta2slop.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\sta2slop.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\sta2slop.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\turn_180.obj : c:\watdos\tombraid\effects\turn_180.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\turn_180.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\turn_180.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\twinkle.obj : c:\watdos\tombraid\effects\twinkle.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\twinkle.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 effects\twinkle.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\watrfall.obj : c:\watdos\tombraid\effects\watrfall.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 effects\watrfall.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 effects\watrfall.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\abortion.obj : c:\watdos\tombraid\objects\abortion.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\abortion.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 objects\abortion.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\alligatr.obj : c:\watdos\tombraid\objects\alligatr.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\alligatr.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 objects\alligatr.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\ape.obj : c:\watdos\tombraid\objects\ape.cpp .AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\ape.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
- -mf
+ *wpp386 objects\ape.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ -&
+om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\baldy.obj : c:\watdos\tombraid\objects\baldy.cpp .AUTODEP&
 END
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\baldy.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 objects\baldy.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\bat.obj : c:\watdos\tombraid\objects\bat.cpp .AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\bat.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
- -mf
+ *wpp386 objects\bat.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ -&
+om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\bear.obj : c:\watdos\tombraid\objects\bear.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\bear.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 objects\bear.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\blood.obj : c:\watdos\tombraid\objects\blood.cpp .AUTODEP&
 END
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\blood.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 objects\blood.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\boat.obj : c:\watdos\tombraid\objects\boat.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\boat.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 objects\boat.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\bridge.obj : c:\watdos\tombraid\objects\bridge.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\bridge.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 objects\bridge.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\cabin.obj : c:\watdos\tombraid\objects\cabin.cpp .AUTODEP&
 END
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\cabin.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 objects\cabin.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\centaur.obj : c:\watdos\tombraid\objects\centaur.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\centaur.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 objects\centaur.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\cog.obj : c:\watdos\tombraid\objects\cog.cpp .AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\cog.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
- -mf
+ *wpp386 objects\cog.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ -&
+om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\cowboy.obj : c:\watdos\tombraid\objects\cowboy.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\cowboy.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 objects\cowboy.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\crocodle.obj : c:\watdos\tombraid\objects\crocodle.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\crocodle.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 objects\crocodle.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\dino.obj : c:\watdos\tombraid\objects\dino.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\dino.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 objects\dino.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\door.obj : c:\watdos\tombraid\objects\door.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\door.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 objects\door.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\gunshot.obj : c:\watdos\tombraid\objects\gunshot.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\gunshot.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 objects\gunshot.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\keyhole.obj : c:\watdos\tombraid\objects\keyhole.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\keyhole.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 objects\keyhole.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\larson.obj : c:\watdos\tombraid\objects\larson.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\larson.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 objects\larson.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\lion.obj : c:\watdos\tombraid\objects\lion.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\lion.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 objects\lion.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\misc.obj : c:\watdos\tombraid\objects\misc.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\misc.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 objects\misc.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\mummy.obj : c:\watdos\tombraid\objects\mummy.cpp .AUTODEP&
 END
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\mummy.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 objects\mummy.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\mutant.obj : c:\watdos\tombraid\objects\mutant.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\mutant.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 objects\mutant.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\natla.obj : c:\watdos\tombraid\objects\natla.cpp .AUTODEP&
 END
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\natla.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 objects\natla.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\pickup.obj : c:\watdos\tombraid\objects\pickup.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\pickup.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 objects\pickup.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\pierre.obj : c:\watdos\tombraid\objects\pierre.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\pierre.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 objects\pierre.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\pod.obj : c:\watdos\tombraid\objects\pod.cpp .AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\pod.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
- -mf
+ *wpp386 objects\pod.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ -&
+om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\puzz_hol.obj : c:\watdos\tombraid\objects\puzz_hol.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\puzz_hol.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 objects\puzz_hol.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\raptor.obj : c:\watdos\tombraid\objects\raptor.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\raptor.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 objects\raptor.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\rat.obj : c:\watdos\tombraid\objects\rat.cpp .AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\rat.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
- -mf
+ *wpp386 objects\rat.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ -&
+om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\scion.obj : c:\watdos\tombraid\objects\scion.cpp .AUTODEP&
 END
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\scion.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 objects\scion.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\skatekid.obj : c:\watdos\tombraid\objects\skatekid.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\skatekid.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 objects\skatekid.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\statue.obj : c:\watdos\tombraid\objects\statue.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\statue.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 objects\statue.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\switch.obj : c:\watdos\tombraid\objects\switch.cpp .AUTOD&
 EPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\switch.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 objects\switch.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\trapdoor.obj : c:\watdos\tombraid\objects\trapdoor.cpp .A&
 UTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\trapdoor.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 objects\trapdoor.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\vole.obj : c:\watdos\tombraid\objects\vole.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\vole.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 objects\vole.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\wolf.obj : c:\watdos\tombraid\objects\wolf.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 objects\wolf.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 objects\wolf.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\3d_gen.obj : c:\watdos\tombraid\specific\3d_gen.cpp .AUTO&
 DEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\3d_gen.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 specific\3d_gen.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\3d_line.obj : c:\watdos\tombraid\specific\3d_line.cpp .AU&
 TODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\3d_line.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 specific\3d_line.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\3d_out.obj : c:\watdos\tombraid\specific\3d_out.cpp .AUTO&
 DEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\3d_out.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 specific\3d_out.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\bbuffer.obj : c:\watdos\tombraid\specific\bbuffer.cpp .AU&
 TODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\bbuffer.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 specific\bbuffer.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\box.obj : c:\watdos\tombraid\specific\box.cpp .AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\box.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 specific\box.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\camera.obj : c:\watdos\tombraid\specific\camera.cpp .AUTO&
 DEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\camera.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 specific\camera.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\cinema.obj : c:\watdos\tombraid\specific\cinema.cpp .AUTO&
 DEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\cinema.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 specific\cinema.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\collide.obj : c:\watdos\tombraid\specific\collide.cpp .AU&
 TODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\collide.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 specific\collide.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\ctr_util.obj : c:\watdos\tombraid\specific\ctr_util.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\ctr_util.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\ctr_util.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\demo.obj : c:\watdos\tombraid\specific\demo.cpp .AUTODEPE&
 ND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\demo.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 specific\demo.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\draw.obj : c:\watdos\tombraid\specific\draw.cpp .AUTODEPE&
 ND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\draw.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 specific\draw.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\file.obj : c:\watdos\tombraid\specific\file.cpp .AUTODEPE&
 ND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\file.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 specific\file.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\game.obj : c:\watdos\tombraid\specific\game.cpp .AUTODEPE&
 ND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\game.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 specific\game.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\gameflow.obj : c:\watdos\tombraid\specific\gameflow.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\gameflow.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\gameflow.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\init.obj : c:\watdos\tombraid\specific\init.cpp .AUTODEPE&
 ND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\init.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 specific\init.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\input.obj : c:\watdos\tombraid\specific\input.cpp .AUTODE&
 PEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\input.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 specific\input.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\inventry.obj : c:\watdos\tombraid\specific\inventry.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\inventry.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\inventry.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\invfunc.obj : c:\watdos\tombraid\specific\invfunc.cpp .AU&
 TODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\invfunc.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 specific\invfunc.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\invvars.obj : c:\watdos\tombraid\specific\invvars.cpp .AU&
 TODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\invvars.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 specific\invvars.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\items.obj : c:\watdos\tombraid\specific\items.cpp .AUTODE&
 PEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\items.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 specific\items.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\lara.obj : c:\watdos\tombraid\specific\lara.cpp .AUTODEPE&
 ND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\lara.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 specific\lara.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\lara1gun.obj : c:\watdos\tombraid\specific\lara1gun.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\lara1gun.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\lara1gun.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\lara2gun.obj : c:\watdos\tombraid\specific\lara2gun.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\lara2gun.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\lara2gun.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\larafire.obj : c:\watdos\tombraid\specific\larafire.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\larafire.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\larafire.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\laramisc.obj : c:\watdos\tombraid\specific\laramisc.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\laramisc.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\laramisc.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\larasurf.obj : c:\watdos\tombraid\specific\larasurf.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\larasurf.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\larasurf.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\laraswim.obj : c:\watdos\tombraid\specific\laraswim.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\laraswim.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\laraswim.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\lot.obj : c:\watdos\tombraid\specific\lot.cpp .AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\lot.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 specific\lot.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\main.obj : c:\watdos\tombraid\specific\main.cpp .AUTODEPE&
 ND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\main.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 specific\main.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\matrix.obj : c:\watdos\tombraid\specific\matrix.cpp .AUTO&
 DEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\matrix.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 specific\matrix.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\op_comp.obj : c:\watdos\tombraid\specific\op_comp.cpp .AU&
 TODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\op_comp.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 specific\op_comp.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\op_contr.obj : c:\watdos\tombraid\specific\op_contr.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\op_contr.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\op_contr.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\op_graph.obj : c:\watdos\tombraid\specific\op_graph.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\op_graph.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\op_graph.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\op_passp.obj : c:\watdos\tombraid\specific\op_passp.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\op_passp.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\op_passp.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\op_sound.obj : c:\watdos\tombraid\specific\op_sound.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\op_sound.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\op_sound.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\option.obj : c:\watdos\tombraid\specific\option.cpp .AUTO&
 DEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\option.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 specific\option.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\overlay.obj : c:\watdos\tombraid\specific\overlay.cpp .AU&
 TODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\overlay.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 specific\overlay.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\people.obj : c:\watdos\tombraid\specific\people.cpp .AUTO&
 DEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\people.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 specific\people.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\phd_math.obj : c:\watdos\tombraid\specific\phd_math.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\phd_math.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\phd_math.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\reqster.obj : c:\watdos\tombraid\specific\reqster.cpp .AU&
 TODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\reqster.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -b&
-t=dos -mf
+ *wpp386 specific\reqster.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -&
+ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\savegame.obj : c:\watdos\tombraid\specific\savegame.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\savegame.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\savegame.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\scalespr.obj : c:\watdos\tombraid\specific\scalespr.cpp .&
 AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\scalespr.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -&
-bt=dos -mf
+ *wpp386 specific\scalespr.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol &
+-ol+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\screen.obj : c:\watdos\tombraid\specific\screen.cpp .AUTO&
 DEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\screen.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 specific\screen.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\setup.obj : c:\watdos\tombraid\specific\setup.cpp .AUTODE&
 PEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\setup.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 specific\setup.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\sound.obj : c:\watdos\tombraid\specific\sound.cpp .AUTODE&
 PEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\sound.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 specific\sound.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\sphere.obj : c:\watdos\tombraid\specific\sphere.cpp .AUTO&
 DEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\sphere.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt&
-=dos -mf
+ *wpp386 specific\sphere.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -o&
+l+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\text.obj : c:\watdos\tombraid\specific\text.cpp .AUTODEPE&
 ND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\text.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 specific\text.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\timer.obj : c:\watdos\tombraid\specific\timer.cpp .AUTODE&
 PEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\timer.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 specific\timer.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\vars.obj : c:\watdos\tombraid\specific\vars.cpp .AUTODEPE&
 ND
  @c:
  cd c:\watdos\tombraid
- *wpp386 specific\vars.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=d&
-os -mf
+ *wpp386 specific\vars.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+&
+ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\da_sword.obj : c:\watdos\tombraid\traps\da_sword.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\da_sword.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\da_sword.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\dart.obj : c:\watdos\tombraid\traps\dart.cpp .AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\dart.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos &
--mf
+ *wpp386 traps\dart.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ -o&
+m -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\dart_emi.obj : c:\watdos\tombraid\traps\dart_emi.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\dart_emi.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\dart_emi.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\fal_blok.obj : c:\watdos\tombraid\traps\fal_blok.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\fal_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\fal_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\fal_ceil.obj : c:\watdos\tombraid\traps\fal_ceil.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\fal_ceil.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\fal_ceil.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\flame.obj : c:\watdos\tombraid\traps\flame.cpp .AUTODEPEN&
 D
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\flame.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos&
- -mf
+ *wpp386 traps\flame.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ -&
+om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\lava.obj : c:\watdos\tombraid\traps\lava.cpp .AUTODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\lava.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=dos &
--mf
+ *wpp386 traps\lava.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ -o&
+m -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\ligh_emi.obj : c:\watdos\tombraid\traps\ligh_emi.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\ligh_emi.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\ligh_emi.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\mid_touc.obj : c:\watdos\tombraid\traps\mid_touc.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\mid_touc.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\mid_touc.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\mov_blok.obj : c:\watdos\tombraid\traps\mov_blok.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\mov_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\mov_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\pendul.obj : c:\watdos\tombraid\traps\pendul.cpp .AUTODEP&
 END
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\pendul.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 traps\pendul.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\rol_ball.obj : c:\watdos\tombraid\traps\rol_ball.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\rol_ball.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\rol_ball.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\rol_blok.obj : c:\watdos\tombraid\traps\rol_blok.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\rol_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\rol_blok.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\spikes.obj : c:\watdos\tombraid\traps\spikes.cpp .AUTODEP&
 END
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\spikes.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=do&
-s -mf
+ *wpp386 traps\spikes.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol+ &
+-om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\tee_trap.obj : c:\watdos\tombraid\traps\tee_trap.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\tee_trap.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\tee_trap.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\tor_hamm.obj : c:\watdos\tombraid\traps\tor_hamm.cpp .AUT&
 ODEPEND
  @c:
  cd c:\watdos\tombraid
- *wpp386 traps\tor_hamm.cpp -i=C:\WATCOM\h -w4 -e25 -zq -otexan -d2 -5r -bt=&
-dos -mf
+ *wpp386 traps\tor_hamm.cpp -i=C:\WATCOM\h -w4 -e25 -zp1 -zq -otexan -ol -ol&
++ -om -oc -oi -oa -or -d2 -5r -bt=dos -mf
 
 c:\watdos\tombraid\tombraid.exe : c:\watdos\tombraid\3d_xouta.obj c:\watdos\&
 tombraid\profile.obj c:\watdos\tombraid\sosez.obj c:\watdos\tombraid\bod_par&

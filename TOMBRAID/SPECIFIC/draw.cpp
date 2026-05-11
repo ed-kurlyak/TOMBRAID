@@ -25,7 +25,8 @@
 #include "types.h"
 #include "vars.h"
 #include "main.h"
-
+#include <stdio.h>
+FILE* fp;
 void DrawAnimatingItem(ITEM_INFO *item)
 {
         static int16_t null_rotation[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};

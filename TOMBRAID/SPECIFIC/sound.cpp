@@ -307,7 +307,7 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 						
 					}
                 }
-
+				/*
 				int used = 0;
 
 				for (i = 0; i < MAX_PLAYING_FX; i++)
@@ -324,7 +324,7 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 				fp = fopen("log.txt", "at");
 				fprintf(fp, "used %d\n", used);
 				fclose(fp);
-
+				*/
 		switch (mode)
         {
 			/*
@@ -1083,9 +1083,21 @@ void ZeroSoundBuff()
 	//вызвать ZeroSoundBuff() из main() в конце очистка перед return 0
 
         //memset(Sound_Buff_Data, 0, sizeof(Sound_Buff_Data));
+
+		int i;
+
+		for (i = 0; i < 256; i++)
+		{
+			if(Sound_Buff_Data[i])
+			{	
+				free(Sound_Buff_Data[i]);
+				Sound_Buff_Data[i] = 0;
+			}
+		}
+
 		memset(Sound_Buff_Data, 0, sizeof(unsigned char) * 256);
 
-        for (int i = 0; i < MAX_PLAYING_FX; i++)
+        for (i = 0; i < MAX_PLAYING_FX; i++)
         {
                 SOUND_SLOT* result = &m_SFXPlaying[i];
                 memset(result, 0, sizeof(SOUND_SLOT));
