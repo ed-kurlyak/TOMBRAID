@@ -26,33 +26,11 @@ extern "C"
 
 	extern HANDLE G_timerHandle;
 
-	//extern HANDLE G_timerHandle;
-
-	/*
-
-	#include ".\hmi\sos.h"
-	#include ".\hmi\sosm.h"
-	#include ".\hmi\sosez.h"
-
-			extern W32 wDIGIDeviceID;
-			extern W32 wMIDIDeviceID;
-			extern W32 hDIGIDriver;
-			extern W32 hMIDIDriver;
-
-			*/
+	
 
 }
 
-//PSOSSAMPLE s;
-
-//W32 h;
-
 VOID TickerInc(VOID);
-
-
-
-//#include <dsound.h>
-//#pragma comment(lib, "dsound.lib")
 
 #define DECIBEL_LUT_SIZE 512
 #define SOUND_FLIPFLAG 0x40
@@ -77,27 +55,14 @@ VOID TickerInc(VOID);
 
 typedef struct SOUND_SLOT
 {
-        int sound_id;
-        PHD_3DPOS *pos;
-
-		int Looped; //удалить не используется
-
-		uint32_t JustLoaded;
-        // PHD_3DPOS pos;
-        // uint32_t loudness;
-        int16_t volume;
-        // int16_t pan;
-        // int16_t fxnum;
-        int16_t flags;
-        unsigned int bufferLength;
-        //LPDIRECTSOUNDBUFFER Buffers;
-                unsigned char* Sound_Buff;
-
-                W32 sound_handler;
-
-				_SOS_SAMPLE sample;
-
-                //SoundBuffStruct Sound_Buff;
+	//int sound_id;
+	W32 sound_id;
+	PHD_3DPOS* pos;
+	uint32_t loudness;
+	int16_t volume;
+	int16_t pan;
+	int16_t fxnum;
+	int16_t flags;
 } SOUND_SLOT;
 
 
@@ -138,99 +103,47 @@ typedef struct AUDIO_SAMPLE_SOUND
         // pitch shift means the same samples can be reused twice, hence float
         float current_sample;
 
-        // AUDIO_SAMPLE* sample;
-        //LPDIRECTSOUNDBUFFER sample;
+		_SOS_SAMPLE sample;
+         
 } AUDIO_SAMPLE_SOUND;
 
-struct MySound
-{
-        //LPDIRECTSOUNDBUFFER Buffers;
-        int SFX_num;
-        int distance;
-};
 
 #pragma pack (pop)
-
-// static AUDIO_SAMPLE_SOUND m_SampleSounds[MAX_ACTIVE_SAMPLES] = { 0 };
 
 extern SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX];
 
 static int32_t m_MasterVolume = 0;
-// static int32_t m_MasterVolumeDefault = 0;
-// static int16_t m_AmbientLookup[MAX_AMBIENT_FX] = { 0 };
-// static int32_t m_AmbientLookupIdx = 0;
 static int m_DecibelLUT[DECIBEL_LUT_SIZE] = {0};
 static int32_t m_SoundIsActive = 1;
 
-void Sound_StopSample(SOUND_SLOT* slot);
 void Sound_SetMasterVolume(int8_t volume);
 void Sound_UpdateEffects();
 void Sound_ResetEffects();
-SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos);
-SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, PHD_3DPOS* pos);
-void DS_StopSample(SOUND_SLOT *slot);
-//HRESULT DirectSound_Init();
+void Sound_ResetAmbientLoudness();
+void Sound_StopAmbientSounds();
+int Play_Driver_Sound_Ambient(int sample_index, int volume, int pan, int pitch);
+int S_SoundPlayAmbientSample(int sample_index, int volume, int pan, int pitch);
+static void Sound_ClearSlot(SOUND_SLOT* slot);
+bool S_Audio_SampleSoundIsPlaying(int sound_id);
+static SOUND_SLOT* Sound_GetSlot(int32_t sfx_num, uint32_t loudness,
+	PHD_3DPOS* pos, int16_t mode);
 void Sound_Init();
-
 int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags);
-
 void Sound_MakeSample(unsigned int i, unsigned char* sample, unsigned int size);
-
 void ZeroSoundBuff();
+int S_SoundPlaySample(int sample_index, int volume, int pitch, int pan);
+int Play_Driver_Sound2(int sample_index, int volume, int pan, int pitch);
+int Adjust_Pan(int pan);
+void Sound_UnInit();
+void Sound_StopAllSamples();
+void SetCurrVolume(SOUND_SLOT* slot, W32 Volume);
+//void SetCurrVolume(SOUND_SLOT* slot);
 
-#pragma pack (push,1)
-
-/*
-struct SoundBuffStruct
-{
-	unsigned char* Buff_data; //256 max sound samples
-    unsigned int data_size;
-};
-
-//тут можно просто сделать unsigned char * Sound_Buff[256] = { 0 };
-//extern SoundBuffStruct Sound_Buff[256];
-*/
-
+static int16_t m_AmbientLookup[MAX_AMBIENT_FX] = { 0 };
+static int32_t m_AmbientLookupIdx = 0;
+static AUDIO_SAMPLE_SOUND m_SampleSounds[MAX_ACTIVE_SAMPLES] = { 0 };
 
 extern unsigned char* Sound_Buff_Data[256];
 
-#pragma pack (pop)
-
-
-
-
-
-
-/*
-extern "C"
-{
-
-#include ".\hmi\sos.h"
-#include ".\hmi\sosm.h"
-#include ".\hmi\sosez.h"
-
-}
-*/
-
-
-//HRESULT DS_MakeSample(int nSample, WAVEFORMATEX *pWF, unsigned char *pWaveData,
-
-/*
-void Sound_MakeSample(int nSample, _WAVHEADER *pWF, unsigned char *pWaveData,
-                                          int dwWaveLength);
-*/
-
-//int DS_StartSample(SOUND_SLOT *slot, int nVolume, int nPitch, int nPan,
-int Sound_StartSample(SOUND_SLOT *slot, W32 nVolume, int nPitch, int nPan,
-                                   unsigned int dwFlags);
-
-int Sound_StartLoopedSample(SOUND_SLOT* slot, W32 nVolume, int nPitch, int nPan,
-	unsigned int dwFlags);
-
-void SetCurrVolume(SOUND_SLOT* slot, W32 Volume);
-
-void Sound_UnInit();
-
-void Sound_StopAllSamples();
 
 #endif

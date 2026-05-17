@@ -24,6 +24,9 @@ int m_KeyConflict[INPUT_KEY_NUMBER_OF] = {false};
 S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF] = {
         // built-in controls
         {
+		
+		//встроенные клавиши
+		//добработать
             
 				KEY_UP,          // INPUT_KEY_UP
 				KEY_DOWN,        // INPUT_KEY_DOWN
@@ -38,12 +41,31 @@ S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF] = {
 				KEY_INSERT,  // INPUT_KEY_LOOK
 				KEY_NUM5,         // INPUT_KEY_ROLL
 				KEY_ESCAPE   // INPUT_KEY_OPTION
-            
-               // 0,0,0,0,0,0,0,0,0,0,0,0,0
+          
+               //0,0,0,0,0,0,0,0,0,0,0,0,0
         },
         // default user controls
         {
-            
+
+			//пользовательские переназначаемые клавиши
+			//взято из settings.dat tomb raider 1
+			
+			72,
+			80,
+			75,
+			77,
+			71,
+			73,
+			79,
+			78,
+			156,
+			81,
+			82,
+			76,
+			83
+			
+
+            /*
 				KEY_UP,          // INPUT_KEY_UP
 				KEY_DOWN,        // INPUT_KEY_DOWN
 				KEY_LEFT,        // INPUT_KEY_LEFT
@@ -57,7 +79,7 @@ S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF] = {
 				KEY_INSERT,  // INPUT_KEY_LOOK
 				KEY_NUM5,         // INPUT_KEY_ROLL
 				KEY_ESCAPE   // INPUT_KEY_OPTION
-                
+              */  
                 //0,0,0,0,0,0,0,0,0,0,0,0,0
         }
         // clang-format on

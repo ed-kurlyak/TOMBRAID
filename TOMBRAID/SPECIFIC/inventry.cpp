@@ -85,7 +85,7 @@ int32_t Display_Inventory(int inv_mode)
                 S_FadeInInventory(0);
         }
 
-        //Sound_StopAmbientSounds();
+        Sound_StopAmbientSounds();
         Sound_StopAllSamples();
 
         if (g_InvMode != INV_TITLE_MODE)

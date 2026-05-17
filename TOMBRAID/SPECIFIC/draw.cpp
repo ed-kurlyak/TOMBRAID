@@ -3664,7 +3664,7 @@ void RefreshCamera(int16_t type, int16_t *data)
 
 void FlipMap()
 {
-        // Sound_StopAmbientSounds();
+        Sound_StopAmbientSounds();
 
         for (int i = 0; i < g_RoomCount; i++)
         {

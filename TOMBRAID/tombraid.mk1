@@ -944,6 +944,6 @@ _blok.obj,fal_ceil.obj,flame.obj,lava.obj,ligh_emi.obj,mid_touc.obj,mov_blok&
 .obj,pendul.obj,rol_ball.obj,rol_blok.obj,spikes.obj,tee_trap.obj,tor_hamm.o&
 bj
  @%append tombraid.lk1 
- *wlink SYS dos4g op m op st=256000 libp HMI libf SOSW1CR.LIB op maxe=25 op &
+ *wlink SYS dos4g op m op st=262144 libp HMI libf SOSW1CR.LIB op maxe=25 op &
 q op symf @tombraid.lk1
 

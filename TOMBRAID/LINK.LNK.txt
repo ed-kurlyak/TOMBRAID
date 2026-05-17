@@ -1,4 +1,4 @@
-system dos4gw
+system dos4g
 option stack=262144
 name tombraid.exe
 

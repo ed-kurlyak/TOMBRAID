@@ -106,9 +106,7 @@ int Initialise_Level(int LevelNum)
 
         g_HealthBarTimer = 100;
 
-        /*
-        Sound_ResetEffects();
-        */
+		Sound_ResetEffects();
 
         if (g_LevelNumTR == 21)
         {
