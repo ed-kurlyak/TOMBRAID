@@ -144,7 +144,16 @@ static int16_t m_AmbientLookup[MAX_AMBIENT_FX] = { 0 };
 static int32_t m_AmbientLookupIdx = 0;
 static AUDIO_SAMPLE_SOUND m_SampleSounds[MAX_ACTIVE_SAMPLES] = { 0 };
 
-extern unsigned char* Sound_Buff_Data[256];
+//extern unsigned char* Sound_Buff_Data[256];
+
+struct Sound_Buff
+{
+	_SOS_SAMPLE sample;
+	unsigned char* Buff_Data;
+};
+
+extern Sound_Buff Sound_Buff_Data[256];
+
 
 
 #endif

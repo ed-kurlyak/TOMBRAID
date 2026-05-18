@@ -12,7 +12,7 @@
 
 SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX] = { 0 };
 
-unsigned char* Sound_Buff_Data[256] = { 0 };
+Sound_Buff Sound_Buff_Data[256];
 
 void SetCurrVolume(SOUND_SLOT* slot, W32 Volume)
 //void SetCurrVolume(SOUND_SLOT* slot)
@@ -631,8 +631,23 @@ void Sound_SetMasterVolume(int8_t volume)
 void Sound_MakeSample(unsigned int i, unsigned char* sample, unsigned int size)
 {
 
-	Sound_Buff_Data[i] = (unsigned char*)malloc(size);
-	memcpy((void*)Sound_Buff_Data[i], (void*)sample, size);
+	Sound_Buff_Data[i].Buff_Data = (unsigned char*)malloc(size);
+	memcpy((void*)Sound_Buff_Data[i].Buff_Data, (void*)sample, size);
+
+
+	unsigned char* curr_sound_buff = (unsigned char*)Sound_Buff_Data[i].Buff_Data;
+
+	Sound_Buff_Data[i].sample.pSample = (char*)(curr_sound_buff + sizeof(_WAVHEADER));
+
+	_WAVHEADER* pWaveHeader;
+
+	pWaveHeader = (_WAVHEADER*)curr_sound_buff;
+
+	Sound_Buff_Data[i].sample.wLength = pWaveHeader->dwDataLength - sizeof(_WAVHEADER);
+	Sound_Buff_Data[i].sample.wFormat = _PCM_UNSIGNED;
+	Sound_Buff_Data[i].sample.wRate = 22050;
+	Sound_Buff_Data[i].sample.wBitsPerSample = pWaveHeader->wBitsPerSample;
+	Sound_Buff_Data[i].sample.wChannels = pWaveHeader->wChannels;
 }
 
 
@@ -652,14 +667,14 @@ void ZeroSoundBuff()
 
 		for (i = 0; i < 256; i++)
 		{
-			if(Sound_Buff_Data[i])
+			if(Sound_Buff_Data[i].Buff_Data)
 			{	
-				free(Sound_Buff_Data[i]);
-				Sound_Buff_Data[i] = 0;
+				free(Sound_Buff_Data[i].Buff_Data);
+				Sound_Buff_Data[i].Buff_Data = 0;
 			}
 		}
 
-		memset(Sound_Buff_Data, 0, sizeof(unsigned char) * 256);
+		memset(Sound_Buff_Data, 0, sizeof(Sound_Buff) * 256);
 
         for (i = 0; i < MAX_PLAYING_FX; i++)
         {
@@ -672,7 +687,7 @@ void ZeroSoundBuff()
 
         }
 
-
+		/*
 		for (int sound_id = 0; sound_id < MAX_ACTIVE_SAMPLES; sound_id++) {
 			AUDIO_SAMPLE_SOUND* sound = &m_SampleSounds[sound_id];
 			sound->is_used = false;
@@ -683,6 +698,7 @@ void ZeroSoundBuff()
 			sound->current_sample = 0.0f;
 			sound->sample.pSample = NULL;
 		}
+		*/
 
         
 
@@ -770,6 +786,19 @@ W32 Play_Driver_Sound_Ambient(int sample_index, int volume, int pan, int pitch)
 
 	W32 result;
 
+	Sound_Buff_Data[sample_index].sample.wPanPosition = _PAN_CENTER;
+
+	Sound_Buff_Data[sample_index].sample.wVolume = volume;
+	Sound_Buff_Data[sample_index].sample.wLoopCount = 0x7FFFFFFF;
+
+	result = sosDIGIStartSample(hDIGIDriver, &Sound_Buff_Data[sample_index].sample);
+
+	return result;
+
+	/*
+
+	W32 result;
+
 	for (int sound_id = 0; sound_id < MAX_ACTIVE_SAMPLES; sound_id++)
 	{
 
@@ -823,7 +852,7 @@ W32 Play_Driver_Sound_Ambient(int sample_index, int volume, int pan, int pitch)
 	}
 
 	return result;
-
+	*/
 
 
 
@@ -839,6 +868,16 @@ W32 Play_Driver_Sound(int sample_index, int volume, int pan, int pitch)
 
 	W32 result;
 
+	Sound_Buff_Data[sample_index].sample.wPanPosition = _PAN_CENTER;
+
+	Sound_Buff_Data[sample_index].sample.wVolume = volume;
+	Sound_Buff_Data[sample_index].sample.wLoopCount = 0;
+
+	result = sosDIGIStartSample(hDIGIDriver, &Sound_Buff_Data[sample_index].sample);
+
+	return result;
+
+	/*
 	for (int sound_id = 0; sound_id < MAX_ACTIVE_SAMPLES; sound_id++)
 	{
 
@@ -860,8 +899,6 @@ W32 Play_Driver_Sound(int sample_index, int volume, int pan, int pitch)
 	//_SOS_SAMPLE* sos = &sos_sample[sample_index];
 
 	_WAVHEADER* pWaveHeader;
-
-	
 
 	pWaveHeader = (_WAVHEADER*)curr_sound_buff;
 
@@ -886,7 +923,7 @@ W32 Play_Driver_Sound(int sample_index, int volume, int pan, int pitch)
 
 	//slot->flags = SOUND_FLAG_USED;
 
-	result =  sosDIGIStartSample(hDIGIDriver, &sound->sample);
+	result = sosDIGIStartSample(hDIGIDriver, &sound->sample);
 
 	break;
 
@@ -894,7 +931,7 @@ W32 Play_Driver_Sound(int sample_index, int volume, int pan, int pitch)
 
 	return result;
 
-
+	*/
 
 }
 
