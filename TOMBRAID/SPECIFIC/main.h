@@ -9,7 +9,7 @@
 #include "types.h"
 
 
-
+extern int g_ShowFPS;
 
 
 extern int CheatsMode;

@@ -37,13 +37,58 @@ void Sound_ResetAmbientLoudness()
 	}
 }
 
+static void Sound_UpdateSlotParams(SOUND_SLOT* slot)
+{
+	int sound_num = g_SampleLUT[slot->fxnum];
+
+	SAMPLE_INFO* s = (SAMPLE_INFO*)&g_SampleInfos[sound_num];
+
+	int32_t x = slot->pos->x - g_Camera.target.x;
+	int32_t y = slot->pos->y - g_Camera.target.y;
+	int32_t z = slot->pos->z - g_Camera.target.z;
+
+	if (ABS(x) > SOUND_RADIUS || ABS(y) > SOUND_RADIUS || ABS(z) > SOUND_RADIUS)
+	{
+		slot->volume = 0;
+		return;
+	}
+
+	uint32_t distance = SQUARE(x) + SQUARE(y) + SQUARE(z);
+	int32_t volume = s->volume - phd_sqrt(distance) * SOUND_RANGE_MULT_CONSTANT;
+	
+	if (volume < 0)
+	{
+		slot->volume = 0;
+		return;
+	}
+
+	if (volume > 0x7FFF)
+	{
+		volume = 0x7FFF;
+	}
+
+	slot->volume = volume;
+
+	if (!distance || (s->flags & SAMPLE_FLAG_NO_PAN))
+	{
+		slot->pan = 0;
+		return;
+	}
+
+	int16_t angle = phd_atan(slot->pos->z - g_LaraItem->pos.z,
+		slot->pos->x - g_LaraItem->pos.x);
+
+	angle -= g_LaraItem->pos.y_rot + g_Lara.torso_y_rot + g_Lara.head_y_rot;
+	
+	slot->pan = angle;
+}
+
+
 void Sound_UpdateEffects()
 {
 	int i;
 
 	Sound_ResetAmbientLoudness();
-
-	
 
         for (i = 0; i < g_NumberSoundEffects; i++)
         {
@@ -80,8 +125,8 @@ void Sound_UpdateEffects()
 					slot->sound_id != AUDIO_NO_SOUND)
 				{
 					//SetCurrVolume(slot, (m_MasterVolume * slot->volume) >> 6);
-					//SetCurrVolume(slot, (32 * slot->volume) >> 6);
-					SetCurrVolume(slot, slot->volume);
+					SetCurrVolume(slot, (32 * slot->volume) >> 6);
+					//SetCurrVolume(slot, slot->volume);
 				}
 				else
 				{
@@ -93,10 +138,25 @@ void Sound_UpdateEffects()
 				}
 				
 			}
-
 			else if (S_Audio_SampleSoundIsPlaying(slot->sound_id))
 			{
-				//доработать этот кусок возможно голоса персонажей
+				if (slot->pos != NULL)
+				{
+					Sound_UpdateSlotParams(slot);
+
+					if (slot->volume > 0 && slot->sound_id != AUDIO_NO_SOUND)
+					{
+						SetCurrVolume(slot, (32 * slot->volume) >> 6);
+					}
+					else
+					{
+						if (slot->sound_id != AUDIO_NO_SOUND)
+						{
+							sosDIGIStopSample(hDIGIDriver, slot->sound_id);
+						}
+						Sound_ClearSlot(slot);
+					}
+				}
 			}
 
 			else

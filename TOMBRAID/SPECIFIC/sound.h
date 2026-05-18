@@ -138,6 +138,7 @@ void Sound_UnInit();
 void Sound_StopAllSamples();
 void SetCurrVolume(SOUND_SLOT* slot, W32 Volume);
 //void SetCurrVolume(SOUND_SLOT* slot);
+static void Sound_UpdateSlotParams(SOUND_SLOT* slot);
 
 static int16_t m_AmbientLookup[MAX_AMBIENT_FX] = { 0 };
 static int32_t m_AmbientLookupIdx = 0;

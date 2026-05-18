@@ -6,6 +6,7 @@
 #include "draw.h"
 #include "types.h"
 #include "vars.h"
+#include "main.h"
 
 #include <stdio.h>
 
@@ -482,7 +483,9 @@ int32_t Screen_GetRenderScaleGLRage(int32_t unit)
 
 void Overlay_DrawFPSInfo()
 {
-	return; 
+
+	if(!g_ShowFPS)
+		return; 
 
         static int32_t elapsed = 0;
 

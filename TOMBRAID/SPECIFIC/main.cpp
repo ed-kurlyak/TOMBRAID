@@ -49,6 +49,9 @@ int SCREEN_HEIGHT = 480;
 //int CheatsMode = 1;
 int CheatsMode = 0;
 
+//int g_ShowFPS = 1;
+int g_ShowFPS = 0;
+
 //***************************
 // SETUP END
 //***************************
