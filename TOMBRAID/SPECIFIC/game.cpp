@@ -326,7 +326,7 @@ int Game_Loop(int demo_mode)
         //------------------------
         //мой код все оружие - начало
 
-        if(CheatsMode)
+        if(g_CheatsMode)
         {
                 g_Lara.pistols.ammo = 1000;
                 /*

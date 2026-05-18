@@ -1,6 +1,6 @@
 WATCOM Linker Version 10.6
 Copyright by WATCOM International Corp. 1985, 1996. All rights reserved.
-Created on:       26/05/18 16:54:37
+Created on:       26/05/18 19:48:57
 Executable Image: tombraid.exe
 creating a DOS/4G executable
 
@@ -24,7 +24,7 @@ Segment                Class          Group          Address         Size
 =======                =====          =====          =======         ====
 
 BEGTEXT                CODE                          0001:00000000   00000010
-_TEXT                  CODE                          0001:00000010   0005dd25
+_TEXT                  CODE                          0001:00000010   0005dd35
 _NULL                  BEGDATA        DGROUP         0002:00000000   00000004
 _AFTERNULL             BEGDATA        DGROUP         0002:00000004   00000000
 CONST                  DATA           DGROUP         0002:00000004   000014e0
@@ -359,7 +359,7 @@ Module: HMI\SOSW1CR.LIB(D:\DONS\DIGI4W\SOSLIB\SRC\SOSSTART.C)
 0001:0000b84a  sosModule9Start_
 0001:0000b85f  sosDIGIStartSample_
 0001:0000b9df  sosDIGIStopSample_
-0001:0000ba51* sosDIGIStopAllSamples_
+0001:0000ba51  sosDIGIStopAllSamples_
 0001:0000babf  sosModule9End_
 Module: HMI\SOSW1CR.LIB(sostimer.asm)
 0002:000058e8  __bTIMERInstalled
@@ -1239,7 +1239,7 @@ Module: main.obj(C:\watdos\tombraid\specific\main.cpp)
 0001:00045c1c  void near Random_SeedControl( int )
 0001:00045c40  int near Random_GetControl()
 0002:0003d54c  int near GameType
-0002:0003d550  int near CheatsMode
+0002:0003d550  int near g_CheatsMode
 0002:0003d554  int near g_ShowFPS
 0001:00045c80+ void near phd_InitWindow( int, int, int, int, int, int, int, int, int, char unsigned near * )
 0001:00045d20+ int near LoadTitle()
@@ -1370,39 +1370,39 @@ Module: sound.obj(C:\watdos\tombraid\specific\sound.cpp)
 0001:0004e61c+ void near TickerInc()
 0001:0004e638  void near ZeroSoundBuff()
 0001:0004e6fc  void near Sound_StopAllSamples()
-0001:0004e714+ int unsigned near S_SoundPlaySample( int, int, int, int )
-0001:0004e784+ int unsigned near S_SoundPlayAmbientSample( int, int, int, int )
-0001:0004e7f8+ int unsigned near Play_Driver_Sound_Ambient( int, int, int, int )
-0001:0004e86c+ int unsigned near Play_Driver_Sound( int, int, int, int )
-0001:0004e8e0+ int near Adjust_Pan( int )
-0001:0004e960+ int unsigned near S_Audio_SampleSoundIsPlaying( int )
-0001:0004e9a0  void near Sound_StopAmbientSounds()
+0001:0004e71c+ int unsigned near S_SoundPlaySample( int, int, int, int )
+0001:0004e78c+ int unsigned near S_SoundPlayAmbientSample( int, int, int, int )
+0001:0004e800+ int unsigned near Play_Driver_Sound_Ambient( int, int, int, int )
+0001:0004e874+ int unsigned near Play_Driver_Sound( int, int, int, int )
+0001:0004e8e8+ int near Adjust_Pan( int )
+0001:0004e968+ int unsigned near S_Audio_SampleSoundIsPlaying( int )
+0001:0004e9a8  void near Sound_StopAmbientSounds()
 0002:000445f8+ SOUND_SLOT near m_SFXPlaying[]
 0002:000447d8+ Sound_Buff near Sound_Buff_Data[]
 Module: sphere.obj(C:\watdos\tombraid\specific\sphere.cpp)
-0001:0004ea10  int near TestCollision( ITEM_INFO near *, ITEM_INFO near * )
-0001:0004ebc8  int near GetSpheres( ITEM_INFO near *, SPHERE near *, int )
-0001:0004ef10  void near GetJointAbsPosition( ITEM_INFO near *, PHD_VECTOR near *, int )
+0001:0004ea20  int near TestCollision( ITEM_INFO near *, ITEM_INFO near * )
+0001:0004ebd8  int near GetSpheres( ITEM_INFO near *, SPHERE near *, int )
+0001:0004ef20  void near GetJointAbsPosition( ITEM_INFO near *, PHD_VECTOR near *, int )
 Module: text.obj(C:\watdos\tombraid\specific\text.cpp)
-0001:0004f110  void near Text_Init()
-0001:0004f160  TEXTSTRING near * near Text_Create( short, short, char const near * )
-0001:0004f280  void near Text_ChangeText( TEXTSTRING near *, char const near * )
-0001:0004f2e4  void near Text_SetScale( TEXTSTRING near *, int, int )
-0001:0004f318  void near Text_Flash( TEXTSTRING near *, int, short )
-0001:0004f364  void near Text_AddBackground( TEXTSTRING near *, short, short, short, short )
-0001:0004f3b8  void near Text_RemoveBackground( TEXTSTRING near * )
-0001:0004f3e0  void near Text_AddOutline( TEXTSTRING near *, int )
-0001:0004f408  void near Text_RemoveOutline( TEXTSTRING near * )
-0001:0004f430  void near Text_CentreH( TEXTSTRING near *, int )
-0001:0004f468  void near Text_CentreV( TEXTSTRING near *, int )
-0001:0004f4a0  void near Text_AlignRight( TEXTSTRING near *, int )
-0001:0004f4d8  void near Text_AlignBottom( TEXTSTRING near *, int )
-0001:0004f510+ int near Text_GetWidth( TEXTSTRING near * )
-0001:0004f640  void near Text_Remove( TEXTSTRING near * )
-0001:0004f678  void near Text_Draw()
+0001:0004f120  void near Text_Init()
+0001:0004f170  TEXTSTRING near * near Text_Create( short, short, char const near * )
+0001:0004f290  void near Text_ChangeText( TEXTSTRING near *, char const near * )
+0001:0004f2f4  void near Text_SetScale( TEXTSTRING near *, int, int )
+0001:0004f328  void near Text_Flash( TEXTSTRING near *, int, short )
+0001:0004f374  void near Text_AddBackground( TEXTSTRING near *, short, short, short, short )
+0001:0004f3c8  void near Text_RemoveBackground( TEXTSTRING near * )
+0001:0004f3f0  void near Text_AddOutline( TEXTSTRING near *, int )
+0001:0004f418  void near Text_RemoveOutline( TEXTSTRING near * )
+0001:0004f440  void near Text_CentreH( TEXTSTRING near *, int )
+0001:0004f478  void near Text_CentreV( TEXTSTRING near *, int )
+0001:0004f4b0  void near Text_AlignRight( TEXTSTRING near *, int )
+0001:0004f4e8  void near Text_AlignBottom( TEXTSTRING near *, int )
+0001:0004f520+ int near Text_GetWidth( TEXTSTRING near * )
+0001:0004f650  void near Text_Remove( TEXTSTRING near * )
+0001:0004f688  void near Text_Draw()
 Module: timer.obj(C:\watdos\tombraid\specific\timer.cpp)
-0001:0004fa40* void near Init_Timer()
-0001:0004fa58* int near Sync()
+0001:0004fa50* void near Init_Timer()
+0001:0004fa68* int near Sync()
 0002:00055df4+ double near LdFreq
 Module: vars.obj(C:\watdos\tombraid\specific\vars.cpp)
 0002:00055dfc  char unsigned near joy_fire
@@ -1548,59 +1548,59 @@ Module: vars.obj(C:\watdos\tombraid\specific\vars.cpp)
 0002:000eedb8  SHADOW_INFO near g_ShadowInfo
 0002:000eee84  CONFIG near g_Config
 Module: da_sword.obj(C:\watdos\tombraid\traps\da_sword.cpp)
-0001:0004fa80  void near InitialiseDamoclesSword( short )
-0001:0004fae0  void near DamoclesSwordControl( short )
-0001:0004fcbc  void near DamoclesSwordCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:0004fa90  void near InitialiseDamoclesSword( short )
+0001:0004faf0  void near DamoclesSwordControl( short )
+0001:0004fccc  void near DamoclesSwordCollision( short, ITEM_INFO near *, COLL_INFO near * )
 Module: dart.obj(C:\watdos\tombraid\traps\dart.cpp)
-0001:0004fdf0  void near DartsControl( short )
-0001:0004ff68  void near DartEffectControl( short )
+0001:0004fe00  void near DartsControl( short )
+0001:0004ff78  void near DartEffectControl( short )
 Module: dart_emi.obj(C:\watdos\tombraid\traps\dart_emi.cpp)
-0001:0004ffe0  void near DartEmitterControl( short )
+0001:0004fff0  void near DartEmitterControl( short )
 Module: fal_blok.obj(C:\watdos\tombraid\traps\fal_blok.cpp)
-0001:00050220  void near FallingBlockControl( short )
-0001:000503ac  void near FallingBlockFloor( ITEM_INFO near *, int, int, int, short near * )
-0001:00050410  void near FallingBlockCeiling( ITEM_INFO near *, int, int, int, short near * )
+0001:00050230  void near FallingBlockControl( short )
+0001:000503bc  void near FallingBlockFloor( ITEM_INFO near *, int, int, int, short near * )
+0001:00050420  void near FallingBlockCeiling( ITEM_INFO near *, int, int, int, short near * )
 Module: fal_ceil.obj(C:\watdos\tombraid\traps\fal_ceil.cpp)
-0001:00050480  void near FallingCeilingControl( short )
+0001:00050490  void near FallingCeilingControl( short )
 Module: flame.obj(C:\watdos\tombraid\traps\flame.cpp)
-0001:00050570  void near FlameEmitterControl( short )
-0001:00050650  void near FlameControl( short )
+0001:00050580  void near FlameEmitterControl( short )
+0001:00050660  void near FlameControl( short )
 Module: lava.obj(C:\watdos\tombraid\traps\lava.cpp)
-0001:00050890  void near LavaBurn( ITEM_INFO near * )
-0001:000509c4  void near LavaEmitterControl( short )
-0001:00050abc  void near LavaControl( short )
-0001:00050c08  void near LavaWedgeControl( short )
+0001:000508a0  void near LavaBurn( ITEM_INFO near * )
+0001:000509d4  void near LavaEmitterControl( short )
+0001:00050acc  void near LavaControl( short )
+0001:00050c18  void near LavaWedgeControl( short )
 Module: ligh_emi.obj(C:\watdos\tombraid\traps\ligh_emi.cpp)
-0001:00050dc0  void near InitialiseLightning( short )
-0001:00050e70  void near LightningControl( short )
-0001:00051218  void near LightningCollision( short, ITEM_INFO near *, COLL_INFO near * )
-0001:00051290  void near DrawLightning( ITEM_INFO near * )
+0001:00050dd0  void near InitialiseLightning( short )
+0001:00050e80  void near LightningControl( short )
+0001:00051228  void near LightningCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:000512a0  void near DrawLightning( ITEM_INFO near * )
 Module: mid_touc.obj(C:\watdos\tombraid\traps\mid_touc.cpp)
-0001:000517e0  void near MidasCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:000517f0  void near MidasCollision( short, ITEM_INFO near *, COLL_INFO near * )
 0002:00008bdc+ short near g_MidasBounds[]
 Module: mov_blok.obj(C:\watdos\tombraid\traps\mov_blok.cpp)
-0001:00051a80  void near InitialiseMovableBlock( short )
-0001:00051ad4  void near MovableBlockControl( short )
-0001:00051c6c  void near MovableBlockCollision( short, ITEM_INFO near *, COLL_INFO near * )
-0001:00051f54  void near DrawMovableBlock( ITEM_INFO near * )
-0001:00051f98+ int near TestBlockMovable( ITEM_INFO near *, int )
-0001:00052020+ int near TestBlockPush( ITEM_INFO near *, int, short unsigned )
-0001:00052184+ int near TestBlockPull( ITEM_INFO near *, int, short unsigned )
-0001:00052414  void near AlterFloorHeight( ITEM_INFO near *, int )
+0001:00051a90  void near InitialiseMovableBlock( short )
+0001:00051ae4  void near MovableBlockControl( short )
+0001:00051c7c  void near MovableBlockCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:00051f64  void near DrawMovableBlock( ITEM_INFO near * )
+0001:00051fa8+ int near TestBlockMovable( ITEM_INFO near *, int )
+0001:00052030+ int near TestBlockPush( ITEM_INFO near *, int, short unsigned )
+0001:00052194+ int near TestBlockPull( ITEM_INFO near *, int, short unsigned )
+0001:00052424  void near AlterFloorHeight( ITEM_INFO near *, int )
 Module: pendul.obj(C:\watdos\tombraid\traps\pendul.cpp)
-0001:00052540  void near PendulumControl( short )
+0001:00052550  void near PendulumControl( short )
 Module: rol_ball.obj(C:\watdos\tombraid\traps\rol_ball.cpp)
-0001:000526e0  void near InitialiseRollingBall( short )
-0001:00052758  void near RollingBallControl( short )
-0001:00052a94  void near RollingBallCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:000526f0  void near InitialiseRollingBall( short )
+0001:00052768  void near RollingBallControl( short )
+0001:00052aa4  void near RollingBallCollision( short, ITEM_INFO near *, COLL_INFO near * )
 Module: rol_blok.obj(C:\watdos\tombraid\traps\rol_blok.cpp)
-0001:00052e00  void near InitialiseRollingBlock( short )
-0001:00052e3c  void near RollingBlockControl( short )
+0001:00052e10  void near InitialiseRollingBlock( short )
+0001:00052e4c  void near RollingBlockControl( short )
 0002:00008bf8  short near g_MovingBlockBounds[]
 Module: spikes.obj(C:\watdos\tombraid\traps\spikes.cpp)
-0001:00052f60  void near SpikeCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:00052f70  void near SpikeCollision( short, ITEM_INFO near *, COLL_INFO near * )
 Module: tee_trap.obj(C:\watdos\tombraid\traps\tee_trap.cpp)
-0001:00053184  void near TeethTrapControl( short )
+0001:00053194  void near TeethTrapControl( short )
 0002:00008c10+ BITE_INFO near g_Teeth1A
 0002:00008c20+ BITE_INFO near g_Teeth1B
 0002:00008c30+ BITE_INFO near g_Teeth2A
@@ -1608,155 +1608,155 @@ Module: tee_trap.obj(C:\watdos\tombraid\traps\tee_trap.cpp)
 0002:00008c50+ BITE_INFO near g_Teeth3A
 0002:00008c60+ BITE_INFO near g_Teeth3B
 Module: tor_hamm.obj(C:\watdos\tombraid\traps\tor_hamm.cpp)
-0001:00053260  void near InitialiseThorsHandle( short )
-0001:000532f8  void near ThorsHandleControl( short )
-0001:000536dc  void near ThorsHandleCollision( short, ITEM_INFO near *, COLL_INFO near * )
-0001:0005373c  void near ThorsHeadCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:00053270  void near InitialiseThorsHandle( short )
+0001:00053308  void near ThorsHandleControl( short )
+0001:000536ec  void near ThorsHandleCollision( short, ITEM_INFO near *, COLL_INFO near * )
+0001:0005374c  void near ThorsHeadCollision( short, ITEM_INFO near *, COLL_INFO near * )
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strcpy)
-0001:000537aa  strcpy_
+0001:000537ba  strcpy_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strcat)
-0001:000537c9  strcat_
+0001:000537d9  strcat_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(open)
-0001:000537fc  open_
-0001:00053820  sopen_
-0001:00053a09* __set_binary_
+0001:0005380c  open_
+0001:00053830  sopen_
+0001:00053a19* __set_binary_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(read)
-0001:00053a6e  read_
+0001:00053a7e  read_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(io386)
-0001:00053b6a  _dos_read_
-0001:00053b94* _dos_write_
+0001:00053b7a  _dos_read_
+0001:00053ba4* _dos_write_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(lseek)
-0001:00053b9b  lseek_
-0001:00053b9b* _lseek_
+0001:00053bab  lseek_
+0001:00053bab* _lseek_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(close)
-0001:00053bde  close_
+0001:00053bee  close_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(cmp386)
-0001:00053c00  strcmp_
+0001:00053c10  strcmp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(memcpy)
-0001:00053ca1  memcpy_
+0001:00053cb1  memcpy_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(set386)
-0001:00053cd0  memset_
+0001:00053ce0  memset_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(nmalloc)
-0001:00053ce8  _nmalloc_
-0001:00053ce8  malloc_
+0001:00053cf8  _nmalloc_
+0001:00053cf8  malloc_
 0002:00008c70  ___nheapbeg
 0002:00008c74  ___MiniHeapRover
 0002:00008c78  ___LargestSizeB4MiniHeapRover
 Module: C:\WATCOM\lib386\dos\clib3r.lib(nfree)
-0001:00053dcb  _nfree_
-0001:00053dcb  free_
+0001:00053ddb  _nfree_
+0001:00053ddb  free_
 0002:000f5ff8  ___MiniHeapFreeRover
 Module: C:\WATCOM\lib386\dos\clib3r.lib(getenv)
-0001:00053e4d  getenv_
+0001:00053e5d  getenv_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fmemcpy)
-0001:00053eae  _fmemcpy_
+0001:00053ebe  _fmemcpy_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(cstrt386)
 0001:00000003* ___begtext
 0002:00000000* __nullarea
 0002:00008c7c  __GDAptr
 0002:00008c80  __D16Infoseg
 0002:00008c82  __x386_zero_base_selector
-0001:00053ed8  _cstart_
-0001:00054167  __exit_
-0001:00054169  __do_exit_with_msg__
-0001:000541a4  __GETDS
-0001:000541a4  ___GETDSStart_
-0001:000541af  ___GETDSEnd_
+0001:00053ee8  _cstart_
+0001:00054177  __exit_
+0001:00054179  __do_exit_with_msg__
+0001:000541b4  __GETDS
+0001:000541b4  ___GETDSStart_
+0001:000541bf  ___GETDSEnd_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(write)
-0001:000541af  write_
+0001:000541bf  write_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(atoi)
-0001:00054384  atoi_
+0001:00054394  atoi_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(itoa)
-0001:00054416+ utoa_
-0001:00054460  itoa_
-0001:00054460* _itoa_
+0001:00054426+ utoa_
+0001:00054470  itoa_
+0001:00054470* _itoa_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strlen)
-0001:0005447b  strlen_
+0001:0005448b  strlen_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(memmove)
-0001:00054494  memmove_
+0001:000544a4  memmove_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(stricmp)
-0001:000544e1* stricmp_
-0001:000544e1* _stricmp_
-0001:000544e1  strcmpi_
+0001:000544f1* stricmp_
+0001:000544f1* _stricmp_
+0001:000544f1  strcmpi_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(toupper)
-0001:00054528  toupper_
-0001:00054528* _toupper_
+0001:00054538  toupper_
+0001:00054538* _toupper_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strncmp)
-0001:00054536  strncmp_
+0001:00054546  strncmp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fltused)
 0000:00000000  _fltused_
 Module: C:\WATCOM\lib386\dos\emu387.lib(386inite)
-0001:00054565* __fini_387_emulator
-0001:00054560  __init_387_emulator
+0001:00054575* __fini_387_emulator
+0001:00054570  __init_387_emulator
 Module: C:\WATCOM\lib386\dos\clib3r.lib(_8087386)
 0002:00008c84  __8087
 0002:00008c85  __real87
 Module: C:\WATCOM\lib386\math387r.lib(fchop)
-0001:0005456a  __CHP
+0001:0005457a  __CHP
 Module: C:\WATCOM\lib386\dos\clib3r.lib(inp)
-0001:00054587  inp_
+0001:00054597  inp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(outp)
-0001:0005458f  outp_
+0001:0005459f  outp_
 Module: C:\WATCOM\lib386\plib3r.lib(opnewarr)
-0001:0005459c  void near * near operator new []( int unsigned )
+0001:000545ac  void near * near operator new []( int unsigned )
 Module: C:\WATCOM\lib386\plib3r.lib(opdelarr)
-0001:000545a4  void near operator delete []( void near * )
+0001:000545b4  void near operator delete []( void near * )
 Module: C:\WATCOM\lib386\plib3r.lib(undefed)
-0001:000545ac  __wcpp_2_undefed_cdtor__
+0001:000545bc  __wcpp_2_undefed_cdtor__
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fopen)
-0001:000545be+ __open_flags_
-0001:00054753+ _fsopen_
-0001:0005478c  fopen_
-0001:000547fe* freopen_
+0001:000545ce+ __open_flags_
+0001:00054763+ _fsopen_
+0001:0005479c  fopen_
+0001:0005480e* freopen_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(printf)
-0001:00054840  printf_
+0001:00054850  printf_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fread)
-0001:00054862  fread_
+0001:00054872  fread_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fclose)
-0001:00054a3d  fclose_
-0001:00054a6a  __shutdown_stream_
-0001:00054a8b+ __MkTmpFile_
-0001:00054af0  __doclose_
+0001:00054a4d  fclose_
+0001:00054a7a  __shutdown_stream_
+0001:00054a9b+ __MkTmpFile_
+0001:00054b00  __doclose_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fseek)
-0001:00054bc2  fseek_
+0001:00054bd2  fseek_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ftell)
-0001:00054cbe  ftell_
+0001:00054cce  ftell_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(sprintf)
-0001:00054d13  sprintf_
+0001:00054d23  sprintf_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fwrite)
-0001:00054d43  fwrite_
+0001:00054d53  fwrite_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(time)
-0001:00054f03  time_
+0001:00054f13  time_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(localtim)
-0001:00054f32+ _localtime_
-0001:00054f83  localtime_
+0001:00054f42+ _localtime_
+0001:00054f93  localtime_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(d_getvec)
-0001:00054f90  _dos_getvect_
+0001:00054fa0  _dos_getvect_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(d_setvec)
-0001:00054fc2  _dos_setvect_
+0001:00054fd2  _dos_setvect_
 Module: C:\WATCOM\lib386\math387r.lib(pow387)
-0001:00055146* pow_
-0001:00054ff0  IF@DPOW
-0001:00054ff0* IF@POW
+0001:00055156* pow_
+0001:00055000  IF@DPOW
+0001:00055000* IF@POW
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strncpy)
-0001:00055156  strncpy_
+0001:00055166  strncpy_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(isatt)
-0001:0005517b  isatty_
+0001:0005518b  isatty_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(seterrno)
-0001:000551a2  __set_EDOM_
-0001:000551a7  __set_errno_
-0001:000551b3  __set_ERANGE_
-0001:000551ba* __set_EINVAL_
-0001:000551ca+ __set_doserrno_
+0001:000551b2  __set_EDOM_
+0001:000551b7  __set_errno_
+0001:000551c3  __set_ERANGE_
+0001:000551ca* __set_EINVAL_
+0001:000551da+ __set_doserrno_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(dosret)
-0001:000551d6* _dosret0_
-0001:000551dd* _dosretax_
-0001:000551e1  __set_errno_dos_
+0001:000551e6* _dosret0_
+0001:000551ed* _dosretax_
+0001:000551f1  __set_errno_dos_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(umaskval)
 0002:00008c9c  ___umaskval
 Module: C:\WATCOM\lib386\dos\clib3r.lib(iomode)
-0001:00055252  __IOMode_
-0001:000552a7  __SetIOMode_
+0001:00055262  __IOMode_
+0001:000552b7  __SetIOMode_
 0002:00008ca0  ___NFiles
 0002:00008ca4+ ___init_mode
 0002:00008cf4+ __iomode
@@ -1766,22 +1766,22 @@ Module: C:\WATCOM\lib386\dos\clib3r.lib(iob)
 0002:00008f01  __fmode
 0002:000f6020  ___ClosedStreams
 Module: C:\WATCOM\lib386\dos\clib3r.lib(error386)
-0001:000552bc  __doserror_
+0001:000552cc  __doserror_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(_clse)
-0001:000552cf  __close_
+0001:000552df  __close_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(__stos)
-0001:00055310  __STOSB
-0001:00055347* __STOSD
+0001:00055320  __STOSB
+0001:00055357* __STOSD
 Module: C:\WATCOM\lib386\dos\clib3r.lib(memalloc)
-0001:000553b4  __MemAllocator
-0001:0005545c  __MemFree
+0001:000553c4  __MemAllocator
+0001:0005546c  __MemFree
 Module: C:\WATCOM\lib386\dos\clib3r.lib(grownear)
-0001:000555b8+ __FreeDPMIBlocks_
-0001:00055614* __ReAllocDPMIBlock_
-0001:00055787+ __LastFree_
-0001:00055958  __ExpandDGROUP_
+0001:000555c8+ __FreeDPMIBlocks_
+0001:00055624* __ReAllocDPMIBlock_
+0001:00055797+ __LastFree_
+0001:00055968  __ExpandDGROUP_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(nmemneed)
-0001:00055b21  __nmemneed_
+0001:00055b31  __nmemneed_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(heapmod)
 0002:000f6024  ___nheap_clean
 0002:000f6025* ___fheap_clean
@@ -1789,13 +1789,13 @@ Module: C:\WATCOM\lib386\dos\clib3r.lib(environ)
 0002:00008f0c  _environ
 0002:00008f10  ___env_mask
 Module: C:\WATCOM\lib386\dos\clib3r.lib(strnicmp)
-0001:00055b24  strnicmp_
-0001:00055b24* _strnicmp_
+0001:00055b34  strnicmp_
+0001:00055b34* _strnicmp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(cmain386)
-0001:00055b77  __CMain
+0001:00055b87  __CMain
 Module: C:\WATCOM\lib386\dos\clib3r.lib(inirt386)
-0001:00055bc6  __InitRtns
-0001:00055c11  __FiniRtns
+0001:00055bd6  __InitRtns
+0001:00055c21  __FiniRtns
 Module: C:\WATCOM\lib386\dos\clib3r.lib(seg386)
 0000:00001234  __DOSseg__
 Module: C:\WATCOM\lib386\dos\clib3r.lib(crwd386)
@@ -1823,75 +1823,75 @@ Module: C:\WATCOM\lib386\dos\clib3r.lib(crwd386)
 0002:00008f51  __FPE_handler
 0002:00008f51  ___FPE_handler
 Module: C:\WATCOM\lib386\dos\clib3r.lib(stack386)
-0001:00055c61  stackavail_
+0001:00055c71  stackavail_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(stk386)
-0001:00055c85* __STK
-0001:00055c72* __CHK
-0001:00055c82* __GRO
-0001:00055ca3  __STKOVERFLOW_
+0001:00055c95* __STK
+0001:00055c82* __CHK
+0001:00055c92* __GRO
+0001:00055cb3  __STKOVERFLOW_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(istable)
 0002:000014e8  __IsTable
 Module: C:\WATCOM\lib386\dos\clib3r.lib(setefg)
-0001:00055cb2  __setEFGfmt_
+0001:00055cc2  __setEFGfmt_
 Module: C:\WATCOM\lib386\math387r.lib(dosinite)
-0001:00055cce  __sys_init_387_emulator
-0001:00055e53  __sys_fini_387_emulator
+0001:00055cde  __sys_init_387_emulator
+0001:00055e63  __sys_fini_387_emulator
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chk8087)
-0001:00055f32+ __init_8087_
-0001:00055f63* _fpreset_
-0001:00055f6d  __chk8087_
+0001:00055f42+ __init_8087_
+0001:00055f73* _fpreset_
+0001:00055f7d  __chk8087_
 Module: C:\WATCOM\lib386\plib3r.lib(opnew)
-0001:00055fb8  void near * near operator new( int unsigned )
+0001:00055fc8  void near * near operator new( int unsigned )
 Module: C:\WATCOM\lib386\plib3r.lib(opdel)
-0001:00056004  void near operator delete( void near * )
+0001:00056014  void near operator delete( void near * )
 Module: C:\WATCOM\lib386\plib3r.lib(fatalerr)
-0001:00056010  __wcpp_2_fatal_runtime_error__
+0001:00056020  __wcpp_2_fatal_runtime_error__
 Module: C:\WATCOM\lib386\dos\clib3r.lib(tolower)
-0001:0005602d  tolower_
-0001:0005602d* _tolower_
+0001:0005603d  tolower_
+0001:0005603d* _tolower_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(allocfp)
-0001:0005603b  __allocfp_
-0001:000560e1  __freefp_
-0001:0005611a  __purgefp_
+0001:0005604b  __allocfp_
+0001:000560f1  __freefp_
+0001:0005612a  __purgefp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chktty)
-0001:00056138  __chktty_
+0001:00056148  __chktty_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(stinit)
 0002:000f6028  ___OpenStreams
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fprtf)
-0001:0005617b  __fprtf_
+0001:0005618b  __fprtf_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ioalloc)
-0001:000561fa  __ioalloc_
+0001:0005620a  __ioalloc_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(qread)
-0001:00056271  __qread_
+0001:00056281  __qread_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fgetc)
-0001:00056290* fgetc_
-0001:00056319+ __filbuf_
-0001:00056348  __fill_buffer_
+0001:000562a0* fgetc_
+0001:00056329+ __filbuf_
+0001:00056358  __fill_buffer_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(gtpid)
-0001:000563f4  getpid_
+0001:00056404  getpid_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(flush)
-0001:000563fa  __flush_
+0001:0005640a  __flush_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(remove)
-0001:000564d3  remove_
+0001:000564e3  remove_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(tell)
-0001:000564d8  tell_
+0001:000564e8  tell_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fflush)
-0001:000564e9  fflush_
+0001:000564f9  fflush_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(prtf)
-0001:000564f9  __prtf_
+0001:00056509  __prtf_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(qwrit)
-0001:000570d7  __qwrite_
+0001:000570e7  __qwrite_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(errno)
-0001:0005714b  __get_errno_ptr_
-0001:00057151  __get_doserrno_ptr_
+0001:0005715b  __get_errno_ptr_
+0001:00057161  __get_doserrno_ptr_
 0002:000f602c+ _errno
 0002:000f6030+ __doserrno
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fputc)
-0001:00057157  fputc_
+0001:00057167  fputc_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(gtctm)
-0001:000571fb  __getctime_
+0001:0005720b  __getctime_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(mktime)
-0001:000572be  mktime_
+0001:000572ce  mktime_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(tzset)
 0002:00008fb8  ___start_dst
 0002:00008fdc  ___end_dst
@@ -1899,212 +1899,212 @@ Module: C:\WATCOM\lib386\dos\clib3r.lib(tzset)
 0002:00009004  ___dst_adjust
 0002:00009008+ _daylight
 0002:0000904a  _tzname
-0001:00057412* __CacheOSTZ_
-0001:0005747e  tzset_
-0001:0005748c* __parse_tz_
+0001:00057422* __CacheOSTZ_
+0001:0005748e  tzset_
+0001:0005749c* __parse_tz_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(gmtime)
-0001:000577e2  __brktime_
-0001:000578f7+ _gmtime_
-0001:00057915* gmtime_
+0001:000577f2  __brktime_
+0001:00057907+ _gmtime_
+0001:00057925* gmtime_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(timeutil)
-0001:00057922  __leapyear_
-0001:00057a76  __isindst_
+0001:00057932  __leapyear_
+0001:00057a86  __isindst_
 0002:000015ec  ___diyr
 0002:00001606  ___dilyr
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chipvar)
 0002:00009058  ___chipbug
 0002:00009058  __chipbug
 Module: C:\WATCOM\lib386\math387r.lib(pow87e)
-0001:00057d6a  __pow87_err_
+0001:00057d7a  __pow87_err_
 Module: C:\WATCOM\lib386\math387r.lib(exp387)
-0001:00057e5e* exp_
-0001:00057df4* __@DEXP1
-0001:00057dfc* IF@EXP
-0001:00057dfc* IF@DEXP
-0001:00057dfe  __@DEXP
+0001:00057e6e* exp_
+0001:00057e04* __@DEXP1
+0001:00057e0c* IF@EXP
+0001:00057e0c* IF@DEXP
+0001:00057e0e  __@DEXP
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chipd32)
-0001:00057f83  __fdiv_fpr
-0001:00058445* __fdiv_chk
-0001:00058458* __fdiv_m32
-0001:000584a4  __fdiv_m64
-0001:000584f0* __fdiv_m32r
-0001:0005853c* __fdiv_m64r
+0001:00057f93  __fdiv_fpr
+0001:00058455* __fdiv_chk
+0001:00058468* __fdiv_m32
+0001:000584b4  __fdiv_m64
+0001:00058500* __fdiv_m32r
+0001:0005854c* __fdiv_m64r
 Module: C:\WATCOM\lib386\dos\clib3r.lib(minreal)
 0002:000f6058  ___minreal
 Module: C:\WATCOM\lib386\dos\clib3r.lib(heapen)
-0001:00058588* _heapenable_
+0001:00058598* _heapenable_
 0002:0000906c  ___heap_enabled
 Module: C:\WATCOM\lib386\dos\clib3r.lib(sbrk386)
-0001:00058598* sbrk_
-0001:00058660  __brk_
+0001:000585a8* sbrk_
+0001:00058670  __brk_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(amblksiz)
 0002:00009070  __amblksiz
 Module: C:\WATCOM\lib386\dos\clib3r.lib(setenvp)
-0001:0005872b  __setenvp_
+0001:0005873b  __setenvp_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(cinit)
-0001:000587ff  __CommonInit_
+0001:0005880f  __CommonInit_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(___argc)
 0002:000f605c  ____Argc
 0002:000f6060  ____Argv
 Module: C:\WATCOM\lib386\dos\clib3r.lib(exit)
-0001:00058868  __null_int23_exit_
-0001:00058869  exit_
-0001:00058881+ _exit_
+0001:00058878  __null_int23_exit_
+0001:00058879  exit_
+0001:00058891+ _exit_
 0002:00009074+ ___atexit
 0002:00009078  ___int23_exit
 0002:0000907c  ___FPE_handler_exit
 Module: C:\WATCOM\lib386\dos\clib3r.lib(xmsg)
-0001:00058897  __exit_with_msg_
-0001:0005889c  __fatal_runtime_error_
+0001:000588a7  __exit_with_msg_
+0001:000588ac  __fatal_runtime_error_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(efgfmt)
-0001:000588b9  _EFG_Format_
+0001:000588c9  _EFG_Format_
 Module: C:\WATCOM\lib386\math387r.lib(cnvs2d)
-0001:00058a02  __cnvs2d_
+0001:00058a12  __cnvs2d_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(noefgfmt)
 0002:00009080  ___EFG_printf
 0002:00009084  ___EFG_scanf
 Module: C:\WATCOM\lib386\dos\emu387.lib(emu387)
-0001:00058dc0* __int7_X32VM
-0001:00058e0c  __int7
-0001:00058d9c  __int7_pl3
+0001:00058dd0* __int7_X32VM
+0001:00058e1c  __int7
+0001:00058dac  __int7_pl3
 Module: C:\WATCOM\lib386\dos\clib3r.lib(hook387)
-0001:0005bc4a  __hook387
-0001:0005bd1e  __unhook387
+0001:0005bc5a  __hook387
+0001:0005bd2e  __unhook387
 Module: C:\WATCOM\lib386\dos\clib3r.lib(8087cw)
 0002:00009108  __8087cw
 Module: C:\WATCOM\lib386\dos\clib3r.lib(save8087)
 0002:0000910c  ___Save8087
 0002:00009110  ___Rest8087
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ini87386)
-0001:0005bd78  __init_80x87
+0001:0005bd88  __init_80x87
 Module: C:\WATCOM\lib386\plib3r.lib(cppdata)
 0002:000f60e4  __wint_thread_data
 0002:000f6104* ___wcpp_2_data_catch_completed_
 0002:000f6108* ___wcpp_2_data_dtreg_vfptrs_
 0002:000f611c* __compiled_under_generic
 Module: C:\WATCOM\lib386\dos\clib3r.lib(enterdb)
-0001:0005bda0  __EnterWVIDEO_
+0001:0005bdb0  __EnterWVIDEO_
 0002:00009114+ ___WD_Present
 Module: C:\WATCOM\lib386\dos\clib3r.lib(initfile)
-0001:0005bdc6  __InitFiles_
+0001:0005bdd6  __InitFiles_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ioexit)
-0001:0005be3d  __full_io_exit_
-0001:0005be49* fcloseall_
+0001:0005be4d  __full_io_exit_
+0001:0005be59* fcloseall_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(flushall)
-0001:0005bea6  flushall_
-0001:0005beab  __flushall_
+0001:0005beb6  flushall_
+0001:0005bebb  __flushall_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(gtche)
-0001:0005beda  getche_
+0001:0005beea  getche_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(unlnk)
-0001:0005bef7  unlink_
+0001:0005bf07  unlink_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(ltoa)
-0001:0005bf3d  ultoa_
-0001:0005bf87  ltoa_
-0001:0005bf87* _ltoa_
+0001:0005bf4d  ultoa_
+0001:0005bf97  ltoa_
+0001:0005bf97* _ltoa_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chipbug)
-0001:0005bfa2  verify_pentium_fdiv_bug_
+0001:0005bfb2  verify_pentium_fdiv_bug_
 Module: C:\WATCOM\lib386\math387r.lib(math2err)
-0001:0005bff7  __math1err_
-0001:0005c001  __math2err_
+0001:0005c007  __math1err_
+0001:0005c011  __math2err_
 Module: C:\WATCOM\lib386\math387r.lib(math87e)
-0001:0005c0dc  __math87_err_
+0001:0005c0ec  __math87_err_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(sigsy)
-0001:0005c264  __DPMI_hosted_
-0001:0005c2f8  __restore_int23_
-0001:0005c4ae  __restore_int_ctrl_break_
-0001:0005c4e6  __grab_int23_
-0001:0005c601  __grab_int_ctrl_break_
+0001:0005c274  __DPMI_hosted_
+0001:0005c308  __restore_int23_
+0001:0005c4be  __restore_int_ctrl_break_
+0001:0005c4f6  __grab_int23_
+0001:0005c611  __grab_int_ctrl_break_
 Module: C:\WATCOM\lib386\math387r.lib(ftos)
-0001:0005c71c* _SetMaxPrec_
-0001:0005c899  _FtoS_
+0001:0005c72c* _SetMaxPrec_
+0001:0005c8a9  _FtoS_
 Module: C:\WATCOM\lib386\math387r.lib(strtod)
-0001:0005cad3  strtod_
+0001:0005cae3  strtod_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(hugeval)
 0002:00001620  __HugeValue
 Module: C:\WATCOM\lib386\math387r.lib(_matherr)
-0001:0005ccc6* _set_matherr_
-0001:0005cccc+ __rterrmsg_
-0001:0005cd14  _matherr_
+0001:0005ccd6* _set_matherr_
+0001:0005ccdc+ __rterrmsg_
+0001:0005cd24  _matherr_
 0002:00009194+ __RWD_matherr
 Module: C:\WATCOM\lib386\dos\clib3r.lib(signl)
-0001:0005cd43+ __sigabort_
-0001:0005cd4d  __sigfpe_handler_
-0001:0005cd82* signal_
-0001:0005ce37  raise_
+0001:0005cd53+ __sigabort_
+0001:0005cd5d  __sigfpe_handler_
+0001:0005cd92* signal_
+0001:0005ce47  raise_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(chint386)
-0001:0005cefa  _chain_intr_
+0001:0005cf0a  _chain_intr_
 Module: C:\WATCOM\lib386\math387r.lib(nan_inf)
-0001:0005cf13  __Nan_Inf_
+0001:0005cf23  __Nan_Inf_
 Module: C:\WATCOM\lib386\math387r.lib(log387)
-0001:0005cff1* log_
-0001:0005d009* log2_
-0001:0005cffd* log10_
-0001:0005cfa6* IF@LOG
-0001:0005cfa6* IF@DLOG
-0001:0005cfe9* IF@LOG2
-0001:0005cfe9* IF@DLOG2
-0001:0005cfed* IF@LOG10
-0001:0005cfed  IF@DLOG10
+0001:0005d001* log_
+0001:0005d019* log2_
+0001:0005d00d* log10_
+0001:0005cfb6* IF@LOG
+0001:0005cfb6* IF@DLOG
+0001:0005cff9* IF@LOG2
+0001:0005cff9* IF@DLOG2
+0001:0005cffd* IF@LOG10
+0001:0005cffd  IF@DLOG10
 Module: C:\WATCOM\lib386\math387r.lib(floor)
-0001:0005d015  floor_
+0001:0005d025  floor_
 Module: C:\WATCOM\lib386\math387r.lib(scale)
-0001:0005d051+ _Scale_
-0001:0005d092  _Scale10V_
+0001:0005d061+ _Scale_
+0001:0005d0a2  _Scale10V_
 Module: C:\WATCOM\lib386\math387r.lib(cvt)
-0001:0005d1af  __cvt_
+0001:0005d1bf  __cvt_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(amodf386)
-0001:0005d38c* __ModF
-0001:0005d41c  __ZBuf2F
+0001:0005d39c* __ModF
+0001:0005d42c  __ZBuf2F
 Module: C:\WATCOM\lib386\math387r.lib(__mtherr)
-0001:0005d4b8  __matherr
+0001:0005d4c8  __matherr
 Module: C:\WATCOM\lib386\dos\clib3r.lib(iobaddr)
-0001:0005d4bd  __get_std_stream_
+0001:0005d4cd  __get_std_stream_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fputs)
-0001:0005d4dc  fputs_
+0001:0005d4ec  fputs_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(abort)
-0001:0005d557* abort_
-0001:0005d55d  __terminate_
+0001:0005d567* abort_
+0001:0005d56d  __terminate_
 0002:000091cc  ___abort
 Module: C:\WATCOM\lib386\math387r.lib(grabfpe)
-0001:0005d56f  __grab_fpe_
+0001:0005d57f  __grab_fpe_
 Module: C:\WATCOM\lib386\math387r.lib(log87e)
-0001:0005d574  __log87_err_
+0001:0005d584  __log87_err_
 Module: C:\WATCOM\lib386\math387r.lib(modf387)
-0001:0005d5b0  modf_
+0001:0005d5c0  modf_
 Module: C:\WATCOM\lib386\math387r.lib(i64ts386)
-0001:0005d5ca  __CmpBigInt
-0001:0005d604  __Rnd2Int
-0001:0005d66f  __Bin2String
+0001:0005d5da  __CmpBigInt
+0001:0005d614  __Rnd2Int
+0001:0005d67f  __Bin2String
 Module: C:\WATCOM\lib386\math387r.lib(fpow10)
 0002:00001664  __BigPow10Table
 Module: C:\WATCOM\lib386\math387r.lib(frexp)
-0001:0005d790  frexp_
+0001:0005d7a0  frexp_
 Module: C:\WATCOM\lib386\math387r.lib(matherr)
-0001:0005d7ff  matherr_
+0001:0005d80f  matherr_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(grabfp87)
-0001:0005d802+ __GrabFP87_
+0001:0005d812+ __GrabFP87_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpe387)
 0002:000091d0  ___PMSeg
 0002:000091d2  ___PMAddr
 0002:000091d6  ___RMAddr
-0001:0005d834  __Init_FPE_handler_
-0001:0005d891  __Fini_FPE_handler_
+0001:0005d844  __Init_FPE_handler_
+0001:0005d8a1  __Fini_FPE_handler_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpeinth)
-0001:0005d8ee  __Enable_FPE_
-0001:0005d903  __FPEHandler_
-0001:0005d910  __FPE2Handler_
+0001:0005d8fe  __Enable_FPE_
+0001:0005d913  __FPEHandler_
+0001:0005d920  __FPE2Handler_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpephar)
-0001:0005db4e  __Phar_hook_init_
-0001:0005dc11  __Phar_hook_fini_
+0001:0005db5e  __Phar_hook_init_
+0001:0005dc21  __Phar_hook_fini_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpedos4g)
-0001:0005dc3e  __DOS4G_hook_init_
-0001:0005dc6b  __DOS4G_hook_fini_
+0001:0005dc4e  __DOS4G_hook_init_
+0001:0005dc7b  __DOS4G_hook_fini_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpeergo)
-0001:0005dc84  __Ergo_hook_init_
-0001:0005dcc2  __Ergo_hook_fini_
+0001:0005dc94  __Ergo_hook_init_
+0001:0005dcd2  __Ergo_hook_fini_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpeintel)
-0001:0005dcdc  __Intel_hook_init_
-0001:0005dd34  __Intel_hook_fini_
+0001:0005dcec  __Intel_hook_init_
+0001:0005dd44  __Intel_hook_fini_
 Module: C:\WATCOM\lib386\dos\clib3r.lib(fpeint)
 0002:000093f8  ___FPE_int
 0002:000093f9  ___IRQ_num
@@ -2137,6 +2137,6 @@ C:\WATCOM\lib386\plib3r.lib
                         +-----------------------+
 
 Stack size:  00040000 (262144.)
-Memory size:  00194255 (1655381.)
-Entry point address: 0001:00053ed8
+Memory size:  00194265 (1655397.)
+Entry point address: 0001:00053ee8
 Link time: 00:00.08

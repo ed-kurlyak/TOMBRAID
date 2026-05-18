@@ -12,7 +12,7 @@
 extern int g_ShowFPS;
 
 
-extern int CheatsMode;
+extern int g_CheatsMode;
 
 
 //раскоментировать учет аспекта в

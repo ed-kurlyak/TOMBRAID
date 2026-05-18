@@ -182,7 +182,7 @@ if (g_InputDB.item_cheat)
         }
 
         //включил god mode
-        //if (CheatsMode)
+        //if (g_CheatsMode)
         //      item->hit_points = LARA_HITPOINTS;
 
         if (item->hit_points <= 0)

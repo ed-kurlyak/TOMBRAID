@@ -46,8 +46,8 @@ int SCREEN_HEIGHT = 480;
 
 // SETUP PART #5 CHEATS MODE
 // full ammo/medi
-//int CheatsMode = 1;
-int CheatsMode = 0;
+//int g_CheatsMode = 1;
+int g_CheatsMode = 0;
 
 //int g_ShowFPS = 1;
 int g_ShowFPS = 0;
