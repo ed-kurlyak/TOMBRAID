@@ -604,47 +604,91 @@ int Control_Phase(int32_t nframes, int32_t demo_mode)
         return 0;
 }
 
-int Get_Key_State(int key)
+int Get_Key_State(int keyIndex)
 {
 	int i;
 	int scan_key;
 
-	scan_key = m_Layout[0][key];
-	/*
-	FILE* fp;
+	//user keyborad
+	scan_key = m_Layout[1][keyIndex];
 
-	fp = fopen("log.txt", "at");
-
-	fprintf(fp, "%d\n", Keys_States_Array[0x4b]);
-
-	fclose(fp);
-	*/
-
-	//check default keyboard layout
-	if (Keys_States_Array[scan_key])
+	if (scan_key & 0x0100)
 	{
-		return 1;
+		unsigned char scanCode = scan_key & 0xFF;
+
+		if (scanCode == joy_fire)
+		{
+			return true;
+		}
 	}
+		else
+		{
+			// Обычная проверка клавиши
+			if (Keys_States_Array[scan_key])
+			{
+				return true;
+			}
 
-	scan_key = m_Layout[1][key];
+			// Проверка парных extended клавиш
+			switch (scan_key)
+			{
+			case 0x9D:
+				return Keys_States_Array[0x1D];
 
-	/*
-	fp = fopen("log.txt", "at");
+			case 0x1D:
+				return Keys_States_Array[0x9D];
 
-	fprintf(fp, "%d", Keys_States_Array[scan_key]);
+			case 0x36:
+				return Keys_States_Array[0x2A];
 
-	fclose(fp);
-	*/
-	if (Keys_States_Array[scan_key])
-	{
+			case 0x2A:
+				return Keys_States_Array[0x36];
+
+			case 0xB8:
+				return Keys_States_Array[0x38];
+
+			case 0x38:
+				return Keys_States_Array[0xB8];
+			}
+		}
+
+		// Проверка default keyboard mapping
+		//if (Keyboard_val[keyIndex] == 0)
+		{
 		
-		return 1;
+			unsigned char defKey = m_Layout[0][keyIndex];
+
+			if (Keys_States_Array[defKey])
+			{
+				return true;
+			}
+
+			switch (defKey)
+			{
+			case 0x9D:
+				return Keys_States_Array[0x1D];
+
+			case 0x1D:
+				return Keys_States_Array[0x9D];
+
+			case 0x36:
+				return Keys_States_Array[0x2A];
+
+			case 0x2A:
+				return Keys_States_Array[0x36];
+
+			case 0xB8:
+				return Keys_States_Array[0x38];
+
+			case 0x38:
+				return Keys_States_Array[0xB8];
+			}
+		}
+
+		return false;
 	}
 
-	return 0;
-}
-
-#define VK_L 0x4C
+//#define VK_L 0x4C
 
 void Input_Update()
 {

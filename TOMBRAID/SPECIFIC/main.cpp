@@ -286,11 +286,11 @@ void _interrupt _far New_Key_Int(void);
 void  _interrupt _far New_Key_Int()
 {
                 static int ch = 0;
-        int key_scan_code;
+				unsigned char key_scan_code;
         
         key_scan_code = inp(0x60);
 
-        int key_stat = Keys_States_Array[0x143];
+        unsigned char key_stat = Keys_States_Array[0x143];
            
         if (key_stat != 0)
         {
@@ -351,14 +351,15 @@ key_release:
 
         goto finish;
 
-
+		
+		/*
 extended_mode:
 
         key_stat--;
                 
         if (key_stat == 0)
         {
-                if (key_scan_code & 0x80 == 0)
+                if ((key_scan_code & 0x80) == 0)
                 {
                         key_scan_code |= 0x80;
 
@@ -381,6 +382,44 @@ extended_mode:
                                 {
                                                                         goto set_extended;
                                 }
+
+                        Keys_States_Array[0x145]--;
+                        Keys_States_Array[key_scan_code] = 0;
+                }
+
+                goto zero_state;
+        }
+		*/
+		
+extended_mode:
+
+        key_stat--;
+                
+        if (key_stat == 0)
+        {
+                if ((key_scan_code & 0x80) == 0)
+                {
+                        key_scan_code |= 0x80;
+
+						key_stat |= Keys_States_Array[key_scan_code];
+
+                        if (key_stat == 0)
+                        {
+                                key_stat++;
+                                Keys_States_Array[0x145]++;
+                                Keys_States_Array[key_scan_code] = key_stat;
+
+                        }
+                }
+                else
+                {
+
+                        key_stat |= Keys_States_Array[key_scan_code];
+
+                        if (key_stat == 0)
+                        {
+                            goto set_extended;
+                        }
 
                         Keys_States_Array[0x145]--;
                         Keys_States_Array[key_scan_code] = 0;

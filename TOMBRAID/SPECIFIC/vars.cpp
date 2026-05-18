@@ -6,6 +6,8 @@
 #include "types.h"
 ////#include <windows.h>
 
+unsigned char joy_fire;
+
 uint32_t Option_Graphics_Val = 1; //perspective_distance = 0x3000000;
 
 int joy_x = 0;

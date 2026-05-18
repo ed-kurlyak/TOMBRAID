@@ -281,7 +281,7 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 
 			slot->sound_id = S_SoundPlaySample(sampleId, volume, pitch, 0 );
 
-			if (slot->sound_id < 0)
+			if (slot->sound_id == -1)
 			{
 				return 0;
 			}
@@ -322,7 +322,7 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 
 			slot->sound_id = S_SoundPlaySample(sampleId, volume, pitch, 0);
 
-			if (slot->sound_id < 0)
+			if (slot->sound_id == -1)
 			{
 				return 0;
 			}
@@ -381,13 +381,11 @@ int Sound_Effect(int32_t sfx_num, PHD_3DPOS *pos, uint32_t flags)
 				slot->sound_id = S_SoundPlayAmbientSample(sampleId, volume, pitch, 0);
 				
 
-				if (slot->sound_id < 0)
+				if (slot->sound_id == -1)
 				{
 					Sound_ClearSlot(slot);
 					return 0;
 				}
-
-
 
 				for (int i = 0; i < MAX_PLAYING_FX; i++)
 				{
@@ -655,7 +653,7 @@ void Sound_StopAllSamples()
 }
 
 
-int S_SoundPlaySample(int sample_index, int volume, int pitch, int pan)
+W32 S_SoundPlaySample(int sample_index, int volume, int pitch, int pan)
 {
 	if (!m_SoundIsActive)
 	{
@@ -672,14 +670,14 @@ int S_SoundPlaySample(int sample_index, int volume, int pitch, int pan)
 
 	int final_pitch = pitch & 0xFFFF;
 
-	int result = Play_Driver_Sound2(sample_index, final_volume, adjusted_pan, final_pitch);
+	W32 result = Play_Driver_Sound(sample_index, final_volume, adjusted_pan, final_pitch);
 
 	return result;
 
 }
 
 
-int S_SoundPlayAmbientSample(int sample_index, int volume, int pan, int pitch)
+W32 S_SoundPlayAmbientSample(int sample_index, int volume, int pan, int pitch)
 {
 
 	if (!m_SoundIsActive)
@@ -696,14 +694,14 @@ int S_SoundPlayAmbientSample(int sample_index, int volume, int pan, int pitch)
 
 	int final_pitch = pitch & 0xFFFF;
 
-	int result = Play_Driver_Sound_Ambient(sample_index, final_volume, adjusted_pan, final_pitch);
+	W32 result = Play_Driver_Sound_Ambient(sample_index, final_volume, adjusted_pan, final_pitch);
 
 	return result;
 
 
 }
 
-int Play_Driver_Sound_Ambient(int sample_index, int volume, int pan, int pitch)
+W32 Play_Driver_Sound_Ambient(int sample_index, int volume, int pan, int pitch)
 {/*
 	if (!Sound_Enabled_Var1 || !Sound_Enabled_Var2) {
 		return 0;
@@ -772,7 +770,7 @@ int Play_Driver_Sound_Ambient(int sample_index, int volume, int pan, int pitch)
 }
 
 
-int Play_Driver_Sound2(int sample_index, int volume, int pan, int pitch)
+W32 Play_Driver_Sound(int sample_index, int volume, int pan, int pitch)
 {/*
 	if (!Sound_Enabled_Var1 || !Sound_Enabled_Var2) {
 		return 0;

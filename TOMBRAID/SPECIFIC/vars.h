@@ -22,6 +22,8 @@
 #include "types.h"
 #include "main.h"
 
+extern unsigned char joy_fire;
+
 extern uint32_t Option_Graphics_Val;
 
 extern int perspective_distance;
