@@ -93,6 +93,7 @@ Level 4 - Hive - END2.PHD
 int32_t g_RandControl = 0xD371F947;
 int32_t g_RandDraw = 0xD371F947;
 
+/*
 int Settings_Write()
 {
         char KeyBuff[13] = {0};
@@ -148,6 +149,86 @@ int Settings_Read()
 
         return 1;
 }
+
+*/
+
+
+int Settings_Write()
+{
+	//пока ничего не записываем
+	return 1;
+
+		FILE* file = fopen("settings.dat", "wb");
+
+		if (!file)
+		{
+			return 0;
+		}
+
+		// Option_Music_Volume
+		fwrite(&g_Config.music_volume, 2, 1, file);
+
+		// dword_C3848 + 2
+		fwrite(&g_Config.sound_volume, 2, 1, file);
+
+		// User_Keyboard_Layout
+		fwrite(&m_Layout[1], 2, 13, file);
+
+		// Option_Graphics_Val
+		fwrite(&Option_Graphics_Val, 4, 1, file);
+
+		// VideoMode_Flag2
+		fwrite(&VideoMode_Flag2, 4, 1, file);
+
+		// game_sizer
+		fwrite(&game_sizer, 8, 1, file);
+
+		fclose(file);
+	
+
+	return 1;
+}
+
+int Settings_Read()
+{
+	char Option_Music_Volume;
+	char Option_Sound_Volume;
+	short int User_Keyboard_Layout[13];
+
+
+	FILE* file = fopen("settings.dat", "rb");
+
+	if (!file)
+	{
+		return 0;
+	}
+
+	// music volume
+	fread(&Option_Music_Volume, 2, 1, file);
+	g_Config.music_volume = Option_Music_Volume;
+
+	// sound volume
+	fread(&Option_Sound_Volume, 2, 1, file);
+	g_Config.sound_volume = Option_Sound_Volume;
+	Sound_SetMasterVolume(g_Config.sound_volume);
+
+	// 13 keyboard scan codes
+	fread(User_Keyboard_Layout, 2, 13, file);
+
+	// graphics option
+	fread(&Option_Graphics_Val, 4, 1, file);
+
+	// video mode flag
+	fread(&VideoMode_Flag2, 4, 1, file);
+
+	// game_sizer
+	fread(&game_sizer, 8, 1, file);
+
+	fclose(file);
+
+	return 1;
+}
+
 
 void S_SeedRandom()
 {
@@ -572,8 +653,8 @@ int main(void)
         Init_Game_Malloc();
         S_FrontEndCheck();
         Settings_Read();
-                //Settings_Write();
-                //return 0;
+		//Settings_Write();
+        //return 0;
         Create_BackBuffer();
         InitialiseStartInfo();
 

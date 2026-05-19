@@ -24,6 +24,8 @@
 
 extern unsigned char joy_fire;
 
+extern double game_sizer;
+extern uint32_t VideoMode_Flag2;
 extern uint32_t Option_Graphics_Val;
 
 extern int perspective_distance;

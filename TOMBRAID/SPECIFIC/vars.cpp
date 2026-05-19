@@ -8,6 +8,8 @@
 
 unsigned char joy_fire;
 
+double game_sizer = 1.0;
+uint32_t VideoMode_Flag2;
 uint32_t Option_Graphics_Val = 1; //perspective_distance = 0x3000000;
 
 int joy_x = 0;

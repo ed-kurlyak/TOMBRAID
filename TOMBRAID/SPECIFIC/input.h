@@ -14,7 +14,7 @@
 #define VK_8 0x38
 #define VK_9 0x39
 
-typedef int32_t S_INPUT_KEYCODE;
+typedef int16_t S_INPUT_KEYCODE;
 
 extern S_INPUT_KEYCODE m_Layout[2][INPUT_KEY_NUMBER_OF];
 

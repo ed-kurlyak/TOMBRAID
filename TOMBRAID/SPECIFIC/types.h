@@ -2407,8 +2407,8 @@ struct CONFIG
                 double bar_scale;
         } ui;
 
-        int32_t sound_volume;
-        int32_t music_volume;
+        int16_t sound_volume;
+        int16_t music_volume;
 };
 
 #pragma pack(pop)
